@@ -31,7 +31,7 @@ final acceptButtonWithBorderStyle = acceptButtonStyle.copyWith(
 final authInputStyle = InputDecoration(
   filled: true,
   fillColor: UIColors.textFieldBackground,
-  contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+  contentPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(15),
   ),
