@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:matjary/PresentationLayer/Public/home_screen.dart';
+import 'package:get/get.dart';
+import 'package:matjary/Constants/get_pages.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,8 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Matjary',
+      getPages: getPages,
     );
   }
 }
