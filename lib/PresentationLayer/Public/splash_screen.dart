@@ -10,9 +10,11 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UIColors.mainBackground,
-      body: Center(
-        child: Image.asset(
-          'assets/images/logo.png',
+      body: SafeArea(
+        child: Center(
+          child: Image.asset(
+            'assets/images/logo.png',
+          ),
         ),
       ),
       bottomSheet: const PrimaryLine(),
