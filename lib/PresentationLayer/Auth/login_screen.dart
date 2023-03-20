@@ -15,67 +15,71 @@ class LoginScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 90),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: SizedBox(
-                  width: 163,
-                  height: 150,
-                  child: Image.asset(
-                    'assets/images/logo.png',
+        body: SafeArea(
+          child: Container(
+            width: Get.width,
+            height: Get.height,
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 90),
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(
+                    width: 163,
+                    height: 150,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Form(
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        keyboardType: TextInputType.name,
-                        decoration: authInputStyle.copyWith(
-                          hintText: 'اسم المستخدم',
-                        ),
-                      ),
-                      spacerHeight(),
-                      TextFormField(
-                        keyboardType: TextInputType.name,
-                        decoration: authInputStyle.copyWith(
-                          hintText: 'كلمة المرور',
-                        ),
-                      ),
-                      spacerHeight(),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: acceptButtonStyle,
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          child: Text(
-                            'متابعة',
-                            style: UITextStyle.boldMeduim,
+                Expanded(
+                  flex: 3,
+                  child: Form(
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          keyboardType: TextInputType.name,
+                          decoration: authInputStyle.copyWith(
+                            hintText: 'اسم المستخدم',
                           ),
                         ),
-                      ),
-                      spacerHeight(),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: acceptButtonWithBorderStyle,
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          child: Text(
-                            'انشاء حساب',
-                            style: UITextStyle.boldMeduim,
+                        spacerHeight(),
+                        TextFormField(
+                          keyboardType: TextInputType.name,
+                          decoration: authInputStyle.copyWith(
+                            hintText: 'كلمة المرور',
                           ),
                         ),
-                      ),
-                    ],
+                        spacerHeight(),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: acceptButtonStyle,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              'متابعة',
+                              style: UITextStyle.boldMeduim,
+                            ),
+                          ),
+                        ),
+                        spacerHeight(),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: acceptButtonWithBorderStyle,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              'انشاء حساب',
+                              style: UITextStyle.boldMeduim,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         bottomSheet: const PrimaryLine(),
