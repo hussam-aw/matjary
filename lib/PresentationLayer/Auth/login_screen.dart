@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -52,7 +53,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                         spacerHeight(),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.homeScreen);
+                          },
                           style: acceptButtonStyle,
                           child: const Padding(
                             padding: EdgeInsets.symmetric(vertical: 15),
@@ -64,7 +67,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                         spacerHeight(),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.registerscreen);
+                          },
                           style: acceptButtonWithBorderStyle,
                           child: const Padding(
                             padding: EdgeInsets.symmetric(vertical: 15),
