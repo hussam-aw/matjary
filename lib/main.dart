@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Matjary',
       getPages: getPages,
-      home: HomeScreen(),
     );
   }
 }
