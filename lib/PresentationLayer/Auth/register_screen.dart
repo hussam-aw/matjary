@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
@@ -23,112 +27,73 @@ class RegisterScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
             child: Column(
               children: [
+                const AppIconHeader(),
                 Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                    width: 163,
-                    height: 150,
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Form(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          keyboardType: TextInputType.name,
-                          decoration: authInputStyle.copyWith(
-                            hintText: 'الاسم',
-                          ),
-                        ),
-                        spacerHeight(),
-                        TextFormField(
-                          keyboardType: TextInputType.phone,
-                          decoration: authInputStyle.copyWith(
-                            hintText: 'رقم الهاتف',
-                          ),
-                        ),
-                        spacerHeight(),
-                        TextFormField(
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: authInputStyle.copyWith(
-                            hintText: 'كلمة المرور',
-                          ),
-                        ),
-                        spacerHeight(),
-                        TextFormField(
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: authInputStyle.copyWith(
-                            hintText: 'تأكيد كلمة المرور',
-                          ),
-                        ),
-                        spacerHeight(),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: acceptButtonStyle,
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'انشاء حساب',
-                              style: UITextStyle.boldMeduim,
+                  flex: 6,
+                  child: SingleChildScrollView(
+                    child: Form(
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            keyboardType: TextInputType.name,
+                            decoration: textFieldStyle.copyWith(
+                              hintText: 'الاسم',
                             ),
                           ),
-                        ),
-                        spacerHeight(),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: acceptButtonStyle.copyWith(
-                            backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                                    UIColors.buttonBackground),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(FontAwesomeIcons.squareFacebook),
-                                spacerWidth(),
-                                const Text(
-                                  'متابعة باستخدام الفيسبوك',
-                                  style: UITextStyle.boldMeduim,
-                                ),
-                              ],
+                          spacerHeight(),
+                          TextFormField(
+                            keyboardType: TextInputType.phone,
+                            decoration: textFieldStyle.copyWith(
+                              hintText: 'رقم الهاتف',
                             ),
                           ),
-                        ),
-                        spacerHeight(),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: acceptButtonStyle.copyWith(
-                            backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                                    UIColors.white),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  FontAwesomeIcons.google,
-                                  color: UIColors.primary,
-                                ),
-                                spacerWidth(),
-                                Text(
-                                  'متابعة باستخدام الفيسبوك',
-                                  style: UITextStyle.boldMeduim.copyWith(
-                                    color: UIColors.darkText,
-                                  ),
-                                ),
-                              ],
+                          spacerHeight(),
+                          TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: textFieldStyle.copyWith(
+                              hintText: 'كلمة المرور',
                             ),
                           ),
-                        ),
-                      ],
+                          spacerHeight(),
+                          TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: textFieldStyle.copyWith(
+                              hintText: 'تأكيد كلمة المرور',
+                            ),
+                          ),
+                          spacerHeight(),
+                          AcceptButton(
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.homeScreen);
+                            },
+                            text: 'انشاء حساب',
+                          ),
+                          spacerHeight(),
+                          AccetpIconButton(
+                            onPressed: () {},
+                            icon: const Icon(FontAwesomeIcons.squareFacebook),
+                            text: Text(
+                              'متابعة باستخدام الفيسبوك',
+                              style: UITextStyle.boldMeduim
+                                  .copyWith(color: UIColors.white),
+                            ),
+                          ),
+                          spacerHeight(),
+                          AccetpIconButton(
+                            onPressed: () {},
+                            backgroundColor: UIColors.white,
+                            icon: const Icon(
+                              FontAwesomeIcons.google,
+                              color: UIColors.primary,
+                            ),
+                            text: Text(
+                              'متابعة باستخدام غوغل',
+                              style: UITextStyle.boldMeduim
+                                  .copyWith(color: UIColors.darkText),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

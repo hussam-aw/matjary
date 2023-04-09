@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -39,7 +40,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               child: IconButton(
                 icon: Icon(
                   size: 28,
-                  FontAwesomeIcons.user,
+                  Ionicons.person,
                   color: UIColors.white,
                 ),
                 onPressed: () {},
@@ -49,7 +50,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               child: IconButton(
                 icon: Icon(
                   size: 28,
-                  Icons.analytics,
+                  Ionicons.analytics,
                   color: UIColors.white,
                 ),
                 onPressed: () {},

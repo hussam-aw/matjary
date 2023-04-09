@@ -28,7 +28,7 @@ final acceptButtonWithBorderStyle = acceptButtonStyle.copyWith(
 );
 
 // Input Styles
-final authInputStyle = InputDecoration(
+final textFieldStyle = InputDecoration(
   filled: true,
   fillColor: UIColors.textFieldBackground,
   contentPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),

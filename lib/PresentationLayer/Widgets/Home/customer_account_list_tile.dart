@@ -35,7 +35,7 @@ class CustomerAccountListTile extends StatelessWidget {
         style: UITextStyle.normalSmall,
       ),
       trailing: SizedBox(
-        width: 150,
+        width: 120,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -43,7 +43,7 @@ class CustomerAccountListTile extends StatelessWidget {
               customerBalance,
               style: UITextStyle.boldMeduim,
             ),
-            spacerWidth(width: 30),
+            spacerWidth(width: 20),
             const Icon(
               FontAwesomeIcons.arrowLeft,
               color: UIColors.normalIcon,

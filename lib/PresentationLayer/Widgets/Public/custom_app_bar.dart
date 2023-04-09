@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 
-PreferredSize customAppBar({Widget? leading, List<Widget> actions = const []}) {
+PreferredSize customAppBar(
+    {Widget? leading,
+    bool showingAppIcon = true,
+    List<Widget> actions = const []}) {
   return PreferredSize(
     preferredSize: Size(Get.width, 80),
     child: AppBar(
       elevation: 0.0,
       backgroundColor: UIColors.mainBackground,
-      flexibleSpace: Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Image.asset(
-            'assets/images/logo.png',
-          ),
-        ),
-      ),
+      flexibleSpace: showingAppIcon
+          ? Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Image.asset(
+                  'assets/images/logo.png',
+                ),
+              ),
+            )
+          : Container(),
       leading: Builder(
         builder: (BuildContext context) {
           return IconButton(
