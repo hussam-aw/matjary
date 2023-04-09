@@ -8,6 +8,7 @@ class UIColors {
   static const darkText = Color(0xff7D7D7D);
   static const normalText = Color(0xffA4A4A4);
   static const lightNormalText = Color(0xffF6F6F6);
+  static const menuTitle = Color(0xff3D3E65);
   // Icon Colors
   static const normalIcon = Color(0xffC5C5C5);
   // Border Colors
