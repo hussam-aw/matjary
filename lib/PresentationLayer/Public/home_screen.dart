@@ -5,6 +5,8 @@ import 'package:ionicons/ionicons.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Create/create_bottom_sheet.dart';
+import 'package:matjary/PresentationLayer/Widgets/Create/create_menu_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Home/customer_account_list_tile.dart';
 import 'package:matjary/PresentationLayer/Widgets/Home/invoice_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Home/order_icon_button.dart';
@@ -156,7 +158,16 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: const CustomBottomNavigationBar(),
-        floatingActionButton: const CustomFloatingActionButton(),
+        floatingActionButton: CustomIconButton(
+          icon: const Icon(
+            size: 45,
+            FontAwesomeIcons.plus,
+            color: UIColors.primary,
+          ),
+          onPressed: () {
+            Get.bottomSheet(const CreateBottomSheet());
+          },
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
