@@ -40,14 +40,14 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         TextFormField(
                           keyboardType: TextInputType.name,
-                          decoration: authInputStyle.copyWith(
+                          decoration: textFieldStyle.copyWith(
                             hintText: 'اسم المستخدم',
                           ),
                         ),
                         spacerHeight(),
                         TextFormField(
                           keyboardType: TextInputType.name,
-                          decoration: authInputStyle.copyWith(
+                          decoration: textFieldStyle.copyWith(
                             hintText: 'كلمة المرور',
                           ),
                         ),

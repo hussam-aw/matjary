@@ -41,7 +41,7 @@ class RegisterScreen extends StatelessWidget {
                         Expanded(
                           child: TextFormField(
                             keyboardType: TextInputType.name,
-                            decoration: authInputStyle.copyWith(
+                            decoration: textFieldStyle.copyWith(
                               hintText: 'الاسم',
                             ),
                           ),
@@ -50,7 +50,7 @@ class RegisterScreen extends StatelessWidget {
                         Expanded(
                           child: TextFormField(
                             keyboardType: TextInputType.phone,
-                            decoration: authInputStyle.copyWith(
+                            decoration: textFieldStyle.copyWith(
                               hintText: 'رقم الهاتف',
                             ),
                           ),
@@ -59,7 +59,7 @@ class RegisterScreen extends StatelessWidget {
                         Expanded(
                           child: TextFormField(
                             keyboardType: TextInputType.visiblePassword,
-                            decoration: authInputStyle.copyWith(
+                            decoration: textFieldStyle.copyWith(
                               hintText: 'كلمة المرور',
                             ),
                           ),
@@ -68,7 +68,7 @@ class RegisterScreen extends StatelessWidget {
                         Expanded(
                           child: TextFormField(
                             keyboardType: TextInputType.visiblePassword,
-                            decoration: authInputStyle.copyWith(
+                            decoration: textFieldStyle.copyWith(
                               hintText: 'تأكيد كلمة المرور',
                             ),
                           ),
