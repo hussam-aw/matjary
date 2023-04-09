@@ -4,6 +4,8 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/primary_line.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
@@ -23,16 +25,7 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 90),
             child: Column(
               children: [
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                    width: 163,
-                    height: 150,
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                    ),
-                  ),
-                ),
+                const AppIconHeader(),
                 Expanded(
                   flex: 3,
                   child: Form(
@@ -52,32 +45,19 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         spacerHeight(),
-                        ElevatedButton(
+                        AcceptButton(
                           onPressed: () {
                             Get.toNamed(AppRoutes.homeScreen);
                           },
-                          style: acceptButtonStyle,
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'متابعة',
-                              style: UITextStyle.boldMeduim,
-                            ),
-                          ),
+                          text: 'متابعة',
                         ),
                         spacerHeight(),
-                        ElevatedButton(
+                        AcceptButton(
                           onPressed: () {
                             Get.toNamed(AppRoutes.registerscreen);
                           },
                           style: acceptButtonWithBorderStyle,
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'انشاء حساب',
-                              style: UITextStyle.boldMeduim,
-                            ),
-                          ),
+                          text: 'انشاء حساب',
                         ),
                       ],
                     ),
