@@ -47,6 +47,15 @@ final textFieldStyle = InputDecoration(
   ),
 );
 
+final normalTextFieldStyle = InputDecoration(
+  hintStyle: UITextStyle.normalBody.copyWith(color: UIColors.normalText),
+  enabledBorder: const UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: UIColors.textFieldBackground,
+    ),
+  ),
+);
+
 // Border Radius
 const raduis15 = BorderRadius.all(Radius.circular(15));
 const radius19 = BorderRadius.all(Radius.circular(19));
