@@ -42,7 +42,9 @@ final textFieldStyle = InputDecoration(
     ),
     borderRadius: BorderRadius.circular(15),
   ),
-  hintStyle: UITextStyle.normalBody,
+  hintStyle: UITextStyle.normalBody.copyWith(
+    color: UIColors.normalText,
+  ),
 );
 
 // Border Radius
