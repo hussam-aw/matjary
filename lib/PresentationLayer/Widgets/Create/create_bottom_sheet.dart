@@ -53,12 +53,16 @@ class CreateBottomSheet extends StatelessWidget {
                     title: 'دفعة نقدية',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createStatementScreen);
+                    },
                     icon: 'assets/icons/D_calc_icon.png',
                     title: 'قيد محاسبي',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditCategoryScreen);
+                    },
                     icon: 'assets/icons/D_ORDERS_icon.png',
                     title: 'كشف حساب',
                   ),
