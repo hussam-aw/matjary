@@ -12,7 +12,7 @@ class SplashController extends GetxController {
           .then((value) => Get.offAndToNamed(AppRoutes.homeScreen));
     } else {
       Future.delayed(const Duration(seconds: 3))
-          .then((value) => Get.offAndToNamed(AppRoutes.loginscreen));
+          .then((value) => Get.offAndToNamed(AppRoutes.loginScreen));
     }
   }
 

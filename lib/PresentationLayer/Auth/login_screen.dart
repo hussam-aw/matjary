@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                         spacerHeight(),
                         AcceptButton(
                           onPressed: () {
-                            Get.toNamed(AppRoutes.registerscreen);
+                            Get.toNamed(AppRoutes.registerScreen);
                           },
                           style: acceptButtonWithBorderStyle,
                           text: 'انشاء حساب',

@@ -64,7 +64,7 @@ class RegisterScreen extends StatelessWidget {
                           spacerHeight(),
                           AcceptButton(
                             onPressed: () {
-                              Get.toNamed(AppRoutes.homeScreen);
+                              Get.toNamed(AppRoutes.pinCodeScreen);
                             },
                             text: 'انشاء حساب',
                           ),
