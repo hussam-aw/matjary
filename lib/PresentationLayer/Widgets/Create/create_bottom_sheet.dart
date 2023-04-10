@@ -48,7 +48,9 @@ class CreateBottomSheet extends StatelessWidget {
                     title: 'فاتورة بيع',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.chooseAccountScreen);
+                    },
                     icon: 'assets/icons/DExpense.png',
                     title: 'دفعة نقدية',
                   ),
