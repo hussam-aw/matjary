@@ -11,6 +11,7 @@ class UIColors {
   static const menuTitle = Color(0xff3D3E65);
   // Icon Colors
   static const normalIcon = Color(0xffC5C5C5);
+  static const mainIcon = Color(0xff1C1D40);
   // Border Colors
   static const circleAvatarBorder = Color(0xff707070);
   // Background Colors
