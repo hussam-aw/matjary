@@ -16,6 +16,7 @@ class CustomDropdownFormField extends StatelessWidget {
     return DropdownButtonFormField(
       value: items[0],
       isDense: true,
+      isExpanded: true,
       decoration: textFieldStyle,
       style: UITextStyle.normalBody,
       focusColor: UIColors.normalText,
