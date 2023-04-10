@@ -63,24 +63,30 @@ class CreateBottomSheet extends StatelessWidget {
                     title: 'كشف حساب',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditBankScreen);
+                    },
                     icon: 'assets/icons/D_bank_icon.png',
                     title: 'صندوق نقدي',
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.chooseAccountScreen);
+                      Get.toNamed(AppRoutes.createEditClientScreen);
                     },
                     icon: 'assets/icons/D_user_icon.png',
                     title: 'جهة عمل',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditProductScreen);
+                    },
                     icon: 'assets/icons/D_PROD_icon_hov.png',
                     title: 'بضاعة',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditWareScreen);
+                    },
                     icon: 'assets/icons/D_ware_icon.png',
                     title: 'مستودع',
                   ),
