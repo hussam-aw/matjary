@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
 class SectionTitle extends StatelessWidget {
@@ -9,10 +10,12 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Text(
         title,
-        style: UITextStyle.normalBody,
+        style: UITextStyle.normalBody.copyWith(
+          color: UIColors.normalText,
+        ),
       ),
     );
   }
