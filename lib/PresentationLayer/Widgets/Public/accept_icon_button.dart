@@ -10,12 +10,14 @@ class AccetpIconButton extends StatelessWidget {
     required this.text,
     required this.icon,
     this.backgroundColor = UIColors.buttonBackground,
+    this.center = false,
     required this.onPressed,
   });
 
   final Text text;
   final Icon icon;
   final Color backgroundColor;
+  final bool center;
   final Function() onPressed;
 
   @override
@@ -28,10 +30,11 @@ class AccetpIconButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment:
+              center ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
             icon,
-            spacerWidth(width: 30),
+            spacerWidth(width: 20),
             text,
           ],
         ),
