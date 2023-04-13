@@ -17,7 +17,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   size: 28,
                   FontAwesomeIcons.houseChimney,
                   color: UIColors.white,
@@ -27,7 +27,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
             Expanded(
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   size: 28,
                   FontAwesomeIcons.fileInvoice,
                   color: UIColors.white,
@@ -38,7 +38,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             const Expanded(child: Text('')),
             Expanded(
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   size: 28,
                   Ionicons.person,
                   color: UIColors.white,
@@ -48,7 +48,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
             Expanded(
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   size: 28,
                   Ionicons.analytics,
                   color: UIColors.white,

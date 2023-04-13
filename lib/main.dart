@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/Constants/get_pages.dart';
-import 'package:matjary/PresentationLayer/Auth/login_screen.dart';
-import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
-import 'package:matjary/PresentationLayer/Public/home_screen.dart';
+
+import 'DataAccesslayer/Models/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +10,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static User? appUser;
 
   @override
   Widget build(BuildContext context) {

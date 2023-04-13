@@ -3,15 +3,16 @@ import 'package:get/get.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/primary_line.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+import '../../BussinessLayer/Controllers/auth_controller.dart';
 
+class LoginScreen extends StatelessWidget {
+   LoginScreen({super.key});
+  final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -32,6 +33,7 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: authController.loginEmailController,
                           keyboardType: TextInputType.name,
                           decoration: textFieldStyle.copyWith(
                             hintText: 'اسم المستخدم',
@@ -39,6 +41,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         spacerHeight(),
                         TextFormField(
+                          controller: authController.loginPasswordController,
                           keyboardType: TextInputType.name,
                           decoration: textFieldStyle.copyWith(
                             hintText: 'كلمة المرور',
@@ -46,8 +49,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                         spacerHeight(),
                         AcceptButton(
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.homeScreen);
+                          onPressed: () async {
+                            await authController.login();
                           },
                           text: 'متابعة',
                         ),
@@ -57,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                             Get.toNamed(AppRoutes.registerScreen);
                           },
                           style: acceptButtonWithBorderStyle,
-                          text: 'انشاء حساب',
+                          text: 'إنشاء حساب',
                         ),
                       ],
                     ),
