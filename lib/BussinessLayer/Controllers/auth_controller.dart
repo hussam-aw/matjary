@@ -14,9 +14,8 @@ class AuthController extends GetxController {
   BoxClient client = BoxClient();
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
-
-
   var logging = false.obs;
+
   Future<void> login() async {
     logging.value = true;
     if (loginEmailController.value.text.isNotEmpty &&
