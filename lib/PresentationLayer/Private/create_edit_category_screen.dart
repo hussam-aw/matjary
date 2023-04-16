@@ -5,6 +5,7 @@ import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -21,8 +22,6 @@ class CreateEditCategoryScreen extends StatelessWidget {
         appBar: customAppBar(showingAppIcon: false),
         drawer: const CustomDrawer(),
         body: Container(
-          width: Get.width,
-          height: Get.height,
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: Column(
             children: [
@@ -37,11 +36,9 @@ class CreateEditCategoryScreen extends StatelessWidget {
                       children: [
                         const SectionTitle(title: 'المعلومات الأساسية'),
                         spacerHeight(),
-                        TextFormField(
-                          keyboardType: TextInputType.name,
-                          decoration: textFieldStyle.copyWith(
-                            hintText: 'اسم التصنيف',
-                          ),
+                        CustomTextFormField(
+                          controller: TextEditingController(),
+                          hintText: 'اسم التصنيف',
                         ),
                       ],
                     ),

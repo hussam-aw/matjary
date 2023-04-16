@@ -14,7 +14,7 @@ class CustomPinCodeFields extends StatelessWidget {
     return PinCodeFields(
       length: length,
       fieldBorderStyle: FieldBorderStyle.square,
-      responsive: false,
+      responsive: true,
       fieldHeight: 46,
       fieldWidth: 46,
       borderRadius: raduis15,

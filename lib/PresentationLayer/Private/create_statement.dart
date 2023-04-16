@@ -9,6 +9,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -25,18 +26,15 @@ class CreateStatementScreen extends StatelessWidget {
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
         drawer: const CustomDrawer(),
-        body: Container(
-          width: Get.width,
-          height: Get.height,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-          child: Column(
-            children: [
-              const PageTitle(title: 'إنشاء | تعديل قيد محاسبي'),
-              Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+            child: Column(
+              children: [
+                const PageTitle(title: 'إنشاء | تعديل قيد محاسبي'),
+                Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
                     child: Form(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +58,7 @@ class CreateStatementScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          spacerHeight(height: 22),
+                          spacerHeight(height: 20),
                           const SectionTitle(title: 'إلى الحساب'),
                           spacerHeight(),
                           Row(
@@ -80,14 +78,14 @@ class CreateStatementScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          spacerHeight(height: 22),
+                          spacerHeight(height: 20),
                           const SectionTitle(title: 'مبلغ القيد'),
                           spacerHeight(),
-                          TextFormField(
+                          CustomTextFormField(
+                            controller: TextEditingController(),
                             keyboardType: TextInputType.number,
-                            decoration: textFieldStyle,
                           ),
-                          spacerHeight(height: 22),
+                          spacerHeight(height: 20),
                           const SectionTitle(title: 'تاريخ القيد'),
                           spacerHeight(),
                           TextFormField(
@@ -100,14 +98,14 @@ class CreateStatementScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          spacerHeight(height: 22),
+                          spacerHeight(height: 20),
                           const SectionTitle(title: 'البيان'),
                           spacerHeight(),
-                          TextFormField(
-                            keyboardType: TextInputType.text,
+                          CustomTextFormField(
+                            controller: TextEditingController(),
                             maxLines: 3,
-                            decoration: textFieldStyle.copyWith(
-                                hintText: 'تسجيل دفعة نقدية من الزبون علي'),
+                            keyboardType: TextInputType.text,
+                            hintText: 'تسجيل دفعة نقدية من الزبون علي',
                           ),
                           spacerHeight(),
                           RichText(
@@ -134,13 +132,13 @@ class CreateStatementScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              spacerHeight(height: 30),
-              AcceptButton(
-                text: 'إنشاء',
-                onPressed: () {},
-              )
-            ],
+                spacerHeight(height: 30),
+                AcceptButton(
+                  text: 'إنشاء',
+                  onPressed: () {},
+                )
+              ],
+            ),
           ),
         ),
       ),

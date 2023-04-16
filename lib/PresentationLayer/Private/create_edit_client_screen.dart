@@ -6,6 +6,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -23,8 +24,6 @@ class CreateEditClientScreen extends StatelessWidget {
         drawer: const CustomDrawer(),
         body: SafeArea(
           child: Container(
-            width: Get.width,
-            height: Get.height,
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
@@ -40,41 +39,35 @@ class CreateEditClientScreen extends StatelessWidget {
                           children: [
                             const SectionTitle(title: 'المعلومات الأساسية'),
                             spacerHeight(),
-                            TextFormField(
-                              keyboardType: TextInputType.name,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'اسم العميل',
-                              ),
+                            CustomTextFormField(
+                              controller: TextEditingController(),
+                              hintText: 'اسم العميل',
                             ),
                             spacerHeight(),
-                            TextFormField(
+                            CustomTextFormField(
+                              controller: TextEditingController(),
                               keyboardType: TextInputType.number,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'المبلغ الإبتدائي ( الجرد الأولي )',
-                              ),
+                              hintText: 'المبلغ الإبتدائي ( الجرد الأولي )',
                             ),
                             spacerHeight(),
-                            TextFormField(
+                            CustomTextFormField(
+                              controller: TextEditingController(),
                               keyboardType: TextInputType.emailAddress,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'البريد الالكتروني',
-                              ),
+                              hintText: 'البريد الالكتروني',
                             ),
                             spacerHeight(),
-                            TextFormField(
+                            CustomTextFormField(
+                              controller: TextEditingController(),
                               keyboardType: TextInputType.number,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'الرقم',
-                              ),
+                              hintText: 'الرقم',
                             ),
                             spacerHeight(),
-                            TextFormField(
+                            CustomTextFormField(
+                              controller: TextEditingController(),
                               keyboardType: TextInputType.streetAddress,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'العنوان',
-                              ),
+                              hintText: 'العنوان',
                             ),
-                            spacerHeight(height: 22),
+                            spacerHeight(height: 20),
                             const SectionTitle(title: 'نوع الحساب'),
                             spacerHeight(),
                             const CustomDropdownFormField(

@@ -3,15 +3,17 @@ import 'package:get/get.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
+import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/primary_line.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 import '../../BussinessLayer/Controllers/auth_controller.dart';
 
 class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
+  LoginScreen({super.key});
   final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
@@ -20,9 +22,7 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
-          child: Container(
-            width: Get.width,
-            height: Get.height,
+          child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 90),
             child: Column(
               children: [
@@ -32,20 +32,16 @@ class LoginScreen extends StatelessWidget {
                   child: Form(
                     child: Column(
                       children: [
-                        TextFormField(
+                        CustomTextFormField(
                           controller: authController.loginEmailController,
-                          keyboardType: TextInputType.name,
-                          decoration: textFieldStyle.copyWith(
-                            hintText: 'اسم المستخدم',
-                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          hintText: 'اسم المستخدم',
                         ),
                         spacerHeight(),
-                        TextFormField(
+                        CustomTextFormField(
                           controller: authController.loginPasswordController,
-                          keyboardType: TextInputType.name,
-                          decoration: textFieldStyle.copyWith(
-                            hintText: 'كلمة المرور',
-                          ),
+                          keyboardType: TextInputType.visiblePassword,
+                          hintText: 'كلمة المرور',
                         ),
                         spacerHeight(),
                         AcceptButton(

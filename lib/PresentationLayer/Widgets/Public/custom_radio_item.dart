@@ -20,8 +20,8 @@ class RadioButtonItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 140,
-        height: 42,
+        width: 110,
+        height: 45,
         decoration: BoxDecoration(
           color: isSelected ? UIColors.white : UIColors.containerBackground,
           borderRadius: raduis15,

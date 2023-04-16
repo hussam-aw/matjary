@@ -8,6 +8,7 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
@@ -21,9 +22,7 @@ class RegisterScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
-          child: Container(
-            width: Get.width,
-            height: Get.height,
+          child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
             child: Column(
               children: [
@@ -34,32 +33,27 @@ class RegisterScreen extends StatelessWidget {
                     child: Form(
                       child: Column(
                         children: [
-                          TextFormField(
-                            keyboardType: TextInputType.name,
-                            decoration: textFieldStyle.copyWith(
-                              hintText: 'الاسم',
-                            ),
+                          CustomTextFormField(
+                            controller: TextEditingController(),
+                            hintText: 'الاسم',
                           ),
                           spacerHeight(),
-                          TextFormField(
+                          CustomTextFormField(
+                            controller: TextEditingController(),
                             keyboardType: TextInputType.phone,
-                            decoration: textFieldStyle.copyWith(
-                              hintText: 'رقم الهاتف',
-                            ),
+                            hintText: 'رقم الهاتف',
                           ),
                           spacerHeight(),
-                          TextFormField(
+                          CustomTextFormField(
+                            controller: TextEditingController(),
                             keyboardType: TextInputType.visiblePassword,
-                            decoration: textFieldStyle.copyWith(
-                              hintText: 'كلمة المرور',
-                            ),
+                            hintText: 'كلمة المرور',
                           ),
                           spacerHeight(),
-                          TextFormField(
+                          CustomTextFormField(
+                            controller: TextEditingController(),
                             keyboardType: TextInputType.visiblePassword,
-                            decoration: textFieldStyle.copyWith(
-                              hintText: 'تأكيد كلمة المرور',
-                            ),
+                            hintText: 'تأكيد كلمة المرور',
                           ),
                           spacerHeight(),
                           AcceptButton(
@@ -82,6 +76,7 @@ class RegisterScreen extends StatelessWidget {
                           AccetpIconButton(
                             onPressed: () {},
                             backgroundColor: UIColors.white,
+                            center: true,
                             icon: const Icon(
                               FontAwesomeIcons.google,
                               color: UIColors.primary,

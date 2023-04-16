@@ -22,14 +22,13 @@ class ChooseAccountScreen extends StatelessWidget {
         drawer: const CustomDrawer(),
         body: SafeArea(
           child: Container(
-            width: Get.width,
-            height: Get.height,
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
                 const PageTitle(title: 'إختيار حساب'),
                 spacerHeight(),
                 TextFormField(
+                  controller: TextEditingController(),
                   textAlign: TextAlign.center,
                   decoration: normalTextFieldStyle.copyWith(
                     hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
@@ -39,7 +38,7 @@ class ChooseAccountScreen extends StatelessWidget {
                 Expanded(
                   child: ListView.separated(
                     itemBuilder: (context, index) {
-                      return AccountBox(accountName: 'الزبون علي');
+                      return const AccountBox(accountName: 'الزبون علي');
                     },
                     separatorBuilder: (context, index) {
                       return spacerHeight();

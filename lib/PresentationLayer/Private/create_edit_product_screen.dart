@@ -12,6 +12,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_fi
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -30,8 +31,6 @@ class CreateEditProductScreen extends StatelessWidget {
         drawer: const CustomDrawer(),
         body: SafeArea(
           child: Container(
-            width: Get.width,
-            height: Get.height,
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
@@ -47,18 +46,15 @@ class CreateEditProductScreen extends StatelessWidget {
                           children: [
                             const SectionTitle(title: 'المعلومات الأساسية'),
                             spacerHeight(),
-                            TextFormField(
-                              keyboardType: TextInputType.name,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'اسم المنتج',
-                              ),
+                            CustomTextFormField(
+                              controller: TextEditingController(),
+                              hintText: 'اسم المنتج',
                             ),
                             spacerHeight(),
-                            TextFormField(
+                            CustomTextFormField(
+                              controller: TextEditingController(),
                               keyboardType: TextInputType.number,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'رقم الموديل',
-                              ),
+                              hintText: 'رقم الموديل',
                             ),
                             spacerHeight(),
                             Row(
@@ -79,13 +75,12 @@ class CreateEditProductScreen extends StatelessWidget {
                               ],
                             ),
                             spacerHeight(),
-                            TextFormField(
+                            CustomTextFormField(
+                              controller: TextEditingController(),
                               keyboardType: TextInputType.number,
-                              decoration: textFieldStyle.copyWith(
-                                hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
-                              ),
+                              hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
                             ),
-                            spacerHeight(height: 22),
+                            spacerHeight(height: 20),
                             const SectionTitle(title: 'يتأثر بتغيرات الصرف'),
                             spacerHeight(),
                             CustomRadioButton(
@@ -97,7 +92,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                 RadioButtonItem(text: 'لا يتأثر', onTap: () {})
                               ],
                             ),
-                            spacerHeight(height: 22),
+                            spacerHeight(height: 20),
                             const SectionTitle(title: 'أسعار البيع'),
                             spacerHeight(),
                             Row(
@@ -105,7 +100,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                 Expanded(
                                   child: TextFormField(
                                     keyboardType: TextInputType.number,
-                                    decoration: textFieldStyle.copyWith(
+                                    decoration: subTextFieldStyle.copyWith(
                                       hintText: 'الجملة',
                                     ),
                                   ),
@@ -114,7 +109,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                 Expanded(
                                   child: TextFormField(
                                     keyboardType: TextInputType.number,
-                                    decoration: textFieldStyle.copyWith(
+                                    decoration: subTextFieldStyle.copyWith(
                                       hintText: 'الموزع',
                                     ),
                                   ),
@@ -123,7 +118,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                 Expanded(
                                   child: TextFormField(
                                     keyboardType: TextInputType.number,
-                                    decoration: textFieldStyle.copyWith(
+                                    decoration: subTextFieldStyle.copyWith(
                                       hintText: 'المفرق',
                                     ),
                                   ),

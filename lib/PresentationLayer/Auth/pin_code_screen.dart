@@ -12,59 +12,60 @@ class PinCodeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
           child: Container(
-            width: Get.width,
-            height: Get.height,
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 80),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
             child: Column(
               children: [
                 const AppIconHeader(),
                 Expanded(
                   flex: 3,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 210,
-                        child: Text(
-                          'لقد قمنا بإرسال رمز مكون من 5 أرقام قم بإدخاله لتأكيد الحساب',
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: UITextStyle.normalBody.copyWith(height: 2),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: width * .6,
+                          child: Text(
+                            'لقد قمنا بإرسال رمز مكون من 5 أرقام قم بإدخاله لتأكيد الحساب',
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: UITextStyle.normalBody.copyWith(height: 2),
+                          ),
                         ),
-                      ),
-                      spacerHeight(),
-                      const CustomPinCodeFields(length: 5),
-                      spacerHeight(),
-                      AcceptButton(
-                        text: 'تأكيد',
-                        onPressed: () {},
-                      ),
-                      spacerHeight(),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.repeat,
-                              size: 22,
-                              color: UIColors.white,
+                        spacerHeight(),
+                        const CustomPinCodeFields(length: 5),
+                        spacerHeight(),
+                        AcceptButton(
+                          text: 'تأكيد',
+                          onPressed: () {},
+                        ),
+                        spacerHeight(),
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.repeat,
+                                size: 22,
+                                color: UIColors.white,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'إعادة إرسال الرمز',
-                            style: UITextStyle.normalBody.copyWith(
-                              color: UIColors.normalText,
+                            Text(
+                              'إعادة إرسال الرمز',
+                              style: UITextStyle.normalBody.copyWith(
+                                color: UIColors.normalText,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -29,29 +30,30 @@ class HomeScreen extends StatelessWidget {
         appBar: customAppBar(),
         drawer: const CustomDrawer(),
         body: SafeArea(
-          child: SizedBox(
-            width: Get.width,
-            height: Get.height,
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 10),
-                            decoration: const BoxDecoration(
-                              color: UIColors.containerBackground,
-                              borderRadius: radius19,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
+          child: Column(
+            children: [
+              Expanded(
+                flex: 7,
+                child: Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: width,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          decoration: const BoxDecoration(
+                            color: UIColors.containerBackground,
+                            borderRadius: radius19,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 5,
+                                child: Row(
                                   children: [
                                     const Icon(
                                       Ionicons.cash,
@@ -78,7 +80,11 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                Row(
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     OrderIconButton(
                                       onTap: () {},
@@ -93,68 +99,70 @@ class HomeScreen extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        spacerHeight(height: 20),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              InovoiceContainer(
-                                invoiceType: 'فواتير المشتريات',
-                                invoiceAmount: '20',
                               ),
-                              spacerWidth(width: 40),
-                              InovoiceContainer(
-                                invoiceType: 'فواتير المبيعات',
-                                invoiceAmount: '20',
-                                backgroundColor: UIColors.primary,
-                              )
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      spacerHeight(height: 20),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            InovoiceContainer(
+                              invoiceType: 'فواتير المشتريات',
+                              invoiceAmount: '20',
+                            ),
+                            spacerWidth(width: 40),
+                            InovoiceContainer(
+                              invoiceType: 'فواتير المبيعات',
+                              invoiceAmount: '20',
+                              backgroundColor: UIColors.primary,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Expanded(
-                  flex: 8,
-                  child: Container(
-                    width: Get.width,
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 35, right: 35),
-                    decoration: const BoxDecoration(
-                      color: UIColors.containerBackground,
-                      borderRadius: raduis32top,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'حسابات العملاء',
-                          style: UITextStyle.boldBody,
+              ),
+              Expanded(
+                flex: 8,
+                child: Container(
+                  width: Get.width,
+                  padding: const EdgeInsets.only(top: 30, left: 35, right: 35),
+                  decoration: const BoxDecoration(
+                    color: UIColors.containerBackground,
+                    borderRadius: raduis32top,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'حسابات العملاء',
+                        style: UITextStyle.boldBody,
+                      ),
+                      spacerHeight(height: 10),
+                      Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return CustomerAccountListTile(
+                              customerName: 'محمد سمير',
+                              customerImage: 'assets/images/user.png',
+                              customerStatus: 'زبون',
+                              customerBalance: '1.500.000',
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return spacerHeight(height: 25);
+                          },
+                          itemCount: 10,
                         ),
-                        spacerHeight(height: 10),
-                        Expanded(
-                          child: ListView.builder(
-                            itemBuilder: (context, index) {
-                              return CustomerAccountListTile(
-                                customerName: 'محمد سمير',
-                                customerImage: 'assets/images/user.png',
-                                customerStatus: 'زبون',
-                                customerBalance: '1.500.000',
-                              );
-                            },
-                            itemCount: 10,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: const CustomBottomNavigationBar(),

@@ -19,12 +19,9 @@ class AcceptButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: style,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Text(
-          text,
-          style: UITextStyle.boldMeduim,
-        ),
+      child: Text(
+        text,
+        style: UITextStyle.boldMeduim,
       ),
     );
   }

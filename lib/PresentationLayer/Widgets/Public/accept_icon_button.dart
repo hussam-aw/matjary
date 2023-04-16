@@ -28,15 +28,19 @@ class AccetpIconButton extends StatelessWidget {
         backgroundColor: MaterialStatePropertyAll<Color>(backgroundColor),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-        child: Row(
-          mainAxisAlignment:
-              center ? MainAxisAlignment.center : MainAxisAlignment.start,
-          children: [
-            icon,
-            spacerWidth(width: 20),
-            text,
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Center(
+          child: Row(
+            mainAxisAlignment:
+                center ? MainAxisAlignment.center : MainAxisAlignment.start,
+            children: [
+              Expanded(child: icon),
+              Expanded(
+                flex: 14,
+                child: Center(child: text),
+              ),
+            ],
+          ),
         ),
       ),
     );
