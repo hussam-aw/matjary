@@ -47,6 +47,27 @@ final textFieldStyle = InputDecoration(
   ),
 );
 
+final subTextFieldStyle = InputDecoration(
+  filled: true,
+  fillColor: UIColors.textFieldBackground,
+  contentPadding: const EdgeInsets.symmetric(
+    horizontal: 25,
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(15),
+  ),
+  errorBorder: OutlineInputBorder(
+    borderSide: const BorderSide(
+      width: 1,
+      color: UIColors.red,
+    ),
+    borderRadius: BorderRadius.circular(15),
+  ),
+  hintStyle: UITextStyle.normalBody.copyWith(
+    color: UIColors.normalText,
+  ),
+);
+
 final normalTextFieldStyle = InputDecoration(
   hintStyle: UITextStyle.normalBody.copyWith(color: UIColors.normalText),
   enabledBorder: const UnderlineInputBorder(
