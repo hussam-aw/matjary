@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -10,7 +11,9 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class ChooseAccountScreen extends StatelessWidget {
-  const ChooseAccountScreen({super.key});
+  ChooseAccountScreen({super.key});
+
+  final AccountController accountController = Get.put(AccountController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +39,22 @@ class ChooseAccountScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 20),
                 Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return const AccountBox(accountName: 'الزبون علي');
-                    },
-                    separatorBuilder: (context, index) {
-                      return spacerHeight();
-                    },
-                    itemCount: 20,
+                  child: Obx(
+                    () => accountController.isLoadingAccounts.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ListView.separated(
+                            itemBuilder: (context, index) {
+                              return AccountBox(
+                                  accountName:
+                                      accountController.accounts[index].name);
+                            },
+                            separatorBuilder: (context, index) {
+                              return spacerHeight();
+                            },
+                            itemCount: accountController.accounts.length,
+                          ),
                   ),
                 ),
               ],
