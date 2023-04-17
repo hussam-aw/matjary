@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:matjary/Constants/ui_colors.dart';
 
 class UITextStyle {
   static const boldLarge = TextStyle(

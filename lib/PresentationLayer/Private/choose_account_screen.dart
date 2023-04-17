@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_button.dart';
 
 class ChooseAccountScreen extends StatelessWidget {
@@ -18,12 +14,12 @@ class ChooseAccountScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: CustomDrawer(),
+        drawer: const CustomDrawer(),
         body: SafeArea(
           child: Container(
-            padding: EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             child: Column(
-              children: [
+              children: const [
                 CustomRadioButton(
                   items: ['دائن', 'مدين'],
                 ),
