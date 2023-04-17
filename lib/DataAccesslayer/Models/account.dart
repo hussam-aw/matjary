@@ -4,7 +4,7 @@ class Account {
   final String? email;
   final String? address;
   final String? mobileNumber;
-  final double balance;
+  final int balance;
   final int type;
   final int style;
   final int? userId;
@@ -47,7 +47,7 @@ class Account {
       email: map['email'] ?? '',
       address: map['address'] ?? '',
       mobileNumber: map['phone'] ?? '',
-      balance: map['balance'] ?? 0.0,
+      balance: map['balance'] ?? 0,
       type: map['type'] ?? 0,
       style: map['style'] ?? 0,
     );
