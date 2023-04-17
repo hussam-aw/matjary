@@ -14,4 +14,6 @@ class AppRoutes {
   static const createEditCategoryScreen = '/home/createEditCategoryScreen';
   static const createStatementScreen = '/home/createEditStatementScreen';
   static const chooseAccountScreen = '/home/chooseAccountScreen';
+  static const chooseBankAccountScreen = '/home/chooseBankAccountScreen';
+  static const chooseClientAccountScreen = '/home/chooseClientAccountScreen';
 }
