@@ -9,7 +9,6 @@ class AccountsRepo {
     var response = await client.getAccounts();
     if (response != "") {
       final parsed = json.decode(response).cast<Map<String, dynamic>>();
-
       return parsed.map<Account>((json) => Account.fromMap(json)).toList();
     }
     return [];

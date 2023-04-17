@@ -25,13 +25,13 @@ class AuthController extends GetxController {
       if (user != null) {
         MyApp.appUser = user;
         await client.setAuthedUser(user);
-        SnackBars.showSuccess("${'أهلاً بك'.tr}${user.name}");
+        SnackBars.showSuccess("${'أهلاً بك'}${user.name}");
         Get.toNamed(AppRoutes.homeScreen);
       } else {
-        SnackBars.showWarning('بياناتك لا تتطابق مع سجلاتنا'.tr);
+        SnackBars.showWarning('بياناتك لا تتطابق مع سجلاتنا');
       }
     } else {
-      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة للمتابعة'.tr);
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة للمتابعة');
     }
     logging.value = false;
   }

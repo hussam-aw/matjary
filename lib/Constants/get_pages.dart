@@ -25,7 +25,7 @@ List<GetPage<dynamic>> getPages = [
       page: () => const CreateEditAccountScreen()),
   GetPage(
       name: AppRoutes.createEditWareScreen,
-      page: () => const CreateEditWareScreen()),
+      page: () =>  CreateEditWareScreen()),
   GetPage(
       name: AppRoutes.createEditBankScreen,
       page: () => const CreateEditBankScreen()),
