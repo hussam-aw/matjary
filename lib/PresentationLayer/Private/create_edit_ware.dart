@@ -10,9 +10,11 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
-class CreateEditWareScreen extends StatelessWidget {
-  const CreateEditWareScreen({super.key});
+import '../../BussinessLayer/Controllers/ware_controller.dart';
 
+class CreateEditWareScreen extends StatelessWidget {
+   CreateEditWareScreen({super.key});
+final WareController wareController = Get.put(WareController());
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -58,7 +60,9 @@ class CreateEditWareScreen extends StatelessWidget {
                 ),
                 AcceptButton(
                   text: 'إنشاء',
-                  onPressed: () {},
+                  onPressed: () {
+                    wareController.addWare();
+                  },
                 ),
               ],
             ),
