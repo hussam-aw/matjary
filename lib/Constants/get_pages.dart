@@ -3,6 +3,8 @@ import 'package:matjary/PresentationLayer/Auth/login_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/pin_code_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
+import 'package:matjary/PresentationLayer/Private/choose_bank_account_screen.dart';
+import 'package:matjary/PresentationLayer/Private/choose_client_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_bank_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_category_screen.dart';
@@ -22,7 +24,7 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: AppRoutes.homeScreen, page: () => const HomeScreen()),
   GetPage(
       name: AppRoutes.createEditAccountScreen,
-      page: () => const CreateEditAccountScreen()),
+      page: () => CreateEditAccountScreen()),
   GetPage(
       name: AppRoutes.createEditWareScreen,
       page: () => const CreateEditWareScreen()),
@@ -43,4 +45,10 @@ List<GetPage<dynamic>> getPages = [
       page: () => const CreateStatementScreen()),
   GetPage(
       name: AppRoutes.chooseAccountScreen, page: () => ChooseAccountScreen()),
+  GetPage(
+      name: AppRoutes.chooseBankAccountScreen,
+      page: () => ChooseBankAccountScreen()),
+  GetPage(
+      name: AppRoutes.chooseClientAccountScreen,
+      page: () => ChooseClientAccountScreen()),
 ];
