@@ -58,6 +58,7 @@ class AccountBox extends StatelessWidget {
                         actions: [
                           AcceptButton(
                             text: 'حذف',
+                            backgroundColor: UIColors.red,
                             onPressed: () {
                               accountController.deleteAccount(account.id);
                               Get.back();
