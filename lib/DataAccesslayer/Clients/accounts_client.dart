@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:matjary/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
 
@@ -35,7 +35,7 @@ class AccountsClient {
   }
 
   Future<dynamic> createAccount(
-      name, balance, type, style, email, address, mobileNumber) async {
+      id, name, balance, type, style, email, address, mobileNumber) async {
     var response = await http.post(Uri.parse('$baseUrl$accountLink'),
         body: jsonEncode(<String, dynamic>{
           "name": name,
@@ -45,12 +45,14 @@ class AccountsClient {
           "email": email,
           "address": address,
           "phone": mobileNumber,
+          "user_id": id,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
+
     print(response.body);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return response.body;
     } else {
       return null;

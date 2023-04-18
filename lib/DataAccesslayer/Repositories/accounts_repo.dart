@@ -42,9 +42,9 @@ class AccountsRepo {
   }
 
   Future<Account?> createAccount(
-      name, balance, type, style, email, address, mobileNumber) async {
+      id, name, balance, type, style, email, address, mobileNumber) async {
     var createdAccount = await client.createAccount(
-        name, balance, type, style, email, address, mobileNumber);
+        id, name, balance, type, style, email, address, mobileNumber);
     print(createdAccount);
     if (createdAccount != null) {
       return Account.fromMap(jsonDecode(createdAccount));

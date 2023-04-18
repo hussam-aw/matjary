@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
+import 'package:matjary/main.dart';
 
 class AccountController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -86,6 +87,7 @@ class AccountController extends GetxController {
         mobileNumber.isNotEmpty &&
         address.isNotEmpty) {
       var account = await accountsRepo.createAccount(
+          MyApp.appUser!.id,
           name,
           int.parse(balance),
           convertAccountTypeToNumber(type),
@@ -94,10 +96,12 @@ class AccountController extends GetxController {
           address,
           mobileNumber);
       if (account != null) {
-        print("ali");
+        SnackBars.showSuccess('تم انشاء الحساب');
+      } else {
+        SnackBars.showError('فشل انشاء الحساب');
       }
     } else {
-      print('حقل مطلوب');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
@@ -106,7 +110,7 @@ class AccountController extends GetxController {
       nameController = TextEditingController(text: account.name);
       balanceController =
           TextEditingController(text: account.balance.toString());
-      type = convertAccountStyleToString(account.type);
+      type = convertAccountTypeToString(account.type);
       style = convertAccountStyleToString(account.style);
       emailController = TextEditingController(text: account.email);
       mobilePhoneController = TextEditingController(text: account.mobileNumber);
