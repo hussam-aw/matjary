@@ -15,7 +15,7 @@ PreferredSize customAppBar(
           ? Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: Image.asset(
                   'assets/images/logo.png',
                 ),

@@ -16,8 +16,10 @@ class CustomDropdownFormField extends StatelessWidget {
     return DropdownButtonFormField(
       value: items[0],
       isDense: true,
+      isExpanded: true,
       decoration: textFieldStyle,
       style: UITextStyle.normalBody,
+      focusColor: UIColors.normalText,
       dropdownColor: UIColors.textFieldBackground,
       icon: const Icon(
         Icons.keyboard_arrow_down_sharp,

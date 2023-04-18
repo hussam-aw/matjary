@@ -1,15 +1,11 @@
 import 'package:get_storage/get_storage.dart';
-
-import '../../DataAccesslayer/Models/user.dart';
-import '../../DataAccesslayer/Models/ware.dart';
+import '../Models/user.dart';
+import '../Models/ware.dart';
 
 class BoxClient {
-  final box = GetStorage();
-
-  get json => null;
-
+  var box = GetStorage();
   Future<bool> getAuthState() async {
-    print(box.read('authed'));
+    print( box.read('authed'));
     if (await box.read('authed') != null) {
       return true;
     }
@@ -29,13 +25,5 @@ class BoxClient {
     await box.remove('authed');
     await box.remove('userdata');
   }
-
-  Future<void> addWare(List<Ware> userWares) async {
-    await box.remove('user_wares');
-    var map = userWares.map((e) => e.toMap());
-    await box.write('user_wares', map.toList());
-  }
-  Future<void> removeAllWares() async {
-    await box.remove('user_wares');
-  }
 }
+

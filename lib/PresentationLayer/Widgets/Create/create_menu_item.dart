@@ -24,10 +24,12 @@ class CreateMenuItem extends StatelessWidget {
         children: [
           Image.asset(icon),
           spacerHeight(),
-          Text(
-            title,
-            style: UITextStyle.boldSmall.copyWith(
-              color: UIColors.menuTitle,
+          Expanded(
+            child: Text(
+              title,
+              style: UITextStyle.boldSmall.copyWith(
+                color: UIColors.menuTitle,
+              ),
             ),
           ),
         ],

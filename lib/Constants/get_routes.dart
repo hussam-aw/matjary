@@ -1,7 +1,8 @@
 class AppRoutes {
-  static const splashscreen = "/";
-  static const loginscreen = "/login";
-  static const registerscreen = "/register";
+  static const splashScreen = "/";
+  static const loginScreen = "/login";
+  static const registerScreen = "/register";
+  static const pinCodeScreen = "/pincode";
   static const homeScreen = "/home";
   static const createEditAccountScreen = '/home/createEditAccountScreen';
   static const createEditWareScreen = '/home/createEditWaveScreen';

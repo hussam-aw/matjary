@@ -12,10 +12,11 @@ class CreateBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        height: 350,
+        height: height * .5,
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         decoration: const BoxDecoration(
           color: UIColors.white,
@@ -39,7 +40,7 @@ class CreateBottomSheet extends StatelessWidget {
               child: GridView.count(
                 crossAxisCount: 4,
                 crossAxisSpacing: 5.0,
-                mainAxisSpacing: 10.0,
+                mainAxisSpacing: 30.0,
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 children: [
                   CreateMenuItem(
@@ -48,39 +49,51 @@ class CreateBottomSheet extends StatelessWidget {
                     title: 'فاتورة بيع',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.chooseAccountScreen);
+                    },
                     icon: 'assets/icons/DExpense.png',
                     title: 'دفعة نقدية',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createStatementScreen);
+                    },
                     icon: 'assets/icons/D_calc_icon.png',
                     title: 'قيد محاسبي',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditCategoryScreen);
+                    },
                     icon: 'assets/icons/D_ORDERS_icon.png',
                     title: 'كشف حساب',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditBankScreen);
+                    },
                     icon: 'assets/icons/D_bank_icon.png',
                     title: 'صندوق نقدي',
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.chooseAccountScreen);
+                      Get.toNamed(AppRoutes.createEditClientScreen);
                     },
                     icon: 'assets/icons/D_user_icon.png',
                     title: 'جهة عمل',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditProductScreen);
+                    },
                     icon: 'assets/icons/D_PROD_icon_hov.png',
                     title: 'بضاعة',
                   ),
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditWareScreen);
+                    },
                     icon: 'assets/icons/D_ware_icon.png',
                     title: 'مستودع',
                   ),

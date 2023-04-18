@@ -8,7 +8,6 @@ class PrimaryLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Get.width,
       height: 8,
       color: UIColors.primary,
     );
