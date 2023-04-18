@@ -51,4 +51,23 @@ class AccountsRepo {
     }
     return null;
   }
+
+  Future<Account?> updateAccount(id, name, balance, type, style) async {
+    var updatedAccount =
+        await client.updateAccount(id, name, balance, type, style);
+    print(updatedAccount);
+    if (updatedAccount != null) {
+      return Account.fromMap(jsonDecode(updatedAccount));
+    }
+    return null;
+  }
+
+  Future<Account?> deleteAccount(id) async {
+    var deletedAccount = await client.deleteAccount(id);
+    print(deletedAccount);
+    if (deletedAccount != null) {
+      return Account.fromMap(jsonDecode(deletedAccount));
+    }
+    return null;
+  }
 }
