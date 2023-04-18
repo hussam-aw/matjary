@@ -44,7 +44,9 @@ class CreateBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 children: [
                   CreateMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditAccountScreen);
+                    },
                     icon: 'assets/icons/D_sale_point_ic.png',
                     title: 'فاتورة بيع',
                   ),

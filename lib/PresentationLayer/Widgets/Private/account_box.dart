@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 
 class AccountBox extends StatelessWidget {
-  const AccountBox({super.key, required this.accountName});
+  AccountBox({super.key, required this.account});
 
-  final String accountName;
+  final Account account;
+  AccountController accountController = Get.find<AccountController>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +21,39 @@ class AccountBox extends StatelessWidget {
       decoration: const BoxDecoration(
         color: UIColors.containerBackground,
       ),
-      child: Text(
-        accountName,
-        style: UITextStyle.normalMeduim.copyWith(
-          color: UIColors.lightNormalText,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            account.name,
+            style: UITextStyle.normalMeduim.copyWith(
+              color: UIColors.lightNormalText,
+            ),
+          ),
+          Row(
+            children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(
+                  Icons.edit,
+                  color: UIColors.white,
+                ),
+                onPressed: () {
+                  Get.toNamed(AppRoutes.createEditAccountScreen,
+                      arguments: account);
+                },
+              ),
+              IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(
+                  Icons.delete,
+                  color: UIColors.white,
+                ),
+                onPressed: () => accountController.deleteAccount(account.id),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -43,9 +43,10 @@ class CreateStatementScreen extends StatelessWidget {
                           spacerHeight(),
                           Row(
                             children: [
-                              const Expanded(
+                              Expanded(
                                 child: CustomDropdownFormField(
                                   items: ['الصندوق'],
+                                  onChanged: (value) {},
                                 ),
                               ),
                               spacerWidth(),
@@ -63,9 +64,10 @@ class CreateStatementScreen extends StatelessWidget {
                           spacerHeight(),
                           Row(
                             children: [
-                              const Expanded(
+                              Expanded(
                                 child: CustomDropdownFormField(
                                   items: ['الزبون علي'],
+                                  onChanged: (value) {},
                                 ),
                               ),
                               spacerWidth(),

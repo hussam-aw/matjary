@@ -59,9 +59,10 @@ class CreateEditProductScreen extends StatelessWidget {
                             spacerHeight(),
                             Row(
                               children: [
-                                const Expanded(
+                                Expanded(
                                   child: CustomDropdownFormField(
                                     items: ['تابع لتصنيف'],
+                                    onChanged: (value) {},
                                   ),
                                 ),
                                 spacerWidth(),

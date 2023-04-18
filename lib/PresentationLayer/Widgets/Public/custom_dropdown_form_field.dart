@@ -7,14 +7,18 @@ class CustomDropdownFormField extends StatelessWidget {
   const CustomDropdownFormField({
     super.key,
     required this.items,
+    this.value,
+    required this.onChanged,
   });
 
   final List<String> items;
+  final String? value;
+  final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
-      value: items[0],
+      value: value ?? items[0],
       isDense: true,
       isExpanded: true,
       decoration: textFieldStyle,
@@ -35,7 +39,7 @@ class CustomDropdownFormField extends StatelessWidget {
           ),
         );
       }).toList(),
-      onChanged: (value) {},
+      onChanged: onChanged,
     );
   }
 }

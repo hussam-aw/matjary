@@ -70,7 +70,7 @@ class CreateEditClientScreen extends StatelessWidget {
                             spacerHeight(height: 20),
                             const SectionTitle(title: 'نوع الحساب'),
                             spacerHeight(),
-                            const CustomDropdownFormField(
+                            CustomDropdownFormField(
                               items: [
                                 'زبون',
                                 'بائع',
@@ -78,6 +78,7 @@ class CreateEditClientScreen extends StatelessWidget {
                                 'موزع',
                                 'شركة خدمات'
                               ],
+                              onChanged: (value) {},
                             ),
                           ],
                         ),
