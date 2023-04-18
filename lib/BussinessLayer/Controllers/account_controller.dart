@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class AccountController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -18,10 +19,9 @@ class AccountController extends GetxController {
   var isLoadingAccounts = false.obs;
 
   Future<void> getAccounts() async {
-    isLoadingAccounts.value = true;
     accounts = await accountsRepo.getAccounts();
     print(accounts);
-    isLoadingAccounts.value = false;
+    update();
   }
 
   Future<void> getBankAccounts() async {
@@ -38,21 +38,38 @@ class AccountController extends GetxController {
     isLoadingAccounts.value = false;
   }
 
-  int convertAccountType(type) {
+  int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
-      return 1;
+      return 0;
     } else {
-      return 2;
+      return 1;
     }
   }
 
-  int convertAccountStyle(style) {
-    if (style == 'حساب عادي') {
-      return 1;
-    } else if (style == 'صندوق') {
-      return 2;
+  String convertAccountTypeToString(int type) {
+    if (type == 0) {
+      return 'مدين';
+    } else {
+      return 'دائن';
     }
-    return 3;
+  }
+
+  int convertAccountStyleToNumber(style) {
+    if (style == 'حساب عادي') {
+      return 0;
+    } else if (style == 'صندوق') {
+      return 1;
+    }
+    return 2;
+  }
+
+  String convertAccountStyleToString(int style) {
+    if (style == 0) {
+      return 'حساب عادي';
+    } else if (style == 1) {
+      return 'صندوق';
+    }
+    return 'جهة عمل';
   }
 
   Future<void> createAccount() async {
@@ -71,8 +88,8 @@ class AccountController extends GetxController {
       var account = await accountsRepo.createAccount(
           name,
           int.parse(balance),
-          convertAccountType(type),
-          convertAccountStyle(style),
+          convertAccountTypeToNumber(type),
+          convertAccountStyleToNumber(style),
           email,
           address,
           mobileNumber);
@@ -81,6 +98,43 @@ class AccountController extends GetxController {
       }
     } else {
       print('حقل مطلوب');
+    }
+  }
+
+  void setAcountDetails(Account? account) {
+    if (account != null) {
+      nameController = TextEditingController(text: account.name);
+      balanceController =
+          TextEditingController(text: account.balance.toString());
+      type = convertAccountStyleToString(account.type);
+      style = convertAccountStyleToString(account.style);
+      emailController = TextEditingController(text: account.email);
+      mobilePhoneController = TextEditingController(text: account.mobileNumber);
+      addressController = TextEditingController(text: account.address);
+    }
+  }
+
+  Future<void> updateAccount(int id) async {
+    String name = nameController.text;
+    int balance = int.parse(balanceController.text);
+    var account = await accountsRepo.updateAccount(id, name, balance,
+        convertAccountTypeToNumber(type), convertAccountStyleToNumber(style));
+    if (account != null) {
+      getAccounts();
+      SnackBars.showSuccess('تم التعديل بنجاح');
+    } else {
+      SnackBars.showError('فشل التعديل');
+    }
+  }
+
+  Future<void> deleteAccount(id) async {
+    var account = await accountsRepo.deleteAccount(id);
+    if (account != null) {
+      getAccounts();
+      SnackBars.showSuccess('تم الحذف بنجاح');
+      update();
+    } else {
+      SnackBars.showError('فشل الحذف');
     }
   }
 
