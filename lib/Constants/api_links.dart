@@ -3,5 +3,5 @@ const loginLink = "/login";
 const accountsLink = "/accounts/1";
 const bankAccountsLink = "/bankAccounts/1";
 const clientAccoutsLink = "/clientAccounts/1";
-const addAccountLink = "/account";
+const accountLink = "/account";
 const createWare = "/ware";
