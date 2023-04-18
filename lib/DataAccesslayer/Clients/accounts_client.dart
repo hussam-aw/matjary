@@ -36,7 +36,7 @@ class AccountsClient {
 
   Future<dynamic> createAccount(
       name, balance, type, style, email, address, mobileNumber) async {
-    var response = await http.post(Uri.parse('$baseUrl$addAccountLink'),
+    var response = await http.post(Uri.parse('$baseUrl$accountLink'),
         body: jsonEncode(<String, dynamic>{
           "name": name,
           "balance": balance,
@@ -51,6 +51,37 @@ class AccountsClient {
         });
     print(response.body);
     if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> updateAccount(id, name, balance, type, style) async {
+    var response = await http.post(Uri.parse('$baseUrl$accountLink/$id'),
+        body: jsonEncode(<String, dynamic>{
+          "name": name,
+          "balance": balance,
+          "type": type,
+          "style": style,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+
+    print(response.body);
+    if (response.statusCode == 201) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> deleteAccount(id) async {
+    var response = await http.delete(Uri.parse('$baseUrl$accountLink/$id'));
+
+    print(response.body);
+    if (response.statusCode == 201) {
       return response.body;
     } else {
       return null;
