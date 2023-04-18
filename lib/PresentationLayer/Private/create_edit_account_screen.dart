@@ -4,6 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -21,8 +22,11 @@ class CreateEditAccountScreen extends StatelessWidget {
   final AccountController accountController = AccountController();
   final AccountScreenController accountScreenController =
       AccountScreenController();
+  final Account? account = Get.arguments;
   @override
   Widget build(BuildContext context) {
+    accountController.setAcountDetails(account);
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -65,6 +69,8 @@ class CreateEditAccountScreen extends StatelessWidget {
                               GetBuilder(
                                 init: accountScreenController,
                                 builder: (context) {
+                                  accountScreenController
+                                      .setAccountType(accountController.type);
                                   return CustomRadioButton(
                                     items: [
                                       RadioButtonItem(
@@ -74,7 +80,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                                           onTap: () {
                                             accountController.type = 'مدين';
                                             accountScreenController
-                                                .changeAccountType(0);
+                                                .changeAccountType('مدين');
                                           }),
                                       RadioButtonItem(
                                           text: 'دائن',
@@ -83,7 +89,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                                           onTap: () {
                                             accountController.type = 'دائن';
                                             accountScreenController
-                                                .changeAccountType(1);
+                                                .changeAccountType('دائن');
                                           })
                                     ],
                                   );
@@ -93,6 +99,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                               const SectionTitle(title: 'نوع الحساب'),
                               spacerHeight(),
                               CustomDropdownFormField(
+                                value: accountController.style,
                                 items: ['حساب عادي', 'صندوق', 'جهة عمل'],
                                 onChanged: (value) {
                                   accountController.style = value;
@@ -128,7 +135,11 @@ class CreateEditAccountScreen extends StatelessWidget {
                 AcceptButton(
                   text: 'إنشاء',
                   onPressed: () {
-                    accountController.createAccount();
+                    if (account != null) {
+                      accountController.updateAccount(account!.id);
+                    } else {
+                      accountController.createAccount();
+                    }
                   },
                 )
               ],
