@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/constants.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 
 class AccountBox extends StatelessWidget {
@@ -44,13 +46,27 @@ class AccountBox extends StatelessWidget {
                 },
               ),
               IconButton(
-                padding: EdgeInsets.zero,
-                icon: const Icon(
-                  Icons.delete,
-                  color: UIColors.white,
-                ),
-                onPressed: () => accountController.deleteAccount(account.id),
-              ),
+                  padding: EdgeInsets.zero,
+                  icon: const Icon(
+                    Icons.delete,
+                    color: UIColors.white,
+                  ),
+                  onPressed: () {
+                    Get.dialog(
+                      AlertDialog(
+                        title: Text('هل تريد بالتأكيد حذف الحساب؟'),
+                        actions: [
+                          AcceptButton(
+                            text: 'حذف',
+                            onPressed: () {
+                              accountController.deleteAccount(account.id);
+                              Get.back();
+                            },
+                          )
+                        ],
+                      ),
+                    );
+                  }),
             ],
           ),
         ],
