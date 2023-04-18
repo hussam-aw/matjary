@@ -39,16 +39,16 @@ class ChooseAccountScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 20),
                 Expanded(
-                  child: Obx(
-                    () => accountController.isLoadingAccounts.value
+                  child: GetBuilder(
+                    init: accountController,
+                    builder: (context) => accountController.accounts.isEmpty
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
                         : ListView.separated(
                             itemBuilder: (context, index) {
                               return AccountBox(
-                                  accountName:
-                                      accountController.accounts[index].name);
+                                  account: accountController.accounts[index]);
                             },
                             separatorBuilder: (context, index) {
                               return spacerHeight();
