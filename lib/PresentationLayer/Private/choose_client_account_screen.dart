@@ -48,8 +48,8 @@ class ChooseClientAccountScreen extends StatelessWidget {
                         : ListView.separated(
                             itemBuilder: (context, index) {
                               return AccountBox(
-                                  accountName: accountController
-                                      .clientAccounts[index].name);
+                                  account:
+                                      accountController.clientAccounts[index]);
                             },
                             separatorBuilder: (context, index) {
                               return spacerHeight();
