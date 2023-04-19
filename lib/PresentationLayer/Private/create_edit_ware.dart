@@ -23,50 +23,55 @@ final WareController wareController = Get.put(WareController());
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
         drawer: const CustomDrawer(),
-        body: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-            child: Column(
-              children: [
-                const PageTitle(title: 'إنشاء | تعديل مستودع'),
-                Expanded(
-                  flex: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Form(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SectionTitle(title: 'المعلومات الأساسية'),
-                          spacerHeight(),
-                          CustomTextFormField(
-                            controller: TextEditingController(),
-                            hintText: 'اسم المستودع',
+        body: GetBuilder(
+          init: wareController,
+          builder: (context) {
+            return SafeArea(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                child: Column(
+                  children: [
+                    const PageTitle(title: 'إنشاء | تعديل مستودع'),
+                    Expanded(
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Form(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SectionTitle(title: 'المعلومات الأساسية'),
+                              spacerHeight(),
+                              CustomTextFormField(
+                                controller: wareController.nameOfWareController,
+                                hintText: 'اسم المستودع',
+                              ),
+                              spacerHeight(),
+                              CustomTextFormField(
+                                controller: TextEditingController(),
+                                hintText: 'الموظف المسؤول',
+                              ),
+                              spacerHeight(),
+                              CustomTextFormField(
+                                controller: TextEditingController(),
+                                hintText: 'مكان المستودع',
+                              ),
+                            ],
                           ),
-                          spacerHeight(),
-                          CustomTextFormField(
-                            controller: TextEditingController(),
-                            hintText: 'الموظف المسؤول',
-                          ),
-                          spacerHeight(),
-                          CustomTextFormField(
-                            controller: TextEditingController(),
-                            hintText: 'مكان المستودع',
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                    AcceptButton(
+                      text: 'إنشاء',
+                      onPressed: () {
+                        wareController.addWare();
+                      },
+                    ),
+                  ],
                 ),
-                AcceptButton(
-                  text: 'إنشاء',
-                  onPressed: () {
-                    wareController.addWare();
-                  },
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          }
         ),
       ),
     );

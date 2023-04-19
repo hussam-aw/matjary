@@ -20,8 +20,8 @@ class SplashController extends GetxController {
   }
 
   @override
-  void onInit() {
-    checkAuthed();
+  void onInit() async{
+   await checkAuthed();
     super.onInit();
   }
 }

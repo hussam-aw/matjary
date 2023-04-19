@@ -3,7 +3,7 @@ import 'dart:convert';
 class Ware{
   final int id;
   final String name;
-  final String userId;
+  final int userId;
 
   Ware({
     required this.id,
@@ -21,7 +21,7 @@ class Ware{
     return Ware(
       id: map['id'] as int,
       name: map['name'] as String,
-      userId:map['user_id'] as String,
+      userId:map['user_id'],
 
     );
   }
