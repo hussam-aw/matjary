@@ -20,7 +20,7 @@ class CreateEditCategoryScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: const CustomDrawer(),
+        drawer:  CustomDrawer(),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: Column(

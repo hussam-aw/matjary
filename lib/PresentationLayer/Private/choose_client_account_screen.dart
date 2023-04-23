@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/account_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -23,7 +22,7 @@ class ChooseClientAccountScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: const CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),

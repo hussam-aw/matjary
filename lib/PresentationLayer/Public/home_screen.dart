@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -27,7 +26,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(),
-        drawer: const CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SafeArea(
           child: Column(
             children: [
@@ -41,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                         child: Container(
                           width: width,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
+                              horizontal: 15, vertical: 4),
                           decoration: const BoxDecoration(
                             color: UIColors.containerBackground,
                             borderRadius: radius19,
@@ -55,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     const Icon(
-                                      Ionicons.cash,
+                                      FontAwesomeIcons.moneyCheckDollar,
                                       color: UIColors.primary,
                                       size: 50,
                                     ),

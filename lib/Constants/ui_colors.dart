@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UIColors {
-  static const primary = Color(0xffFFAA00);
+  static const primary = Color(0xFFFFAA00);
   static const white = Color(0xffffffff);
   static const red = Color(0xffff0000);
   // Text colors
@@ -15,7 +15,7 @@ class UIColors {
   // Border Colors
   static const circleAvatarBorder = Color(0xff707070);
   // Background Colors
-  static const mainBackground = Color(0xff1C1D40);
+  static const mainBackground = Color.fromARGB(255, 38, 39, 82);
   static const textFieldBackground = Color(0xff3D3E65);
   static const buttonBackground = Color(0xff6C34F1);
   static const containerBackground = Color(0xff3D3E65);

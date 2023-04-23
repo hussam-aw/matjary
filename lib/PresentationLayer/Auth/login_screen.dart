@@ -19,50 +19,56 @@ class LoginScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 90),
-            child: Column(
-              children: [
-                const AppIconHeader(),
-                Expanded(
-                  flex: 3,
-                  child: Form(
-                    child: Column(
-                      children: [
-                        CustomTextFormField(
-                          controller: authController.loginEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          hintText: 'اسم المستخدم',
+            child: GetBuilder(
+                init: authController,
+                builder: (context) {
+                  return Column(
+                    children: [
+                      const AppIconHeader(),
+                      Expanded(
+                        flex: 3,
+                        child: Form(
+                          child: Column(
+                            children: [
+                              CustomTextFormField(
+                                controller: authController.loginEmailController,
+                                keyboardType: TextInputType.emailAddress,
+                                hintText: 'اسم المستخدم',
+                              ),
+                              spacerHeight(),
+                              CustomTextFormField(
+                                controller:
+                                    authController.loginPasswordController,
+                                keyboardType: TextInputType.visiblePassword,
+                                hintText: 'كلمة المرور',
+                              ),
+                              spacerHeight(),
+                              AcceptButton(
+                                onPressed: () async {
+                                  await authController.login();
+                                },
+                                text: 'متابعة',
+                              ),
+                              spacerHeight(),
+                              AcceptButton(
+                                onPressed: () {
+                                  Get.toNamed(AppRoutes.registerScreen);
+                                },
+                                style: acceptButtonWithBorderStyle,
+                                text: 'إنشاء حساب',
+                              ),
+                            ],
+                          ),
                         ),
-                        spacerHeight(),
-                        CustomTextFormField(
-                          controller: authController.loginPasswordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          hintText: 'كلمة المرور',
-                        ),
-                        spacerHeight(),
-                        AcceptButton(
-                          onPressed: () async {
-                            await authController.login();
-                          },
-                          text: 'متابعة',
-                        ),
-                        spacerHeight(),
-                        AcceptButton(
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.registerScreen);
-                          },
-                          style: acceptButtonWithBorderStyle,
-                          text: 'إنشاء حساب',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                      ),
+                    ],
+                  );
+                }),
           ),
         ),
         bottomSheet: const PrimaryLine(),

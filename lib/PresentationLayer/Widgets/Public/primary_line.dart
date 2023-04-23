@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 
 class PrimaryLine extends StatelessWidget {

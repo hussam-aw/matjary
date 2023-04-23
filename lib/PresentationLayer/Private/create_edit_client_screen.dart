@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -21,7 +19,7 @@ class CreateEditClientScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: const CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -71,7 +69,7 @@ class CreateEditClientScreen extends StatelessWidget {
                             const SectionTitle(title: 'نوع الحساب'),
                             spacerHeight(),
                             CustomDropdownFormField(
-                              items: [
+                              items: const [
                                 'زبون',
                                 'بائع',
                                 'مسوّق',
