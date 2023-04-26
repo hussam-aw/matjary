@@ -13,11 +13,14 @@ import 'package:matjary/PresentationLayer/Private/create_edit_product_screen.dar
 import 'package:matjary/PresentationLayer/Private/create_edit_ware.dart';
 import 'package:matjary/PresentationLayer/Private/create_statement.dart';
 import 'package:matjary/PresentationLayer/Public/home_screen.dart';
+import 'package:matjary/PresentationLayer/Public/introduction.dart';
+
 import '../PresentationLayer/Public/splash_screen.dart';
 import 'get_routes.dart';
 
 List<GetPage<dynamic>> getPages = [
   GetPage(name: AppRoutes.splashScreen, page: () => SplashScreen()),
+  GetPage(name: AppRoutes.introScreen, page: () => const OnBoardingPage()),
   GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
   GetPage(name: AppRoutes.registerScreen, page: () => const RegisterScreen()),
   GetPage(name: AppRoutes.pinCodeScreen, page: () => const PinCodeScreen()),
@@ -26,8 +29,7 @@ List<GetPage<dynamic>> getPages = [
       name: AppRoutes.createEditAccountScreen,
       page: () => CreateEditAccountScreen()),
   GetPage(
-      name: AppRoutes.createEditWareScreen,
-      page: () =>  CreateEditWareScreen()),
+      name: AppRoutes.createEditWareScreen, page: () => CreateEditWareScreen()),
   GetPage(
       name: AppRoutes.createEditBankScreen,
       page: () => const CreateEditBankScreen()),

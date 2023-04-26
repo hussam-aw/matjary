@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/account_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
@@ -22,7 +22,7 @@ class ChooseAccountScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: const CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -42,8 +42,8 @@ class ChooseAccountScreen extends StatelessWidget {
                   child: GetBuilder(
                     init: accountController,
                     builder: (context) => accountController.accounts.isEmpty
-                        ? const Center(
-                            child: CircularProgressIndicator(),
+                        ? Center(
+                            child: loadingItem(width: 100, isWhite: true),
                           )
                         : ListView.separated(
                             itemBuilder: (context, index) {

@@ -35,7 +35,7 @@ class InovoiceContainer extends StatelessWidget {
             spacerHeight(),
             Text(
               invoiceAmount,
-              style: UITextStyle.boldLarge,
+              style: UITextStyle.boldHeading.apply(fontSizeFactor: 1.2),
             ),
           ],
         ),

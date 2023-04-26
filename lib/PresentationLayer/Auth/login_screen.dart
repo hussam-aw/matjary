@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
@@ -20,23 +19,53 @@ class LoginScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 90),
-            child: Column(
-              children: [
-                const AppIconHeader(),
-                Expanded(
-                  flex: 3,
-                  child: Form(
-                    child: Column(
-                      children: [
-                        CustomTextFormField(
-                          controller: authController.loginEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          hintText: 'اسم المستخدم',
+            child: GetBuilder(
+                init: authController,
+                builder: (context) {
+                  return Column(
+                    children: [
+                      const AppIconHeader(),
+                      Expanded(
+                        flex: 3,
+                        child: Form(
+                          child: Column(
+                            children: [
+                              CustomTextFormField(
+                                controller: authController.loginEmailController,
+                                keyboardType: TextInputType.emailAddress,
+                                hintText: 'اسم المستخدم',
+                              ),
+                              spacerHeight(),
+                              CustomTextFormField(
+                                controller:
+                                    authController.loginPasswordController,
+                                keyboardType: TextInputType.visiblePassword,
+                                hintText: 'كلمة المرور',
+                              ),
+                              spacerHeight(),
+                              AcceptButton(
+                                onPressed: () async {
+                                  await authController.login();
+                                },
+                                text: 'متابعة',
+                              ),
+                              spacerHeight(),
+                              AcceptButton(
+                                onPressed: () {
+                                  Get.toNamed(AppRoutes.registerScreen);
+                                },
+                                style: acceptButtonWithBorderStyle,
+                                text: 'إنشاء حساب',
+                              ),
+                            ],
+                          ),
                         ),
+<<<<<<< HEAD
                         spacerHeight(),
                         CustomTextFormField(
                           controller: authController.loginPasswordController,
@@ -65,6 +94,12 @@ class LoginScreen extends StatelessWidget {
                 ),
               ],
             ),
+=======
+                      ),
+                    ],
+                  );
+                }),
+>>>>>>> 24f608478741bd5c9a43631cc14b1d074c1c0014
           ),
         ),
         bottomSheet: const PrimaryLine(),

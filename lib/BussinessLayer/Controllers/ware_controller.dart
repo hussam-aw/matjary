@@ -1,28 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+
 import '../../DataAccesslayer/Models/ware.dart';
 import '../../DataAccesslayer/Repositories/ware_repo.dart';
 import '../../PresentationLayer/Widgets/snackbars.dart';
 import '../../main.dart';
-import '../Helpers/box_client.dart';
 
-
-
-class WareController extends GetxController{
-  BoxClient boxClient = BoxClient();
+class WareController extends GetxController {
   WareRepo wareRepo = WareRepo();
   List<Ware> wares = [];
-  late List<Ware> ware;
   var adding = false.obs;
-TextEditingController nameOfWareController = TextEditingController();
+  TextEditingController nameOfWareController = TextEditingController();
 
   Future<void> addWare() async {
     adding.value = true;
-      wares = (await wareRepo.postWare(
-          MyApp.appUser!.id, nameOfWareController.value.text));
-      //wares.add(ware);
+    Ware? ware = await wareRepo.postWare(
+        nameOfWareController.value.text, MyApp.appUser!.id);
     adding.value = false;
     update();
-    SnackBars.showSuccess('تمت إضافة مستودع جديد');
+    if (ware == null) {
+      SnackBars.showSuccess('حدث خطأ أثناء الإضافة');
+    } else {
+      SnackBars.showSuccess('تمت إضافة مستودع جديد');
+    }
   }
 }

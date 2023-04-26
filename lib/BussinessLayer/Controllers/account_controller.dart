@@ -21,21 +21,18 @@ class AccountController extends GetxController {
 
   Future<void> getAccounts() async {
     accounts = await accountsRepo.getAccounts();
-    print(accounts);
     update();
   }
 
   Future<void> getBankAccounts() async {
     isLoadingAccounts.value = true;
     bankAccounts = await accountsRepo.getBankAccounts();
-    print(bankAccounts);
     isLoadingAccounts.value = false;
   }
 
   Future<void> getClintAccounts() async {
     isLoadingAccounts.value = true;
     clientAccounts = await accountsRepo.getClientAccounts();
-    print(clientAccounts);
     isLoadingAccounts.value = false;
   }
 

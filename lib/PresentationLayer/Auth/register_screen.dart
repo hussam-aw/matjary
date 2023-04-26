@@ -10,7 +10,6 @@ import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart
 import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});

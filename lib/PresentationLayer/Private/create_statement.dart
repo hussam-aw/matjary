@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -25,7 +24,7 @@ class CreateStatementScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: const CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -45,7 +44,7 @@ class CreateStatementScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: CustomDropdownFormField(
-                                  items: ['الصندوق'],
+                                  items: const ['الصندوق'],
                                   onChanged: (value) {},
                                 ),
                               ),
@@ -66,7 +65,7 @@ class CreateStatementScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: CustomDropdownFormField(
-                                  items: ['الزبون علي'],
+                                  items: const ['الزبون علي'],
                                   onChanged: (value) {},
                                 ),
                               ),

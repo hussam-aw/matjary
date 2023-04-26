@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -32,7 +31,7 @@ class CreateEditAccountScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: const CustomDrawer(),
+        drawer:  CustomDrawer(),
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -100,7 +99,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                               spacerHeight(),
                               CustomDropdownFormField(
                                 value: accountController.style,
-                                items: ['حساب عادي', 'صندوق', 'جهة عمل'],
+                                items: const ['حساب عادي', 'صندوق', 'جهة عمل'],
                                 onChanged: (value) {
                                   accountController.style = value;
                                 },
@@ -133,7 +132,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 30),
                 AcceptButton(
-                  text: 'إنشاء',
+                  text: account != null ? "تعديل" : "إنشاء",
                   onPressed: () {
                     if (account != null) {
                       accountController.updateAccount(account!.id);

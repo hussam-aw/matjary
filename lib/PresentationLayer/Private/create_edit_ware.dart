@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -13,8 +12,8 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import '../../BussinessLayer/Controllers/ware_controller.dart';
 
 class CreateEditWareScreen extends StatelessWidget {
-   CreateEditWareScreen({super.key});
-final WareController wareController = Get.put(WareController());
+  CreateEditWareScreen({super.key});
+  final WareController wareController = Get.put(WareController());
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -22,52 +21,61 @@ final WareController wareController = Get.put(WareController());
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer: const CustomDrawer(),
-        body: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-            child: Column(
-              children: [
-                const PageTitle(title: 'إنشاء | تعديل مستودع'),
-                Expanded(
-                  flex: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Form(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SectionTitle(title: 'المعلومات الأساسية'),
-                          spacerHeight(),
-                          CustomTextFormField(
-                            controller: TextEditingController(),
-                            hintText: 'اسم المستودع',
+        drawer: CustomDrawer(),
+        body: GetBuilder(
+            init: wareController,
+            builder: (context) {
+              return SafeArea(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  child: Column(
+                    children: [
+                      const PageTitle(title: 'إنشاء | تعديل مستودع'),
+                      Expanded(
+                        flex: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Form(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SectionTitle(title: 'المعلومات الأساسية'),
+                                spacerHeight(),
+                                CustomTextFormField(
+                                  controller:
+                                      wareController.nameOfWareController,
+                                  hintText: 'اسم المستودع',
+                                ),
+                                spacerHeight(),
+                                /* CustomTextFormField(
+                                  controller: TextEditingController(),
+                                  hintText: 'الموظف المسؤول',
+                                ),
+                                spacerHeight(),
+                                CustomTextFormField(
+                                  controller: TextEditingController(),
+                                  hintText: 'مكان المستودع',
+                                ), */
+                              ],
+                            ),
                           ),
-                          spacerHeight(),
-                          CustomTextFormField(
-                            controller: TextEditingController(),
-                            hintText: 'الموظف المسؤول',
-                          ),
-                          spacerHeight(),
-                          CustomTextFormField(
-                            controller: TextEditingController(),
-                            hintText: 'مكان المستودع',
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      Obx(() {
+                        return AcceptButton(
+                          text: 'إنشاء',
+                          onPressed: () {
+                            wareController.addWare();
+                          },
+                          isLoading: wareController.adding.value,
+                        );
+                      })
+                    ],
                   ),
                 ),
-                AcceptButton(
-                  text: 'إنشاء',
-                  onPressed: () {
-                    wareController.addWare();
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
+              );
+            }),
       ),
     );
   }

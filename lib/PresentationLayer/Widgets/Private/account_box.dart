@@ -6,14 +6,12 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 
 class AccountBox extends StatelessWidget {
   AccountBox({super.key, required this.account});
 
   final Account account;
-  AccountController accountController = Get.find<AccountController>();
+  final AccountController accountController = Get.find<AccountController>();
 
   @override
   Widget build(BuildContext context) {
