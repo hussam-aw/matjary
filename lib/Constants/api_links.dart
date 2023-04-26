@@ -6,3 +6,5 @@ const clientAccoutsLink = "/clientAccounts/1";
 const accountLink = "/account";
 const waresLink = "/wares/1";
 const createWare = "/ware";
+const ordersLink = "/orders/1";
+const productsLink = "/products/1";
