@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/auth_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/main.dart';
 
@@ -11,6 +13,7 @@ import '../Home/drawer_list_tile.dart';
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key});
   final AuthController authController = Get.put(AuthController());
+  final HomeController homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,11 +54,16 @@ class CustomDrawer extends StatelessWidget {
                 iconData: Ionicons.home,
                 onTap: null,
               ),
-              const DrawerListTile(
+              DrawerListTile(
                 title: "الحسابات",
                 subtitle: "تصفح و تعديل الحسابات",
                 iconData: FontAwesomeIcons.fileInvoice,
-                onTap: null,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.chooseAccountScreen,
+                    arguments: homeController.accounts,
+                  );
+                },
               ),
               const DrawerListTile(
                 title: "المستودعات",
