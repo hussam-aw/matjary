@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/account_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
@@ -16,7 +18,6 @@ class ChooseAccountScreen extends StatelessWidget {
 
   final AccountController accountController = Get.put(AccountController());
   final HomeController homeController = Get.find<HomeController>();
-  final accounts = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +45,32 @@ class ChooseAccountScreen extends StatelessWidget {
                 Expanded(
                   child: GetBuilder(
                     init: homeController,
-                    builder: (context) => accounts.isEmpty
+                    builder: (context) => homeController.accounts.isEmpty
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
                         : ListView.separated(
                             itemBuilder: (context, index) {
-                              return AccountBox(account: accounts[index]);
+                              return CustomBox(
+                                title: homeController.accounts[index].name,
+                                editOnPressed: () {
+                                  Get.toNamed(AppRoutes.createEditAccountScreen,
+                                      arguments:
+                                          homeController.accounts[index]);
+                                },
+                                deleteDialogTitle:
+                                    'هل تريد بالتأكيد حذف الحساب؟',
+                                deleteOnPressed: () {
+                                  accountController.deleteAccount(
+                                      homeController.accounts[index].id);
+                                  Get.back();
+                                },
+                              );
                             },
                             separatorBuilder: (context, index) {
                               return spacerHeight();
                             },
-                            itemCount: accounts.length,
+                            itemCount: homeController.accounts.length,
                           ),
                   ),
                 ),
