@@ -49,6 +49,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                               spacerHeight(),
                               AcceptButton(
+                                backgroundColor: UIColors.containerBackground,
                                 onPressed: () async {
                                   await authController.login();
                                 },
