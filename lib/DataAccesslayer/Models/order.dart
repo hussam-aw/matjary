@@ -28,8 +28,8 @@ class Order {
       required this.bankId,
       required this.sellType,
       required this.status,
-      this.expenses,
-      this.discount});
+      required this.expenses,
+      required this.discount});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -66,8 +66,8 @@ class Order {
       bankId: map['bank_id'] as int,
       sellType: map['sell_type'] as int,
       status: map['status'] as int,
-      expenses: map['expenses'] as double ?? 0.0,
-      discount: map['discount'] as double ?? 0.0,
+      expenses: map['expenses'] ?? 0.0,
+      discount: map['discount'] ?? 0.0,
     );
   }
 }
