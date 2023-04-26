@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -14,27 +15,7 @@ class AccountController extends GetxController {
   TextEditingController mobilePhoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   AccountsRepo accountsRepo = AccountsRepo();
-  List<Account> accounts = [];
-  List<Account> bankAccounts = [];
-  List<Account> clientAccounts = [];
-  var isLoadingAccounts = false.obs;
-
-  Future<void> getAccounts() async {
-    accounts = await accountsRepo.getAccounts();
-    update();
-  }
-
-  Future<void> getBankAccounts() async {
-    isLoadingAccounts.value = true;
-    bankAccounts = await accountsRepo.getBankAccounts();
-    isLoadingAccounts.value = false;
-  }
-
-  Future<void> getClintAccounts() async {
-    isLoadingAccounts.value = true;
-    clientAccounts = await accountsRepo.getClientAccounts();
-    isLoadingAccounts.value = false;
-  }
+  HomeController homeController = Get.find<HomeController>();
 
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
@@ -93,6 +74,7 @@ class AccountController extends GetxController {
           address,
           mobileNumber);
       if (account != null) {
+        homeController.getAccounts();
         SnackBars.showSuccess('تم انشاء الحساب');
       } else {
         SnackBars.showError('فشل انشاء الحساب');
@@ -121,7 +103,7 @@ class AccountController extends GetxController {
     var account = await accountsRepo.updateAccount(id, name, balance,
         convertAccountTypeToNumber(type), convertAccountStyleToNumber(style));
     if (account != null) {
-      getAccounts();
+      homeController.getAccounts();
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
       SnackBars.showError('فشل التعديل');
@@ -131,7 +113,7 @@ class AccountController extends GetxController {
   Future<void> deleteAccount(id) async {
     var account = await accountsRepo.deleteAccount(id);
     if (account != null) {
-      getAccounts();
+      homeController.getAccounts();
       SnackBars.showSuccess('تم الحذف بنجاح');
       update();
     } else {
@@ -141,9 +123,6 @@ class AccountController extends GetxController {
 
   @override
   void onInit() {
-    getAccounts();
-    //getBankAccounts();
-    //getClintAccounts();
     super.onInit();
   }
 }
