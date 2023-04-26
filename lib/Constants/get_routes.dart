@@ -15,4 +15,7 @@ class AppRoutes {
   static const chooseAccountScreen = '/home/chooseAccountScreen';
   static const chooseBankAccountScreen = '/home/chooseBankAccountScreen';
   static const chooseClientAccountScreen = '/home/chooseClientAccountScreen';
+  static const chooseWareScreen = '/home/chooseWareScreen';
+  static const chooseOrderScreen = '/home/chooseOrderScreen';
+  static const chooseProductScreen = '/home/chooseProductScreen';
 }
