@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/account_box.dart';
@@ -14,6 +15,8 @@ class ChooseAccountScreen extends StatelessWidget {
   ChooseAccountScreen({super.key});
 
   final AccountController accountController = Get.put(AccountController());
+  final HomeController homeController = Get.find<HomeController>();
+  final accounts = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +43,19 @@ class ChooseAccountScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: GetBuilder(
-                    init: accountController,
-                    builder: (context) => accountController.accounts.isEmpty
+                    init: homeController,
+                    builder: (context) => accounts.isEmpty
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
                         : ListView.separated(
                             itemBuilder: (context, index) {
-                              return AccountBox(
-                                  account: accountController.accounts[index]);
+                              return AccountBox(account: accounts[index]);
                             },
                             separatorBuilder: (context, index) {
                               return spacerHeight();
                             },
-                            itemCount: accountController.accounts.length,
+                            itemCount: accounts.length,
                           ),
                   ),
                 ),

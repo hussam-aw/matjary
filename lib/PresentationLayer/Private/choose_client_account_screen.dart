@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/account_box.dart';
@@ -13,10 +14,9 @@ class ChooseClientAccountScreen extends StatelessWidget {
   ChooseClientAccountScreen({super.key});
 
   final AccountController accountController = Get.put(AccountController());
-
+  final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
-    accountController.getClintAccounts();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -40,7 +40,7 @@ class ChooseClientAccountScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => accountController.isLoadingAccounts.value
+                    () => homeController.isLoadingAccounts.value
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
@@ -48,12 +48,12 @@ class ChooseClientAccountScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return AccountBox(
                                   account:
-                                      accountController.clientAccounts[index]);
+                                      homeController.clientAccounts[index]);
                             },
                             separatorBuilder: (context, index) {
                               return spacerHeight();
                             },
-                            itemCount: accountController.clientAccounts.length,
+                            itemCount: homeController.clientAccounts.length,
                           ),
                   ),
                 ),

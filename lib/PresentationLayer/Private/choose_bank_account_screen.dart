@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -14,16 +15,15 @@ class ChooseBankAccountScreen extends StatelessWidget {
   ChooseBankAccountScreen({super.key});
 
   final AccountController accountController = Get.put(AccountController());
-
+  final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
-    accountController.getBankAccounts();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer:  CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -41,20 +41,19 @@ class ChooseBankAccountScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => accountController.isLoadingAccounts.value
+                    () => homeController.isLoadingAccounts.value
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
                         : ListView.separated(
                             itemBuilder: (context, index) {
                               return AccountBox(
-                                  account:
-                                      accountController.bankAccounts[index]);
+                                  account: homeController.bankAccounts[index]);
                             },
                             separatorBuilder: (context, index) {
                               return spacerHeight();
                             },
-                            itemCount: accountController.bankAccounts.length,
+                            itemCount: homeController.bankAccounts.length,
                           ),
                   ),
                 ),
