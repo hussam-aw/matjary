@@ -65,41 +65,10 @@ class LoginScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-<<<<<<< HEAD
-                        spacerHeight(),
-                        CustomTextFormField(
-                          controller: authController.loginPasswordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          hintText: 'كلمة المرور',
-                        ),
-                        spacerHeight(),
-                        AcceptButton(
-                          onPressed: () async {
-                            await authController.login();
-                          },
-                          text: 'متابعة',
-                        ),
-                        spacerHeight(),
-                        AcceptButton(
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.registerScreen);
-                          },
-                          backgroundColor: UIColors.mainBackground,
-                          style: acceptButtonWithBorderStyle,
-                          text: 'إنشاء حساب',
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-=======
                       ),
                     ],
                   );
                 }),
->>>>>>> 24f608478741bd5c9a43631cc14b1d074c1c0014
           ),
         ),
         bottomSheet: const PrimaryLine(),
