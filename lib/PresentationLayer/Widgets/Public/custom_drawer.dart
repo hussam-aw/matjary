@@ -65,17 +65,25 @@ class CustomDrawer extends StatelessWidget {
                   );
                 },
               ),
-              const DrawerListTile(
+              DrawerListTile(
                 title: "المستودعات",
                 subtitle: "تصفح و تعديل المستودعات",
                 iconData: Icons.warehouse,
-                onTap: null,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.chooseWareScreen,
+                  );
+                },
               ),
-              const DrawerListTile(
+              DrawerListTile(
                 title: "البضاعة",
                 subtitle: "تصفح و تعديل البضاعة",
                 iconData: Ionicons.apps,
-                onTap: null,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.chooseProductScreen,
+                  );
+                },
               ),
               const DrawerListTile(
                 title: "التسعير الشامل",
