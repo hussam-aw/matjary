@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Bindings/home_binding.dart';
 import 'package:matjary/PresentationLayer/Auth/login_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/pin_code_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
@@ -24,7 +25,10 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: AppRoutes.loginScreen, page: () => LoginScreen()),
   GetPage(name: AppRoutes.registerScreen, page: () => const RegisterScreen()),
   GetPage(name: AppRoutes.pinCodeScreen, page: () => const PinCodeScreen()),
-  GetPage(name: AppRoutes.homeScreen, page: () => const HomeScreen()),
+  GetPage(
+      name: AppRoutes.homeScreen,
+      page: () => HomeScreen(),
+      binding: HomeBindings()),
   GetPage(
       name: AppRoutes.createEditAccountScreen,
       page: () => CreateEditAccountScreen()),
