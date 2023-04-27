@@ -31,15 +31,11 @@ class HomeController extends GetxController {
   }
 
   Future<void> getBankAccounts() async {
-    isLoadingAccounts.value = true;
     bankAccounts = await accountsRepo.getBankAccounts();
-    isLoadingAccounts.value = false;
   }
 
-  Future<void> getClintAccounts() async {
-    isLoadingAccounts.value = true;
+  Future<void> getClientAccounts() async {
     clientAccounts = await accountsRepo.getClientAccounts();
-    isLoadingAccounts.value = false;
   }
 
   Future<void> getWares() async {
@@ -66,7 +62,7 @@ class HomeController extends GetxController {
   void onInit() {
     getAccounts();
     getBankAccounts();
-    getClintAccounts();
+    getClientAccounts();
     getWares();
     getOrders();
     getProducts();
