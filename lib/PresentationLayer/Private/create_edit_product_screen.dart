@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/product_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -18,10 +23,17 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class CreateEditProductScreen extends StatelessWidget {
-  const CreateEditProductScreen({super.key});
+  CreateEditProductScreen({super.key});
+
+  final productController = Get.put(ProductController());
+  final productScreenController = Get.put(ProductScreenController());
+  final homeController = Get.find<HomeController>();
+
+  final Product? product = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    productController.setProductDetails(product);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -46,12 +58,13 @@ class CreateEditProductScreen extends StatelessWidget {
                             const SectionTitle(title: 'المعلومات الأساسية'),
                             spacerHeight(),
                             CustomTextFormField(
-                              controller: TextEditingController(),
+                              controller: productController.nameController,
                               hintText: 'اسم المنتج',
                             ),
                             spacerHeight(),
                             CustomTextFormField(
-                              controller: TextEditingController(),
+                              controller:
+                                  productController.modelNumberController,
                               keyboardType: TextInputType.number,
                               hintText: 'رقم الموديل',
                             ),
@@ -60,7 +73,10 @@ class CreateEditProductScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: CustomDropdownFormField(
-                                    items: const ['تابع لتصنيف'],
+                                    value: product!.category,
+                                    items: homeController.categories
+                                        .map((category) => category.name)
+                                        .toList(),
                                     onChanged: (value) {},
                                   ),
                                 ),
@@ -76,22 +92,50 @@ class CreateEditProductScreen extends StatelessWidget {
                             ),
                             spacerHeight(),
                             CustomTextFormField(
-                              controller: TextEditingController(),
+                              controller:
+                                  productController.initialPriceController,
                               keyboardType: TextInputType.number,
                               hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
                             ),
                             spacerHeight(height: 20),
                             const SectionTitle(title: 'يتأثر بتغيرات الصرف'),
                             spacerHeight(),
-                            CustomRadioButton(
-                              items: [
-                                RadioButtonItem(
-                                    text: 'يتأثر',
-                                    isSelected: true,
-                                    onTap: () {}),
-                                RadioButtonItem(text: 'لا يتأثر', onTap: () {})
-                              ],
-                            ),
+                            GetBuilder(
+                                init: productScreenController,
+                                builder: (context) {
+                                  productScreenController
+                                      .setAffectedExchangeState(
+                                          productController
+                                              .affectedExchangeState);
+                                  return CustomRadioButton(
+                                    items: [
+                                      RadioButtonItem(
+                                          text: 'يتأثر',
+                                          isSelected:
+                                              productScreenController.affected,
+                                          onTap: () {
+                                            productController
+                                                    .affectedExchangeState =
+                                                'يتأثر';
+                                            productScreenController
+                                                .changeAffectedExchangeState(
+                                                    'يتأثر');
+                                          }),
+                                      RadioButtonItem(
+                                          text: 'لا يتأثر',
+                                          isSelected: productScreenController
+                                              .notAffected,
+                                          onTap: () {
+                                            productController
+                                                    .affectedExchangeState =
+                                                'لا يتأثر';
+                                            productScreenController
+                                                .changeAffectedExchangeState(
+                                                    'لا يتأثر');
+                                          })
+                                    ],
+                                  );
+                                }),
                             spacerHeight(height: 20),
                             const SectionTitle(title: 'أسعار البيع'),
                             spacerHeight(),
@@ -99,6 +143,8 @@ class CreateEditProductScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: TextFormField(
+                                    controller: productController
+                                        .wholesalePriceController,
                                     keyboardType: TextInputType.number,
                                     decoration: subTextFieldStyle.copyWith(
                                       hintText: 'الجملة',
@@ -108,6 +154,8 @@ class CreateEditProductScreen extends StatelessWidget {
                                 spacerWidth(),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: productController
+                                        .supplierPriceController,
                                     keyboardType: TextInputType.number,
                                     decoration: subTextFieldStyle.copyWith(
                                       hintText: 'الموزع',
@@ -117,6 +165,8 @@ class CreateEditProductScreen extends StatelessWidget {
                                 spacerWidth(),
                                 Expanded(
                                   child: TextFormField(
+                                    controller:
+                                        productController.retailPriceController,
                                     keyboardType: TextInputType.number,
                                     decoration: subTextFieldStyle.copyWith(
                                       hintText: 'المفرق',
@@ -150,7 +200,7 @@ class CreateEditProductScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 30),
                 AcceptButton(
-                  text: 'إنشاء',
+                  text: product != null ? 'تعديل' : 'إنشاء',
                   onPressed: () {},
                 )
               ],
