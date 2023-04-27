@@ -66,12 +66,32 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
               DrawerListTile(
+                title: "البنوك",
+                subtitle: "تصفح و تعديل البنوك",
+                iconData: Ionicons.cart,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.chooseBankAccountScreen,
+                  );
+                },
+              ),
+              DrawerListTile(
                 title: "المستودعات",
                 subtitle: "تصفح و تعديل المستودعات",
                 iconData: Icons.warehouse,
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.chooseWareScreen,
+                  );
+                },
+              ),
+              DrawerListTile(
+                title: "الفئات",
+                subtitle: "تصفح و تعديل الفئات",
+                iconData: Ionicons.menu,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.chooseCategoryScreen,
                   );
                 },
               ),
