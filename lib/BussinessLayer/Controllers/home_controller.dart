@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
+import 'package:matjary/DataAccesslayer/Repositories/categories_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/ware_repo.dart';
@@ -13,12 +15,14 @@ class HomeController extends GetxController {
   WareRepo wareRepo = WareRepo();
   OrdersRepo orderRepo = OrdersRepo();
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
+  CategoriesRepo categoriesRepo = CategoriesRepo();
   List<Account> accounts = [];
   List<Account> bankAccounts = [];
   List<Account> clientAccounts = [];
   List<Ware> wares = [];
   List<Order> orders = [];
   List<Product> products = [];
+  List<Category> categories = [];
   var isLoadingAccounts = false.obs;
 
   Future<void> getAccounts() async {
@@ -53,6 +57,11 @@ class HomeController extends GetxController {
     update();
   }
 
+  Future<void> getCategories() async {
+    categories = await categoriesRepo.getCategories();
+    update();
+  }
+
   @override
   void onInit() {
     getAccounts();
@@ -61,6 +70,7 @@ class HomeController extends GetxController {
     getWares();
     getOrders();
     getProducts();
+    getCategories();
     super.onInit();
   }
 }
