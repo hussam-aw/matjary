@@ -15,7 +15,7 @@ import '../../BussinessLayer/Controllers/ware_controller.dart';
 
 class CreateEditWareScreen extends StatelessWidget {
   CreateEditWareScreen({super.key});
-  final WareController wareController = Get.find<WareController>();
+  final WareController wareController = Get.put(WareController());
   final Ware? ware = Get.arguments;
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class CreateEditWareScreen extends StatelessWidget {
                         wareController.addWare();
                       }
                     },
-                    isLoading: wareController.adding.value,
+                    isLoading: wareController.loading.value,
                   );
                 })
               ],

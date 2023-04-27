@@ -53,12 +53,12 @@ class ChooseCategoryScreen extends StatelessWidget {
                               return CustomBox(
                                 title: homeController.categories[index].name,
                                 editOnPressed: () {
-                                  //Navigate to edit order screen
+                                  //Navigate to edit category screen
                                 },
                                 deleteDialogTitle:
                                     'هل تريد بالتأكيد حذف الفئة؟',
                                 deleteOnPressed: () {
-                                  //Delete from order controller
+                                  //Delete from category controller
                                   Get.back();
                                 },
                               );
