@@ -11,7 +11,7 @@ class WareController extends GetxController {
   TextEditingController nameOfWareController = TextEditingController();
   WareRepo wareRepo = WareRepo();
   List<Ware> wares = [];
-  var adding = false.obs;
+  var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
 
   void setWareDetails(Ware? ware) {
@@ -21,20 +21,23 @@ class WareController extends GetxController {
   }
 
   Future<void> addWare() async {
-    adding.value = true;
+    loading.value = true;
     Ware? ware = await wareRepo.postWare(
         nameOfWareController.value.text, MyApp.appUser!.id);
-    adding.value = false;
-    update();
+    loading.value = false;
+
     if (ware == null) {
       SnackBars.showSuccess('حدث خطأ أثناء الإضافة');
     } else {
+      homeController.getWares();
       SnackBars.showSuccess('تمت إضافة مستودع جديد');
     }
   }
 
   Future<void> updateWare(int id) async {
+    loading.value = true;
     var account = await wareRepo.updateWare(id, nameOfWareController.text);
+    loading.value = false;
     if (account != null) {
       homeController.getWares();
       SnackBars.showSuccess('تم التعديل بنجاح');
@@ -44,11 +47,12 @@ class WareController extends GetxController {
   }
 
   Future<void> deleteWare(id) async {
+    loading.value = true;
     var ware = await wareRepo.deleteWare(id);
+    loading.value = false;
     if (ware != null) {
       homeController.getWares();
       SnackBars.showSuccess('تم الحذف بنجاح');
-      update();
     } else {
       SnackBars.showError('فشل الحذف');
     }
