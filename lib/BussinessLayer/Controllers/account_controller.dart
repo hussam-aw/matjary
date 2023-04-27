@@ -15,6 +15,7 @@ class AccountController extends GetxController {
   TextEditingController mobilePhoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   AccountsRepo accountsRepo = AccountsRepo();
+  var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
 
   int convertAccountTypeToNumber(type) {
@@ -51,6 +52,16 @@ class AccountController extends GetxController {
     return 'جهة عمل';
   }
 
+  void updateAccountsBasedOnAccountStyle(int style) {
+    if (convertAccountStyleToString(style) == 'حساب عادي') {
+      homeController.getClientAccounts();
+      homeController.getAccounts();
+    } else if (convertAccountStyleToString(style) == 'صندوق') {
+      homeController.getBankAccounts();
+      homeController.getAccounts();
+    }
+  }
+
   Future<void> createAccount() async {
     String name = nameController.text;
     String balance = balanceController.text;
@@ -64,6 +75,7 @@ class AccountController extends GetxController {
         email.isNotEmpty &&
         mobileNumber.isNotEmpty &&
         address.isNotEmpty) {
+      loading.value = true;
       var account = await accountsRepo.createAccount(
           MyApp.appUser!.id,
           name,
@@ -73,8 +85,9 @@ class AccountController extends GetxController {
           email,
           address,
           mobileNumber);
+      loading.value = false;
       if (account != null) {
-        homeController.getAccounts();
+        updateAccountsBasedOnAccountStyle(account.style);
         SnackBars.showSuccess('تم انشاء الحساب');
       } else {
         SnackBars.showError('فشل انشاء الحساب');
@@ -100,10 +113,12 @@ class AccountController extends GetxController {
   Future<void> updateAccount(int id) async {
     String name = nameController.text;
     int balance = int.parse(balanceController.text);
+    loading.value = true;
     var account = await accountsRepo.updateAccount(id, name, balance,
         convertAccountTypeToNumber(type), convertAccountStyleToNumber(style));
+    loading.value = false;
     if (account != null) {
-      homeController.getAccounts();
+      updateAccountsBasedOnAccountStyle(account.style);
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
       SnackBars.showError('فشل التعديل');
@@ -111,9 +126,11 @@ class AccountController extends GetxController {
   }
 
   Future<void> deleteAccount(id) async {
+    loading.value = true;
     var account = await accountsRepo.deleteAccount(id);
+    loading.value = false;
     if (account != null) {
-      homeController.getAccounts();
+      updateAccountsBasedOnAccountStyle(account.style);
       SnackBars.showSuccess('تم الحذف بنجاح');
       update();
     } else {
