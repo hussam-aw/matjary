@@ -8,12 +8,12 @@ class Order {
   final int paidUp;
   final int restOfTheBill;
   final int wareId;
-  final int toWareId;
+  final num toWareId;
   final int bankId;
   final int sellType;
   final int status;
-  final double? expenses;
-  final double? discount;
+  final num? expenses;
+  final num? discount;
   Order(
       {required this.id,
       required this.total,
@@ -62,7 +62,7 @@ class Order {
       paidUp: map['paid_up'] as int,
       restOfTheBill: map['rest_of_the_bill'] as int,
       wareId: map['ware_id'] as int,
-      toWareId: map['to_ware_id'] as int,
+      toWareId: map['to_ware_id'] ?? 0.0,
       bankId: map['bank_id'] as int,
       sellType: map['sell_type'] as int,
       status: map['status'] as int,

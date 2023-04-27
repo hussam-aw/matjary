@@ -9,7 +9,7 @@ class Product {
   final int affectedExchange;
   final double initialPrice;
   final String category;
-  final List<dynamic> images;
+  final List<String> images;
 
   Product({
     required this.id,
@@ -53,7 +53,15 @@ class Product {
       affectedExchange: map['affected_exchange'] ?? 0,
       initialPrice: map['initial_price'].toDouble() ?? 0.0,
       category: map['category'] ?? "",
-      images: map['images'] ?? [],
+      images: getImages(map['images']),
     );
+  }
+
+  static List<String> getImages(List<dynamic> images) {
+    List<String> result = [];
+    for (int i = 0; i < images.length; i++) {
+      result.add(images[i].toString());
+    }
+    return result;
   }
 }
