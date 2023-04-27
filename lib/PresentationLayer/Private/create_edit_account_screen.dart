@@ -18,9 +18,9 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class CreateEditAccountScreen extends StatelessWidget {
   CreateEditAccountScreen({super.key});
 
-  final AccountController accountController = AccountController();
+  final AccountController accountController = Get.put(AccountController());
   final AccountScreenController accountScreenController =
-      AccountScreenController();
+      Get.put(AccountScreenController());
   final Account? account = Get.arguments;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CreateEditAccountScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer:  CustomDrawer(),
+        drawer: CustomDrawer(),
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -131,16 +131,19 @@ class CreateEditAccountScreen extends StatelessWidget {
                   ),
                 ),
                 spacerHeight(height: 30),
-                AcceptButton(
-                  text: account != null ? "تعديل" : "إنشاء",
-                  onPressed: () {
-                    if (account != null) {
-                      accountController.updateAccount(account!.id);
-                    } else {
-                      accountController.createAccount();
-                    }
-                  },
-                )
+                Obx(
+                  () => AcceptButton(
+                    text: account != null ? "تعديل" : "إنشاء",
+                    onPressed: () {
+                      if (account != null) {
+                        accountController.updateAccount(account!.id);
+                      } else {
+                        accountController.createAccount();
+                      }
+                    },
+                    isLoading: accountController.loading.value,
+                  ),
+                ),
               ],
             ),
           ),
