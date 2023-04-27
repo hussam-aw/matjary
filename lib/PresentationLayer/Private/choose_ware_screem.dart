@@ -61,7 +61,8 @@ class ChooseWareScreen extends StatelessWidget {
                                 deleteDialogTitle:
                                     'هل تريد بالتأكيد حذف المستودع؟',
                                 deleteOnPressed: () {
-                                  //Delete from ware controller
+                                  wareController.deleteWare(
+                                      homeController.wares[index].id);
                                   Get.back();
                                 },
                               );
