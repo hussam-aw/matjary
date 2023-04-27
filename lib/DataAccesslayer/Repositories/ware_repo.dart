@@ -24,4 +24,22 @@ class WareRepo {
     }
     return null;
   }
+
+  Future<Ware?> updateWare(id, name) async {
+    var updatedAccount = await client.updateWare(id, name);
+    print(updatedAccount);
+    if (updatedAccount != null) {
+      return Ware.fromMap(jsonDecode(updatedAccount));
+    }
+    return null;
+  }
+
+  Future<Ware?> deleteWare(id) async {
+    var deletedWare = await client.deleteWare(id);
+    print(deletedWare);
+    if (deletedWare != null) {
+      return Ware.fromMap(jsonDecode(deletedWare));
+    }
+    return null;
+  }
 }
