@@ -13,4 +13,59 @@ class OrdersRepo {
     }
     return [];
   }
+
+  Future<Order?> createOrder(id, total, notes, type, paidUp, restOfTheBill,
+      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
+    var createdOrder = await client.createOrder(
+        id,
+        total,
+        notes,
+        type,
+        paidUp,
+        restOfTheBill,
+        wareId,
+        toWareId,
+        bankId,
+        sellType,
+        status,
+        expenses,
+        discount);
+    print(createdOrder);
+    if (createdOrder != null) {
+      return Order.fromMap(jsonDecode(createdOrder));
+    }
+    return null;
+  }
+
+  Future<Order?> updateOrder(id, total, notes, type, paidUp, restOfTheBill,
+      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
+    var updateOrder = await client.updateOrder(
+        id,
+        total,
+        notes,
+        type,
+        paidUp,
+        restOfTheBill,
+        wareId,
+        toWareId,
+        bankId,
+        sellType,
+        status,
+        expenses,
+        discount);
+    print(updateOrder);
+    if (updateOrder != null) {
+      return Order.fromMap(jsonDecode(updateOrder));
+    }
+    return null;
+  }
+
+  Future<Order?> deleteOrder(id) async {
+    var deletedOrder = await client.deleteOrder(id);
+    print(deletedOrder);
+    if (deletedOrder != null) {
+      return Order.fromMap(jsonDecode(deletedOrder));
+    }
+    return null;
+  }
 }
