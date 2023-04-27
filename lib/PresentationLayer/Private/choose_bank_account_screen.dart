@@ -41,8 +41,9 @@ class ChooseBankAccountScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 20),
                 Expanded(
-                  child: Obx(
-                    () => homeController.isLoadingAccounts.value
+                  child: GetBuilder(
+                    init: homeController,
+                    builder: (context) => homeController.bankAccounts.isEmpty
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )

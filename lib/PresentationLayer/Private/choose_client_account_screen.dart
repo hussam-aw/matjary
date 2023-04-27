@@ -40,8 +40,9 @@ class ChooseClientAccountScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 20),
                 Expanded(
-                  child: Obx(
-                    () => homeController.isLoadingAccounts.value
+                  child: GetBuilder(
+                    init: homeController,
+                    builder: (context) => homeController.clientAccounts.isEmpty
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )

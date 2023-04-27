@@ -23,7 +23,6 @@ class HomeController extends GetxController {
   List<Order> orders = [];
   List<Product> products = [];
   List<Category> categories = [];
-  var isLoadingAccounts = false.obs;
 
   Future<void> getAccounts() async {
     accounts = await accountsRepo.getAccounts();
