@@ -7,5 +7,6 @@ const accountLink = "/account";
 const waresLink = "/wares/1";
 const wareLink = "/ware";
 const ordersLink = "/orders/1";
+const orderLink = "/order/1";
 const productsLink = "/products/1";
 const categoriesLink = "/categories/1";
