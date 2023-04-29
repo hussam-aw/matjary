@@ -46,9 +46,8 @@ class ChooseProductScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 20),
                 Expanded(
-                  child: GetBuilder(
-                    init: homeController,
-                    builder: (context) => homeController.products.isEmpty
+                  child: Obx(
+                    () => homeController.isLoadingProducts.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )

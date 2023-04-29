@@ -48,9 +48,8 @@ class ChooseAccountScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 20),
                 Expanded(
-                  child: GetBuilder(
-                    init: homeController,
-                    builder: (context) => homeController.accounts.isEmpty
+                  child: Obx(
+                    () => homeController.isLoadingAccounts.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )

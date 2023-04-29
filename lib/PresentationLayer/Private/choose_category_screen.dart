@@ -48,9 +48,8 @@ class ChooseCategoryScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 20),
                 Expanded(
-                  child: GetBuilder(
-                    init: homeController,
-                    builder: (context) => homeController.categories.isEmpty
+                  child: Obx(
+                    () => homeController.isLoadingCategories.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
