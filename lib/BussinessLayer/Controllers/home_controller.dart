@@ -21,8 +21,11 @@ class HomeController extends GetxController {
   List<Account> clientAccounts = [];
   List<Ware> wares = [];
   List<Order> orders = [];
+  List<Order> purchasesOrders = [];
+  List<Order> salesOrders = [];
   List<Product> products = [];
   List<Category> categories = [];
+  var isLoading = false.obs;
 
   Future<void> getAccounts() async {
     accounts = await accountsRepo.getAccounts();
@@ -44,7 +47,17 @@ class HomeController extends GetxController {
 
   Future<void> getOrders() async {
     orders = await orderRepo.getOrders();
+    getPurchasesOrders();
+    getSalesOrders();
     update();
+  }
+
+  void getPurchasesOrders() {
+    purchasesOrders = orders.where((order) => order.type == "0").toList();
+  }
+
+  void getSalesOrders() {
+    salesOrders = orders.where((order) => order.type == "1").toList();
   }
 
   Future<void> getProducts() async {
