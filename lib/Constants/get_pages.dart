@@ -52,7 +52,7 @@ List<GetPage<dynamic>> getPages = [
       page: () => const CreateEditCategoryScreen()),
   GetPage(
       name: AppRoutes.createStatementScreen,
-      page: () => const CreateStatementScreen()),
+      page: () => CreateStatementScreen()),
   GetPage(
       name: AppRoutes.chooseAccountScreen, page: () => ChooseAccountScreen()),
   GetPage(
