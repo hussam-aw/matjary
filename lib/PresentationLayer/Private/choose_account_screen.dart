@@ -16,7 +16,6 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class ChooseAccountScreen extends StatelessWidget {
   ChooseAccountScreen({super.key});
 
-  TextEditingController accountNameController = TextEditingController();
   final AccountController accountController = Get.put(AccountController());
   final HomeController homeController = Get.find<HomeController>();
   final SearchController searchController = Get.put(SearchController());
@@ -38,7 +37,6 @@ class ChooseAccountScreen extends StatelessWidget {
                 const PageTitle(title: 'إختيار حساب'),
                 spacerHeight(),
                 TextFormField(
-                  controller: TextEditingController(),
                   textAlign: TextAlign.center,
                   decoration: normalTextFieldStyle.copyWith(
                     hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
