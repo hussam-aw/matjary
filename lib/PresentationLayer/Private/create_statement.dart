@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
@@ -15,7 +18,9 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class CreateStatementScreen extends StatelessWidget {
-  const CreateStatementScreen({super.key});
+  CreateStatementScreen({super.key});
+
+  final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +59,50 @@ class CreateStatementScreen extends StatelessWidget {
                                   FontAwesomeIcons.magnifyingGlass,
                                   color: UIColors.mainIcon,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      backgroundColor: UIColors.mainBackground,
+                                      content: SizedBox(
+                                        height: 500,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ListView.separated(
+                                          scrollDirection: Axis.vertical,
+                                          itemBuilder: (context, index) {
+                                            return Container(
+                                              height: 67,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 25,
+                                                      horizontal: 25),
+                                              decoration: const BoxDecoration(
+                                                color: UIColors
+                                                    .containerBackground,
+                                              ),
+                                              child: Text(
+                                                homeController
+                                                    .accounts[index].name,
+                                                textAlign: TextAlign.right,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: UITextStyle.normalMeduim
+                                                    .copyWith(
+                                                  color:
+                                                      UIColors.lightNormalText,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) {
+                                            return const SizedBox(height: 15);
+                                          },
+                                          itemCount:
+                                              homeController.accounts.length,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
