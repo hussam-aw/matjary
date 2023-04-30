@@ -14,4 +14,13 @@ class PrdouctsRepo {
     }
     return [];
   }
+
+  Future<Product?> deleteProduct(id) async {
+    var deletedProduct = await client.deleteProduct(id);
+    print(deletedProduct);
+    if (deletedProduct != null) {
+      return Product.fromMap(jsonDecode(deletedProduct));
+    }
+    return null;
+  }
 }

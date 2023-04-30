@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
+import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class ProductController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -10,6 +13,9 @@ class ProductController extends GetxController {
   TextEditingController retailPriceController = TextEditingController();
   TextEditingController supplierPriceController = TextEditingController();
   TextEditingController wholesalePriceController = TextEditingController();
+  PrdouctsRepo prdouctsRepo = PrdouctsRepo();
+  var homeController = Get.find<HomeController>();
+  var loading = false.obs;
 
   String convertAffectedExchangeStateToString(int state) {
     if (state == 0) {
@@ -33,6 +39,18 @@ class ProductController extends GetxController {
           TextEditingController(text: product.supplierPrice.toString());
       retailPriceController =
           TextEditingController(text: product.retailPrice.toString());
+    }
+  }
+
+  Future<void> deleteProduct(id) async {
+    loading.value = true;
+    var product = await prdouctsRepo.deleteProduct(id);
+    loading.value = false;
+    if (product != null) {
+      homeController.getProducts();
+      SnackBars.showSuccess('تم الحذف بنجاح');
+    } else {
+      SnackBars.showError('فشل الحذف');
     }
   }
 

@@ -11,4 +11,15 @@ class ProductsClient {
       return "";
     }
   }
+
+  Future<dynamic> deleteProduct(id) async {
+    var response = await http.delete(Uri.parse('$baseUrl$productLink/$id'));
+
+    print(response.body);
+    if (response.statusCode == 201) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
 }
