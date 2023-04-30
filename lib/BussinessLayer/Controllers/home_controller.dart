@@ -20,7 +20,9 @@ class HomeController extends GetxController {
   List<Account> accounts = [];
   var isLoadingAccounts = false.obs;
   List<Account> bankAccounts = [];
+  var isLoadingBankAccounts = false.obs;
   List<Account> clientAccounts = [];
+  var isLoadingClientAccounts = false.obs;
   List<Ware> wares = [];
   var isLoadingWares = false.obs;
   List<Order> orders = [];
@@ -36,25 +38,19 @@ class HomeController extends GetxController {
     isLoadingAccounts.value = true;
     accounts = await accountsRepo.getAccounts();
     isLoadingAccounts.value = false;
-    getBankAccounts();
-    getClientAccounts();
   }
 
-  void getBankAccounts() {
-    bankAccounts = accounts.where((account) => account.type == 0).toList();
+  Future<void> getBankAccounts() async {
+    isLoadingBankAccounts = true.obs;
+    bankAccounts = await accountsRepo.getBankAccounts();
+    isLoadingBankAccounts = false.obs;
   }
 
-  void getClientAccounts() {
-    clientAccounts = accounts.where((account) => account.type == 1).toList();
+  Future<void> getClientAccounts() async {
+    isLoadingClientAccounts = true.obs;
+    clientAccounts = await accountsRepo.getClientAccounts();
+    isLoadingBankAccounts = false.obs;
   }
-
-  // Future<void> getBankAccounts() async {
-  //   bankAccounts = await accountsRepo.getBankAccounts();
-  // }
-
-  // Future<void> getClientAccounts() async {
-  //   clientAccounts = await accountsRepo.getClientAccounts();
-  // }
 
   Future<void> getWares() async {
     isLoadingWares.value = true;
@@ -93,6 +89,8 @@ class HomeController extends GetxController {
   void fetchData() async {
     isLoading.value = true;
     await getAccounts();
+    await getBankAccounts();
+    await getClientAccounts();
     await getWares();
     await getOrders();
     await getProducts();
