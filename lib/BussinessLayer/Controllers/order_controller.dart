@@ -10,7 +10,7 @@ class OrderController extends GetxController {
   var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
 
-  Future<void> createAccount() async {
+  Future<void> createOrder() async {
     if (true)
     // name.isNotEmpty &&
     {

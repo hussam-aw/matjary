@@ -205,7 +205,7 @@ class CreateEditProductScreen extends StatelessWidget {
                     text: product != null ? "تعديل" : "إنشاء",
                     onPressed: () {
                       if (product != null) {
-                        //productController.updateProduct(product!.id);
+                        productController.updateProduct(product!.id);
                       } else {
                         productController.createProduct();
                       }
