@@ -73,11 +73,13 @@ class CreateEditProductScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: CustomDropdownFormField(
-                                    value: product!.category,
+                                    value: productController.category,
                                     items: homeController.categories
                                         .map((category) => category.name)
                                         .toList(),
-                                    onChanged: (value) {},
+                                    onChanged: (value) {
+                                      productController.category = value;
+                                    },
                                   ),
                                 ),
                                 spacerWidth(),
@@ -92,8 +94,7 @@ class CreateEditProductScreen extends StatelessWidget {
                             ),
                             spacerHeight(),
                             CustomTextFormField(
-                              controller:
-                                  productController.initialPriceController,
+                              controller: productController.quantityController,
                               keyboardType: TextInputType.number,
                               hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
                             ),
@@ -199,10 +200,19 @@ class CreateEditProductScreen extends StatelessWidget {
                   ),
                 ),
                 spacerHeight(height: 30),
-                AcceptButton(
-                  text: product != null ? 'تعديل' : 'إنشاء',
-                  onPressed: () {},
-                )
+                Obx(
+                  () => AcceptButton(
+                    text: product != null ? "تعديل" : "إنشاء",
+                    onPressed: () {
+                      if (product != null) {
+                        //productController.updateProduct(product!.id);
+                      } else {
+                        productController.createProduct();
+                      }
+                    },
+                    isLoading: productController.loading.value,
+                  ),
+                ),
               ],
             ),
           ),

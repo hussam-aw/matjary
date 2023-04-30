@@ -17,7 +17,6 @@ class SearchController extends GetxController {
               item.name.toLowerCase().contains(searchText.toLowerCase()))
           .toList();
 
-      print(filteredList);
       searchLoading.value = false;
     } else {
       filteredList.clear();

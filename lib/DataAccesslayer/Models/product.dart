@@ -53,7 +53,7 @@ class Product {
       affectedExchange: map['affected_exchange'] ?? 0,
       initialPrice: map['initial_price'] ?? 0.0,
       category: map['category'] ?? "",
-      images: getImages(map['images'] ?? []),
+      images: getImages(map['images']),
     );
   }
 
