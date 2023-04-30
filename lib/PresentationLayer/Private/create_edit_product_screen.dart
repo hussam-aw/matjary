@@ -147,6 +147,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                     controller: productController
                                         .wholesalePriceController,
                                     keyboardType: TextInputType.number,
+                                    style: UITextStyle.normalBody,
                                     decoration: subTextFieldStyle.copyWith(
                                       hintText: 'الجملة',
                                     ),
@@ -158,6 +159,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                     controller: productController
                                         .supplierPriceController,
                                     keyboardType: TextInputType.number,
+                                    style: UITextStyle.normalBody,
                                     decoration: subTextFieldStyle.copyWith(
                                       hintText: 'الموزع',
                                     ),
@@ -169,6 +171,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                     controller:
                                         productController.retailPriceController,
                                     keyboardType: TextInputType.number,
+                                    style: UITextStyle.normalBody,
                                     decoration: subTextFieldStyle.copyWith(
                                       hintText: 'المفرق',
                                     ),
@@ -177,6 +180,36 @@ class CreateEditProductScreen extends StatelessWidget {
                               ],
                             ),
                             spacerHeight(),
+                            if (product != null && product!.images.isNotEmpty)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 100,
+                                    child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          width: 100,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: raduis15,
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    product!.images[index]),
+                                                fit: BoxFit.cover),
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return spacerWidth();
+                                      },
+                                      itemCount: product!.images.length,
+                                    ),
+                                  ),
+                                  spacerHeight(),
+                                ],
+                              ),
                             AccetpIconButton(
                               center: true,
                               text: Text(
