@@ -15,6 +15,37 @@ class PrdouctsRepo {
     return [];
   }
 
+  Future<Product?> createProduct(
+      name,
+      categoryId,
+      specialNumber,
+      wholesalePrice,
+      retailPrice,
+      supplierPrice,
+      quantity,
+      affectedExchange,
+      initialPrice,
+      userId,
+      images) async {
+    var createdProduct = await client.createProduct(
+        name,
+        categoryId,
+        specialNumber,
+        wholesalePrice,
+        retailPrice,
+        supplierPrice,
+        quantity,
+        affectedExchange,
+        initialPrice,
+        userId,
+        images);
+    print(createdProduct);
+    if (createdProduct != null) {
+      return Product.fromMap(jsonDecode(createdProduct));
+    }
+    return null;
+  }
+
   Future<Product?> deleteProduct(id) async {
     var deletedProduct = await client.deleteProduct(id);
     print(deletedProduct);

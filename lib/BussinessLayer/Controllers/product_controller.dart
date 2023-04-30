@@ -4,12 +4,15 @@ import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
+import 'package:matjary/main.dart';
 
 class ProductController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController modelNumberController = TextEditingController();
   TextEditingController initialPriceController = TextEditingController();
-  String affectedExchangeState = "يتأثر";
+  String? category;
+  TextEditingController quantityController = TextEditingController();
+  String? affectedExchangeState;
   TextEditingController retailPriceController = TextEditingController();
   TextEditingController supplierPriceController = TextEditingController();
   TextEditingController wholesalePriceController = TextEditingController();
@@ -24,6 +27,19 @@ class ProductController extends GetxController {
     return 'يتأثر';
   }
 
+  int convertAffectedExchangeStateToInt(String state) {
+    if (state == 'لا يتأثر') {
+      return 0;
+    }
+    return 1;
+  }
+
+  int getCategoryId(categoryName) {
+    return homeController.categories
+        .firstWhere((category) => category.name == categoryName)
+        .id;
+  }
+
   void setProductDetails(Product? product) {
     if (product != null) {
       nameController = TextEditingController(text: product.name);
@@ -31,6 +47,9 @@ class ProductController extends GetxController {
           TextEditingController(text: product.specialNumber);
       initialPriceController =
           TextEditingController(text: product.initialPrice.toString());
+      category = product.category;
+      quantityController =
+          TextEditingController(text: product.quantity.toString());
       affectedExchangeState =
           convertAffectedExchangeStateToString(product.affectedExchange);
       wholesalePriceController =
@@ -39,6 +58,44 @@ class ProductController extends GetxController {
           TextEditingController(text: product.supplierPrice.toString());
       retailPriceController =
           TextEditingController(text: product.retailPrice.toString());
+    }
+  }
+
+  Future<void> createProduct() async {
+    String name = nameController.text;
+    String specialNumber = modelNumberController.text;
+    String quantity = quantityController.text;
+    String wholesalePrice = wholesalePriceController.text;
+    String supplierPrice = supplierPriceController.text;
+    String retailPrice = retailPriceController.text;
+    if (name.isNotEmpty &&
+        specialNumber.isNotEmpty &&
+        quantity.isNotEmpty &&
+        wholesalePrice.isNotEmpty &&
+        supplierPrice.isNotEmpty &&
+        retailPrice.isNotEmpty) {
+      loading.value = true;
+      var product = await prdouctsRepo.createProduct(
+        name,
+        getCategoryId(category),
+        specialNumber,
+        num.parse(wholesalePrice),
+        num.parse(retailPrice),
+        num.parse(supplierPrice),
+        int.parse(quantity),
+        convertAffectedExchangeStateToInt(affectedExchangeState!),
+        20,
+        MyApp.appUser!.id,
+        [],
+      );
+      loading.value = false;
+      if (product != null) {
+        SnackBars.showSuccess('تم انشاء المنتج');
+      } else {
+        SnackBars.showError('فشل انشاء المنتج');
+      }
+    } else {
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
@@ -56,7 +113,8 @@ class ProductController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    category = homeController.categories[0].name;
+    affectedExchangeState = "يتأثر";
     super.onInit();
   }
 }
