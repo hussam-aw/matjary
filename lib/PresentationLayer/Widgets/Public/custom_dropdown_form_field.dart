@@ -18,7 +18,7 @@ class CustomDropdownFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
-      value: value ?? items[0],
+      value: value == null || value == "" ? items[0] : value,
       isDense: true,
       isExpanded: true,
       decoration: textFieldStyle,
