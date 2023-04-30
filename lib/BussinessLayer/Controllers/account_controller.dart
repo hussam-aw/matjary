@@ -39,8 +39,14 @@ class AccountController extends GetxController {
       return 0;
     } else if (style == 'صندوق') {
       return 1;
+    } else if (style == 'زبون') {
+      return 2;
+    } else if (style == 'مزود') {
+      return 3;
+    } else if (style == 'جهة عمل') {
+      return 4;
     }
-    return 2;
+    return 5;
   }
 
   String convertAccountStyleToString(int style) {
@@ -48,18 +54,14 @@ class AccountController extends GetxController {
       return 'حساب عادي';
     } else if (style == 1) {
       return 'صندوق';
+    } else if (style == 2) {
+      return 'زبون';
+    } else if (style == 3) {
+      return 'مزود';
+    } else if (style == 4) {
+      return 'جهة عمل';
     }
-    return 'جهة عمل';
-  }
-
-  void updateAccountsBasedOnAccountStyle(int style) {
-    if (convertAccountStyleToString(style) == 'حساب عادي') {
-      homeController.getClientAccounts();
-      homeController.getAccounts();
-    } else if (convertAccountStyleToString(style) == 'صندوق') {
-      homeController.getBankAccounts();
-      homeController.getAccounts();
-    }
+    return '';
   }
 
   Future<void> createAccount() async {
@@ -87,7 +89,9 @@ class AccountController extends GetxController {
           mobileNumber);
       loading.value = false;
       if (account != null) {
-        updateAccountsBasedOnAccountStyle(account.style);
+        homeController.getAccounts();
+        homeController.getBankAccounts();
+        homeController.getClientAccounts();
         SnackBars.showSuccess('تم انشاء الحساب');
       } else {
         SnackBars.showError('فشل انشاء الحساب');
@@ -118,7 +122,9 @@ class AccountController extends GetxController {
         convertAccountTypeToNumber(type), convertAccountStyleToNumber(style));
     loading.value = false;
     if (account != null) {
-      updateAccountsBasedOnAccountStyle(account.style);
+      homeController.getAccounts();
+      homeController.getBankAccounts();
+      homeController.getClientAccounts();
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
       SnackBars.showError('فشل التعديل');
@@ -130,9 +136,10 @@ class AccountController extends GetxController {
     var account = await accountsRepo.deleteAccount(id);
     loading.value = false;
     if (account != null) {
-      updateAccountsBasedOnAccountStyle(account.style);
+      homeController.getAccounts();
+      homeController.getBankAccounts();
+      homeController.getClientAccounts();
       SnackBars.showSuccess('تم الحذف بنجاح');
-      update();
     } else {
       SnackBars.showError('فشل الحذف');
     }
