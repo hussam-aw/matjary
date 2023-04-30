@@ -182,7 +182,12 @@ class HomeScreen extends StatelessWidget {
                                       itemCount:
                                           homeController.clientAccounts.isEmpty
                                               ? 0
-                                              : 5,
+                                              : homeController.clientAccounts
+                                                          .length <
+                                                      5
+                                                  ? homeController
+                                                      .clientAccounts.length
+                                                  : 5,
                                     ),
                                   ),
                                 ],
