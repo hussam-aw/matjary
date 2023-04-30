@@ -9,4 +9,5 @@ const wareLink = "/ware";
 const ordersLink = "/orders/1";
 const orderLink = "/order/1";
 const productsLink = "/products/1";
+const productLink = "/product";
 const categoriesLink = "/categories/1";
