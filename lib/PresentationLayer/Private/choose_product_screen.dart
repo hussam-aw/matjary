@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -16,6 +17,7 @@ class ChooseProductScreen extends StatelessWidget {
   ChooseProductScreen({super.key});
 
   final HomeController homeController = Get.find<HomeController>();
+  final ProductController productController = Get.put(ProductController());
   final SearchController searchController = Get.put(SearchController());
 
   @override
@@ -70,7 +72,9 @@ class ChooseProductScreen extends StatelessWidget {
                                           deleteDialogTitle:
                                               'هل تريد بالتأكيد حذف المنتج؟',
                                           deleteOnPressed: () {
-                                            //Delete from product controller
+                                            productController.deleteProduct(
+                                                homeController
+                                                    .products[index].id);
                                             Get.back();
                                           },
                                         );
@@ -78,7 +82,7 @@ class ChooseProductScreen extends StatelessWidget {
                                       separatorBuilder: (context, index) {
                                         return spacerHeight();
                                       },
-                                      itemCount: homeController.wares.length,
+                                      itemCount: homeController.products.length,
                                     )
                                   : Obx(() {
                                       return searchController
@@ -102,7 +106,11 @@ class ChooseProductScreen extends StatelessWidget {
                                                   deleteDialogTitle:
                                                       'هل تريد بالتأكيد حذف الحساب؟',
                                                   deleteOnPressed: () {
-                                                    //Delete from product controller
+                                                    productController
+                                                        .deleteProduct(
+                                                            homeController
+                                                                .products[index]
+                                                                .id);
                                                     Get.back();
                                                   },
                                                 );
