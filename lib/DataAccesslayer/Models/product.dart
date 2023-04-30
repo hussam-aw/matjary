@@ -2,12 +2,12 @@ class Product {
   final int id;
   final String name;
   final String specialNumber;
-  final double wholesalePrice;
-  final double retailPrice;
-  final double supplierPrice;
+  final num wholesalePrice;
+  final num retailPrice;
+  final num supplierPrice;
   final int quantity;
   final int affectedExchange;
-  final double initialPrice;
+  final num initialPrice;
   final String category;
   final List<String> images;
 
@@ -47,13 +47,13 @@ class Product {
       name: map['name'] ?? "",
       specialNumber: map['special_number'] ?? "",
       wholesalePrice: map['wholesale_price'].toDouble() ?? 0.0,
-      retailPrice: map['retail_price'].toDouble() ?? 0.0,
-      supplierPrice: map['supplier_price\t'].toDouble() ?? 0.0,
+      retailPrice: map['retail_price'] ?? 0.0,
+      supplierPrice: map['supplier_price\t'] ?? 0.0,
       quantity: map['quantity'] ?? 0,
       affectedExchange: map['affected_exchange'] ?? 0,
-      initialPrice: map['initial_price'].toDouble() ?? 0.0,
+      initialPrice: map['initial_price'] ?? 0.0,
       category: map['category'] ?? "",
-      images: getImages(map['images']),
+      images: getImages(map['images'] ?? []),
     );
   }
 
