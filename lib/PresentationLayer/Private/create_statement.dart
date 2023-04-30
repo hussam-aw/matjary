@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
@@ -21,9 +25,45 @@ class CreateStatementScreen extends StatelessWidget {
   CreateStatementScreen({super.key});
 
   final homeController = Get.find<HomeController>();
+  final StatementController statementController =
+      Get.put(StatementController());
+
+  Widget productSelectionDialog(String type) {
+    return AlertDialog(
+      backgroundColor: UIColors.mainBackground,
+      content: SizedBox(
+        height: 500,
+        width: Get.width,
+        child: ListView.separated(
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            return NormalBox(
+              title: homeController.accounts[index].name,
+              onTap: () {
+                type == "from"
+                    ? statementController.setFromAccountInDropdownButton(
+                        homeController.accounts[index].name,
+                      )
+                    : statementController.setToAccountInDropdownButton(
+                        homeController.accounts[index].name,
+                      );
+                Get.back();
+              },
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 15);
+          },
+          itemCount: homeController.accounts.length,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    var accountsList =
+        homeController.accounts.map((account) => account.name).toList();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -45,93 +85,69 @@ class CreateStatementScreen extends StatelessWidget {
                         children: [
                           const SectionTitle(title: 'من الحساب'),
                           spacerHeight(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CustomDropdownFormField(
-                                  items: const ['الصندوق'],
-                                  onChanged: (value) {},
-                                ),
-                              ),
-                              spacerWidth(),
-                              CustomIconButton(
-                                icon: const Icon(
-                                  FontAwesomeIcons.magnifyingGlass,
-                                  color: UIColors.mainIcon,
-                                ),
-                                onPressed: () {
-                                  Get.dialog(
-                                    AlertDialog(
-                                      backgroundColor: UIColors.mainBackground,
-                                      content: SizedBox(
-                                        height: 500,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: ListView.separated(
-                                          scrollDirection: Axis.vertical,
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              height: 67,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 25,
-                                                      horizontal: 25),
-                                              decoration: const BoxDecoration(
-                                                color: UIColors
-                                                    .containerBackground,
-                                              ),
-                                              child: Text(
-                                                homeController
-                                                    .accounts[index].name,
-                                                textAlign: TextAlign.right,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: UITextStyle.normalMeduim
-                                                    .copyWith(
-                                                  color:
-                                                      UIColors.lightNormalText,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) {
-                                            return const SizedBox(height: 15);
-                                          },
-                                          itemCount:
-                                              homeController.accounts.length,
-                                        ),
+                          GetBuilder(
+                              init: statementController,
+                              builder: (context) {
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomDropdownFormField(
+                                        value: statementController.fromAccount,
+                                        items: accountsList,
+                                        onChanged: (value) {},
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                                    spacerWidth(),
+                                    CustomIconButton(
+                                      icon: const Icon(
+                                        FontAwesomeIcons.magnifyingGlass,
+                                        color: UIColors.mainIcon,
+                                      ),
+                                      onPressed: () {
+                                        Get.dialog(
+                                          productSelectionDialog("from"),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }),
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'إلى الحساب'),
                           spacerHeight(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CustomDropdownFormField(
-                                  items: const ['الزبون علي'],
-                                  onChanged: (value) {},
-                                ),
-                              ),
-                              spacerWidth(),
-                              CustomIconButton(
-                                icon: const Icon(
-                                  FontAwesomeIcons.magnifyingGlass,
-                                  color: UIColors.mainIcon,
-                                ),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
+                          GetBuilder(
+                              init: statementController,
+                              builder: (context) {
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomDropdownFormField(
+                                        value: statementController.toAccount,
+                                        items: accountsList,
+                                        onChanged: (value) {},
+                                      ),
+                                    ),
+                                    spacerWidth(),
+                                    CustomIconButton(
+                                      icon: const Icon(
+                                        FontAwesomeIcons.magnifyingGlass,
+                                        color: UIColors.mainIcon,
+                                      ),
+                                      onPressed: () {
+                                        Get.dialog(
+                                          productSelectionDialog("to"),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }),
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'مبلغ القيد'),
                           spacerHeight(),
                           CustomTextFormField(
-                            controller: TextEditingController(),
+                            controller:
+                                statementController.statementAmountController,
                             keyboardType: TextInputType.number,
                           ),
                           spacerHeight(height: 20),
