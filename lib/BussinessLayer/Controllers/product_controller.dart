@@ -90,12 +90,44 @@ class ProductController extends GetxController {
       );
       loading.value = false;
       if (product != null) {
+        homeController.getProducts();
         SnackBars.showSuccess('تم انشاء المنتج');
       } else {
         SnackBars.showError('فشل انشاء المنتج');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+    }
+  }
+
+  Future<void> updateProduct(int id) async {
+    String name = nameController.text;
+    String specialNumber = modelNumberController.text;
+    String quantity = quantityController.text;
+    String wholesalePrice = wholesalePriceController.text;
+    String supplierPrice = supplierPriceController.text;
+    String retailPrice = retailPriceController.text;
+    loading.value = true;
+    var product = await prdouctsRepo.updateProduct(
+      id,
+      name,
+      getCategoryId(category),
+      specialNumber,
+      num.parse(wholesalePrice),
+      num.parse(retailPrice),
+      num.parse(supplierPrice),
+      int.parse(quantity),
+      convertAffectedExchangeStateToInt(affectedExchangeState!),
+      20,
+      MyApp.appUser!.id,
+      [],
+    );
+    loading.value = false;
+    if (product != null) {
+      homeController.getProducts();
+      SnackBars.showSuccess('تم التعديل بنجاح');
+    } else {
+      SnackBars.showError('فشل التعديل');
     }
   }
 

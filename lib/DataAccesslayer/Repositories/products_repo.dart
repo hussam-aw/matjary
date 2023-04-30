@@ -27,7 +27,40 @@ class PrdouctsRepo {
       initialPrice,
       userId,
       images) async {
-    var createdProduct = await client.createProduct(
+    var updatedProduct = await client.createProduct(
+        name,
+        categoryId,
+        specialNumber,
+        wholesalePrice,
+        retailPrice,
+        supplierPrice,
+        quantity,
+        affectedExchange,
+        initialPrice,
+        userId,
+        images);
+    print(updatedProduct);
+    if (updatedProduct != null) {
+      return Product.fromMap(jsonDecode(updatedProduct));
+    }
+    return null;
+  }
+
+  Future<Product?> updateProduct(
+      id,
+      name,
+      categoryId,
+      specialNumber,
+      wholesalePrice,
+      retailPrice,
+      supplierPrice,
+      quantity,
+      affectedExchange,
+      initialPrice,
+      userId,
+      images) async {
+    var createdProduct = await client.updateProduct(
+        id,
         name,
         categoryId,
         specialNumber,
