@@ -99,7 +99,12 @@ class CreateEditAccountScreen extends StatelessWidget {
                               spacerHeight(),
                               CustomDropdownFormField(
                                 value: accountController.style,
-                                items: const ['حساب عادي', 'صندوق', 'جهة عمل'],
+                                items: const [
+                                  'حساب عادي',
+                                  'صندوق',
+                                  'زبون',
+                                  'جهة عمل'
+                                ],
                                 onChanged: (value) {
                                   accountController.style = value;
                                 },
