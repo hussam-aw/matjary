@@ -49,7 +49,7 @@ class ChooseClientAccountScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => homeController.isLoadingAccounts.value
+                    () => homeController.isLoadingClientAccounts.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
