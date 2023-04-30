@@ -83,7 +83,8 @@ class ChooseCategoryScreen extends StatelessWidget {
                                       return searchController
                                               .searchLoading.value
                                           ? Center(
-                                              child: loadingItem(),
+                                              child: loadingItem(
+                                                  width: 100, isWhite: true),
                                             )
                                           : ListView.separated(
                                               itemBuilder: (context, index) {

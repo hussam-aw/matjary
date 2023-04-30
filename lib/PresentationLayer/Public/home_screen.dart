@@ -37,9 +37,7 @@ class HomeScreen extends StatelessWidget {
               builder: (context) {
                 print(homeController.isLoading.value);
                 return homeController.isLoading.value
-                    ? Center(
-                        child: loadingItem(isWhite: true),
-                      )
+                    ? Center(child: loadingItem(width: 100, isWhite: true))
                     : Column(
                         children: [
                           Expanded(
