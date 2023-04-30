@@ -53,15 +53,18 @@ class Product {
       affectedExchange: map['affected_exchange'] ?? 0,
       initialPrice: map['initial_price'] ?? 0.0,
       category: map['category'] ?? "",
-      images: getImages(map['images']),
+      images: getImages(map['images'] ?? []),
     );
   }
 
-  static List<String> getImages(List<dynamic> images) {
+  static List<String> getImages(images) {
     List<String> result = [];
-    for (int i = 0; i < images.length; i++) {
-      result.add(images[i].toString());
+    if (images != "[]") {
+      for (int i = 0; i < images.length; i++) {
+        result.add(images[i].toString());
+      }
+      return result;
     }
-    return result;
+    return [];
   }
 }
