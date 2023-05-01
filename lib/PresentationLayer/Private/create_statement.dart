@@ -91,10 +91,11 @@ class CreateStatementScreen extends StatelessWidget {
                                 return Row(
                                   children: [
                                     Expanded(
-                                      child: CustomDropdownFormField(
-                                        value: statementController.fromAccount,
-                                        items: accountsList,
-                                        onChanged: (value) {},
+                                      child: CustomTextFormField(
+                                        readOnly: true,
+                                        controller: statementController
+                                            .fromAccountController,
+                                        hintText: "الحساب",
                                       ),
                                     ),
                                     spacerWidth(),
@@ -121,12 +122,12 @@ class CreateStatementScreen extends StatelessWidget {
                                 return Row(
                                   children: [
                                     Expanded(
-                                      child: CustomDropdownFormField(
-                                        value: statementController.toAccount,
-                                        items: accountsList,
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
+                                        child: CustomTextFormField(
+                                      readOnly: true,
+                                      controller: statementController
+                                          .toAccountController,
+                                      hintText: 'الحساب',
+                                    )),
                                     spacerWidth(),
                                     CustomIconButton(
                                       icon: const Icon(

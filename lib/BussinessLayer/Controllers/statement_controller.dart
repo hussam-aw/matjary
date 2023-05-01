@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class StatementController extends GetxController {
-  String fromAccount = "";
-  String toAccount = "";
+  TextEditingController fromAccountController = TextEditingController();
+  TextEditingController toAccountController = TextEditingController();
   TextEditingController statementAmountController =
       TextEditingController(text: "0.0");
 
   void setFromAccountInDropdownButton(accountName) {
-    fromAccount = accountName;
+    fromAccountController = TextEditingController(text: accountName);
     update();
   }
 
   void setToAccountInDropdownButton(accountName) {
-    toAccount = accountName;
+    toAccountController = TextEditingController(text: accountName);
     update();
   }
 }
