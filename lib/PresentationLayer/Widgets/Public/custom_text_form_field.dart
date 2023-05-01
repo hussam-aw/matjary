@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.name,
     this.style = UITextStyle.normalBody,
     this.maxLines = 1,
+    this.readOnly = false,
   });
 
   final String hintText;
@@ -17,10 +18,12 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextStyle style;
   final int maxLines;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
       controller: controller,
       keyboardType: keyboardType,
       style: style,
