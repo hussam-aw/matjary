@@ -61,7 +61,6 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.chooseAccountScreen,
-                    arguments: homeController.accounts,
                   );
                 },
               ),
