@@ -62,6 +62,7 @@ class ChooseBankAccountScreen extends StatelessWidget {
                 spacerHeight(),
                 TextFormField(
                   textAlign: TextAlign.center,
+                  style: UITextStyle.normalMeduim,
                   decoration: normalTextFieldStyle.copyWith(
                     hintText: 'قم بالبحث عن اسم الصندوق أو اختر من القائمة',
                   ),

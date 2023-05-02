@@ -80,7 +80,7 @@ class ChooseAccountScreen extends StatelessWidget {
                 spacerHeight(),
                 TextFormField(
                   textAlign: TextAlign.center,
-                  style: UITextStyle.normalBody,
+                  style: UITextStyle.normalMeduim,
                   decoration: normalTextFieldStyle.copyWith(
                     hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
                   ),
