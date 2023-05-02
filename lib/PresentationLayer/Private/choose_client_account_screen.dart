@@ -75,7 +75,6 @@ class ChooseClientAccountScreen extends StatelessWidget {
                                             accountController.deleteAccount(
                                                 homeController
                                                     .clientAccounts[index].id);
-                                            Get.back();
                                           },
                                         );
                                       },
@@ -115,7 +114,6 @@ class ChooseClientAccountScreen extends StatelessWidget {
                                                                 .filteredList[
                                                                     index]
                                                                 .id);
-                                                    Get.back();
                                                   },
                                                 );
                                               },

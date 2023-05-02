@@ -75,7 +75,6 @@ class ChooseProductScreen extends StatelessWidget {
                                             productController.deleteProduct(
                                                 homeController
                                                     .products[index].id);
-                                            Get.back();
                                           },
                                         );
                                       },
@@ -115,7 +114,6 @@ class ChooseProductScreen extends StatelessWidget {
                                                                 .filteredList[
                                                                     index]
                                                                 .id);
-                                                    Get.back();
                                                   },
                                                 );
                                               },

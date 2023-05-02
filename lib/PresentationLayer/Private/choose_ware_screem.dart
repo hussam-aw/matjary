@@ -76,7 +76,6 @@ class ChooseWareScreen extends StatelessWidget {
                                           deleteOnPressed: () {
                                             wareController.deleteWare(
                                                 homeController.wares[index].id);
-                                            Get.back();
                                           },
                                         );
                                       },
@@ -113,7 +112,6 @@ class ChooseWareScreen extends StatelessWidget {
                                                         searchController
                                                             .filteredList[index]
                                                             .id);
-                                                    Get.back();
                                                   },
                                                 );
                                               },

@@ -56,5 +56,6 @@ class WareController extends GetxController {
     } else {
       SnackBars.showError('فشل الحذف');
     }
+    Get.back();
   }
 }

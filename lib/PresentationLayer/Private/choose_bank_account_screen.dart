@@ -75,7 +75,6 @@ class ChooseBankAccountScreen extends StatelessWidget {
                                             accountController.deleteAccount(
                                                 homeController
                                                     .bankAccounts[index].id);
-                                            Get.back();
                                           },
                                         );
                                       },
@@ -115,7 +114,6 @@ class ChooseBankAccountScreen extends StatelessWidget {
                                                                 .filteredList[
                                                                     index]
                                                                 .id);
-                                                    Get.back();
                                                   },
                                                 );
                                               },
