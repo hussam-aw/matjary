@@ -224,7 +224,9 @@ class CreateEditProductScreen extends StatelessWidget {
                                 color: UIColors.mainIcon,
                               ),
                               backgroundColor: UIColors.white,
-                              onPressed: () {},
+                              onPressed: () async {
+                                await productScreenController.pickImage();
+                              },
                             ),
                           ],
                         ),
