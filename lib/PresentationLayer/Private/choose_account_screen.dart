@@ -25,7 +25,6 @@ class ChooseAccountScreen extends StatelessWidget {
   late var controller;
 
   String? screenMode = Get.arguments;
-  late List<Account> accounts;
 
   Widget buildAccountsList(accountList) {
     return ListView.separated(
@@ -60,8 +59,7 @@ class ChooseAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    accounts = homeController.accounts;
-    searchController.list = accounts;
+    searchController.list = homeController.accounts;
     if (screenMode == null) {
       controller = Get.put(AccountController());
     } else {
@@ -102,7 +100,7 @@ class ChooseAccountScreen extends StatelessWidget {
                             init: searchController,
                             builder: (context) {
                               return searchController.searchText.isEmpty
-                                  ? buildAccountsList(accounts)
+                                  ? buildAccountsList(homeController.accounts)
                                   : Obx(() {
                                       return searchController
                                               .searchLoading.value
