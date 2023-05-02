@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_screen_controller.dart';
@@ -224,7 +225,9 @@ class CreateEditProductScreen extends StatelessWidget {
                                 color: UIColors.mainIcon,
                               ),
                               backgroundColor: UIColors.white,
-                              onPressed: () {},
+                              onPressed: () async {
+                                productController.selectImages();
+                              },
                             ),
                           ],
                         ),
