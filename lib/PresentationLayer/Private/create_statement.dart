@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -28,37 +29,37 @@ class CreateStatementScreen extends StatelessWidget {
   final StatementController statementController =
       Get.put(StatementController());
 
-  Widget productSelectionDialog(String type) {
-    return AlertDialog(
-      backgroundColor: UIColors.mainBackground,
-      content: SizedBox(
-        height: 500,
-        width: Get.width,
-        child: ListView.separated(
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return NormalBox(
-              title: homeController.accounts[index].name,
-              onTap: () {
-                type == "from"
-                    ? statementController.setFromAccountInDropdownButton(
-                        homeController.accounts[index].name,
-                      )
-                    : statementController.setToAccountInDropdownButton(
-                        homeController.accounts[index].name,
-                      );
-                Get.back();
-              },
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(height: 15);
-          },
-          itemCount: homeController.accounts.length,
-        ),
-      ),
-    );
-  }
+  // Widget productSelectionDialog(String type) {
+  //   return AlertDialog(
+  //     backgroundColor: UIColors.mainBackground,
+  //     content: SizedBox(
+  //       height: 500,
+  //       width: Get.width,
+  //       child: ListView.separated(
+  //         scrollDirection: Axis.vertical,
+  //         itemBuilder: (context, index) {
+  //           return NormalBox(
+  //             title: homeController.accounts[index].name,
+  //             onTap: () {
+  //               type == "from"
+  //                   ? statementController.setFromAccountInDropdownButton(
+  //                       homeController.accounts[index].name,
+  //                     )
+  //                   : statementController.setToAccountInDropdownButton(
+  //                       homeController.accounts[index].name,
+  //                     );
+  //               Get.back();
+  //             },
+  //           );
+  //         },
+  //         separatorBuilder: (context, index) {
+  //           return const SizedBox(height: 15);
+  //         },
+  //         itemCount: homeController.accounts.length,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,14 +101,18 @@ class CreateStatementScreen extends StatelessWidget {
                                     ),
                                     spacerWidth(),
                                     CustomIconButton(
+                                      heroTag: "from",
                                       icon: const Icon(
                                         FontAwesomeIcons.magnifyingGlass,
                                         color: UIColors.mainIcon,
                                       ),
                                       onPressed: () {
-                                        Get.dialog(
-                                          productSelectionDialog("from"),
-                                        );
+                                        // Get.dialog(
+                                        //   productSelectionDialog("from"),
+                                        // );
+                                        Get.toNamed(
+                                            AppRoutes.chooseAccountScreen,
+                                            arguments: 'from');
                                       },
                                     ),
                                   ],
@@ -130,14 +135,18 @@ class CreateStatementScreen extends StatelessWidget {
                                     )),
                                     spacerWidth(),
                                     CustomIconButton(
+                                      heroTag: "to",
                                       icon: const Icon(
                                         FontAwesomeIcons.magnifyingGlass,
                                         color: UIColors.mainIcon,
                                       ),
                                       onPressed: () {
-                                        Get.dialog(
-                                          productSelectionDialog("to"),
-                                        );
+                                        // Get.dialog(
+                                        //   productSelectionDialog("to"),
+                                        // );
+                                        Get.toNamed(
+                                            AppRoutes.chooseAccountScreen,
+                                            arguments: 'to');
                                       },
                                     ),
                                   ],
