@@ -40,6 +40,7 @@ class ChooseAccountScreen extends StatelessWidget {
                 deleteDialogTitle: 'هل تريد بالتأكيد حذف الحساب؟',
                 deleteOnPressed: () {
                   controller.deleteAccount(accountList[index].id);
+                  Get.back();
                 },
               )
             : NormalBox(
