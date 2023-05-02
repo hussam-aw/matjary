@@ -102,15 +102,17 @@ class ChooseWareScreen extends StatelessWidget {
                                                         AppRoutes
                                                             .createEditWareScreen,
                                                         arguments:
-                                                            homeController
-                                                                .wares[index]);
+                                                            searchController
+                                                                    .filteredList[
+                                                                index]);
                                                   },
                                                   deleteDialogTitle:
                                                       'هل تريد بالتأكيد حذف المستودع؟',
                                                   deleteOnPressed: () {
                                                     wareController.deleteWare(
-                                                        homeController
-                                                            .wares[index].id);
+                                                        searchController
+                                                            .filteredList[index]
+                                                            .id);
                                                     Get.back();
                                                   },
                                                 );

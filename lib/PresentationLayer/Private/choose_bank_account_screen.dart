@@ -101,17 +101,18 @@ class ChooseBankAccountScreen extends StatelessWidget {
                                                     Get.toNamed(
                                                         AppRoutes
                                                             .createEditAccountScreen,
-                                                        arguments: homeController
-                                                                .bankAccounts[
-                                                            index]);
+                                                        arguments:
+                                                            searchController
+                                                                    .filteredList[
+                                                                index]);
                                                   },
                                                   deleteDialogTitle:
                                                       'هل تريد بالتأكيد حذف الحساب؟',
                                                   deleteOnPressed: () {
                                                     accountController
                                                         .deleteAccount(
-                                                            homeController
-                                                                .bankAccounts[
+                                                            searchController
+                                                                .filteredList[
                                                                     index]
                                                                 .id);
                                                     Get.back();

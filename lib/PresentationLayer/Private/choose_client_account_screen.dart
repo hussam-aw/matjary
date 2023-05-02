@@ -101,17 +101,18 @@ class ChooseClientAccountScreen extends StatelessWidget {
                                                     Get.toNamed(
                                                         AppRoutes
                                                             .createEditAccountScreen,
-                                                        arguments: homeController
-                                                                .clientAccounts[
-                                                            index]);
+                                                        arguments:
+                                                            searchController
+                                                                    .filteredList[
+                                                                index]);
                                                   },
                                                   deleteDialogTitle:
                                                       'هل تريد بالتأكيد حذف الحساب؟',
                                                   deleteOnPressed: () {
                                                     accountController
                                                         .deleteAccount(
-                                                            homeController
-                                                                .clientAccounts[
+                                                            searchController
+                                                                .filteredList[
                                                                     index]
                                                                 .id);
                                                     Get.back();

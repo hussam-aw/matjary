@@ -100,8 +100,10 @@ class ChooseProductScreen extends StatelessWidget {
                                                     Get.toNamed(
                                                       AppRoutes
                                                           .createEditProductScreen,
-                                                      arguments: homeController
-                                                          .products[index],
+                                                      arguments:
+                                                          searchController
+                                                                  .filteredList[
+                                                              index],
                                                     );
                                                   },
                                                   deleteDialogTitle:
@@ -109,8 +111,9 @@ class ChooseProductScreen extends StatelessWidget {
                                                   deleteOnPressed: () {
                                                     productController
                                                         .deleteProduct(
-                                                            homeController
-                                                                .products[index]
+                                                            searchController
+                                                                .filteredList[
+                                                                    index]
                                                                 .id);
                                                     Get.back();
                                                   },
