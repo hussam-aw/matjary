@@ -20,6 +20,29 @@ class ChooseClientAccountScreen extends StatelessWidget {
   final homeController = Get.find<HomeController>();
   final SearchController searchController = Get.put(SearchController());
 
+  Widget buildAccountsList(accountList) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return CustomBox(
+          title: accountList[index].name,
+          editOnPressed: () {
+            Get.toNamed(AppRoutes.createEditAccountScreen,
+                arguments: accountList[index]);
+          },
+          deleteDialogTitle: 'هل تريد بالتأكيد حذف الحساب؟',
+          deleteOnPressed: () {
+            accountController.deleteAccount(accountList[index].id);
+            Get.back();
+          },
+        );
+      },
+      separatorBuilder: (context, index) {
+        return spacerHeight();
+      },
+      itemCount: accountList.length,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     searchController.list = homeController.clientAccounts;
@@ -57,34 +80,8 @@ class ChooseClientAccountScreen extends StatelessWidget {
                             init: searchController,
                             builder: (context) {
                               return searchController.searchText.isEmpty
-                                  ? ListView.separated(
-                                      itemBuilder: (context, index) {
-                                        return CustomBox(
-                                          title: homeController
-                                              .clientAccounts[index].name,
-                                          editOnPressed: () {
-                                            Get.toNamed(
-                                                AppRoutes
-                                                    .createEditAccountScreen,
-                                                arguments: homeController
-                                                    .clientAccounts[index]);
-                                          },
-                                          deleteDialogTitle:
-                                              'هل تريد بالتأكيد حذف الحساب؟',
-                                          deleteOnPressed: () {
-                                            accountController.deleteAccount(
-                                                homeController
-                                                    .clientAccounts[index].id);
-                                            Get.back();
-                                          },
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return spacerHeight();
-                                      },
-                                      itemCount:
-                                          homeController.clientAccounts.length,
-                                    )
+                                  ? buildAccountsList(
+                                      homeController.clientAccounts)
                                   : Obx(() {
                                       return searchController
                                               .searchLoading.value
@@ -92,40 +89,8 @@ class ChooseClientAccountScreen extends StatelessWidget {
                                               child: loadingItem(
                                                   width: 100, isWhite: true),
                                             )
-                                          : ListView.separated(
-                                              itemBuilder: (context, index) {
-                                                return CustomBox(
-                                                  title: searchController
-                                                      .filteredList[index].name,
-                                                  editOnPressed: () {
-                                                    Get.toNamed(
-                                                        AppRoutes
-                                                            .createEditAccountScreen,
-                                                        arguments:
-                                                            searchController
-                                                                    .filteredList[
-                                                                index]);
-                                                  },
-                                                  deleteDialogTitle:
-                                                      'هل تريد بالتأكيد حذف الحساب؟',
-                                                  deleteOnPressed: () {
-                                                    accountController
-                                                        .deleteAccount(
-                                                            searchController
-                                                                .filteredList[
-                                                                    index]
-                                                                .id);
-                                                    Get.back();
-                                                  },
-                                                );
-                                              },
-                                              separatorBuilder:
-                                                  (context, index) {
-                                                return spacerHeight();
-                                              },
-                                              itemCount: searchController
-                                                  .filteredList.length,
-                                            );
+                                          : buildAccountsList(
+                                              searchController.filteredList);
                                     });
                             }),
                   ),

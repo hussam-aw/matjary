@@ -6,6 +6,7 @@ import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
+import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -19,6 +20,29 @@ class ChooseBankAccountScreen extends StatelessWidget {
   final AccountController accountController = Get.put(AccountController());
   final HomeController homeController = Get.find<HomeController>();
   final SearchController searchController = Get.put(SearchController());
+
+  Widget buildAccountsList(accountList) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return CustomBox(
+          title: accountList[index].name,
+          editOnPressed: () {
+            Get.toNamed(AppRoutes.createEditAccountScreen,
+                arguments: accountList[index]);
+          },
+          deleteDialogTitle: 'هل تريد بالتأكيد حذف الحساب؟',
+          deleteOnPressed: () {
+            accountController.deleteAccount(accountList[index].id);
+            Get.back();
+          },
+        );
+      },
+      separatorBuilder: (context, index) {
+        return spacerHeight();
+      },
+      itemCount: accountList.length,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,34 +81,8 @@ class ChooseBankAccountScreen extends StatelessWidget {
                             init: searchController,
                             builder: (context) {
                               return searchController.searchText.isEmpty
-                                  ? ListView.separated(
-                                      itemBuilder: (context, index) {
-                                        return CustomBox(
-                                          title: homeController
-                                              .bankAccounts[index].name,
-                                          editOnPressed: () {
-                                            Get.toNamed(
-                                                AppRoutes
-                                                    .createEditAccountScreen,
-                                                arguments: homeController
-                                                    .bankAccounts[index]);
-                                          },
-                                          deleteDialogTitle:
-                                              'هل تريد بالتأكيد حذف الحساب؟',
-                                          deleteOnPressed: () {
-                                            accountController.deleteAccount(
-                                                homeController
-                                                    .bankAccounts[index].id);
-                                            Get.back();
-                                          },
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return spacerHeight();
-                                      },
-                                      itemCount:
-                                          homeController.bankAccounts.length,
-                                    )
+                                  ? buildAccountsList(
+                                      homeController.bankAccounts)
                                   : Obx(() {
                                       return searchController
                                               .searchLoading.value
@@ -92,40 +90,8 @@ class ChooseBankAccountScreen extends StatelessWidget {
                                               child: loadingItem(
                                                   width: 100, isWhite: true),
                                             )
-                                          : ListView.separated(
-                                              itemBuilder: (context, index) {
-                                                return CustomBox(
-                                                  title: searchController
-                                                      .filteredList[index].name,
-                                                  editOnPressed: () {
-                                                    Get.toNamed(
-                                                        AppRoutes
-                                                            .createEditAccountScreen,
-                                                        arguments:
-                                                            searchController
-                                                                    .filteredList[
-                                                                index]);
-                                                  },
-                                                  deleteDialogTitle:
-                                                      'هل تريد بالتأكيد حذف الحساب؟',
-                                                  deleteOnPressed: () {
-                                                    accountController
-                                                        .deleteAccount(
-                                                            searchController
-                                                                .filteredList[
-                                                                    index]
-                                                                .id);
-                                                    Get.back();
-                                                  },
-                                                );
-                                              },
-                                              separatorBuilder:
-                                                  (context, index) {
-                                                return spacerHeight();
-                                              },
-                                              itemCount: searchController
-                                                  .filteredList.length,
-                                            );
+                                          : buildAccountsList(
+                                              searchController.filteredList);
                                     });
                             }),
                   ),
