@@ -7,13 +7,21 @@ class StatementController extends GetxController {
   TextEditingController statementAmountController =
       TextEditingController(text: "0.0");
 
-  void setFromAccountInDropdownButton(accountName) {
+  void setFromAccount(accountName) {
     fromAccountController = TextEditingController(text: accountName);
-    update();
   }
 
-  void setToAccountInDropdownButton(accountName) {
+  void setToAccount(accountName) {
     toAccountController = TextEditingController(text: accountName);
+  }
+
+  void setAccountBasedOnType(accountName, type) {
+    if (type == "from") {
+      setFromAccount(accountName);
+    } else if (type == "to") {
+      setToAccount(accountName);
+    }
     update();
+    Get.back();
   }
 }
