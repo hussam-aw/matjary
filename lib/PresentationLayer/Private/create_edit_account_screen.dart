@@ -103,6 +103,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                                   'حساب عادي',
                                   'صندوق',
                                   'زبون',
+                                  'مزود',
                                   'جهة عمل'
                                 ],
                                 onChanged: (value) {
