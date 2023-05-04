@@ -69,28 +69,29 @@ class ProductsClient {
       initialPrice,
       userId,
       images) async {
-    var response = await http.post(Uri.parse('$baseUrl$productLink/$id'),
-        body: jsonEncode(<String, dynamic>{
-          "name": name,
-          "category_id": categoryId,
-          "special_number": specialNumber,
-          "wholesale_price": wholesalePrice,
-          "retail_price": retailPrice,
-          "supplier_price": supplierPrice,
-          "quantity": quantity,
-          "affected_exchange": affectedExchange,
-          "initial_price": initialPrice,
-          "user_id": userId,
-          "images": images,
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        });
+    var request =
+        http.MultipartRequest('POST', Uri.parse('$baseUrl$productLink/$id'));
+    request.fields.addAll({
+      'name': name.toString(),
+      'category_id': categoryId.toString(),
+      'special_number': specialNumber.toString(),
+      'wholesale_price': wholesalePrice.toString(),
+      'retail_price': retailPrice.toString(),
+      'supplier_price': supplierPrice.toString(),
+      'quantity': quantity.toString(),
+      'affected_exchange': affectedExchange.toString(),
+      'initial_price': initialPrice.toString(),
+      'user_id': userId.toString(),
+    });
+    for (String path in images) {
+      request.files.add(await http.MultipartFile.fromPath('images[]', path));
+    }
+    http.StreamedResponse response = await request.send();
 
-    print(response.body);
     if (response.statusCode == 201) {
-      return response.body;
+      return await response.stream.bytesToString();
     } else {
+      print(response.statusCode);
       return null;
     }
   }
