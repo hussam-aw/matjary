@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -200,36 +202,83 @@ class CreateEditProductScreen extends StatelessWidget {
                               ],
                             ),
                             spacerHeight(),
-                            if (product != null && product!.images.isNotEmpty)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 100,
-                                    child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          width: 100,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius: raduis15,
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    product!.images[index]),
-                                                fit: BoxFit.cover),
+                            GetBuilder(
+                              init: productScreenController,
+                              builder: (context) {
+                                return productScreenController
+                                        .selectedImages.isEmpty
+                                    ? product != null &&
+                                            product!.images.isNotEmpty
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: 100,
+                                                child: ListView.separated(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Container(
+                                                      width: 100,
+                                                      height: 100,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: raduis15,
+                                                        image: DecorationImage(
+                                                            image: NetworkImage(
+                                                                product!.images[
+                                                                    index]),
+                                                            fit: BoxFit.cover),
+                                                      ),
+                                                    );
+                                                  },
+                                                  separatorBuilder:
+                                                      (context, index) {
+                                                    return spacerWidth();
+                                                  },
+                                                  itemCount:
+                                                      product!.images.length,
+                                                ),
+                                              ),
+                                              spacerHeight(),
+                                            ],
+                                          )
+                                        : Container()
+                                    : Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 100,
+                                            child: ListView.separated(
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  width: 100,
+                                                  height: 100,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: raduis15,
+                                                    image: DecorationImage(
+                                                        image: FileImage(File(
+                                                            productScreenController
+                                                                    .selectedImages[
+                                                                index])),
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (context, index) {
+                                                return spacerWidth();
+                                              },
+                                              itemCount: productScreenController
+                                                  .selectedImages.length,
+                                            ),
                                           ),
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return spacerWidth();
-                                      },
-                                      itemCount: product!.images.length,
-                                    ),
-                                  ),
-                                  spacerHeight(),
-                                ],
-                              ),
+                                          spacerHeight(),
+                                        ],
+                                      );
+                              },
+                            ),
                             AccetpIconButton(
                               center: true,
                               text: Text(
@@ -245,7 +294,7 @@ class CreateEditProductScreen extends StatelessWidget {
                               ),
                               backgroundColor: UIColors.white,
                               onPressed: () async {
-                                productController.setImages();
+                                productScreenController.getSelectedImages();
                               },
                             ),
                           ],
@@ -259,6 +308,8 @@ class CreateEditProductScreen extends StatelessWidget {
                   () => AcceptButton(
                     text: product != null ? "تعديل" : "إنشاء",
                     onPressed: () {
+                      productController
+                          .setImages(productScreenController.selectedImages);
                       if (product != null) {
                         productController.updateProduct(product!.id);
                       } else {
