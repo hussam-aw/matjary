@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_screen_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -18,6 +19,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -73,15 +75,22 @@ class CreateEditProductScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: CustomDropdownFormField(
-                                    value: productController.category,
-                                    items: homeController.categories
-                                        .map((category) => category.name)
-                                        .toList(),
-                                    onChanged: (value) {
-                                      productController.category = value;
-                                    },
-                                  ),
+                                  child: Obx(() {
+                                    return homeController
+                                            .isLoadingCategories.value
+                                        ? loadingItem()
+                                        : CustomDropdownFormField(
+                                            value: productController.category,
+                                            items: homeController.categories
+                                                .map(
+                                                    (category) => category.name)
+                                                .toList(),
+                                            onChanged: (value) {
+                                              productController.category =
+                                                  value;
+                                            },
+                                          );
+                                  }),
                                 ),
                                 spacerWidth(),
                                 CustomIconButton(
@@ -89,7 +98,10 @@ class CreateEditProductScreen extends StatelessWidget {
                                     FontAwesomeIcons.plus,
                                     color: UIColors.mainIcon,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.toNamed(
+                                        AppRoutes.createEditCategoryScreen);
+                                  },
                                 ),
                               ],
                             ),
