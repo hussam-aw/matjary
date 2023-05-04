@@ -69,18 +69,21 @@ class ProductController extends GetxController {
           TextEditingController(text: product.supplierPrice.toString());
       retailPriceController =
           TextEditingController(text: product.retailPrice.toString());
+      imagePaths = product.images;
     }
   }
 
   Future<void> createProduct() async {
     String name = nameController.text;
     String specialNumber = modelNumberController.text;
+    String initialPrice = initialPriceController.text;
     String quantity = quantityController.text;
     String wholesalePrice = wholesalePriceController.text;
     String supplierPrice = supplierPriceController.text;
     String retailPrice = retailPriceController.text;
     if (name.isNotEmpty &&
         specialNumber.isNotEmpty &&
+        initialPrice.isNotEmpty &&
         quantity.isNotEmpty &&
         wholesalePrice.isNotEmpty &&
         supplierPrice.isNotEmpty &&
@@ -95,7 +98,7 @@ class ProductController extends GetxController {
         num.parse(supplierPrice),
         int.parse(quantity),
         convertAffectedExchangeStateToInt(affectedExchangeState!),
-        20,
+        num.parse(initialPrice),
         MyApp.appUser!.id,
         imagePaths,
       );
@@ -114,6 +117,7 @@ class ProductController extends GetxController {
   Future<void> updateProduct(int id) async {
     String name = nameController.text;
     String specialNumber = modelNumberController.text;
+    String initialPrice = initialPriceController.text;
     String quantity = quantityController.text;
     String wholesalePrice = wholesalePriceController.text;
     String supplierPrice = supplierPriceController.text;
@@ -129,9 +133,9 @@ class ProductController extends GetxController {
       num.parse(supplierPrice),
       int.parse(quantity),
       convertAffectedExchangeStateToInt(affectedExchangeState!),
-      20,
+      num.parse(initialPrice),
       MyApp.appUser!.id,
-      [],
+      imagePaths,
     );
     loading.value = false;
     if (product != null) {
