@@ -226,7 +226,7 @@ class CreateEditProductScreen extends StatelessWidget {
                               ),
                               backgroundColor: UIColors.white,
                               onPressed: () async {
-                                productController.selectImages();
+                                productController.setImages();
                               },
                             ),
                           ],
