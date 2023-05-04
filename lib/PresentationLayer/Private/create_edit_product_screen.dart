@@ -95,6 +95,13 @@ class CreateEditProductScreen extends StatelessWidget {
                             ),
                             spacerHeight(),
                             CustomTextFormField(
+                              controller:
+                                  productController.initialPriceController,
+                              keyboardType: TextInputType.number,
+                              hintText: 'المبلغ الابتدائي',
+                            ),
+                            spacerHeight(height: 20),
+                            CustomTextFormField(
                               controller: productController.quantityController,
                               keyboardType: TextInputType.number,
                               hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
