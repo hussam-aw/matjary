@@ -9,7 +9,6 @@ class ImagePickerHelper {
 
   Future<List<String>> pickImages() async {
     selectedImages = await picker.pickMultiImage();
-
     for (XFile file in selectedImages) {
       imagePaths.add(file.path);
     }
