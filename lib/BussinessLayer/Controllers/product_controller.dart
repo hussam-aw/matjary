@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/image_picker_helper.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -16,6 +20,8 @@ class ProductController extends GetxController {
   TextEditingController retailPriceController = TextEditingController();
   TextEditingController supplierPriceController = TextEditingController();
   TextEditingController wholesalePriceController = TextEditingController();
+  List<XFile> imageFiles = [];
+  ImagePickerHelper imagePickerHelper = ImagePickerHelper();
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
   var homeController = Get.find<HomeController>();
   var loading = false.obs;
@@ -38,6 +44,10 @@ class ProductController extends GetxController {
     return homeController.categories
         .firstWhere((category) => category.name == categoryName)
         .id;
+  }
+
+  void selectImages() async {
+    imageFiles = await imagePickerHelper.pickImages();
   }
 
   void setProductDetails(Product? product) {

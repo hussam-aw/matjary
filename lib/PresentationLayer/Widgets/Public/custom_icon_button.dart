@@ -7,14 +7,17 @@ class CustomIconButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onPressed,
+    this.heroTag = "",
   });
 
   final Icon icon;
+  final Object? heroTag;
   final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: heroTag,
       onPressed: onPressed,
       elevation: 0.0,
       backgroundColor: UIColors.white,
