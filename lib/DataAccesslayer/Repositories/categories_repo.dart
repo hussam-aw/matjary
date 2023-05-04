@@ -13,4 +13,13 @@ class CategoriesRepo {
     }
     return [];
   }
+
+  Future<Category?> createCategory(name, userId) async {
+    var data = await client.createCategory(name, userId);
+    if (data != null) {
+      final parsed = json.decode(data);
+      return Category.fromMap(parsed);
+    }
+    return null;
+  }
 }
