@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,24 +21,24 @@ class ProductController extends GetxController {
   TextEditingController retailPriceController = TextEditingController();
   TextEditingController supplierPriceController = TextEditingController();
   TextEditingController wholesalePriceController = TextEditingController();
-  List<XFile> imageFiles = [];
+  List<String> imagePaths = [];
   ImagePickerHelper imagePickerHelper = ImagePickerHelper();
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
   var homeController = Get.find<HomeController>();
   var loading = false.obs;
 
-  String convertAffectedExchangeStateToString(int state) {
-    if (state == 0) {
+  String convertAffectedExchangeStateToString(String state) {
+    if (state == "0") {
       return 'لا يتأثر';
     }
     return 'يتأثر';
   }
 
-  int convertAffectedExchangeStateToInt(String state) {
+  String convertAffectedExchangeStateToInt(String state) {
     if (state == 'لا يتأثر') {
-      return 0;
+      return "0";
     }
-    return 1;
+    return "1";
   }
 
   int getCategoryId(categoryName) {
@@ -46,8 +47,8 @@ class ProductController extends GetxController {
         .id;
   }
 
-  void selectImages() async {
-    imageFiles = await imagePickerHelper.pickImages();
+  void setImages() async {
+    imagePaths = await imagePickerHelper.pickImages();
   }
 
   void setProductDetails(Product? product) {
@@ -60,8 +61,8 @@ class ProductController extends GetxController {
       category = product.category;
       quantityController =
           TextEditingController(text: product.quantity.toString());
-      affectedExchangeState =
-          convertAffectedExchangeStateToString(product.affectedExchange);
+      affectedExchangeState = convertAffectedExchangeStateToString(
+          product.affectedExchange.toString());
       wholesalePriceController =
           TextEditingController(text: product.wholesalePrice.toString());
       supplierPriceController =
@@ -96,7 +97,7 @@ class ProductController extends GetxController {
         convertAffectedExchangeStateToInt(affectedExchangeState!),
         20,
         MyApp.appUser!.id,
-        [],
+        imagePaths,
       );
       loading.value = false;
       if (product != null) {
