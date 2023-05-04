@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,24 +21,24 @@ class ProductController extends GetxController {
   TextEditingController retailPriceController = TextEditingController();
   TextEditingController supplierPriceController = TextEditingController();
   TextEditingController wholesalePriceController = TextEditingController();
-  List<XFile> imageFiles = [];
+  List<String> imagePaths = [];
   ImagePickerHelper imagePickerHelper = ImagePickerHelper();
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
   var homeController = Get.find<HomeController>();
   var loading = false.obs;
 
-  String convertAffectedExchangeStateToString(int state) {
-    if (state == 0) {
+  String convertAffectedExchangeStateToString(String state) {
+    if (state == "0") {
       return 'لا يتأثر';
     }
     return 'يتأثر';
   }
 
-  int convertAffectedExchangeStateToInt(String state) {
+  String convertAffectedExchangeStateToInt(String state) {
     if (state == 'لا يتأثر') {
-      return 0;
+      return "0";
     }
-    return 1;
+    return "1";
   }
 
   int getCategoryId(categoryName) {
@@ -46,8 +47,8 @@ class ProductController extends GetxController {
         .id;
   }
 
-  void selectImages() async {
-    imageFiles = await imagePickerHelper.pickImages();
+  void setImages() async {
+    imagePaths = await imagePickerHelper.pickImages();
   }
 
   void setProductDetails(Product? product) {
@@ -60,26 +61,29 @@ class ProductController extends GetxController {
       category = product.category;
       quantityController =
           TextEditingController(text: product.quantity.toString());
-      affectedExchangeState =
-          convertAffectedExchangeStateToString(product.affectedExchange);
+      affectedExchangeState = convertAffectedExchangeStateToString(
+          product.affectedExchange.toString());
       wholesalePriceController =
           TextEditingController(text: product.wholesalePrice.toString());
       supplierPriceController =
           TextEditingController(text: product.supplierPrice.toString());
       retailPriceController =
           TextEditingController(text: product.retailPrice.toString());
+      imagePaths = product.images;
     }
   }
 
   Future<void> createProduct() async {
     String name = nameController.text;
     String specialNumber = modelNumberController.text;
+    String initialPrice = initialPriceController.text;
     String quantity = quantityController.text;
     String wholesalePrice = wholesalePriceController.text;
     String supplierPrice = supplierPriceController.text;
     String retailPrice = retailPriceController.text;
     if (name.isNotEmpty &&
         specialNumber.isNotEmpty &&
+        initialPrice.isNotEmpty &&
         quantity.isNotEmpty &&
         wholesalePrice.isNotEmpty &&
         supplierPrice.isNotEmpty &&
@@ -94,9 +98,9 @@ class ProductController extends GetxController {
         num.parse(supplierPrice),
         int.parse(quantity),
         convertAffectedExchangeStateToInt(affectedExchangeState!),
-        20,
+        num.parse(initialPrice),
         MyApp.appUser!.id,
-        [],
+        imagePaths,
       );
       loading.value = false;
       if (product != null) {
@@ -113,6 +117,7 @@ class ProductController extends GetxController {
   Future<void> updateProduct(int id) async {
     String name = nameController.text;
     String specialNumber = modelNumberController.text;
+    String initialPrice = initialPriceController.text;
     String quantity = quantityController.text;
     String wholesalePrice = wholesalePriceController.text;
     String supplierPrice = supplierPriceController.text;
@@ -128,9 +133,9 @@ class ProductController extends GetxController {
       num.parse(supplierPrice),
       int.parse(quantity),
       convertAffectedExchangeStateToInt(affectedExchangeState!),
-      20,
+      num.parse(initialPrice),
       MyApp.appUser!.id,
-      [],
+      imagePaths,
     );
     loading.value = false;
     if (product != null) {

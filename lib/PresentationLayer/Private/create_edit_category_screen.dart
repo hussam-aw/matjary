@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/category_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
@@ -11,7 +12,9 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class CreateEditCategoryScreen extends StatelessWidget {
-  const CreateEditCategoryScreen({super.key});
+  CreateEditCategoryScreen({super.key});
+
+  final categoryController = Get.put(CategoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class CreateEditCategoryScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: UIColors.mainBackground,
         appBar: customAppBar(showingAppIcon: false),
-        drawer:  CustomDrawer(),
+        drawer: CustomDrawer(),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: Column(
@@ -37,7 +40,7 @@ class CreateEditCategoryScreen extends StatelessWidget {
                         const SectionTitle(title: 'المعلومات الأساسية'),
                         spacerHeight(),
                         CustomTextFormField(
-                          controller: TextEditingController(),
+                          controller: categoryController.nameController,
                           hintText: 'اسم التصنيف',
                         ),
                       ],
@@ -46,10 +49,17 @@ class CreateEditCategoryScreen extends StatelessWidget {
                 ),
               ),
               spacerHeight(height: 30),
-              AcceptButton(
-                text: 'إنشاء',
-                onPressed: () {},
-              )
+              Obx(
+                () {
+                  return AcceptButton(
+                    text: 'إنشاء',
+                    onPressed: () {
+                      categoryController.createCategory();
+                    },
+                    isLoading: categoryController.loading.value,
+                  );
+                },
+              ),
             ],
           ),
         ),
