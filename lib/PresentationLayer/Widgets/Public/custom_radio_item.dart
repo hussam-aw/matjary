@@ -8,11 +8,15 @@ class RadioButtonItem extends StatelessWidget {
     super.key,
     required this.text,
     this.isSelected = false,
+    this.selectionColor = UIColors.white,
+    this.selectedTextColor = UIColors.menuTitle,
     required this.onTap,
   });
 
   final String text;
   final bool isSelected;
+  final Color selectionColor;
+  final Color selectedTextColor;
   final Function() onTap;
 
   @override
@@ -23,14 +27,14 @@ class RadioButtonItem extends StatelessWidget {
         width: 110,
         height: 45,
         decoration: BoxDecoration(
-          color: isSelected ? UIColors.white : UIColors.containerBackground,
+          color: isSelected ? selectionColor : UIColors.containerBackground,
           borderRadius: raduis15,
         ),
         child: Center(
           child: Text(
             text,
             style: UITextStyle.normalMeduim.copyWith(
-              color: isSelected ? UIColors.menuTitle : UIColors.normalText,
+              color: isSelected ? selectedTextColor : UIColors.normalText,
             ),
           ),
         ),

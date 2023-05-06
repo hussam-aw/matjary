@@ -73,7 +73,7 @@ class CreateBottomSheet extends StatelessWidget {
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.createEditBankScreen);
+                      Get.toNamed(AppRoutes.createEditOrderScreen);
                     },
                     icon: 'assets/icons/D_bank_icon.png',
                     title: 'صندوق نقدي',

@@ -19,4 +19,5 @@ class AppRoutes {
   static const chooseOrderScreen = '/home/chooseOrderScreen';
   static const chooseProductScreen = '/home/chooseProductScreen';
   static const chooseCategoryScreen = '/home/chooseCategoryScreen';
+  static const createEditOrderScreen = '/home/createEditOrderScreen';
 }
