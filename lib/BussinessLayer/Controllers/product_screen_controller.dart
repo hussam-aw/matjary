@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:matjary/BussinessLayer/helpers/image_picker_helper.dart';
 
 class ProductScreenController extends GetxController {
   bool affected = false;
   bool notAffected = true;
-  List<XFile>? imageFileList;
+  ImagePickerHelper imagePickerHelper = ImagePickerHelper();
+  List<String> selectedImages = [];
+
   void setAffectedExchangeState(type) {
     if (type == 'يتأثر') {
       affected = true;
@@ -20,11 +22,14 @@ class ProductScreenController extends GetxController {
     update();
   }
 
-  Future<void> pickImage() async {
-    print("start pick Images");
-    ImagePicker picker = ImagePicker();
-    imageFileList = await picker.pickMultiImage();
+  void getSelectedImages() async {
+    selectedImages = await imagePickerHelper.pickImages();
     update();
-    print(imageFileList);
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    selectedImages.clear();
   }
 }

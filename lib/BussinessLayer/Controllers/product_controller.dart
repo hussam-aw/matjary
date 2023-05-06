@@ -22,7 +22,7 @@ class ProductController extends GetxController {
   TextEditingController supplierPriceController = TextEditingController();
   TextEditingController wholesalePriceController = TextEditingController();
   List<String> imagePaths = [];
-  ImagePickerHelper imagePickerHelper = ImagePickerHelper();
+  List<String> selectedImages = [];
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
   var homeController = Get.find<HomeController>();
   var loading = false.obs;
@@ -47,8 +47,8 @@ class ProductController extends GetxController {
         .id;
   }
 
-  void setImages() async {
-    imagePaths = await imagePickerHelper.pickImages();
+  void setImages(images) {
+    selectedImages = images;
   }
 
   void setProductDetails(Product? product) {
@@ -89,6 +89,7 @@ class ProductController extends GetxController {
         supplierPrice.isNotEmpty &&
         retailPrice.isNotEmpty) {
       loading.value = true;
+
       var product = await prdouctsRepo.createProduct(
         name,
         getCategoryId(category),
@@ -100,7 +101,7 @@ class ProductController extends GetxController {
         convertAffectedExchangeStateToInt(affectedExchangeState!),
         num.parse(initialPrice),
         MyApp.appUser!.id,
-        imagePaths,
+        selectedImages.isEmpty ? [] : selectedImages,
       );
       loading.value = false;
       if (product != null) {
@@ -122,6 +123,7 @@ class ProductController extends GetxController {
     String wholesalePrice = wholesalePriceController.text;
     String supplierPrice = supplierPriceController.text;
     String retailPrice = retailPriceController.text;
+
     loading.value = true;
     var product = await prdouctsRepo.updateProduct(
       id,
@@ -135,7 +137,7 @@ class ProductController extends GetxController {
       convertAffectedExchangeStateToInt(affectedExchangeState!),
       num.parse(initialPrice),
       MyApp.appUser!.id,
-      imagePaths,
+      selectedImages.isEmpty ? [] : selectedImages,
     );
     loading.value = false;
     if (product != null) {
@@ -162,6 +164,8 @@ class ProductController extends GetxController {
   void onInit() {
     category = homeController.categories[0].name;
     affectedExchangeState = "يتأثر";
+    selectedImages.clear();
+    print(selectedImages.length);
     super.onInit();
   }
 }
