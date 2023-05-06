@@ -11,8 +11,8 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
-class OrderBasicInformationScreen extends StatelessWidget {
-  OrderBasicInformationScreen({super.key});
+class OrderBasicInformation extends StatelessWidget {
+  OrderBasicInformation({super.key});
 
   final orderScreenController = Get.find<OrderScreenController>();
 
@@ -102,7 +102,7 @@ class OrderBasicInformationScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 35),
                 child: Text(
                   'سيتم إيداع أو سحب قيمة صافي الفاتورة منه أو إليه  ',
-                  style: UITextStyle.normalBody.copyWith(
+                  style: UITextStyle.small.copyWith(
                     color: UIColors.normalText,
                   ),
                 ),
@@ -134,7 +134,7 @@ class OrderBasicInformationScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 35),
                 child: Text(
                   'سيتم زيادة أو تقليص المنتجات من المستودع المختار',
-                  style: UITextStyle.normalBody.copyWith(
+                  style: UITextStyle.small.copyWith(
                     color: UIColors.normalText,
                   ),
                 ),
