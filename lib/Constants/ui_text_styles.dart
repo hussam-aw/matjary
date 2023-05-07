@@ -80,6 +80,14 @@ class UITextStyle {
     fontSize: 10.0,
   );
 
+  static const smallBold = TextStyle(
+    color: Colors.white,
+    height: 1,
+    fontFamily: 'Cairo',
+    fontWeight: FontWeight.bold,
+    fontSize: 7,
+  );
+
   static const small = TextStyle(
     color: Colors.white,
     height: 1,
