@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
+import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class OrderProductBox extends StatelessWidget {
@@ -11,47 +13,112 @@ class OrderProductBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 85,
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+      decoration: const BoxDecoration(
         color: UIColors.containerBackground,
         borderRadius: raduis15,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            children: [
-              Text('باوربانك ريماكس RM-79'),
-              Row(
-                children: [
-                  Text('الكمية:'),
-                  Container(),
-                  spacerWidth(),
-                  Text('الافرادي:'),
-                  Container(),
-                ],
-              ),
-            ],
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Expanded(
+                  child: Text(
+                    'باوربانك ريماكس RM-79',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: UITextStyle.normalBody,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      const Text(
+                        'الكمية:',
+                        style: UITextStyle.small,
+                      ),
+                      spacerWidth(width: 7),
+                      Container(
+                        width: 32,
+                        height: 14,
+                        decoration: const BoxDecoration(
+                          color: UIColors.white,
+                          borderRadius: raduis15,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '5',
+                            style: UITextStyle.smallBold
+                                .copyWith(color: UIColors.smallText),
+                          ),
+                        ),
+                      ),
+                      spacerWidth(),
+                      const Text(
+                        'الافرادي:',
+                        style: UITextStyle.small,
+                      ),
+                      spacerWidth(width: 7),
+                      Container(
+                        width: 32,
+                        height: 14,
+                        decoration: const BoxDecoration(
+                          color: UIColors.white,
+                          borderRadius: raduis15,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '5000',
+                            style: UITextStyle.smallBold
+                                .copyWith(color: UIColors.smallText),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          Text('25000'),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                child: Icon(
-                  Icons.edit,
-                  size: 25,
-                ),
-                onTap: () {},
+          const Expanded(
+            flex: 2,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                '25000',
+                style: UITextStyle.normalMeduim,
               ),
-              InkWell(
-                child: Icon(
-                  Icons.delete,
-                  size: 25,
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: const Icon(
+                    Icons.edit,
+                    size: 20,
+                    color: UIColors.white,
+                  ),
+                  onTap: () {},
                 ),
-                onTap: () {},
-              ),
-            ],
+                InkWell(
+                  child: const Icon(
+                    Icons.delete,
+                    size: 20,
+                    color: UIColors.white,
+                  ),
+                  onTap: () {},
+                ),
+              ],
+            ),
           ),
         ],
       ),
