@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 class UIColors {
   static const primary = Color(0xFFFFAA00);
   static const white = Color(0xffffffff);
-  static const red = Color(0xffff0000);
+  static const red = Color.fromARGB(255, 202, 159, 159);
   // Text colors
   static const darkText = Color(0xff7D7D7D);
   static const normalText = Color(0xffA4A4A4);
   static const lightNormalText = Color(0xffF6F6F6);
   static const menuTitle = Color(0xff3D3E65);
+  static const smallText = Color(0xff1c1d40);
   // Icon Colors
   static const normalIcon = Color(0xffC5C5C5);
   static const mainIcon = Color(0xff1C1D40);
