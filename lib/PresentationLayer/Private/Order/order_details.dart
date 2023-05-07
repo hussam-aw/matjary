@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_product_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
@@ -22,7 +24,9 @@ class OrderDetails extends StatelessWidget {
               width: 120,
               child: AcceptButton(
                 text: 'اختيار منتجات',
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoutes.selectProducts);
+                },
               ),
             ),
             spacerHeight(),
