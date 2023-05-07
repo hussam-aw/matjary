@@ -3,15 +3,15 @@ import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
-    super.key,
-    required this.controller,
-    this.hintText = '',
-    this.keyboardType = TextInputType.name,
-    this.style = UITextStyle.normalBody,
-    this.maxLines = 1,
-    this.readOnly = false,
-  });
+  const CustomTextFormField(
+      {super.key,
+      required this.controller,
+      this.hintText = '',
+      this.keyboardType = TextInputType.name,
+      this.style = UITextStyle.normalBody,
+      this.maxLines = 1,
+      this.readOnly = false,
+      this.onChanged});
 
   final String hintText;
   final TextEditingController controller;
@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle style;
   final int maxLines;
   final bool readOnly;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
       decoration: textFieldStyle.copyWith(
         hintText: hintText,
       ),
+      onChanged: onChanged,
     );
   }
 }
