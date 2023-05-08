@@ -161,9 +161,8 @@ class CreateStatementScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: statementController.amountController,
                             keyboardType: TextInputType.number,
-                            onChanged: (value) {
-                              statementScreenController.statementAmount.value =
-                                  value;
+                            onChanged: (amount) {
+                              statementScreenController.setAmount(amount);
                             },
                           ),
                           spacerHeight(height: 20),
@@ -247,10 +246,15 @@ class CreateStatementScreen extends StatelessWidget {
                   ),
                 ),
                 spacerHeight(height: 30),
-                AcceptButton(
-                  text: 'إنشاء',
-                  onPressed: () {},
-                )
+                Obx(() {
+                  return AcceptButton(
+                    text: 'إنشاء',
+                    onPressed: () {
+                      statementController.createStatement();
+                    },
+                    isLoading: statementController.loading.value,
+                  );
+                })
               ],
             ),
           ),
