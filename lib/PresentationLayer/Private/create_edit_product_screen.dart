@@ -18,7 +18,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
@@ -130,7 +130,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                       .setAffectedExchangeState(
                                           productController
                                               .affectedExchangeState);
-                                  return CustomRadioButton(
+                                  return CustomRadioGroup(
                                     items: [
                                       RadioButtonItem(
                                           text: 'يتأثر',

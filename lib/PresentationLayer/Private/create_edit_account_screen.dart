@@ -8,7 +8,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -70,7 +70,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                                 builder: (context) {
                                   accountScreenController
                                       .setAccountType(accountController.type);
-                                  return CustomRadioButton(
+                                  return CustomRadioGroup(
                                     items: [
                                       RadioButtonItem(
                                           text: 'مدين',
