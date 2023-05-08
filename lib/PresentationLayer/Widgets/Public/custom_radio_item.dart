@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -7,15 +8,21 @@ class RadioButtonItem extends StatelessWidget {
   const RadioButtonItem({
     super.key,
     required this.text,
+    this.width = 125,
+    this.style = UITextStyle.normalMeduim,
     this.isSelected = false,
     this.selectionColor = UIColors.white,
+    this.unselectionColor = UIColors.containerBackground,
     this.selectedTextColor = UIColors.menuTitle,
     required this.onTap,
   });
 
   final String text;
+  final double width;
+  final TextStyle style;
   final bool isSelected;
   final Color selectionColor;
+  final Color unselectionColor;
   final Color selectedTextColor;
   final Function() onTap;
 
@@ -24,16 +31,16 @@ class RadioButtonItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 110,
-        height: 45,
+        width: width,
         decoration: BoxDecoration(
-          color: isSelected ? selectionColor : UIColors.containerBackground,
+          color: isSelected ? selectionColor : unselectionColor,
           borderRadius: raduis15,
         ),
+        padding: const EdgeInsets.all(4),
         child: Center(
           child: Text(
             text,
-            style: UITextStyle.normalMeduim.copyWith(
+            style: style.copyWith(
               color: isSelected ? selectedTextColor : UIColors.normalText,
             ),
           ),
