@@ -28,7 +28,7 @@ class Statement {
       firstSideId: map['first_side_id'] as int,
       secondSideId: map['second_side_id'] as int,
       statement: map['statement'] ?? '',
-      amount: num.parse(map['amount']),
+      amount: map['amount'],
       date: DateTime.parse(map['date']),
     );
   }
