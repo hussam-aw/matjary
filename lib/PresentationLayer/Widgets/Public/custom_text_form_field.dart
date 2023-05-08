@@ -11,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
       this.style = UITextStyle.normalBody,
       this.maxLines = 1,
       this.readOnly = false,
+      this.suffix,
       this.onChanged});
 
   final String hintText;
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle style;
   final int maxLines;
   final bool readOnly;
+  final Widget? suffix;
   final Function(String)? onChanged;
 
   @override
@@ -31,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: maxLines,
       decoration: textFieldStyle.copyWith(
         hintText: hintText,
+        suffixIcon: suffix,
       ),
       onChanged: onChanged,
     );
