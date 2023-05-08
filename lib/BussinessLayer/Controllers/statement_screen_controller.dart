@@ -25,8 +25,16 @@ class StatementScreenController extends GetxController {
     Get.back();
   }
 
+  void setAmount(String amount) {
+    if (amount.isNotEmpty) {
+      var parsedAmount = num.parse(amount);
+      if (parsedAmount > 0.0) statementAmount.value = amount;
+    } else {
+      statementAmount.value = '';
+    }
+  }
+
   void selectDate(date) async {
-    print(date);
     if (date != null) {
       statementController.setDate(date.toString().substring(0, 10));
       update();
