@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart'
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
@@ -27,29 +28,21 @@ class OrderBasicInformation extends StatelessWidget {
             children: [
               const SectionTitle(title: 'نوع الفاتورة'),
               spacerHeight(),
-              GetBuilder(
-                init: orderScreenController,
-                builder: (context) {
-                  return SizedBox(
-                    height: 45,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return RadioButtonItem(
-                          text: orderScreenController.orderTypes[index],
-                          selectionColor: UIColors.primary,
-                          selectedTextColor: UIColors.white,
-                          isSelected: orderScreenController.orderSelection[
-                              orderScreenController.orderTypes[index]]!,
-                          onTap: () {
-                            orderScreenController.changeOrderType(
-                                orderScreenController.orderTypes[index]);
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) => spacerWidth(),
-                      itemCount: 5,
-                    ),
+              Obx(
+                () {
+                  return CustomRadioGroup(
+                    items: orderScreenController.orderTypes
+                        .map((orderType) => RadioButtonItem(
+                              text: orderType,
+                              selectionColor: UIColors.primary,
+                              selectedTextColor: UIColors.white,
+                              isSelected: orderScreenController
+                                  .orderTypesSelection.value[orderType]!,
+                              onTap: () {
+                                orderScreenController.setOrderType(orderType);
+                              },
+                            ))
+                        .toList(),
                   );
                 },
               ),
