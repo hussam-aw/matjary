@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
+import 'package:matjary/main.dart';
 
 class StatementController extends GetxController {
   TextEditingController fromAccountController = TextEditingController();
@@ -13,6 +15,7 @@ class StatementController extends GetxController {
   );
   TextEditingController statementTextController = TextEditingController();
   StatementRepo statementRepo = StatementRepo();
+  var homeController = Get.find<HomeController>();
   var loading = false.obs;
 
   void setFromAccount(accountName) {
@@ -21,6 +24,15 @@ class StatementController extends GetxController {
 
   void setToAccount(accountName) {
     toAccountController.value = TextEditingValue(text: accountName);
+  }
+
+  String getAccountId(accountName) {
+    var account = homeController.accounts
+        .firstWhereOrNull((account) => account.name == accountName);
+    if (account != null) {
+      return account.id.toString();
+    }
+    return '';
   }
 
   void setDate(date) {
@@ -32,37 +44,34 @@ class StatementController extends GetxController {
         TextEditingValue(text: 'تسجيل دفعة نقدية من الزبون ${accountName}');
   }
 
-  // Future<void> createAccount() async {
-  //   String name = nameController.text;
-  //   String balance = balanceController.text;
-  //   String email = emailController.text;
-  //   String mobileNumber = mobilePhoneController.text;
-  //   String address = addressController.text;
-  //   if (name.isNotEmpty &&
-  //       balance.isNotEmpty &&
-  //       type!.isNotEmpty &&
-  //       style!.isNotEmpty &&
-  //       email.isNotEmpty &&
-  //       mobileNumber.isNotEmpty &&
-  //       address.isNotEmpty) {
-  //     loading.value = true;
-  //     var account = await accountsRepo.createAccount(
-  //         MyApp.appUser!.id,
-  //         name,
-  //         int.parse(balance),
-  //         convertAccountTypeToNumber(type),
-  //         convertAccountStyleToNumber(style),
-  //         email,
-  //         address,
-  //         mobileNumber);
-  //     loading.value = false;
-  //     if (account != null) {
-  //       SnackBars.showSuccess('تم انشاء القيد المحاسبي');
-  //     } else {
-  //       SnackBars.showError('فشل انشاء القيد المحاسبي');
-  //     }
-  //   } else {
-  //     SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
-  //   }
-  // }
+  Future<void> createStatement() async {
+    String fromId = getAccountId(fromAccountController.text);
+    String toId = getAccountId(toAccountController.text);
+    String amount = amountController.text;
+    String date = dateController.text;
+    String statementText = statementTextController.text;
+    if (fromId.isNotEmpty &&
+        toId.isNotEmpty &&
+        amount.toString().isNotEmpty &&
+        date.isNotEmpty &&
+        statementText.isNotEmpty) {
+      loading.value = true;
+      var statement = await statementRepo.createStatement(
+        int.parse(fromId),
+        int.parse(toId),
+        MyApp.appUser!.id,
+        statementText,
+        num.parse(amount),
+        date,
+      );
+      loading.value = false;
+      if (statement != null) {
+        SnackBars.showSuccess('تم انشاء القيد المحاسبي');
+      } else {
+        SnackBars.showError('فشل انشاء القيد المحاسبي');
+      }
+    } else {
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+    }
+  }
 }
