@@ -8,6 +8,9 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
 import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
 import 'package:matjary/PresentationLayer/Private/Order/order_details.dart';
+import 'package:matjary/PresentationLayer/Private/Order/saving_order.dart';
+import 'package:matjary/PresentationLayer/Private/Order/success_saving_order.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/stepper_component.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -36,16 +39,99 @@ class CreateEditOrderScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: Column(
             children: [
-              const PageTitle(title: 'فانورة جديدة'),
+              Obx(() {
+                return orderScreenController.currentIndex.value == 0
+                    ? const PageTitle(title: 'فانورة جديدة')
+                    : spacerHeight(height: 40);
+              }),
               spacerHeight(),
-              Expanded(
-                flex: 5,
-                child: DeliveryDetails(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Obx(
+                  () => Row(
+                    children: [
+                      StepperComponent(
+                        title: 'المعلومات الرئيسية',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 0,
+                        onTap: () {
+                          orderScreenController.updateCurrentPageIndex(0);
+                          orderScreenController.pageController.animateToPage(0,
+                              curve: Curves.decelerate,
+                              duration: Duration(milliseconds: 300));
+                        },
+                      ),
+                      StepperComponent(
+                        title: 'تفاصيل الفاتورة',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 1,
+                        onTap: () {
+                          orderScreenController.updateCurrentPageIndex(1);
+                          orderScreenController.pageController.animateToPage(1,
+                              curve: Curves.decelerate,
+                              duration: Duration(milliseconds: 300));
+                        },
+                      ),
+                      StepperComponent(
+                        title: 'تفاصيل التسليم',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 2,
+                        onTap: () {
+                          orderScreenController.updateCurrentPageIndex(2);
+                          orderScreenController.pageController.animateToPage(2,
+                              curve: Curves.decelerate,
+                              duration: Duration(milliseconds: 300));
+                        },
+                      ),
+                      StepperComponent(
+                        title: 'حفظ الفاتورة',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 3,
+                        isLast: true,
+                        icon: Icon(
+                          Icons.check,
+                          size: 28,
+                          color: UIColors.mainIcon,
+                        ),
+                        onTap: () {
+                          orderScreenController.updateCurrentPageIndex(3);
+                          orderScreenController.pageController.animateToPage(3,
+                              curve: Curves.decelerate,
+                              duration: Duration(milliseconds: 300));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              AcceptButton(
-                text: 'التالي',
-                onPressed: () {},
-              ),
+              spacerHeight(),
+              Expanded(child: Obx(() {
+                return orderScreenController.finishSavingOrder.value
+                    ? SuccessSavingOrder()
+                    : PageView.builder(
+                        //physics: NeverScrollableScrollPhysics(),
+                        controller: orderScreenController.pageController,
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return orderScreenController.getSelectedPage(index);
+                        });
+              })),
+              Obx(() {
+                return orderScreenController.currentIndex <= 3
+                    ? AcceptButton(
+                        text: orderScreenController.currentIndex == 3
+                            ? 'حفظ'
+                            : 'التالي',
+                        onPressed: () {
+                          if (orderScreenController.currentIndex.value == 3) {
+                            orderScreenController.updateCurrentPageIndex(4);
+                            orderScreenController.finishSavingOrder.value =
+                                true;
+                          }
+                        },
+                      )
+                    : Container();
+              }),
             ],
           ),
         ),
