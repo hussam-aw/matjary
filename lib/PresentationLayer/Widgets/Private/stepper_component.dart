@@ -8,7 +8,6 @@ class StepperComponent extends StatelessWidget {
   int index;
   int currentIndex;
   Widget? icon;
-  VoidCallback onTap;
 
   bool isLast;
   StepperComponent({
@@ -17,7 +16,6 @@ class StepperComponent extends StatelessWidget {
     required this.currentIndex,
     required this.index,
     this.icon,
-    required this.onTap,
     this.isLast = false,
   });
 
@@ -29,29 +27,26 @@ class StepperComponent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: onTap,
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: index == currentIndex
-                            ? UIColors.containerBackground
-                            : index > currentIndex
-                                ? UIColors.containerBackground
-                                : UIColors.primary,
-                        border: Border.all(
-                            width: 2,
-                            color: currentIndex == index
-                                ? UIColors.white
-                                : currentIndex > index
-                                    ? UIColors.primary
-                                    : UIColors.containerBackground),
-                      ),
-                      child: Center(
-                        child: icon,
-                      ),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: index == currentIndex
+                          ? UIColors.containerBackground
+                          : index > currentIndex
+                              ? UIColors.containerBackground
+                              : UIColors.primary,
+                      border: Border.all(
+                          width: 2,
+                          color: currentIndex == index
+                              ? UIColors.white
+                              : currentIndex > index
+                                  ? UIColors.primary
+                                  : UIColors.containerBackground),
+                    ),
+                    child: Center(
+                      child: icon,
                     ),
                   ),
                   Container(
@@ -81,26 +76,23 @@ class StepperComponent extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: onTap,
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: index == currentIndex
-                              ? UIColors.containerBackground
-                              : index > currentIndex
-                                  ? UIColors.containerBackground
-                                  : UIColors.primary,
-                          border: Border.all(
-                              width: 2,
-                              color: currentIndex == index
-                                  ? UIColors.white
-                                  : currentIndex > index
-                                      ? UIColors.primary
-                                      : UIColors.containerBackground),
-                        ),
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: index == currentIndex
+                            ? UIColors.containerBackground
+                            : index > currentIndex
+                                ? UIColors.containerBackground
+                                : UIColors.primary,
+                        border: Border.all(
+                            width: 2,
+                            color: currentIndex == index
+                                ? UIColors.white
+                                : currentIndex > index
+                                    ? UIColors.primary
+                                    : UIColors.containerBackground),
                       ),
                     ),
                     Expanded(
