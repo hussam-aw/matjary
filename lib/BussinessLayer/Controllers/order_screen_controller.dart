@@ -1,6 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
+import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
+import 'package:matjary/PresentationLayer/Private/Order/order_details.dart';
+import 'package:matjary/PresentationLayer/Private/Order/saving_order.dart';
+import 'package:matjary/PresentationLayer/Private/Order/success_saving_order.dart';
 
 class OrderScreenController extends GetxController {
+  PageController pageController = PageController();
+  RxInt currentIndex = 0.obs;
+  RxBool finishSavingOrder = false.obs;
+
   List<String> orderTypes = [
     'بيع للزبائن',
     'بيع مفرق',
@@ -124,4 +134,28 @@ class OrderScreenController extends GetxController {
   //   setOrderStatus(type);
   //   update();
   // }
+
+  void updateCurrentPageIndex(index) {
+    currentIndex.value = index;
+  }
+
+  Widget getSelectedPage(int index) {
+    switch (index) {
+      case 0:
+        return OrderBasicInformation();
+      case 1:
+        return OrderDetails();
+      case 2:
+        return DeliveryDetails();
+      case 3:
+        return SavingOrder();
+    }
+    return Container();
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
+    super.onClose();
+  }
 }
