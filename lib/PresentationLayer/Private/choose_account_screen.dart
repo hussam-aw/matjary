@@ -4,6 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/statement_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
@@ -63,7 +64,7 @@ class ChooseAccountScreen extends StatelessWidget {
     if (screenMode == null) {
       controller = Get.put(AccountController());
     } else {
-      controller = Get.find<StatementController>();
+      controller = Get.find<StatementScreenController>();
     }
     return Directionality(
       textDirection: TextDirection.rtl,

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/statement_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
@@ -17,6 +18,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -28,6 +30,8 @@ class CreateStatementScreen extends StatelessWidget {
   final homeController = Get.find<HomeController>();
   final StatementController statementController =
       Get.put(StatementController());
+  final StatementScreenController statementScreenController =
+      Get.put(StatementScreenController());
 
   // Widget productSelectionDialog(String type) {
   //   return AlertDialog(
@@ -86,132 +90,171 @@ class CreateStatementScreen extends StatelessWidget {
                         children: [
                           const SectionTitle(title: 'من الحساب'),
                           spacerHeight(),
-                          GetBuilder(
-                              init: statementController,
-                              builder: (context) {
-                                return Row(
-                                  children: [
-                                    Expanded(
-                                      child: CustomTextFormField(
-                                        readOnly: true,
-                                        controller: statementController
-                                            .fromAccountController,
-                                        hintText: "الحساب",
-                                      ),
-                                    ),
-                                    spacerWidth(),
-                                    CustomIconButton(
-                                      heroTag: "from",
-                                      icon: const Icon(
-                                        FontAwesomeIcons.magnifyingGlass,
-                                        color: UIColors.mainIcon,
-                                      ),
-                                      onPressed: () {
-                                        // Get.dialog(
-                                        //   productSelectionDialog("from"),
-                                        // );
-                                        Get.toNamed(
-                                            AppRoutes.chooseAccountScreen,
-                                            arguments: 'from');
-                                      },
-                                    ),
-                                  ],
-                                );
-                              }),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Obx(() {
+                                  return statementScreenController
+                                          .selectionAccount.value
+                                      ? loadingItem()
+                                      : CustomTextFormField(
+                                          readOnly: true,
+                                          controller: statementController
+                                              .fromAccountController,
+                                          hintText: "الحساب",
+                                        );
+                                }),
+                              ),
+                              spacerWidth(),
+                              CustomIconButton(
+                                heroTag: "from",
+                                icon: const Icon(
+                                  FontAwesomeIcons.magnifyingGlass,
+                                  color: UIColors.mainIcon,
+                                ),
+                                onPressed: () {
+                                  // Get.dialog(
+                                  //   productSelectionDialog("from"),
+                                  // );
+                                  Get.toNamed(AppRoutes.chooseAccountScreen,
+                                      arguments: 'from');
+                                },
+                              ),
+                            ],
+                          ),
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'إلى الحساب'),
                           spacerHeight(),
-                          GetBuilder(
-                              init: statementController,
-                              builder: (context) {
-                                return Row(
-                                  children: [
-                                    Expanded(
-                                        child: CustomTextFormField(
-                                      readOnly: true,
-                                      controller: statementController
-                                          .toAccountController,
-                                      hintText: 'الحساب',
-                                    )),
-                                    spacerWidth(),
-                                    CustomIconButton(
-                                      heroTag: "to",
-                                      icon: const Icon(
-                                        FontAwesomeIcons.magnifyingGlass,
-                                        color: UIColors.mainIcon,
-                                      ),
-                                      onPressed: () {
-                                        // Get.dialog(
-                                        //   productSelectionDialog("to"),
-                                        // );
-                                        Get.toNamed(
-                                            AppRoutes.chooseAccountScreen,
-                                            arguments: 'to');
-                                      },
-                                    ),
-                                  ],
-                                );
-                              }),
+                          Row(
+                            children: [
+                              Expanded(child: Obx(() {
+                                return statementScreenController
+                                        .selectionAccount.value
+                                    ? loadingItem()
+                                    : CustomTextFormField(
+                                        readOnly: true,
+                                        controller: statementController
+                                            .toAccountController,
+                                        hintText: 'الحساب',
+                                      );
+                              })),
+                              spacerWidth(),
+                              CustomIconButton(
+                                heroTag: "to",
+                                icon: const Icon(
+                                  FontAwesomeIcons.magnifyingGlass,
+                                  color: UIColors.mainIcon,
+                                ),
+                                onPressed: () {
+                                  // Get.dialog(
+                                  //   productSelectionDialog("to"),
+                                  // );
+                                  Get.toNamed(AppRoutes.chooseAccountScreen,
+                                      arguments: 'to');
+                                },
+                              ),
+                            ],
+                          ),
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'مبلغ القيد'),
                           spacerHeight(),
                           CustomTextFormField(
-                            controller:
-                                statementController.statementAmountController,
+                            controller: statementController.amountController,
                             keyboardType: TextInputType.number,
+                            onChanged: (amount) {
+                              statementScreenController.setAmount(amount);
+                            },
                           ),
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'تاريخ القيد'),
                           spacerHeight(),
-                          TextFormField(
-                            readOnly: true,
-                            keyboardType: TextInputType.datetime,
-                            decoration: textFieldStyle.copyWith(
-                              suffixIcon: const Icon(
-                                Icons.date_range,
-                                color: UIColors.white,
-                              ),
-                            ),
-                          ),
+                          GetBuilder(
+                              init: statementScreenController,
+                              builder: (con) {
+                                return TextFormField(
+                                  readOnly: true,
+                                  controller:
+                                      statementController.dateController,
+                                  keyboardType: TextInputType.datetime,
+                                  style: UITextStyle.normalBody,
+                                  decoration: textFieldStyle.copyWith(
+                                      suffixIcon: IconButton(
+                                    onPressed: () async {
+                                      statementScreenController.selectDate(
+                                          await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.parse(
+                                                  statementController
+                                                      .dateController.text),
+                                              firstDate: DateTime(1900),
+                                              lastDate: DateTime(2100)));
+                                    },
+                                    icon: const Icon(
+                                      Icons.date_range,
+                                      color: UIColors.white,
+                                    ),
+                                  )),
+                                );
+                              }),
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'البيان'),
                           spacerHeight(),
-                          CustomTextFormField(
-                            controller: TextEditingController(),
-                            maxLines: 3,
-                            keyboardType: TextInputType.text,
-                            hintText: 'تسجيل دفعة نقدية من الزبون علي',
+                          Obx(
+                            () =>
+                                statementScreenController.selectionAccount.value
+                                    ? Container()
+                                    : CustomTextFormField(
+                                        controller: statementController
+                                            .statementTextController,
+                                        maxLines: 3,
+                                        keyboardType: TextInputType.text,
+                                        hintText: 'تسجيل دفعة نقدية من الزبون ',
+                                      ),
                           ),
                           spacerHeight(),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'نتيجة القيد: ',
-                                  style: UITextStyle.normalBody
-                                      .copyWith(height: 1.5),
-                                ),
-                                TextSpan(
-                                  text:
-                                      ' سيتم إضافة مبلغ 00000 إلى حساب الصندوق  وخصم مبلغ 00000 من حساب علي.',
-                                  style: UITextStyle.normalBody.copyWith(
-                                    height: 1.5,
-                                    color: UIColors.normalText,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          Obx(() {
+                            return statementScreenController.fromAcount.value.isNotEmpty &&
+                                    statementScreenController
+                                        .toAccount.value.isNotEmpty &&
+                                    statementScreenController
+                                        .statementAmount.value.isNotEmpty
+                                ? RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'نتيجة القيد: ',
+                                          style: UITextStyle.normalBody
+                                              .copyWith(height: 1.5),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              ' سيتم إضافة مبلغ ${statementController.amountController.text} إلى حساب ${statementScreenController.toAccount.value}  وخصم مبلغ ${statementController.amountController.text} من حساب ${statementScreenController.fromAcount.value}.',
+                                          style:
+                                              UITextStyle.normalBody.copyWith(
+                                            height: 1.5,
+                                            color: UIColors.normalText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container();
+                          }),
                         ],
                       ),
                     ),
                   ),
                 ),
                 spacerHeight(height: 30),
-                AcceptButton(
-                  text: 'إنشاء',
-                  onPressed: () {},
-                )
+                Obx(() {
+                  return AcceptButton(
+                    text: 'إنشاء',
+                    onPressed: () {
+                      statementController.createStatement();
+                    },
+                    isLoading: statementController.loading.value,
+                  );
+                })
               ],
             ),
           ),
