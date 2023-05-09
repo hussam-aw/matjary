@@ -11,14 +11,17 @@ class AcceptButton extends StatelessWidget {
       required this.text,
       this.style = acceptButtonStyle,
       this.backgroundColor = UIColors.primary,
+      this.textStyle = UITextStyle.boldMeduim,
       required this.onPressed,
       this.isLoading = false});
 
   final String text;
   final ButtonStyle style;
   final Color backgroundColor;
+  final TextStyle textStyle;
   final Function() onPressed;
   bool isLoading;
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -33,7 +36,7 @@ class AcceptButton extends StatelessWidget {
             if (isLoading) loadingItem(isWhite: true),
             Text(
               text,
-              style: UITextStyle.boldMeduim,
+              style: textStyle,
             ),
           ],
         ));
