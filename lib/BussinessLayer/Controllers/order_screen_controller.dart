@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
 import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
 import 'package:matjary/PresentationLayer/Private/Order/order_details.dart';
 import 'package:matjary/PresentationLayer/Private/Order/saving_order.dart';
 import 'package:matjary/PresentationLayer/Private/Order/success_saving_order.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class OrderScreenController extends GetxController {
   PageController pageController = PageController();
+  TextEditingController productQuantityController = TextEditingController();
+  RxList<Product> selectedProducts = <Product>[].obs;
+  HomeController homeController = Get.find<HomeController>();
   RxInt currentIndex = 0.obs;
   RxBool finishSavingOrder = false.obs;
 
@@ -64,6 +70,8 @@ class OrderScreenController extends GetxController {
     'رقم': true,
     'نسبة': false,
   }.obs;
+
+  RxMap<int, int> selectedProductsQuantities = <int, int>{}.obs;
 
   void resetOrderType() {
     orderTypesSelection.value = {
@@ -173,6 +181,54 @@ class OrderScreenController extends GetxController {
   void goToSavingOrderPage() {
     updateCurrentPageIndex(4);
     finishSavingOrder.value = true;
+  }
+
+  bool checkIfProductQuantityIsZero(productId) {
+    return selectedProductsQuantities.value[productId] == null ||
+        selectedProductsQuantities.value[productId] == 0;
+  }
+
+  void increaseProductQuantity(productId) {
+    selectedProductsQuantities[productId] =
+        selectedProductsQuantities.value[productId] == null
+            ? 1
+            : selectedProductsQuantities.value[productId]! + 1;
+  }
+
+  void decreaseProductQuantity(productId) {
+    if (selectedProductsQuantities.value[productId] != null &&
+        selectedProductsQuantities.value[productId]! > 0) {
+      selectedProductsQuantities[productId] =
+          selectedProductsQuantities.value[productId]! - 1;
+      if (selectedProductsQuantities.value[productId]! == 0) {
+        selectedProductsQuantities.remove(productId);
+      }
+    }
+  }
+
+  void setProductQuantity(productId) {
+    if (productQuantityController.text.isNotEmpty) {
+      selectedProductsQuantities[productId] =
+          int.parse(productQuantityController.text);
+
+      productQuantityController.clear();
+      Get.back();
+    } else {
+      SnackBars.showWarning('يرجى ادخال كمية المنتج');
+    }
+  }
+
+  num calculateTotalProdcutPrice(price, quantity) {
+    return num.parse(price) * quantity;
+  }
+
+  void getSelectedProducts() {
+    for (Product product in homeController.products) {
+      if (selectedProductsQuantities[product.id] != null) {
+        selectedProducts.add(product);
+      }
+    }
+    print(selectedProducts);
   }
 
   @override
