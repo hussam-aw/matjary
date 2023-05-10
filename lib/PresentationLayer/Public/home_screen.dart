@@ -200,8 +200,13 @@ class HomeScreen extends StatelessWidget {
           }),
         ),
         bottomNavigationBar: const CustomBottomNavigationBar(),
-        floatingActionButton: CustomIconButton(
-          icon: const Icon(
+        floatingActionButton: FloatingActionButton(
+          elevation: 0.0,
+          backgroundColor: UIColors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: raduis15,
+          ),
+          child: const Icon(
             size: 45,
             FontAwesomeIcons.plus,
             color: UIColors.primary,
