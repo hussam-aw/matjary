@@ -15,21 +15,19 @@ class CustomRadioGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return items.length <= 2
-        ? scrollDirection == Axis.horizontal
-            ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: items,
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: items,
-                ),
-              )
+        ? Container(
+            height: 45,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: scrollDirection == Axis.horizontal
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: items,
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: items,
+                  ),
+          )
         : SizedBox(
             height: 45,
             child: ListView.separated(
