@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -16,6 +17,7 @@ class OrderBasicInformation extends StatelessWidget {
   OrderBasicInformation({super.key});
 
   final orderScreenController = Get.find<OrderScreenController>();
+  final orderController = Get.find<OrderController>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class OrderBasicInformation extends StatelessWidget {
                                   .orderTypesSelection.value[orderType]!,
                               onTap: () {
                                 orderScreenController.setOrderType(orderType);
+                                orderController.orderType = orderType;
                               },
                             ))
                         .toList(),
@@ -54,7 +57,7 @@ class OrderBasicInformation extends StatelessWidget {
                   Expanded(
                       child: CustomTextFormField(
                     readOnly: true,
-                    controller: TextEditingController(),
+                    controller: orderController.counterPartyController,
                     hintText: 'الزبون',
                   )),
                   spacerWidth(),
@@ -75,7 +78,7 @@ class OrderBasicInformation extends StatelessWidget {
                   Expanded(
                       child: CustomTextFormField(
                     readOnly: true,
-                    controller: TextEditingController(),
+                    controller: orderController.bankController,
                     hintText: 'صندوق المحل',
                   )),
                   spacerWidth(),
@@ -106,7 +109,7 @@ class OrderBasicInformation extends StatelessWidget {
                   Expanded(
                       child: CustomTextFormField(
                     readOnly: true,
-                    controller: TextEditingController(),
+                    controller: orderController.wareController,
                     hintText: 'الرئيسي',
                   )),
                   spacerWidth(),
@@ -137,7 +140,7 @@ class OrderBasicInformation extends StatelessWidget {
                   Expanded(
                       child: CustomTextFormField(
                     readOnly: true,
-                    controller: TextEditingController(),
+                    controller: orderController.marketerController,
                     hintText: 'لا يوجد مسوق',
                   )),
                   spacerWidth(),
