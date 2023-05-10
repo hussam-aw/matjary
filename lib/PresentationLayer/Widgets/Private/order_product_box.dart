@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class OrderProductBox extends StatelessWidget {
-  const OrderProductBox({super.key});
+  OrderProductBox({
+    super.key,
+    required this.product,
+    required this.quantity,
+    required this.totalPrice,
+  });
+
+  final Product product;
+  final int? quantity;
+  final num totalPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +37,9 @@ class OrderProductBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'باوربانك ريماكس RM-79',
+                    product.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: UITextStyle.normalBody,
@@ -52,7 +62,7 @@ class OrderProductBox extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '5',
+                            quantity.toString(),
                             style: UITextStyle.smallBold
                                 .copyWith(color: UIColors.smallText),
                           ),
@@ -73,7 +83,7 @@ class OrderProductBox extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '5000',
+                            product.retailPrice,
                             style: UITextStyle.smallBold
                                 .copyWith(color: UIColors.smallText),
                           ),
@@ -85,12 +95,12 @@ class OrderProductBox extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(
+          Expanded(
             flex: 2,
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                '25000',
+                totalPrice.toString(),
                 style: UITextStyle.normalMeduim,
               ),
             ),
