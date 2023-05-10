@@ -153,6 +153,28 @@ class OrderScreenController extends GetxController {
     return Container();
   }
 
+  void goToPreviousPage() {
+    if (currentIndex.value > 0 && currentIndex.value <= 3) {
+      updateCurrentPageIndex(currentIndex.value - 1);
+      pageController.previousPage(
+          curve: Curves.decelerate,
+          duration: const Duration(milliseconds: 300));
+    } else {
+      Get.back();
+    }
+  }
+
+  void goToNextPage() {
+    updateCurrentPageIndex(currentIndex.value + 1);
+    pageController.animateToPage(currentIndex.value,
+        curve: Curves.decelerate, duration: const Duration(milliseconds: 300));
+  }
+
+  void goToSavingOrderPage() {
+    updateCurrentPageIndex(4);
+    finishSavingOrder.value = true;
+  }
+
   @override
   void onClose() {
     pageController.dispose();
