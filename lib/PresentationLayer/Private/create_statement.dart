@@ -107,7 +107,6 @@ class CreateStatementScreen extends StatelessWidget {
                               ),
                               spacerWidth(),
                               CustomIconButton(
-                                heroTag: "from",
                                 icon: const Icon(
                                   FontAwesomeIcons.magnifyingGlass,
                                   color: UIColors.mainIcon,
@@ -140,7 +139,7 @@ class CreateStatementScreen extends StatelessWidget {
                               })),
                               spacerWidth(),
                               CustomIconButton(
-                                heroTag: "to",
+                                //heroTag: "to",
                                 icon: const Icon(
                                   FontAwesomeIcons.magnifyingGlass,
                                   color: UIColors.mainIcon,

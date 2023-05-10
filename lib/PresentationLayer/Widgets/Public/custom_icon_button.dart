@@ -16,15 +16,12 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      heroTag: heroTag,
-      onPressed: onPressed,
-      elevation: 0.0,
-      backgroundColor: UIColors.white,
-      shape: const RoundedRectangleBorder(
+    return Container(
+      decoration: const BoxDecoration(
+        color: UIColors.white,
         borderRadius: raduis15,
       ),
-      child: icon,
+      child: IconButton(onPressed: onPressed, icon: icon),
     );
   }
 }

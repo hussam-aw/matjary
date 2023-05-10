@@ -59,7 +59,6 @@ class OrderBasicInformation extends StatelessWidget {
                   )),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
@@ -81,7 +80,6 @@ class OrderBasicInformation extends StatelessWidget {
                   )),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
@@ -113,7 +111,6 @@ class OrderBasicInformation extends StatelessWidget {
                   )),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
@@ -145,7 +142,6 @@ class OrderBasicInformation extends StatelessWidget {
                   )),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
