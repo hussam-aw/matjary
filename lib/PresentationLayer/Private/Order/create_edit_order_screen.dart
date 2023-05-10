@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -26,6 +27,7 @@ class CreateEditOrderScreen extends StatelessWidget {
   CreateEditOrderScreen({super.key});
 
   final orderScreenController = Get.put(OrderScreenController());
+  final orderController = Get.put(OrderController());
 
   @override
   Widget build(BuildContext context) {
