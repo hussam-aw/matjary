@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -8,15 +14,39 @@ import 'package:matjary/PresentationLayer/Widgets/Private/selection_order_produc
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class SelectProductsScreen extends StatelessWidget {
-  const SelectProductsScreen({super.key});
+  SelectProductsScreen({super.key});
+
+  final homeController = Get.find<HomeController>();
+  final searchController = Get.put(SearchController());
+  final orderController = Get.find<OrderController>();
+  final orderScreenController = Get.find<OrderScreenController>();
+
+  Widget buildProductsList(productsList) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return SelectionOrderProductBox(
+          productId: homeController.products[index].id,
+          productName: homeController.products[index].name,
+        );
+      },
+      separatorBuilder: (context, index) {
+        return spacerHeight();
+      },
+      itemCount: productsList.length,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    searchController.list = homeController.products;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -35,7 +65,10 @@ class SelectProductsScreen extends StatelessWidget {
                 decoration: normalTextFieldStyle.copyWith(
                   hintText: 'اكتب اسم المنتج أو جزء منه للفلترة',
                 ),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  searchController.searchText = value;
+                  searchController.search();
+                },
               ),
               spacerHeight(height: 25),
               Row(
@@ -61,18 +94,40 @@ class SelectProductsScreen extends StatelessWidget {
               ),
               spacerHeight(height: 22),
               Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return SelectionOrderProductBox();
-                  },
-                  separatorBuilder: (context, index) => spacerHeight(),
-                  itemCount: 30,
-                ),
+                child: GetBuilder(
+                    init: searchController,
+                    builder: (context) {
+                      return searchController.searchText.isEmpty
+                          ? buildProductsList(homeController.products)
+                          : Obx(() {
+                              return searchController.searchLoading.value
+                                  ? Center(
+                                      child: loadingItem(
+                                          width: 100, isWhite: true),
+                                    )
+                                  : buildProductsList(
+                                      searchController.filteredList);
+                            });
+                    }),
               ),
               spacerHeight(),
               AcceptButton(
                 text: 'اختيار',
-                onPressed: () {},
+                onPressed: () {
+                  if (orderScreenController
+                      .selectedProductsQuantities.isNotEmpty) {
+                    orderScreenController.getSelectedProducts();
+                    orderController.orderProductsQuantities =
+                        orderScreenController.selectedProductsQuantities.value;
+                    orderController.selectedProducts =
+                        orderScreenController.selectedProducts.value;
+
+                    Get.back();
+                    SnackBars.showSuccess('تم اختيار المنتجات');
+                  } else {
+                    SnackBars.showWarning('يرجى اختيار المنتجات');
+                  }
+                },
               ),
             ],
           ),
