@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -15,7 +16,7 @@ class StatementController extends GetxController {
   );
   TextEditingController statementTextController = TextEditingController();
   StatementRepo statementRepo = StatementRepo();
-  var homeController = Get.find<HomeController>();
+  var accountController = Get.find<AccountsController>();
   var loading = false.obs;
 
   void setFromAccount(accountName) {
@@ -27,7 +28,7 @@ class StatementController extends GetxController {
   }
 
   String getAccountId(accountName) {
-    var account = homeController.accounts
+    var account = accountController.accounts
         .firstWhereOrNull((account) => account.name == accountName);
     if (account != null) {
       return account.id.toString();
