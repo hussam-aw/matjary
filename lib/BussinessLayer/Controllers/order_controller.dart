@@ -36,6 +36,14 @@ class OrderController extends GetxController {
     return 5;
   }
 
+  void setCounterPartyAccount(accountName) {
+    counterPartyController.value = TextEditingValue(text: accountName);
+  }
+
+  void setBankAccount(accountName) {
+    bankController.value = TextEditingValue(text: accountName);
+  }
+
   // Future<void> createOrder() async {
   //   if (true)
   //   // name.isNotEmpty &&
