@@ -5,9 +5,7 @@ import 'package:matjary/PresentationLayer/Auth/pin_code_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Order/select_products_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
-import 'package:matjary/PresentationLayer/Private/choose_bank_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_category_screen.dart';
-import 'package:matjary/PresentationLayer/Private/choose_client_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_order_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_product_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_ware_screem.dart';
@@ -57,12 +55,6 @@ List<GetPage<dynamic>> getPages = [
       page: () => CreateStatementScreen()),
   GetPage(
       name: AppRoutes.chooseAccountScreen, page: () => ChooseAccountScreen()),
-  GetPage(
-      name: AppRoutes.chooseBankAccountScreen,
-      page: () => ChooseBankAccountScreen()),
-  GetPage(
-      name: AppRoutes.chooseClientAccountScreen,
-      page: () => ChooseClientAccountScreen()),
   GetPage(name: AppRoutes.chooseWareScreen, page: () => ChooseWareScreen()),
   GetPage(name: AppRoutes.chooseOrderScreen, page: () => ChooseOrderScreen()),
   GetPage(
