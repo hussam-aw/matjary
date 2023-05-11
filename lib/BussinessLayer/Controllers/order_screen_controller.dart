@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
 import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
@@ -14,8 +16,10 @@ class OrderScreenController extends GetxController {
   TextEditingController productQuantityController = TextEditingController();
   RxList<Product> selectedProducts = <Product>[].obs;
   HomeController homeController = Get.find<HomeController>();
+  OrderController orderController = Get.find<OrderController>();
   RxInt currentIndex = 0.obs;
   RxBool finishSavingOrder = false.obs;
+  RxBool selectionAccount = false.obs;
 
   List<String> orderTypes = [
     'بيع للزبائن',
@@ -229,6 +233,18 @@ class OrderScreenController extends GetxController {
       }
     }
     print(selectedProducts);
+  }
+
+  void setAccountBasedOnType(Account? account, type) {
+    if (account != null) {
+      selectionAccount.value = true;
+      if (type == "clientsAndSuppliers") {
+        orderController.setCounterPartyAccount(account.name);
+      } else if (type == "bank") {
+        orderController.setBankAccount(account.name);
+      }
+      selectionAccount.value = false;
+    }
   }
 
   @override
