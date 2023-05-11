@@ -26,8 +26,8 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 class CreateEditOrderScreen extends StatelessWidget {
   CreateEditOrderScreen({super.key});
 
-  final orderScreenController = Get.put(OrderScreenController());
   final orderController = Get.put(OrderController());
+  final orderScreenController = Get.put(OrderScreenController());
 
   @override
   Widget build(BuildContext context) {
