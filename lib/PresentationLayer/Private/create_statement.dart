@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_screen_controller.dart';
@@ -32,6 +33,7 @@ class CreateStatementScreen extends StatelessWidget {
       Get.put(StatementController());
   final StatementScreenController statementScreenController =
       Get.put(StatementScreenController());
+  final AccountsController accountsController = Get.find<AccountsController>();
 
   // Widget productSelectionDialog(String type) {
   //   return AlertDialog(
@@ -67,8 +69,6 @@ class CreateStatementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var accountsList =
-        homeController.accounts.map((account) => account.name).toList();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -111,12 +111,22 @@ class CreateStatementScreen extends StatelessWidget {
                                   FontAwesomeIcons.magnifyingGlass,
                                   color: UIColors.mainIcon,
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   // Get.dialog(
                                   //   productSelectionDialog("from"),
                                   // );
-                                  Get.toNamed(AppRoutes.chooseAccountScreen,
-                                      arguments: 'from');
+                                  await Get.toNamed(
+                                      AppRoutes.chooseAccountScreen,
+                                      arguments: {
+                                        'mode': 'selection',
+                                        'accounts': accountsController.accounts
+                                      });
+
+                                  statementScreenController
+                                      .setAccountBasedOnType(
+                                          accountsController.selectedAccount,
+                                          'from');
+                                  accountsController.resetSelectedAccount();
                                 },
                               ),
                             ],
@@ -144,12 +154,21 @@ class CreateStatementScreen extends StatelessWidget {
                                   FontAwesomeIcons.magnifyingGlass,
                                   color: UIColors.mainIcon,
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   // Get.dialog(
                                   //   productSelectionDialog("to"),
                                   // );
-                                  Get.toNamed(AppRoutes.chooseAccountScreen,
-                                      arguments: 'to');
+                                  await Get.toNamed(
+                                      AppRoutes.chooseAccountScreen,
+                                      arguments: {
+                                        'mode': 'selection',
+                                        'accounts': accountsController.accounts
+                                      });
+                                  statementScreenController
+                                      .setAccountBasedOnType(
+                                          accountsController.selectedAccount,
+                                          'to');
+                                  accountsController.resetSelectedAccount();
                                 },
                               ),
                             ],
