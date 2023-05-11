@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
 
 class StatementScreenController extends GetxController {
   final statementController = Get.find<StatementController>();
@@ -11,18 +12,19 @@ class StatementScreenController extends GetxController {
   var statementAmount = ''.obs;
   DateTime? selectedDate;
 
-  void setAccountBasedOnType(accountName, type) {
-    selectionAccount.value = true;
-    if (type == "from") {
-      fromAcount.value = accountName;
-      statementController.setFromAccount(accountName);
-      statementController.setStatementText(accountName);
-    } else if (type == "to") {
-      toAccount.value = accountName;
-      statementController.setToAccount(accountName);
+  void setAccountBasedOnType(Account? account, type) {
+    if (account != null) {
+      selectionAccount.value = true;
+      if (type == "from") {
+        fromAcount.value = account.name;
+        statementController.setFromAccount(account.name);
+        statementController.setStatementText(account.name);
+      } else if (type == "to") {
+        toAccount.value = account.name;
+        statementController.setToAccount(account.name);
+      }
+      selectionAccount.value = false;
     }
-    selectionAccount.value = false;
-    Get.back();
   }
 
   void setAmount(String amount) {
