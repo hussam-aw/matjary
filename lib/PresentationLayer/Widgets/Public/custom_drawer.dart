@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/auth_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
@@ -13,7 +14,7 @@ import '../Home/drawer_list_tile.dart';
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key});
   final AuthController authController = Get.put(AuthController());
-  final HomeController homeController = Get.find<HomeController>();
+  final AccountsController accountsController = Get.find<AccountsController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,6 +62,7 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.chooseAccountScreen,
+                    arguments: {'accounts': accountsController.accounts},
                   );
                 },
               ),
@@ -70,7 +72,11 @@ class CustomDrawer extends StatelessWidget {
                 iconData: Ionicons.cart,
                 onTap: () {
                   Get.toNamed(
-                    AppRoutes.chooseBankAccountScreen,
+                    AppRoutes.chooseAccountScreen,
+                    arguments: {
+                      'style': 'bank',
+                      'accounts': accountsController.bankAccounts
+                    },
                   );
                 },
               ),
