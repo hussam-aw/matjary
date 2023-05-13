@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
+import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
@@ -42,6 +44,14 @@ class OrderController extends GetxController {
 
   void setBankAccount(accountName) {
     bankController.value = TextEditingValue(text: accountName);
+  }
+
+  void setWare(wareName) {
+    wareController.value = TextEditingValue(text: wareName);
+  }
+
+  void setMarketerAccount(accountName) {
+    marketerController.value = TextEditingValue(text: accountName);
   }
 
   // Future<void> createOrder() async {
