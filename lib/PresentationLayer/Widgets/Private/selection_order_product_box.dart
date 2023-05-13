@@ -5,6 +5,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/circle_text_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/quantity_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -66,7 +67,11 @@ class SelectionOrderProductBox extends StatelessWidget {
                     text: '123',
                     textStyle: UITextStyle.normalSmall,
                     onTap: () {
-                      showQuantityBottomSheet();
+                      Get.bottomSheet(QuantityBottomSheet(
+                        productId: productId,
+                        currentQuantity: orderScreenController
+                            .selectedProductsQuantities[productId],
+                      ));
                     },
                   ),
                 ],
@@ -89,43 +94,5 @@ class SelectionOrderProductBox extends StatelessWidget {
         ),
       );
     });
-  }
-
-  void showQuantityBottomSheet() {
-    Get.bottomSheet(
-      Container(
-        height: Get.width * .55,
-        decoration: const BoxDecoration(
-          borderRadius: raduis32top,
-          color: UIColors.white,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 40),
-          child: Column(
-            children: [
-              Text(
-                'يرجى ادخال الكمية للمنتج',
-                style:
-                    UITextStyle.normalMeduim.copyWith(color: UIColors.darkText),
-              ),
-              spacerHeight(),
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: orderScreenController.productQuantityController,
-                keyboardType: TextInputType.number,
-                decoration: normalTextFieldStyle,
-              ),
-              spacerHeight(height: 30),
-              AcceptButton(
-                text: 'تأكيد',
-                onPressed: () {
-                  orderScreenController.setProductQuantity(productId);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
