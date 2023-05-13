@@ -38,19 +38,21 @@ class OrderDetails extends StatelessWidget {
               child: Obx(() {
                 return ListView.separated(
                   itemBuilder: (context, index) {
-                    var quantity =
-                        orderScreenController.selectedProductsQuantities[
-                            orderScreenController.selectedProducts[index].id];
-                    return OrderProductBox(
-                      product: orderScreenController.selectedProducts[index],
-                      quantity: quantity,
-                      totalPrice:
-                          orderScreenController.calculateTotalProdcutPrice(
-                        orderScreenController
-                            .selectedProducts[index].retailPrice,
-                        quantity,
-                      ),
-                    );
+                    return Obx(() {
+                      var quantity =
+                          orderScreenController.selectedProductsQuantities[
+                              orderScreenController.selectedProducts[index].id];
+                      return OrderProductBox(
+                        product: orderScreenController.selectedProducts[index],
+                        quantity: quantity,
+                        totalPrice:
+                            orderScreenController.calculateTotalProdcutPrice(
+                          orderScreenController
+                              .selectedProducts[index].retailPrice,
+                          quantity,
+                        ),
+                      );
+                    });
                   },
                   separatorBuilder: (context, index) => spacerHeight(),
                   itemCount: orderScreenController.selectedProducts.length,
