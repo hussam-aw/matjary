@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/amount_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/quantity_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
@@ -18,11 +22,12 @@ class OrderProductBox extends StatelessWidget {
   final Product product;
   final int? quantity;
   final num totalPrice;
+  final orderScreenController = Get.find<OrderScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 85,
+      height: 90,
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
       decoration: const BoxDecoration(
         color: UIColors.containerBackground,
@@ -38,6 +43,7 @@ class OrderProductBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
+                  flex: 2,
                   child: Text(
                     product.name,
                     maxLines: 2,
@@ -53,20 +59,8 @@ class OrderProductBox extends StatelessWidget {
                         style: UITextStyle.small,
                       ),
                       spacerWidth(width: 7),
-                      Container(
-                        width: 32,
-                        height: 14,
-                        decoration: const BoxDecoration(
-                          color: UIColors.white,
-                          borderRadius: raduis15,
-                        ),
-                        child: Center(
-                          child: Text(
-                            quantity.toString(),
-                            style: UITextStyle.smallBold
-                                .copyWith(color: UIColors.smallText),
-                          ),
-                        ),
+                      AmountBox(
+                        amount: quantity.toString(),
                       ),
                       spacerWidth(),
                       const Text(
@@ -74,20 +68,8 @@ class OrderProductBox extends StatelessWidget {
                         style: UITextStyle.small,
                       ),
                       spacerWidth(width: 7),
-                      Container(
-                        width: 32,
-                        height: 14,
-                        decoration: const BoxDecoration(
-                          color: UIColors.white,
-                          borderRadius: raduis15,
-                        ),
-                        child: Center(
-                          child: Text(
-                            product.retailPrice,
-                            style: UITextStyle.smallBold
-                                .copyWith(color: UIColors.smallText),
-                          ),
-                        ),
+                      AmountBox(
+                        amount: product.retailPrice,
                       ),
                     ],
                   ),
@@ -101,6 +83,8 @@ class OrderProductBox extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 totalPrice.toString(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalMeduim,
               ),
             ),
@@ -112,20 +96,28 @@ class OrderProductBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 InkWell(
+                  onTap: () {
+                    Get.bottomSheet(QuantityBottomSheet(
+                      productId: product.id,
+                      currentQuantity: orderScreenController
+                          .selectedProductsQuantities[product.id],
+                    ));
+                  },
                   child: const Icon(
                     Icons.edit,
                     size: 20,
                     color: UIColors.white,
                   ),
-                  onTap: () {},
                 ),
                 InkWell(
+                  onTap: () {
+                    orderScreenController.deleteSelectedProduct(product.id);
+                  },
                   child: const Icon(
                     Icons.delete,
                     size: 20,
                     color: UIColors.white,
                   ),
-                  onTap: () {},
                 ),
               ],
             ),
