@@ -22,10 +22,10 @@ class CreateEditAccountScreen extends StatelessWidget {
   final AccountScreenController accountScreenController =
       Get.put(AccountScreenController());
   final Account? account = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     accountController.setAcountDetails(account);
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -104,7 +104,8 @@ class CreateEditAccountScreen extends StatelessWidget {
                                   'صندوق',
                                   'زبون',
                                   'مزود',
-                                  'جهة عمل'
+                                  'جهة عمل',
+                                  'مسوق'
                                 ],
                                 onChanged: (value) {
                                   accountController.style = value;
