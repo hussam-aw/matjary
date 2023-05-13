@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
+import 'package:matjary/Constants/api_links.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
@@ -16,9 +21,13 @@ class OrderBasicInformation extends StatelessWidget {
   OrderBasicInformation({super.key});
 
   final orderScreenController = Get.find<OrderScreenController>();
+  final orderController = Get.find<OrderController>();
+  final accountsController = Get.find<AccountsController>();
 
   @override
   Widget build(BuildContext context) {
+    accountsController.getClientsAndSupplierAccounts();
+    accountsController.getMarketerAccounts();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -40,6 +49,7 @@ class OrderBasicInformation extends StatelessWidget {
                                   .orderTypesSelection.value[orderType]!,
                               onTap: () {
                                 orderScreenController.setOrderType(orderType);
+                                orderController.orderType = orderType;
                               },
                             ))
                         .toList(),
@@ -52,19 +62,30 @@ class OrderBasicInformation extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                      child: CustomTextFormField(
-                    readOnly: true,
-                    controller: TextEditingController(),
-                    hintText: 'الزبون',
-                  )),
+                    child: CustomTextFormField(
+                      readOnly: true,
+                      controller: orderController.counterPartyController,
+                      hintText: 'الزبون',
+                    ),
+                  ),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var account = await Get.toNamed(
+                          AppRoutes.chooseAccountScreen,
+                          arguments: {
+                            'mode': 'selection',
+                            'style': 'clientsAndSuppliers',
+                            'accounts':
+                                accountsController.clientAndSupplierAccounts
+                          });
+                      orderScreenController.selectAccountBasedOnType(
+                          account, 'clientsAndSuppliers');
+                    },
                   ),
                 ],
               ),
@@ -74,19 +95,29 @@ class OrderBasicInformation extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                      child: CustomTextFormField(
-                    readOnly: true,
-                    controller: TextEditingController(),
-                    hintText: 'صندوق المحل',
-                  )),
+                    child: CustomTextFormField(
+                      readOnly: true,
+                      controller: orderController.bankController,
+                      hintText: 'صندوق المحل',
+                    ),
+                  ),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var account = await Get.toNamed(
+                          AppRoutes.chooseAccountScreen,
+                          arguments: {
+                            'mode': 'selection',
+                            'style': 'bank',
+                            'accounts': accountsController.bankAccounts
+                          });
+                      orderScreenController.selectAccountBasedOnType(
+                          account, 'bank');
+                    },
                   ),
                 ],
               ),
@@ -108,17 +139,22 @@ class OrderBasicInformation extends StatelessWidget {
                   Expanded(
                       child: CustomTextFormField(
                     readOnly: true,
-                    controller: TextEditingController(),
+                    controller: orderController.wareController,
                     hintText: 'الرئيسي',
                   )),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var ware = await Get.toNamed(
+                        AppRoutes.chooseWareScreen,
+                        arguments: {'mode': 'selection'},
+                      );
+                      orderScreenController.selectWare(ware);
+                    },
                   ),
                 ],
               ),
@@ -140,17 +176,26 @@ class OrderBasicInformation extends StatelessWidget {
                   Expanded(
                       child: CustomTextFormField(
                     readOnly: true,
-                    controller: TextEditingController(),
+                    controller: orderController.marketerController,
                     hintText: 'لا يوجد مسوق',
                   )),
                   spacerWidth(),
                   CustomIconButton(
-                    heroTag: "to",
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var account = await Get.toNamed(
+                          AppRoutes.chooseAccountScreen,
+                          arguments: {
+                            'mode': 'selection',
+                            'style': 'marketer',
+                            'accounts': accountsController.marketerAccounts
+                          });
+                      orderScreenController.selectAccountBasedOnType(
+                          account, 'marketer');
+                    },
                   ),
                 ],
               ),

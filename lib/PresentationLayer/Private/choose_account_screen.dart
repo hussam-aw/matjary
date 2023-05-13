@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
@@ -21,11 +22,13 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class ChooseAccountScreen extends StatelessWidget {
   ChooseAccountScreen({super.key});
 
-  final HomeController homeController = Get.find<HomeController>();
+  final AccountsController accountsController = Get.find<AccountsController>();
   final SearchController searchController = Get.put(SearchController());
   late var controller;
 
-  String? screenMode = Get.arguments;
+  String? screenMode = Get.arguments['mode'];
+  String? accountStyle = Get.arguments['style'];
+  var accounts = Get.arguments['accounts'];
 
   Widget buildAccountsList(accountList) {
     return ListView.separated(
@@ -46,8 +49,7 @@ class ChooseAccountScreen extends StatelessWidget {
             : NormalBox(
                 title: accountList[index].name,
                 onTap: () {
-                  controller.setAccountBasedOnType(
-                      accountList[index].name, screenMode);
+                  Get.back(result: accountList[index]);
                 },
               );
       },
@@ -60,11 +62,9 @@ class ChooseAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = homeController.accounts;
+    searchController.list = accounts;
     if (screenMode == null) {
       controller = Get.put(AccountController());
-    } else {
-      controller = Get.find<StatementScreenController>();
     }
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -93,26 +93,30 @@ class ChooseAccountScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => homeController.isLoadingAccounts.value
-                        ? Center(
-                            child: loadingItem(width: 100, isWhite: true),
-                          )
-                        : GetBuilder(
-                            init: searchController,
-                            builder: (context) {
-                              return searchController.searchText.isEmpty
-                                  ? buildAccountsList(homeController.accounts)
-                                  : Obx(() {
-                                      return searchController
-                                              .searchLoading.value
-                                          ? Center(
-                                              child: loadingItem(
-                                                  width: 100, isWhite: true),
-                                            )
-                                          : buildAccountsList(
-                                              searchController.filteredList);
-                                    });
-                            }),
+                    () {
+                      if (accountsController.isLoadingAccounts.value) {
+                        return Center(
+                          child: loadingItem(width: 100, isWhite: true),
+                        );
+                      }
+                      accounts =
+                          accountsController.getAccountsList(accountStyle);
+                      return GetBuilder(
+                          init: searchController,
+                          builder: (context) {
+                            return searchController.searchText.isEmpty
+                                ? buildAccountsList(accounts)
+                                : Obx(() {
+                                    return searchController.searchLoading.value
+                                        ? Center(
+                                            child: loadingItem(
+                                                width: 100, isWhite: true),
+                                          )
+                                        : buildAccountsList(
+                                            searchController.filteredList);
+                                  });
+                          });
+                    },
                   ),
                 ),
               ],

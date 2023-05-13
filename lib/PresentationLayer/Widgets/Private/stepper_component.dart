@@ -27,47 +27,23 @@ class StepperComponent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: index == currentIndex
-                          ? UIColors.containerBackground
-                          : index > currentIndex
-                              ? UIColors.containerBackground
-                              : UIColors.primary,
-                      border: Border.all(
-                          width: 2,
-                          color: currentIndex == index
-                              ? UIColors.white
-                              : currentIndex > index
-                                  ? UIColors.primary
-                                  : UIColors.containerBackground),
-                    ),
-                    child: Center(
-                      child: icon,
-                    ),
-                  ),
-                  Container(
-                    height: 2,
-                    color: UIColors.stepperLine,
+                  stepCircle(
+                    backgroundColor: index == currentIndex
+                        ? UIColors.containerBackground
+                        : index > currentIndex
+                            ? UIColors.containerBackground
+                            : UIColors.primary,
+                    borderColor: currentIndex == index
+                        ? UIColors.white
+                        : currentIndex > index
+                            ? UIColors.primary
+                            : UIColors.containerBackground,
+                    icon: icon,
                   ),
                 ],
               ),
               spacerHeight(),
-              SizedBox(
-                width: 50,
-                child: Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: UITextStyle.normalSmall.copyWith(
-                    height: 1.2,
-                    color: UIColors.normalText,
-                  ),
-                ),
-              ),
+              stepTitle(title),
             ],
           )
         : Expanded(
@@ -76,47 +52,64 @@ class StepperComponent extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: index == currentIndex
+                    stepCircle(
+                        backgroundColor: index == currentIndex
                             ? UIColors.containerBackground
                             : index > currentIndex
                                 ? UIColors.containerBackground
                                 : UIColors.primary,
-                        border: Border.all(
-                            width: 2,
-                            color: currentIndex == index
-                                ? UIColors.white
-                                : currentIndex > index
-                                    ? UIColors.primary
-                                    : UIColors.containerBackground),
-                      ),
-                    ),
+                        borderColor: currentIndex == index
+                            ? UIColors.white
+                            : currentIndex > index
+                                ? UIColors.primary
+                                : UIColors.containerBackground),
                     Expanded(
-                        child: Container(
-                      height: 2,
-                      color: UIColors.stepperLine,
-                    )),
+                      child: stepLine(),
+                    ),
                   ],
                 ),
                 spacerHeight(),
-                SizedBox(
-                  width: 50,
-                  child: Text(
-                    title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: UITextStyle.normalSmall.copyWith(
-                      height: 1.2,
-                      color: UIColors.normalText,
-                    ),
-                  ),
-                ),
+                stepTitle(title),
               ],
             ),
           );
   }
+}
+
+Widget stepCircle(
+    {required backgroundColor, required borderColor, Widget? icon}) {
+  return Container(
+    width: 30,
+    height: 30,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(100),
+      color: backgroundColor,
+      border: Border.all(width: 2, color: borderColor),
+    ),
+    child: Center(
+      child: icon,
+    ),
+  );
+}
+
+Widget stepLine() {
+  return Container(
+    height: 2,
+    color: UIColors.stepperLine,
+  );
+}
+
+Widget stepTitle(title) {
+  return SizedBox(
+    width: 50,
+    child: Text(
+      title,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: UITextStyle.normalSmall.copyWith(
+        height: 1.2,
+        color: UIColors.normalText,
+      ),
+    ),
+  );
 }

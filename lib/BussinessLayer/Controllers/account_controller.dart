@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
@@ -16,7 +17,7 @@ class AccountController extends GetxController {
   TextEditingController addressController = TextEditingController();
   AccountsRepo accountsRepo = AccountsRepo();
   var loading = false.obs;
-  HomeController homeController = Get.find<HomeController>();
+  AccountsController accountsController = Get.find<AccountsController>();
 
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
@@ -45,6 +46,8 @@ class AccountController extends GetxController {
       return 3;
     } else if (style == 'جهة عمل') {
       return 4;
+    } else if (style == 'مسوق') {
+      return 10;
     }
     return 5;
   }
@@ -60,6 +63,8 @@ class AccountController extends GetxController {
       return 'مزود';
     } else if (style == 4) {
       return 'جهة عمل';
+    } else if (style == 10) {
+      return 'مسوق';
     }
     return '';
   }
@@ -89,9 +94,8 @@ class AccountController extends GetxController {
           mobileNumber);
       loading.value = false;
       if (account != null) {
-        homeController.getAccounts();
-        homeController.getBankAccounts();
-        homeController.getClientAccounts();
+        accountsController.getAcoounts();
+        accountsController.getAccountsBasedOnStyle(account.style);
         SnackBars.showSuccess('تم انشاء الحساب');
       } else {
         SnackBars.showError('فشل انشاء الحساب');
@@ -122,9 +126,8 @@ class AccountController extends GetxController {
         convertAccountTypeToNumber(type), convertAccountStyleToNumber(style));
     loading.value = false;
     if (account != null) {
-      homeController.getAccounts();
-      homeController.getBankAccounts();
-      homeController.getClientAccounts();
+      await accountsController.getAcoounts();
+      await accountsController.getAccountsBasedOnStyle(account.style);
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
       SnackBars.showError('فشل التعديل');
@@ -136,9 +139,8 @@ class AccountController extends GetxController {
     var account = await accountsRepo.deleteAccount(id);
     loading.value = false;
     if (account != null) {
-      homeController.getAccounts();
-      homeController.getBankAccounts();
-      homeController.getClientAccounts();
+      accountsController.getAcoounts();
+      accountsController.getAccountsBasedOnStyle(account.style);
       SnackBars.showSuccess('تم الحذف بنجاح');
     } else {
       SnackBars.showError('فشل الحذف');

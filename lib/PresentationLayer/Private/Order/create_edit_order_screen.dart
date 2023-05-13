@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -25,6 +26,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 class CreateEditOrderScreen extends StatelessWidget {
   CreateEditOrderScreen({super.key});
 
+  final orderController = Get.put(OrderController());
   final orderScreenController = Get.put(OrderScreenController());
 
   @override
@@ -33,16 +35,7 @@ class CreateEditOrderScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: WillPopScope(
         onWillPop: () async {
-          if (orderScreenController.currentIndex.value > 0 &&
-              orderScreenController.currentIndex.value <= 3) {
-            orderScreenController.updateCurrentPageIndex(
-                orderScreenController.currentIndex.value - 1);
-            orderScreenController.pageController.previousPage(
-                curve: Curves.decelerate,
-                duration: Duration(milliseconds: 300));
-          } else {
-            Get.back();
-          }
+          orderScreenController.goToPreviousPage();
           return false;
         },
         child: Scaffold(
@@ -101,35 +94,27 @@ class CreateEditOrderScreen extends StatelessWidget {
                 spacerHeight(),
                 Expanded(child: Obx(() {
                   return orderScreenController.finishSavingOrder.value
-                      ? SuccessSavingOrder()
+                      ? const SuccessSavingOrder()
                       : PageView.builder(
-                          //physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           controller: orderScreenController.pageController,
                           itemCount: 4,
                           itemBuilder: (context, index) {
                             return orderScreenController.getSelectedPage(index);
-                          });
+                          },
+                        );
                 })),
                 Obx(() {
                   return orderScreenController.currentIndex <= 3
                       ? AcceptButton(
-                          text: orderScreenController.currentIndex == 3
+                          text: orderScreenController.currentIndex.value == 3
                               ? 'حفظ'
                               : 'التالي',
                           onPressed: () {
                             if (orderScreenController.currentIndex.value == 3) {
-                              orderScreenController.updateCurrentPageIndex(4);
-                              orderScreenController.finishSavingOrder.value =
-                                  true;
+                              orderScreenController.goToSavingOrderPage();
                             } else {
-                              orderScreenController.updateCurrentPageIndex(
-                                  orderScreenController.currentIndex.value + 1);
-                              orderScreenController.pageController
-                                  .animateToPage(
-                                      orderScreenController.currentIndex.value,
-                                      curve: Curves.decelerate,
-                                      duration:
-                                          const Duration(milliseconds: 300));
+                              orderScreenController.goToNextPage();
                             }
                           },
                         )

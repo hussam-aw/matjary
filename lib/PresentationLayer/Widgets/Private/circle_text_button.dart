@@ -23,7 +23,7 @@ class CircleTextButton extends StatelessWidget {
         height: 28,
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-            color: UIColors.containerBackground,
+            color: Colors.transparent,
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white)),
         child: Center(

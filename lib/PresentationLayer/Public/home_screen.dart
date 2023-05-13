@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final homeController = Get.find<HomeController>();
+  final accountsController = Get.find<AccountsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -160,32 +162,35 @@ class HomeScreen extends StatelessWidget {
                               spacerHeight(height: 10),
                               Expanded(
                                 child: Obx(() {
-                                  return homeController
+                                  return accountsController
                                           .isLoadingClientAccounts.value
                                       ? Container()
                                       : ListView.separated(
                                           itemBuilder: (context, index) {
                                             return CustomerAccountListTile(
-                                              customerName: homeController
+                                              customerName: accountsController
                                                   .clientAccounts[index].name,
                                               customerImage:
                                                   'assets/images/user.png',
                                               customerStatus: 'زبون',
-                                              customerBalance: homeController
-                                                  .clientAccounts[index].balance
-                                                  .toString(),
+                                              customerBalance:
+                                                  accountsController
+                                                      .clientAccounts[index]
+                                                      .balance
+                                                      .toString(),
                                             );
                                           },
                                           separatorBuilder: (context, index) {
                                             return spacerHeight(height: 25);
                                           },
-                                          itemCount: homeController
+                                          itemCount: accountsController
                                                   .clientAccounts.isEmpty
                                               ? 0
-                                              : homeController.clientAccounts
+                                              : accountsController
+                                                          .clientAccounts
                                                           .length <
                                                       5
-                                                  ? homeController
+                                                  ? accountsController
                                                       .clientAccounts.length
                                                   : 5,
                                         );
@@ -200,14 +205,19 @@ class HomeScreen extends StatelessWidget {
           }),
         ),
         bottomNavigationBar: const CustomBottomNavigationBar(),
-        floatingActionButton: CustomIconButton(
-          icon: const Icon(
+        floatingActionButton: FloatingActionButton(
+          elevation: 0.0,
+          backgroundColor: UIColors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: raduis15,
+          ),
+          child: const Icon(
             size: 45,
             FontAwesomeIcons.plus,
             color: UIColors.primary,
           ),
           onPressed: () {
-            Get.bottomSheet(const CreateBottomSheet());
+            Get.bottomSheet(CreateBottomSheet());
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_product_box.dart';
@@ -8,7 +9,9 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class OrderDetails extends StatelessWidget {
-  const OrderDetails({super.key});
+  OrderDetails({super.key});
+
+  final orderScreenController = Get.find<OrderScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +28,36 @@ class OrderDetails extends StatelessWidget {
               child: AcceptButton(
                 text: 'اختيار منتجات',
                 onPressed: () {
+                  orderScreenController.selectedProducts.clear();
                   Get.toNamed(AppRoutes.selectProducts);
                 },
               ),
             ),
             spacerHeight(),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return OrderProductBox();
-                },
-                separatorBuilder: (context, index) => spacerHeight(),
-                itemCount: 40,
-              ),
+              child: Obx(() {
+                return ListView.separated(
+                  itemBuilder: (context, index) {
+                    return Obx(() {
+                      var quantity =
+                          orderScreenController.selectedProductsQuantities[
+                              orderScreenController.selectedProducts[index].id];
+                      return OrderProductBox(
+                        product: orderScreenController.selectedProducts[index],
+                        quantity: quantity,
+                        totalPrice:
+                            orderScreenController.calculateTotalProdcutPrice(
+                          orderScreenController
+                              .selectedProducts[index].retailPrice,
+                          quantity,
+                        ),
+                      );
+                    });
+                  },
+                  separatorBuilder: (context, index) => spacerHeight(),
+                  itemCount: orderScreenController.selectedProducts.length,
+                );
+              }),
             ),
           ],
         ),
