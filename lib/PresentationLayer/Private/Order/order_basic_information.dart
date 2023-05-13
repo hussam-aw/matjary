@@ -27,6 +27,7 @@ class OrderBasicInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     accountsController.getClientsAndSupplierAccounts();
+    accountsController.getMarketerAccounts();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -60,15 +61,13 @@ class OrderBasicInformation extends StatelessWidget {
               spacerHeight(),
               Row(
                 children: [
-                  Expanded(child: Obx(() {
-                    return orderScreenController.selectionAccount.value
-                        ? loadingItem()
-                        : CustomTextFormField(
-                            readOnly: true,
-                            controller: orderController.counterPartyController,
-                            hintText: 'الزبون',
-                          );
-                  })),
+                  Expanded(
+                    child: CustomTextFormField(
+                      readOnly: true,
+                      controller: orderController.counterPartyController,
+                      hintText: 'الزبون',
+                    ),
+                  ),
                   spacerWidth(),
                   CustomIconButton(
                     icon: const Icon(
@@ -76,17 +75,16 @@ class OrderBasicInformation extends StatelessWidget {
                       color: UIColors.mainIcon,
                     ),
                     onPressed: () async {
-                      await Get.toNamed(AppRoutes.chooseAccountScreen,
+                      var account = await Get.toNamed(
+                          AppRoutes.chooseAccountScreen,
                           arguments: {
                             'mode': 'selection',
                             'style': 'clientsAndSuppliers',
                             'accounts':
                                 accountsController.clientAndSupplierAccounts
                           });
-                      orderScreenController.setAccountBasedOnType(
-                          accountsController.selectedAccount,
-                          'clientsAndSuppliers');
-                      accountsController.resetSelectedAccount();
+                      orderScreenController.selectAccountBasedOnType(
+                          account, 'clientsAndSuppliers');
                     },
                   ),
                 ],
@@ -96,15 +94,13 @@ class OrderBasicInformation extends StatelessWidget {
               spacerHeight(),
               Row(
                 children: [
-                  Expanded(child: Obx(() {
-                    return orderScreenController.selectionAccount.value
-                        ? loadingItem()
-                        : CustomTextFormField(
-                            readOnly: true,
-                            controller: orderController.bankController,
-                            hintText: 'صندوق المحل',
-                          );
-                  })),
+                  Expanded(
+                    child: CustomTextFormField(
+                      readOnly: true,
+                      controller: orderController.bankController,
+                      hintText: 'صندوق المحل',
+                    ),
+                  ),
                   spacerWidth(),
                   CustomIconButton(
                     icon: const Icon(
@@ -112,15 +108,15 @@ class OrderBasicInformation extends StatelessWidget {
                       color: UIColors.mainIcon,
                     ),
                     onPressed: () async {
-                      await Get.toNamed(AppRoutes.chooseAccountScreen,
+                      var account = await Get.toNamed(
+                          AppRoutes.chooseAccountScreen,
                           arguments: {
                             'mode': 'selection',
                             'style': 'bank',
                             'accounts': accountsController.bankAccounts
                           });
-                      orderScreenController.setAccountBasedOnType(
-                          accountsController.selectedAccount, 'bank');
-                      accountsController.resetSelectedAccount();
+                      orderScreenController.selectAccountBasedOnType(
+                          account, 'bank');
                     },
                   ),
                 ],
@@ -152,7 +148,13 @@ class OrderBasicInformation extends StatelessWidget {
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var ware = await Get.toNamed(
+                        AppRoutes.chooseWareScreen,
+                        arguments: {'mode': 'selection'},
+                      );
+                      orderScreenController.selectWare(ware);
+                    },
                   ),
                 ],
               ),
@@ -183,7 +185,17 @@ class OrderBasicInformation extends StatelessWidget {
                       FontAwesomeIcons.magnifyingGlass,
                       color: UIColors.mainIcon,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var account = await Get.toNamed(
+                          AppRoutes.chooseAccountScreen,
+                          arguments: {
+                            'mode': 'selection',
+                            'style': 'marketer',
+                            'accounts': accountsController.marketerAccounts
+                          });
+                      orderScreenController.selectAccountBasedOnType(
+                          account, 'marketer');
+                    },
                   ),
                 ],
               ),
