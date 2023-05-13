@@ -115,7 +115,7 @@ class CreateStatementScreen extends StatelessWidget {
                                   // Get.dialog(
                                   //   productSelectionDialog("from"),
                                   // );
-                                  await Get.toNamed(
+                                  var account = await Get.toNamed(
                                       AppRoutes.chooseAccountScreen,
                                       arguments: {
                                         'mode': 'selection',
@@ -123,10 +123,7 @@ class CreateStatementScreen extends StatelessWidget {
                                       });
 
                                   statementScreenController
-                                      .setAccountBasedOnType(
-                                          accountsController.selectedAccount,
-                                          'from');
-                                  accountsController.resetSelectedAccount();
+                                      .setAccountBasedOnType(account, 'from');
                                 },
                               ),
                             ],
@@ -149,7 +146,6 @@ class CreateStatementScreen extends StatelessWidget {
                               })),
                               spacerWidth(),
                               CustomIconButton(
-                                //heroTag: "to",
                                 icon: const Icon(
                                   FontAwesomeIcons.magnifyingGlass,
                                   color: UIColors.mainIcon,
@@ -158,17 +154,14 @@ class CreateStatementScreen extends StatelessWidget {
                                   // Get.dialog(
                                   //   productSelectionDialog("to"),
                                   // );
-                                  await Get.toNamed(
+                                  var account = await Get.toNamed(
                                       AppRoutes.chooseAccountScreen,
                                       arguments: {
                                         'mode': 'selection',
                                         'accounts': accountsController.accounts
                                       });
                                   statementScreenController
-                                      .setAccountBasedOnType(
-                                          accountsController.selectedAccount,
-                                          'to');
-                                  accountsController.resetSelectedAccount();
+                                      .setAccountBasedOnType(account, 'to');
                                 },
                               ),
                             ],
