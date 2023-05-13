@@ -114,19 +114,11 @@ class SelectProductsScreen extends StatelessWidget {
               AcceptButton(
                 text: 'اختيار',
                 onPressed: () {
-                  if (orderScreenController
-                      .selectedProductsQuantities.isNotEmpty) {
-                    orderScreenController.getSelectedProducts();
-                    orderController.orderProductsQuantities =
-                        orderScreenController.selectedProductsQuantities.value;
-                    orderController.selectedProducts =
-                        orderScreenController.selectedProducts.value;
-
-                    Get.back();
-                    SnackBars.showSuccess('تم اختيار المنتجات');
-                  } else {
-                    SnackBars.showWarning('يرجى اختيار المنتجات');
-                  }
+                  orderScreenController.getSelectedProducts();
+                  orderController.orderProductsQuantities =
+                      orderScreenController.selectedProductsQuantities.value;
+                  orderController.selectedProducts =
+                      orderScreenController.selectedProducts.value;
                 },
               ),
             ],
