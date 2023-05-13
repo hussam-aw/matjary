@@ -62,7 +62,9 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.chooseAccountScreen,
-                    arguments: {'accounts': accountsController.accounts},
+                    arguments: {
+                      'accounts': accountsController.accounts,
+                    },
                   );
                 },
               ),
@@ -85,9 +87,7 @@ class CustomDrawer extends StatelessWidget {
                 subtitle: "تصفح و تعديل المستودعات",
                 iconData: Icons.warehouse,
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.chooseWareScreen,
-                  );
+                  Get.toNamed(AppRoutes.chooseWareScreen, arguments: {});
                 },
               ),
               DrawerListTile(
