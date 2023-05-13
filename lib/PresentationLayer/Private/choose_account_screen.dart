@@ -49,8 +49,7 @@ class ChooseAccountScreen extends StatelessWidget {
             : NormalBox(
                 title: accountList[index].name,
                 onTap: () {
-                  accountsController.selectedAccount = accountList[index];
-                  Get.back();
+                  Get.back(result: accountList[index]);
                 },
               );
       },
