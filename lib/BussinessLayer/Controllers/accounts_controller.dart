@@ -17,7 +17,6 @@ class AccountsController extends GetxController {
   var isLoadingMarketerAccounts = false.obs;
   List<Account> clientAndSupplierAccounts = [];
   AccountsRepo accountsRepo = AccountsRepo();
-  Account? selectedAccount;
 
   Future<void> getAcoounts() async {
     isLoadingAccounts.value = true;
@@ -43,6 +42,11 @@ class AccountsController extends GetxController {
         .toList();
   }
 
+  void getMarketerAccounts() {
+    marketerAccounts =
+        accounts.where((account) => account.style == 10).toList();
+  }
+
   Future<void> getAccountsBasedOnStyle(style) async {
     switch (style) {
       case 1:
@@ -50,6 +54,9 @@ class AccountsController extends GetxController {
         break;
       case 2:
         await getClientAcoounts();
+        break;
+      case 10:
+        getMarketerAccounts();
         break;
     }
   }
@@ -62,12 +69,10 @@ class AccountsController extends GetxController {
         return clientAccounts;
       case 'clientsAndSuppliers':
         return clientAndSupplierAccounts;
+      case 'marketer':
+        return marketerAccounts;
     }
     return accounts;
-  }
-
-  void resetSelectedAccount() {
-    selectedAccount = null;
   }
 
   @override
