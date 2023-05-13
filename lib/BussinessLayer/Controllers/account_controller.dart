@@ -46,6 +46,8 @@ class AccountController extends GetxController {
       return 3;
     } else if (style == 'جهة عمل') {
       return 4;
+    } else if (style == 'مسوق') {
+      return 10;
     }
     return 5;
   }
@@ -61,6 +63,8 @@ class AccountController extends GetxController {
       return 'مزود';
     } else if (style == 4) {
       return 'جهة عمل';
+    } else if (style == 10) {
+      return 'مسوق';
     }
     return '';
   }
