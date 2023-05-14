@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
@@ -16,6 +17,7 @@ class UpdateOrderProductBottomSheet extends StatelessWidget {
       this.currentPrice});
 
   final orderScreenController = Get.find<OrderScreenController>();
+  final orderController = Get.find<OrderController>();
 
   final int productId;
   final currentQuantity;
@@ -91,6 +93,8 @@ class UpdateOrderProductBottomSheet extends StatelessWidget {
                   orderScreenController.setProductPrice(productId);
                   orderScreenController.setProductsPrices();
                 }
+                orderController.calculateTotalProductsPrice();
+                orderController.calculateTotalOrderAmount();
                 Get.back();
               },
             ),
