@@ -115,10 +115,8 @@ class SelectProductsScreen extends StatelessWidget {
                 text: 'اختيار',
                 onPressed: () {
                   orderScreenController.getSelectedProducts();
-                  orderController.orderProductsQuantities =
-                      orderScreenController.selectedProductsQuantities.value;
-                  orderController.selectedProducts =
-                      orderScreenController.selectedProducts.value;
+                  orderScreenController.setProductsQuantities();
+                  orderScreenController.setProductsPrices();
                 },
               ),
             ],
