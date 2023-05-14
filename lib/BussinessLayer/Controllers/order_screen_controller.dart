@@ -16,10 +16,6 @@ class OrderScreenController extends GetxController {
   String selectedOrderType = 'بيع للزبائن';
   PageController pageController = PageController();
   RxInt currentIndex = 0.obs;
-  String clinetOrSupplierName = '';
-  String bankName = '';
-  String wareName = '';
-  String marketerName = '';
   TextEditingController productQuantityController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   RxList<Product> selectedProducts = <Product>[].obs;
@@ -254,7 +250,7 @@ class OrderScreenController extends GetxController {
               getProductPricrBasedOnOrderType(product);
         }
       }
-      print(selectedProductPrices);
+      orderController.calculateTotalProductsPrice();
       Get.back();
       SnackBars.showSuccess('تم اختيار المنتجات');
     } else {
@@ -281,6 +277,10 @@ class OrderScreenController extends GetxController {
   void deleteSelectedProduct(productId) {
     selectedProductsQuantities.remove(productId);
     selectedProducts.removeWhere((product) => product.id == productId);
+    setProductsQuantities();
+    setSelectedProducts();
+    orderController.calculateTotalProductsPrice();
+    orderController.calculateTotalOrderAmount();
     SnackBars.showSuccess('تم ازالة المنتج');
   }
 
@@ -292,16 +292,17 @@ class OrderScreenController extends GetxController {
     orderController.setProductsPrices(selectedProductPrices.value);
   }
 
+  void setSelectedProducts() {
+    orderController.setSelectedProducts(selectedProducts);
+  }
+
   void selectAccountBasedOnType(Account? account, type) {
     if (account != null) {
       if (type == "clientsAndSuppliers") {
-        clinetOrSupplierName = account.name;
         orderController.setCounterPartyAccount(account.name);
       } else if (type == "bank") {
-        bankName = account.name;
         orderController.setBankAccount(account.name);
       } else if (type == "marketer") {
-        marketerName = account.name;
         orderController.setMarketerAccount(account.name);
       }
     }
@@ -309,7 +310,6 @@ class OrderScreenController extends GetxController {
 
   void selectWare(Ware? ware) {
     if (ware != null) {
-      wareName = ware.name;
       orderController.setWare(ware.name);
     }
   }
