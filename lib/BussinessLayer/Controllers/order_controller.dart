@@ -23,10 +23,13 @@ class OrderController extends GetxController {
   String? buyingType = "";
   TextEditingController expensesController = TextEditingController();
   String discountType = "";
-  String? discountOrder = "";
   TextEditingController discountOrderController = TextEditingController();
   String? status = "";
   TextEditingController notesController = TextEditingController();
+  var totalProductsPrice = 0.0.obs;
+  var expenses = 0.0.obs;
+  var discountAmount = 0.0.obs;
+  var totalOrderAmount = 0.0.obs;
   var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
 
@@ -66,6 +69,10 @@ class OrderController extends GetxController {
     marketerController.value = TextEditingValue(text: accountName);
   }
 
+  void setSelectedProducts(products) {
+    selectedProducts = products;
+  }
+
   void setProductsQuantities(quantities) {
     orderProductsQuantities = quantities;
   }
@@ -87,7 +94,7 @@ class OrderController extends GetxController {
   }
 
   void setDiscountOrder(discount) {
-    discountOrder = discount;
+    discountOrderController.value = TextEditingValue(text: discount);
   }
 
   void setStatus(orderStatus) {
@@ -96,6 +103,37 @@ class OrderController extends GetxController {
 
   void setNotes(notes) {
     notesController.value = TextEditingValue(text: notes);
+  }
+
+  void calculateTotalProductsPrice() {
+    totalProductsPrice.value = 0.0;
+    for (Product product in selectedProducts) {
+      totalProductsPrice.value += orderProductsPrices[product.id]! *
+          orderProductsQuantities[product.id]!;
+    }
+  }
+
+  void convertExpensesToDouble(String orderExpenses) {
+    expenses.value =
+        orderExpenses.isNotEmpty ? double.parse(orderExpenses) : 0.0;
+  }
+
+  void calculateDiscountBasedOnType() {
+    if (discountType == 'نسبة') {
+      discountAmount.value = discountOrderController.text.isNotEmpty
+          ? double.parse(discountOrderController.text) *
+              totalProductsPrice.value /
+              100
+          : 0.0;
+    } else {
+      discountAmount.value = double.parse(discountOrderController.text);
+    }
+  }
+
+  void calculateTotalOrderAmount() {
+    totalOrderAmount.value = 0.0;
+    totalOrderAmount.value =
+        totalProductsPrice.value - expenses.value - discountAmount.value;
   }
 
   // Future<void> createOrder() async {
