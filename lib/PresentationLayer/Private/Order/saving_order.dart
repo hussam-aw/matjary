@@ -65,7 +65,7 @@ class SavingOrder extends StatelessWidget {
                     () {
                       return CustomRadioGroup(
                         scrollDirection: Axis.vertical,
-                        items: orderScreenController.discountTypes
+                        items: orderScreenController.discountOrderTypes
                             .map((discountType) => RadioButtonItem(
                                   text: discountType,
                                   width: Get.width * .13,
@@ -74,7 +74,7 @@ class SavingOrder extends StatelessWidget {
                                   unselectionColor: UIColors.mainBackground,
                                   selectedTextColor: UIColors.white,
                                   isSelected: orderScreenController
-                                      .discountTypesSelection
+                                      .discountOrderTypesSelection
                                       .value[discountType]!,
                                   onTap: () {
                                     orderScreenController
