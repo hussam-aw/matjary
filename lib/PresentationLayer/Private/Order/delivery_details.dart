@@ -63,6 +63,10 @@ class DeliveryDetails extends StatelessWidget {
                           controller: orderController.expensesController,
                           keyboardType: TextInputType.number,
                           hintText: '5000',
+                          onChanged: (value) {
+                            orderController.convertExpensesToDouble(value);
+                            orderController.calculateTotalOrderAmount();
+                          },
                         ),
                       ],
                     ),
@@ -154,6 +158,10 @@ class DeliveryDetails extends StatelessWidget {
               .toList(),
         ),
       ),
+      onChanged: (value) {
+        orderController.calculateDiscountBasedOnType();
+        orderController.calculateTotalOrderAmount();
+      },
     );
   }
 }
