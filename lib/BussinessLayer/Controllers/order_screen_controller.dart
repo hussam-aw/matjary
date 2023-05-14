@@ -13,6 +13,7 @@ import 'package:matjary/PresentationLayer/Private/Order/success_saving_order.dar
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class OrderScreenController extends GetxController {
+  String selectedOrderType = 'بيع للزبائن';
   PageController pageController = PageController();
   RxInt currentIndex = 0.obs;
   String clinetOrSupplierName = '';
@@ -20,6 +21,7 @@ class OrderScreenController extends GetxController {
   String wareName = '';
   String marketerName = '';
   TextEditingController productQuantityController = TextEditingController();
+  TextEditingController productPriceController = TextEditingController();
   RxList<Product> selectedProducts = <Product>[].obs;
   HomeController homeController = Get.find<HomeController>();
   OrderController orderController = Get.find<OrderController>();
@@ -69,17 +71,18 @@ class OrderScreenController extends GetxController {
     'قيد التوصيل': false,
   }.obs;
 
-  List<String> discountTypes = [
+  List<String> discountOrderTypes = [
     'رقم',
     'نسبة',
   ];
 
-  RxMap<String, bool> discountTypesSelection = {
+  RxMap<String, bool> discountOrderTypesSelection = {
     'رقم': true,
     'نسبة': false,
   }.obs;
 
   RxMap<int, int> selectedProductsQuantities = <int, int>{}.obs;
+  RxMap<int, num> selectedProductPrices = <int, num>{}.obs;
 
   void resetOrderType() {
     orderTypesSelection.value = {
@@ -110,7 +113,7 @@ class OrderScreenController extends GetxController {
   }
 
   void resetDiscountType() {
-    discountTypesSelection.value = {
+    discountOrderTypesSelection.value = {
       'رقم': false,
       'نسبة': false,
     };
@@ -118,6 +121,7 @@ class OrderScreenController extends GetxController {
 
   void setOrderType(type) {
     resetOrderType();
+    selectedOrderType = type;
     orderTypesSelection[type] = true;
   }
 
@@ -133,7 +137,7 @@ class OrderScreenController extends GetxController {
 
   void setDiscountType(type) {
     resetDiscountType();
-    discountTypesSelection[type] = true;
+    discountOrderTypesSelection[type] = true;
   }
 
   // void changeOrderType(type) {
@@ -223,14 +227,22 @@ class OrderScreenController extends GetxController {
           int.parse(productQuantityController.text);
 
       productQuantityController.clear();
-      Get.back();
     } else {
-      SnackBars.showWarning('يرجى ادخال كمية المنتج');
+      SnackBars.showWarning('يرجى ادخال الكمية');
+    }
+  }
+
+  void setProductPrice(productId) {
+    if (productPriceController.text.isNotEmpty) {
+      selectedProductPrices[productId] = num.parse(productPriceController.text);
+      productPriceController.clear();
+    } else {
+      SnackBars.showWarning('يرجى ادخال السعر');
     }
   }
 
   num calculateTotalProdcutPrice(price, quantity) {
-    return num.parse(price) * quantity;
+    return price * quantity;
   }
 
   void getSelectedProducts() {
@@ -238,8 +250,11 @@ class OrderScreenController extends GetxController {
       for (Product product in homeController.products) {
         if (selectedProductsQuantities[product.id] != null) {
           selectedProducts.add(product);
+          selectedProductPrices[product.id] =
+              getProductPricrBasedOnOrderType(product);
         }
       }
+      print(selectedProductPrices);
       Get.back();
       SnackBars.showSuccess('تم اختيار المنتجات');
     } else {
@@ -247,10 +262,34 @@ class OrderScreenController extends GetxController {
     }
   }
 
+  void updateSelectedProductsPrices() {
+    for (Product product in selectedProducts) {
+      selectedProductPrices[product.id] =
+          getProductPricrBasedOnOrderType(product);
+    }
+  }
+
+  num getProductPricrBasedOnOrderType(Product product) {
+    if (selectedOrderType == 'بيع مفرق') {
+      return num.parse(product.retailPrice);
+    } else if (selectedOrderType == 'بيع للزبائن') {
+      return num.parse(product.supplierPrice);
+    }
+    return 0.0;
+  }
+
   void deleteSelectedProduct(productId) {
     selectedProductsQuantities.remove(productId);
     selectedProducts.removeWhere((product) => product.id == productId);
     SnackBars.showSuccess('تم ازالة المنتج');
+  }
+
+  void setProductsQuantities() {
+    orderController.setProductsQuantities(selectedProductsQuantities.value);
+  }
+
+  void setProductsPrices() {
+    orderController.setProductsPrices(selectedProductPrices.value);
   }
 
   void selectAccountBasedOnType(Account? account, type) {
@@ -278,9 +317,9 @@ class OrderScreenController extends GetxController {
   bool checkIfOrderStepCompeleted(int stepIndex) {
     switch (stepIndex) {
       case 0:
-        if (clinetOrSupplierName.isEmpty ||
-            bankName.isEmpty ||
-            wareName.isEmpty) {
+        if (orderController.counterPartyController.text.isEmpty ||
+            orderController.bankController.text.isEmpty ||
+            orderController.wareController.text.isEmpty) {
           SnackBars.showWarning('يرجى اختيار الخانات المطلوبة');
           return false;
         }
@@ -288,6 +327,13 @@ class OrderScreenController extends GetxController {
       case 1:
         if (selectedProducts.isEmpty) {
           SnackBars.showWarning('يرجى اختيار منتجات الفاتورة');
+          return false;
+        }
+        return true;
+      case 2:
+        if (orderController.expensesController.text.isEmpty ||
+            orderController.discountOrderController.text.isEmpty) {
+          SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
           return false;
         }
         return true;
