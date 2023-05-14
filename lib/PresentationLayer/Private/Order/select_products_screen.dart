@@ -117,6 +117,9 @@ class SelectProductsScreen extends StatelessWidget {
                   orderScreenController.getSelectedProducts();
                   orderScreenController.setProductsQuantities();
                   orderScreenController.setProductsPrices();
+                  orderScreenController.setSelectedProducts();
+                  orderController.calculateTotalProductsPrice();
+                  orderController.calculateTotalOrderAmount();
                 },
               ),
             ],
