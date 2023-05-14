@@ -12,13 +12,21 @@ import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 class OrderController extends GetxController {
   OrdersRepo orderRepo = OrdersRepo();
   List<Order> orders = [];
-  String? orderType = "";
+  String? type = "";
   TextEditingController counterPartyController = TextEditingController();
   TextEditingController bankController = TextEditingController();
   TextEditingController wareController = TextEditingController();
   TextEditingController marketerController = TextEditingController();
   Map<int, int> orderProductsQuantities = {};
+  Map<int, num> orderProductsPrices = {};
   List<Product> selectedProducts = [];
+  String? buyingType = "";
+  TextEditingController expensesController = TextEditingController();
+  String discountType = "";
+  String? discountOrder = "";
+  TextEditingController discountOrderController = TextEditingController();
+  String? status = "";
+  TextEditingController notesController = TextEditingController();
   var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
 
@@ -38,6 +46,10 @@ class OrderController extends GetxController {
     return 5;
   }
 
+  void setOrderType(orderType) {
+    type = orderType;
+  }
+
   void setCounterPartyAccount(accountName) {
     counterPartyController.value = TextEditingValue(text: accountName);
   }
@@ -52,6 +64,38 @@ class OrderController extends GetxController {
 
   void setMarketerAccount(accountName) {
     marketerController.value = TextEditingValue(text: accountName);
+  }
+
+  void setProductsQuantities(quantities) {
+    orderProductsQuantities = quantities;
+  }
+
+  void setProductsPrices(prices) {
+    orderProductsPrices = prices;
+  }
+
+  void setBuyingType(type) {
+    buyingType = type;
+  }
+
+  void setexpenses(expenses) {
+    expensesController.value = TextEditingValue(text: expenses);
+  }
+
+  void setDiscountType(type) {
+    discountType = type;
+  }
+
+  void setDiscountOrder(discount) {
+    discountOrder = discount;
+  }
+
+  void setStatus(orderStatus) {
+    status = orderStatus;
+  }
+
+  void setNotes(notes) {
+    notesController.value = TextEditingValue(text: notes);
   }
 
   // Future<void> createOrder() async {
@@ -98,7 +142,10 @@ class OrderController extends GetxController {
 
   @override
   void onInit() {
-    orderType = "بيع للزبائن";
+    type = "بيع للزبائن";
+    buyingType = "مباشر";
+    status = "تامة";
+    discountType = "رقم";
     super.onInit();
   }
 }
