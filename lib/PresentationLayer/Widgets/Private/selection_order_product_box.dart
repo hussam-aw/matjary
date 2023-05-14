@@ -5,7 +5,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/circle_text_button.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/quantity_bottomsheet.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/update_order_product_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -67,7 +67,7 @@ class SelectionOrderProductBox extends StatelessWidget {
                     text: '123',
                     textStyle: UITextStyle.normalSmall,
                     onTap: () {
-                      Get.bottomSheet(QuantityBottomSheet(
+                      Get.bottomSheet(UpdateOrderProductBottomSheet(
                         productId: productId,
                         currentQuantity: orderScreenController
                             .selectedProductsQuantities[productId],
