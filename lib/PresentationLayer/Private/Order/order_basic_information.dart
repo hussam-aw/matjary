@@ -49,7 +49,10 @@ class OrderBasicInformation extends StatelessWidget {
                                   .orderTypesSelection.value[orderType]!,
                               onTap: () {
                                 orderScreenController.setOrderType(orderType);
-                                orderController.orderType = orderType;
+                                orderScreenController
+                                    .updateSelectedProductsPrices();
+                                orderController.setOrderType(orderType);
+                                orderScreenController.setProductsPrices();
                               },
                             ))
                         .toList(),
