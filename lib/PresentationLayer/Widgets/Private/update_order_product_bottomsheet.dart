@@ -17,7 +17,6 @@ class UpdateOrderProductBottomSheet extends StatelessWidget {
       this.currentPrice});
 
   final orderScreenController = Get.find<OrderScreenController>();
-  final orderController = Get.find<OrderController>();
 
   final int productId;
   final currentQuantity;
@@ -93,8 +92,6 @@ class UpdateOrderProductBottomSheet extends StatelessWidget {
                   orderScreenController.setProductPrice(productId);
                   orderScreenController.setProductsPrices();
                 }
-                orderController.calculateTotalProductsPrice();
-                orderController.calculateTotalOrderAmount();
                 Get.back();
               },
             ),
