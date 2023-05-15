@@ -77,6 +77,11 @@ class OrderScreenController extends GetxController {
     'نسبة': false,
   }.obs;
 
+  RxMap<String, bool> marketerDiscountSelection = {
+    'رقم': true,
+    'نسبة': false,
+  }.obs;
+
   RxMap<int, int> selectedProductsQuantities = <int, int>{}.obs;
   RxMap<int, num> selectedProductPrices = <int, num>{}.obs;
 
@@ -115,6 +120,13 @@ class OrderScreenController extends GetxController {
     };
   }
 
+  void resetMarketerDiscount() {
+    marketerDiscountSelection.value = {
+      'رقم': false,
+      'نسبة': false,
+    };
+  }
+
   void setOrderType(type) {
     resetOrderType();
     selectedOrderType = type;
@@ -134,6 +146,13 @@ class OrderScreenController extends GetxController {
   void setDiscountType(type) {
     resetDiscountType();
     discountOrderTypesSelection[type] = true;
+    orderController.discountOrderController.clear();
+  }
+
+  void setMarketerDiscount(type) {
+    resetMarketerDiscount();
+    marketerDiscountSelection[type] = true;
+    orderController.marketerDiscountController.clear();
   }
 
   // void changeOrderType(type) {
@@ -165,6 +184,8 @@ class OrderScreenController extends GetxController {
         return DeliveryDetails();
       case 3:
         return SavingOrder();
+      case 4:
+        return SuccessSavingOrder();
     }
     return Container();
   }
@@ -172,9 +193,7 @@ class OrderScreenController extends GetxController {
   void goToPreviousPage() {
     if (currentIndex.value > 0 && currentIndex.value <= 3) {
       updateCurrentPageIndex(currentIndex.value - 1);
-      pageController.previousPage(
-          curve: Curves.decelerate,
-          duration: const Duration(milliseconds: 300));
+      animateToPage(currentIndex.value);
     } else {
       Get.back();
     }
@@ -183,15 +202,18 @@ class OrderScreenController extends GetxController {
   void goToNextPage() {
     if (checkIfOrderStepCompeleted(currentIndex.value)) {
       updateCurrentPageIndex(currentIndex.value + 1);
-      pageController.animateToPage(currentIndex.value,
-          curve: Curves.decelerate,
-          duration: const Duration(milliseconds: 300));
+      animateToPage(currentIndex.value);
     }
   }
 
-  void goToSavingOrderPage() {
-    updateCurrentPageIndex(4);
-    finishSavingOrder.value = true;
+  void goToInitialPage() {
+    updateCurrentPageIndex(0);
+    animateToPage(currentIndex.value);
+  }
+
+  void animateToPage(index) {
+    pageController.animateToPage(index,
+        curve: Curves.decelerate, duration: const Duration(milliseconds: 300));
   }
 
   bool checkIfProductQuantityIsZero(productId) {
@@ -250,7 +272,6 @@ class OrderScreenController extends GetxController {
               getProductPricrBasedOnOrderType(product);
         }
       }
-      orderController.calculateTotalProductsPrice();
       Get.back();
       SnackBars.showSuccess('تم اختيار المنتجات');
     } else {
@@ -279,21 +300,29 @@ class OrderScreenController extends GetxController {
     selectedProducts.removeWhere((product) => product.id == productId);
     setProductsQuantities();
     setSelectedProducts();
-    orderController.calculateTotalProductsPrice();
-    orderController.calculateTotalOrderAmount();
+    orderController.refreshOrderCalculations();
     SnackBars.showSuccess('تم ازالة المنتج');
   }
 
   void setProductsQuantities() {
     orderController.setProductsQuantities(selectedProductsQuantities.value);
+    orderController.refreshOrderCalculations();
   }
 
   void setProductsPrices() {
     orderController.setProductsPrices(selectedProductPrices.value);
+    orderController.refreshOrderCalculations();
   }
 
   void setSelectedProducts() {
     orderController.setSelectedProducts(selectedProducts);
+  }
+
+  void setOrderProducts() {
+    orderController.setSelectedProducts(selectedProducts);
+    orderController.setProductsQuantities(selectedProductsQuantities.value);
+    orderController.setProductsPrices(selectedProductPrices.value);
+    orderController.refreshOrderCalculations();
   }
 
   void selectAccountBasedOnType(Account? account, type) {
@@ -337,8 +366,27 @@ class OrderScreenController extends GetxController {
           return false;
         }
         return true;
+      case 3:
+        if (orderController.paidAmountController.text.isEmpty) {
+          SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+          return false;
+        }
+        return true;
     }
     return true;
+  }
+
+  void resetOrderScreen() {
+    goToInitialPage();
+    selectedOrderType = 'بيع للزبائن';
+    setOrderType(orderTypes[0]);
+    setbuyingType(buyingTypes[0]);
+    setOrderStatus(orderStatus[0]);
+    setDiscountType(discountOrderTypes[0]);
+    setMarketerDiscount(discountOrderTypes[0]);
+    productQuantityController.value = const TextEditingValue();
+    productPriceController.value = const TextEditingValue();
+    selectedProducts = <Product>[].obs;
   }
 
   @override
