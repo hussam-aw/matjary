@@ -71,7 +71,7 @@ class OrderProductBox extends StatelessWidget {
                       ),
                       spacerWidth(width: 7),
                       AmountBox(
-                        amount: price.toString(),
+                        amount: price!.toStringAsFixed(2),
                       ),
                     ],
                   ),
@@ -84,8 +84,7 @@ class OrderProductBox extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                totalPrice.toString(),
-                maxLines: 1,
+                totalPrice.toStringAsFixed(2),
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalMeduim,
               ),
