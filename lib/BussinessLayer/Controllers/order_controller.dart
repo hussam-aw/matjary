@@ -11,7 +11,6 @@ import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class OrderController extends GetxController {
   OrdersRepo orderRepo = OrdersRepo();
-  List<Order> orders = [];
   String? type = "";
   TextEditingController counterPartyController = TextEditingController();
   TextEditingController bankController = TextEditingController();
@@ -20,8 +19,8 @@ class OrderController extends GetxController {
   Map<int, int> orderProductsQuantities = {};
   Map<int, num> orderProductsPrices = {};
   List<Product> selectedProducts = [];
-  String? buyingType = "";
-  TextEditingController expensesController = TextEditingController();
+  String buyingType = "";
+  TextEditingController expensesController = TextEditingController(text: '0.0');
   String discountType = "";
   TextEditingController discountOrderController = TextEditingController();
   String? status = "";
@@ -30,6 +29,13 @@ class OrderController extends GetxController {
   var expenses = 0.0.obs;
   var discountAmount = 0.0.obs;
   var totalOrderAmount = 0.0.obs;
+  TextEditingController marketerDiscountController =
+      TextEditingController(text: '0.0');
+  String marketerDiscountType = "";
+  TextEditingController paidAmountController =
+      TextEditingController(text: '0.0');
+  TextEditingController remainingAmountController = TextEditingController();
+  RxDouble remainingAmount = 0.0.obs;
   var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
 
@@ -126,7 +132,9 @@ class OrderController extends GetxController {
               100
           : 0.0;
     } else {
-      discountAmount.value = double.parse(discountOrderController.text);
+      discountAmount.value = discountOrderController.text.isNotEmpty
+          ? double.parse(discountOrderController.text)
+          : 0.0;
     }
   }
 
@@ -134,6 +142,28 @@ class OrderController extends GetxController {
     totalOrderAmount.value = 0.0;
     totalOrderAmount.value =
         totalProductsPrice.value - expenses.value - discountAmount.value;
+  }
+
+  void refreshOrderCalculations() {
+    calculateTotalProductsPrice();
+    calculateDiscountBasedOnType();
+    calculateTotalOrderAmount();
+  }
+
+  void setMarketerDiscount(discount) {
+    marketerDiscountController.value = TextEditingValue(text: discount);
+  }
+
+  void setMarketerDiscountType(type) {
+    marketerDiscountType = type;
+  }
+
+  void calculateRemainingAmount(String paidAmount) {
+    remainingAmount.value = paidAmount.isNotEmpty
+        ? totalOrderAmount.value - double.parse(paidAmount)
+        : totalOrderAmount.value;
+    remainingAmountController.value =
+        TextEditingValue(text: remainingAmount.toStringAsFixed(2));
   }
 
   // Future<void> createOrder() async {
@@ -178,12 +208,46 @@ class OrderController extends GetxController {
   //   }
   // }
 
+  void resetOrder() {
+    type = "";
+    counterPartyController.value = const TextEditingValue();
+    bankController.value = const TextEditingValue();
+    wareController.value = const TextEditingValue();
+    marketerController.value = const TextEditingValue();
+    orderProductsQuantities.clear();
+    orderProductsPrices.clear();
+    selectedProducts.clear();
+    buyingType = "";
+    expensesController.value = const TextEditingValue(text: '0.0');
+    discountType = "";
+    discountOrderController.value = const TextEditingValue();
+    status = "";
+    notesController.value = const TextEditingValue();
+    totalProductsPrice = 0.0.obs;
+    expenses = 0.0.obs;
+    discountAmount = 0.0.obs;
+    totalOrderAmount = 0.0.obs;
+    marketerDiscountController.value = const TextEditingValue();
+    marketerDiscountType = "";
+    paidAmountController.value = const TextEditingValue(text: '0.0');
+    remainingAmountController.value = const TextEditingValue();
+    remainingAmount = 0.0.obs;
+    loading = false.obs;
+  }
+
   @override
   void onInit() {
     type = "بيع للزبائن";
     buyingType = "مباشر";
     status = "تامة";
     discountType = "رقم";
+    marketerDiscountType = "رقم";
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
   }
 }
