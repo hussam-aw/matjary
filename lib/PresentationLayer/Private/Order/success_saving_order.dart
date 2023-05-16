@@ -60,6 +60,7 @@ class SuccessSavingOrder extends StatelessWidget {
                   text: 'إنشاء فاتورة جديدة',
                   onPressed: () {
                     orderController.resetOrder();
+                    orderController.setDefaultFields();
                     orderScreenController.resetOrderScreen();
                     orderScreenController.goToInitialPage();
                   },
