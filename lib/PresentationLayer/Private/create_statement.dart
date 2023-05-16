@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -93,17 +94,12 @@ class CreateStatementScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: Obx(() {
-                                  return statementScreenController
-                                          .selectionAccount.value
-                                      ? loadingItem()
-                                      : CustomTextFormField(
-                                          readOnly: true,
-                                          controller: statementController
-                                              .fromAccountController,
-                                          hintText: "الحساب",
-                                        );
-                                }),
+                                child: CustomTextFormField(
+                                  readOnly: true,
+                                  controller:
+                                      statementController.fromAccountController,
+                                  hintText: "الحساب",
+                                ),
                               ),
                               spacerWidth(),
                               CustomIconButton(
@@ -133,17 +129,14 @@ class CreateStatementScreen extends StatelessWidget {
                           spacerHeight(),
                           Row(
                             children: [
-                              Expanded(child: Obx(() {
-                                return statementScreenController
-                                        .selectionAccount.value
-                                    ? loadingItem()
-                                    : CustomTextFormField(
-                                        readOnly: true,
-                                        controller: statementController
-                                            .toAccountController,
-                                        hintText: 'الحساب',
-                                      );
-                              })),
+                              Expanded(
+                                child: CustomTextFormField(
+                                  readOnly: true,
+                                  controller:
+                                      statementController.toAccountController,
+                                  hintText: 'الحساب',
+                                ),
+                              ),
                               spacerWidth(),
                               CustomIconButton(
                                 icon: const Icon(
@@ -170,10 +163,14 @@ class CreateStatementScreen extends StatelessWidget {
                           const SectionTitle(title: 'مبلغ القيد'),
                           spacerHeight(),
                           CustomTextFormField(
-                            controller: statementController.amountController,
+                            controller:
+                                statementController.amountController.value,
                             keyboardType: TextInputType.number,
+                            formatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             onChanged: (amount) {
-                              statementScreenController.setAmount(amount);
+                              statementController.setAmount(amount);
                             },
                           ),
                           spacerHeight(height: 20),
@@ -210,24 +207,20 @@ class CreateStatementScreen extends StatelessWidget {
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'البيان'),
                           spacerHeight(),
-                          Obx(
-                            () =>
-                                statementScreenController.selectionAccount.value
-                                    ? Container()
-                                    : CustomTextFormField(
-                                        controller: statementController
-                                            .statementTextController,
-                                        maxLines: 3,
-                                        keyboardType: TextInputType.text,
-                                        hintText: 'تسجيل دفعة نقدية من الزبون ',
-                                      ),
+                          CustomTextFormField(
+                            controller:
+                                statementController.statementTextController,
+                            maxLines: 3,
+                            keyboardType: TextInputType.text,
+                            hintText: 'تسجيل دفعة نقدية من الزبون ',
                           ),
                           spacerHeight(),
                           Obx(() {
-                            return statementScreenController.fromAcount.value.isNotEmpty &&
-                                    statementScreenController
-                                        .toAccount.value.isNotEmpty &&
-                                    statementScreenController
+                            return statementController
+                                        .fromAccountName.value.isNotEmpty &&
+                                    statementController
+                                        .toAccountName.value.isNotEmpty &&
+                                    statementController
                                         .statementAmount.value.isNotEmpty
                                 ? RichText(
                                     text: TextSpan(
@@ -239,7 +232,7 @@ class CreateStatementScreen extends StatelessWidget {
                                         ),
                                         TextSpan(
                                           text:
-                                              ' سيتم إضافة مبلغ ${statementController.amountController.text} إلى حساب ${statementScreenController.toAccount.value}  وخصم مبلغ ${statementController.amountController.text} من حساب ${statementScreenController.fromAcount.value}.',
+                                              ' سيتم إضافة مبلغ ${statementController.statementAmount.value} إلى حساب ${statementController.toAccountName.value}  وخصم مبلغ ${statementController.statementAmount.value} من حساب ${statementController.fromAccountName.value}.',
                                           style:
                                               UITextStyle.normalBody.copyWith(
                                             height: 1.5,
