@@ -38,62 +38,67 @@ class UpdateOrderProductBottomSheet extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 40),
         child: Column(
           children: [
-            Row(
-              children: [
-                if (currentPrice != null)
+            Expanded(
+              flex: 2,
+              child: Row(
+                children: [
+                  if (currentPrice != null)
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            'السعر',
+                            style: UITextStyle.normalMeduim
+                                .copyWith(color: UIColors.darkText),
+                          ),
+                          spacerHeight(height: 10),
+                          TextFormField(
+                            textAlign: TextAlign.center,
+                            controller:
+                                orderScreenController.productPriceController,
+                            keyboardType: TextInputType.number,
+                            decoration: normalTextFieldStyle,
+                          ),
+                        ],
+                      ),
+                    ),
+                  spacerWidth(width: 20),
                   Expanded(
                     child: Column(
                       children: [
                         Text(
-                          'السعر',
+                          'الكمية',
                           style: UITextStyle.normalMeduim
                               .copyWith(color: UIColors.darkText),
                         ),
-                        spacerHeight(),
+                        spacerHeight(height: 10),
                         TextFormField(
                           textAlign: TextAlign.center,
                           controller:
-                              orderScreenController.productPriceController,
+                              orderScreenController.productQuantityController,
                           keyboardType: TextInputType.number,
                           decoration: normalTextFieldStyle,
                         ),
                       ],
                     ),
-                  ),
-                spacerWidth(width: 20),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        'الكمية',
-                        style: UITextStyle.normalMeduim
-                            .copyWith(color: UIColors.darkText),
-                      ),
-                      spacerHeight(),
-                      TextFormField(
-                        textAlign: TextAlign.center,
-                        controller:
-                            orderScreenController.productQuantityController,
-                        keyboardType: TextInputType.number,
-                        decoration: normalTextFieldStyle,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-            spacerHeight(height: 30),
-            AcceptButton(
-              text: 'تأكيد',
-              onPressed: () {
-                orderScreenController.setProductQuantity(productId);
-                orderScreenController.setProductsQuantities();
-                if (currentPrice != null) {
-                  orderScreenController.setProductPrice(productId);
-                  orderScreenController.setProductsPrices();
-                }
-                Get.back();
-              },
+            spacerHeight(height: 20),
+            Expanded(
+              child: AcceptButton(
+                text: 'تأكيد',
+                onPressed: () {
+                  orderScreenController.setProductQuantity(productId);
+                  orderScreenController.setProductsQuantities();
+                  if (currentPrice != null) {
+                    orderScreenController.setProductPrice(productId);
+                    orderScreenController.setProductsPrices();
+                  }
+                  Get.back();
+                },
+              ),
             ),
           ],
         ),

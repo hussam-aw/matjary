@@ -43,17 +43,17 @@ class CreateEditOrderScreen extends StatelessWidget {
           appBar: customAppBar(showingAppIcon: false),
           drawer: CustomDrawer(),
           body: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+            padding: const EdgeInsets.only(right: 25, bottom: 15, left: 25),
             child: Column(
               children: [
                 Obx(() {
                   return orderScreenController.currentIndex.value == 0
-                      ? const PageTitle(title: 'فانورة جديدة')
+                      ? const PageTitle(title: 'فاتورة جديدة')
                       : spacerHeight(height: 40);
                 }),
                 spacerHeight(),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  //padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Obx(
                     () => Row(
                       children: [

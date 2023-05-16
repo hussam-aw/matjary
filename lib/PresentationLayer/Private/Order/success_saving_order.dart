@@ -18,11 +18,11 @@ class SuccessSavingOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 60),
+      padding: const EdgeInsets.symmetric(vertical: 40),
       child: Column(
         children: [
           Expanded(
-            flex: 4,
+            flex: 3,
             child: Column(
               children: [
                 Column(

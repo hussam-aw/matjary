@@ -39,7 +39,7 @@ class OrderProductBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class OrderProductBox extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Align(
               alignment: Alignment.center,
               child: Text(
