@@ -63,6 +63,7 @@ class DeliveryDetails extends StatelessWidget {
                           controller: orderController.expensesController,
                           keyboardType: TextInputType.number,
                           hintText: '5000',
+                          formatters: [FilteringTextInputFormatter.digitsOnly],
                           onChanged: (value) {
                             orderController.convertExpensesToDouble(value);
                             orderController.calculateTotalOrderAmount();
@@ -82,9 +83,12 @@ class DeliveryDetails extends StatelessWidget {
                                       .discountOrderTypesSelection
                                       .value['رقم'] ==
                                   true
-                              ? discountTextField('5000', [])
-                              : discountTextField('100%',
-                                  [NumericalRangeFormatter(min: 0, max: 100)]);
+                              ? discountTextField('5000',
+                                  [FilteringTextInputFormatter.digitsOnly])
+                              : discountTextField('100%', [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  NumericalRangeFormatter(min: 0, max: 100)
+                                ]);
                         }),
                       ],
                     ),
