@@ -328,18 +328,18 @@ class OrderScreenController extends GetxController {
   void selectAccountBasedOnType(Account? account, type) {
     if (account != null) {
       if (type == "clientsAndSuppliers") {
-        orderController.setCounterPartyAccount(account.name);
+        orderController.setCounterPartyAccount(account);
       } else if (type == "bank") {
-        orderController.setBankAccount(account.name);
+        orderController.setBankAccount(account);
       } else if (type == "marketer") {
-        orderController.setMarketerAccount(account.name);
+        orderController.setMarketerAccount(account);
       }
     }
   }
 
   void selectWare(Ware? ware) {
     if (ware != null) {
-      orderController.setWare(ware.name);
+      orderController.setWare(ware);
     }
   }
 
