@@ -1,4 +1,6 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/DataAccesslayer/Models/ware.dart';
 
 import '../Models/user.dart';
 
@@ -26,5 +28,83 @@ class BoxClient {
   Future<void> removeUserData() async {
     await box.remove('matjary_authed');
     await box.remove('matjary_userdata');
+  }
+
+  Future<void> setFirstSideAccount(int accountId) async {
+    await box.remove('first_side_account');
+    await box.write('first_side_account', accountId);
+  }
+
+  Future<int?> getFirstSideAccount() async {
+    var firstSideId = await box.read('first_side_account');
+    if (firstSideId != null) {
+      return firstSideId;
+    }
+    return null;
+  }
+
+  Future<void> setSecondSideAccount(int? accountId) async {
+    await box.remove('second_side_account');
+    await box.write('second_side_account', accountId);
+  }
+
+  Future<int?> getSecondSideAccount() async {
+    var secondSideId = await box.read('second_side_account');
+    if (secondSideId != null) {
+      return secondSideId;
+    }
+    return null;
+  }
+
+  Future<void> setCounterPartyAccount(Account account) async {
+    await box.remove('counter_party');
+    await box.write('counter_party', account);
+  }
+
+  Future<Account?> getCounterPartyAccount() async {
+    var counterParty = await box.read('counter_party');
+    if (counterParty != null) {
+      return counterParty;
+    }
+    return null;
+  }
+
+  Future<void> setBankAccount(Account account) async {
+    await box.remove('bank_account');
+    await box.write('bank_account', account);
+  }
+
+  Future<Account?> getBankAccount() async {
+    var bank = await box.read('bank_account');
+    if (bank != null) {
+      return bank;
+    }
+    return null;
+  }
+
+  Future<void> setWareAccount(Ware ware) async {
+    await box.remove('ware_account');
+    await box.write('ware_account', ware);
+  }
+
+  Future<Ware?> getWareAccount() async {
+    var ware = await box.read('ware_account');
+    if (ware != null) {
+      return ware;
+    }
+    return null;
+  }
+
+  Future<void> setMarketerAccount(Account account) async {
+    await box.remove('marketer_account');
+    await box.write('marketer_account', account);
+  }
+
+  Future<Account?> getMarketerAccount() async {
+    var marketer = await box.read('marketer_account');
+    if (marketer != null) {
+      return marketer;
+    }
+    return null;
   }
 }
