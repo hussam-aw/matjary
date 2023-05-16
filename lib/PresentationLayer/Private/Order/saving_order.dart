@@ -78,9 +78,13 @@ class SavingOrder extends StatelessWidget {
                       return orderScreenController
                                   .marketerDiscountSelection.value['رقم'] ==
                               true
-                          ? marketerDiscountTextField('5000', [])
-                          : marketerDiscountTextField('100%',
-                              [NumericalRangeFormatter(min: 0, max: 100)]);
+                          ? marketerDiscountTextField('5000', [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ])
+                          : marketerDiscountTextField('100%', [
+                              FilteringTextInputFormatter.digitsOnly,
+                              NumericalRangeFormatter(min: 0, max: 100)
+                            ]);
                     }),
                     spacerHeight(height: 22),
                   ],
@@ -100,6 +104,9 @@ class SavingOrder extends StatelessWidget {
                         CustomTextFormField(
                           controller: orderController.paidAmountController,
                           hintText: '300.000',
+                          formatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           onChanged: (value) {
                             orderController.calculateRemainingAmount(value);
                           },
