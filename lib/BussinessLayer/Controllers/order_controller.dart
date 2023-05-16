@@ -1,21 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
+import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
+import 'package:matjary/main.dart';
 
 class OrderController extends GetxController {
   OrdersRepo orderRepo = OrdersRepo();
   String? type = "";
   TextEditingController counterPartyController = TextEditingController();
+  Account? counterPartyAccount;
   TextEditingController bankController = TextEditingController();
+  Account? bankAccount;
   TextEditingController wareController = TextEditingController();
+  Ware? wareAccount;
   TextEditingController marketerController = TextEditingController();
+  Account? marketerAccount;
   Map<int, int> orderProductsQuantities = {};
   Map<int, num> orderProductsPrices = {};
   List<Product> selectedProducts = [];
@@ -38,6 +45,8 @@ class OrderController extends GetxController {
   RxDouble remainingAmount = 0.0.obs;
   var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
+  final accountsController = Get.find<AccountsController>();
+  BoxClient boxClient = BoxClient();
 
   int convertOrderTypeToInt(String type) {
     switch (type) {
@@ -59,20 +68,28 @@ class OrderController extends GetxController {
     type = orderType;
   }
 
-  void setCounterPartyAccount(accountName) {
-    counterPartyController.value = TextEditingValue(text: accountName);
+  void setCounterPartyAccount(Account? account) {
+    counterPartyAccount = account;
+    counterPartyController.value =
+        TextEditingValue(text: account != null ? account.name : '');
   }
 
-  void setBankAccount(accountName) {
-    bankController.value = TextEditingValue(text: accountName);
+  void setBankAccount(Account? account) {
+    bankAccount = account;
+    bankController.value =
+        TextEditingValue(text: account != null ? account.name : '');
   }
 
-  void setWare(wareName) {
-    wareController.value = TextEditingValue(text: wareName);
+  void setWare(Ware? ware) {
+    wareAccount = ware;
+    wareController.value =
+        TextEditingValue(text: ware != null ? ware.name : '');
   }
 
-  void setMarketerAccount(accountName) {
-    marketerController.value = TextEditingValue(text: accountName);
+  void setMarketerAccount(Account? account) {
+    marketerAccount = account;
+    marketerController.value =
+        TextEditingValue(text: account != null ? account.name : '');
   }
 
   void setSelectedProducts(products) {
@@ -208,12 +225,50 @@ class OrderController extends GetxController {
   //   }
   // }
 
+  void setDefaultAccounts() async {
+    Account? counterParty, bank, marketer;
+    Ware? ware;
+    counterParty = await boxClient.getCounterPartyAccount();
+    bank = await boxClient.getBankAccount();
+    ware = await boxClient.getWareAccount();
+    marketer = await boxClient.getMarketerAccount();
+    if (counterParty == null && bank == null && ware == null) {
+      counterParty = accountsController.clientAndSupplierAccounts.isNotEmpty
+          ? accountsController.clientAndSupplierAccounts[0]
+          : null;
+      bank = accountsController.bankAccounts.isNotEmpty
+          ? accountsController.bankAccounts[0]
+          : null;
+      ware = homeController.wares.isNotEmpty ? homeController.wares[0] : null;
+      marketer = accountsController.marketerAccounts.isNotEmpty
+          ? accountsController.marketerAccounts[0]
+          : null;
+    }
+    setCounterPartyAccount(counterParty);
+    setBankAccount(bank);
+    setWare(ware);
+    setMarketerAccount(marketer);
+  }
+
+  void setDefaultFields() {
+    setDefaultAccounts();
+    type = "بيع للزبائن";
+    buyingType = "مباشر";
+    status = "تامة";
+    discountType = "رقم";
+    marketerDiscountType = "رقم";
+  }
+
   void resetOrder() {
     type = "";
     counterPartyController.value = const TextEditingValue();
+    counterPartyAccount = null;
     bankController.value = const TextEditingValue();
+    bankAccount = null;
     wareController.value = const TextEditingValue();
+    wareAccount = null;
     marketerController.value = const TextEditingValue();
+    marketerAccount = null;
     orderProductsQuantities.clear();
     orderProductsPrices.clear();
     selectedProducts.clear();
@@ -237,11 +292,9 @@ class OrderController extends GetxController {
 
   @override
   void onInit() {
-    type = "بيع للزبائن";
-    buyingType = "مباشر";
-    status = "تامة";
-    discountType = "رقم";
-    marketerDiscountType = "رقم";
+    accountsController.getClientsAndSupplierAccounts();
+    accountsController.getMarketerAccounts();
+    setDefaultFields();
     super.onInit();
   }
 
