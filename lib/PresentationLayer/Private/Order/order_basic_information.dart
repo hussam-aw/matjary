@@ -26,8 +26,6 @@ class OrderBasicInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    accountsController.getClientsAndSupplierAccounts();
-    accountsController.getMarketerAccounts();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
