@@ -39,16 +39,18 @@ class OrderDetails extends StatelessWidget {
                 return ListView.separated(
                   itemBuilder: (context, index) {
                     return Obx(() {
+                      var price = orderScreenController.selectedProductPrices[
+                          orderScreenController.selectedProducts[index].id];
                       var quantity =
                           orderScreenController.selectedProductsQuantities[
                               orderScreenController.selectedProducts[index].id];
                       return OrderProductBox(
                         product: orderScreenController.selectedProducts[index],
                         quantity: quantity,
+                        price: price,
                         totalPrice:
                             orderScreenController.calculateTotalProdcutPrice(
-                          orderScreenController
-                              .selectedProducts[index].retailPrice,
+                          price,
                           quantity,
                         ),
                       );

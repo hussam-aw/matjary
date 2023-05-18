@@ -43,17 +43,17 @@ class CreateEditOrderScreen extends StatelessWidget {
           appBar: customAppBar(showingAppIcon: false),
           drawer: CustomDrawer(),
           body: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+            padding: const EdgeInsets.only(right: 25, bottom: 15, left: 25),
             child: Column(
               children: [
                 Obx(() {
                   return orderScreenController.currentIndex.value == 0
-                      ? const PageTitle(title: 'فانورة جديدة')
+                      ? const PageTitle(title: 'فاتورة جديدة')
                       : spacerHeight(height: 40);
                 }),
                 spacerHeight(),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  //padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Obx(
                     () => Row(
                       children: [
@@ -92,18 +92,16 @@ class CreateEditOrderScreen extends StatelessWidget {
                   ),
                 ),
                 spacerHeight(),
-                Expanded(child: Obx(() {
-                  return orderScreenController.finishSavingOrder.value
-                      ? const SuccessSavingOrder()
-                      : PageView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          controller: orderScreenController.pageController,
-                          itemCount: 4,
-                          itemBuilder: (context, index) {
-                            return orderScreenController.getSelectedPage(index);
-                          },
-                        );
-                })),
+                Expanded(
+                    child: PageView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: orderScreenController.pageController,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return orderScreenController.getSelectedPage(
+                        orderScreenController.currentIndex.value);
+                  },
+                )),
                 Obx(() {
                   return orderScreenController.currentIndex <= 3
                       ? AcceptButton(
@@ -111,11 +109,7 @@ class CreateEditOrderScreen extends StatelessWidget {
                               ? 'حفظ'
                               : 'التالي',
                           onPressed: () {
-                            if (orderScreenController.currentIndex.value == 3) {
-                              orderScreenController.goToSavingOrderPage();
-                            } else {
-                              orderScreenController.goToNextPage();
-                            }
+                            orderScreenController.goToNextPage();
                           },
                         )
                       : Container();

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/numerical_range_formatter.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -15,6 +18,7 @@ class DeliveryDetails extends StatelessWidget {
   DeliveryDetails({super.key});
 
   final orderScreenController = Get.find<OrderScreenController>();
+  final orderController = Get.find<OrderController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,7 @@ class DeliveryDetails extends StatelessWidget {
                                   .buyingTypesSelection.value[buyingType]!,
                               onTap: () {
                                 orderScreenController.setbuyingType(buyingType);
+                                orderController.setBuyingType(buyingType);
                               },
                             ))
                         .toList(),
@@ -55,9 +60,14 @@ class DeliveryDetails extends StatelessWidget {
                         const SectionTitle(title: 'مصاريف الفاتورة'),
                         spacerHeight(),
                         CustomTextFormField(
-                          controller: TextEditingController(),
+                          controller: orderController.expensesController,
                           keyboardType: TextInputType.number,
                           hintText: '5000',
+                          formatters: [FilteringTextInputFormatter.digitsOnly],
+                          onChanged: (value) {
+                            orderController.convertExpensesToDouble(value);
+                            orderController.calculateTotalOrderAmount();
+                          },
                         ),
                       ],
                     ),
@@ -68,40 +78,18 @@ class DeliveryDetails extends StatelessWidget {
                       children: [
                         const SectionTitle(title: 'الحسم على الفاتورة'),
                         spacerHeight(),
-                        CustomTextFormField(
-                          controller: TextEditingController(),
-                          keyboardType: TextInputType.number,
-                          hintText: '5000',
-                          suffix: Container(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Obx(
-                              () {
-                                return CustomRadioGroup(
-                                  scrollDirection: Axis.vertical,
-                                  items: orderScreenController.discountTypes
-                                      .map((discountType) => RadioButtonItem(
-                                            text: discountType,
-                                            width: Get.width * .1,
-                                            style: UITextStyle.smallBold,
-                                            selectionColor: UIColors.primary,
-                                            unselectionColor:
-                                                UIColors.mainBackground,
-                                            selectedTextColor: UIColors.white,
-                                            isSelected: orderScreenController
-                                                .discountTypesSelection
-                                                .value[discountType]!,
-                                            onTap: () {
-                                              orderScreenController
-                                                  .setDiscountType(
-                                                      discountType);
-                                            },
-                                          ))
-                                      .toList(),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+                        Obx(() {
+                          return orderScreenController
+                                      .discountOrderTypesSelection
+                                      .value['رقم'] ==
+                                  true
+                              ? discountTextField('5000',
+                                  [FilteringTextInputFormatter.digitsOnly])
+                              : discountTextField('100%', [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  NumericalRangeFormatter(min: 0, max: 100)
+                                ]);
+                        }),
                       ],
                     ),
                   ),
@@ -114,15 +102,16 @@ class DeliveryDetails extends StatelessWidget {
                 () {
                   return CustomRadioGroup(
                     items: orderScreenController.orderStatus
-                        .map((orderState) => RadioButtonItem(
-                              text: orderState,
+                        .map((orderStatus) => RadioButtonItem(
+                              text: orderStatus,
                               selectionColor: UIColors.primary,
                               selectedTextColor: UIColors.white,
                               isSelected: orderScreenController
-                                  .orderStatusSelection.value[orderState]!,
+                                  .orderStatusSelection.value[orderStatus]!,
                               onTap: () {
                                 orderScreenController
-                                    .setOrderStatus(orderState);
+                                    .setOrderStatus(orderStatus);
+                                orderController.setStatus(orderStatus);
                               },
                             ))
                         .toList(),
@@ -133,7 +122,7 @@ class DeliveryDetails extends StatelessWidget {
               const SectionTitle(title: 'ملاحظات'),
               spacerHeight(),
               CustomTextFormField(
-                controller: TextEditingController(),
+                controller: orderController.notesController,
                 maxLines: 5,
                 hintText: 'شب التوصيل: حسام',
               ),
@@ -141,6 +130,42 @@ class DeliveryDetails extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget discountTextField(
+      String hintText, List<TextInputFormatter>? formatters) {
+    return CustomTextFormField(
+      controller: orderController.discountOrderController,
+      formatters: formatters,
+      keyboardType: TextInputType.number,
+      hintText: hintText,
+      suffix: Container(
+        padding: const EdgeInsets.only(left: 15),
+        child: CustomRadioGroup(
+          scrollDirection: Axis.vertical,
+          items: orderScreenController.discountOrderTypes
+              .map((discountType) => RadioButtonItem(
+                    text: discountType,
+                    width: Get.width * .1,
+                    style: UITextStyle.smallBold,
+                    selectionColor: UIColors.primary,
+                    unselectionColor: UIColors.mainBackground,
+                    selectedTextColor: UIColors.white,
+                    isSelected: orderScreenController
+                        .discountOrderTypesSelection.value[discountType]!,
+                    onTap: () {
+                      orderScreenController.setDiscountType(discountType);
+                      orderController.setDiscountType(discountType);
+                    },
+                  ))
+              .toList(),
+        ),
+      ),
+      onChanged: (value) {
+        orderController.calculateDiscountBasedOnType();
+        orderController.calculateTotalOrderAmount();
+      },
     );
   }
 }

@@ -25,7 +25,6 @@ class SelectProductsScreen extends StatelessWidget {
 
   final homeController = Get.find<HomeController>();
   final searchController = Get.put(SearchController());
-  final orderController = Get.find<OrderController>();
   final orderScreenController = Get.find<OrderScreenController>();
 
   Widget buildProductsList(productsList) {
@@ -115,10 +114,7 @@ class SelectProductsScreen extends StatelessWidget {
                 text: 'اختيار',
                 onPressed: () {
                   orderScreenController.getSelectedProducts();
-                  orderController.orderProductsQuantities =
-                      orderScreenController.selectedProductsQuantities.value;
-                  orderController.selectedProducts =
-                      orderScreenController.selectedProducts.value;
+                  orderScreenController.setOrderProducts();
                 },
               ),
             ],

@@ -6,7 +6,7 @@ import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/amount_box.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/quantity_bottomsheet.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/update_order_product_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
@@ -16,11 +16,13 @@ class OrderProductBox extends StatelessWidget {
     super.key,
     required this.product,
     required this.quantity,
+    required this.price,
     required this.totalPrice,
   });
 
   final Product product;
   final int? quantity;
+  final num? price;
   final num totalPrice;
   final orderScreenController = Get.find<OrderScreenController>();
 
@@ -37,7 +39,7 @@ class OrderProductBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +71,7 @@ class OrderProductBox extends StatelessWidget {
                       ),
                       spacerWidth(width: 7),
                       AmountBox(
-                        amount: product.retailPrice,
+                        amount: price!.toStringAsFixed(2),
                       ),
                     ],
                   ),
@@ -78,12 +80,11 @@ class OrderProductBox extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                totalPrice.toString(),
-                maxLines: 1,
+                totalPrice.toStringAsFixed(2),
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalMeduim,
               ),
@@ -97,10 +98,12 @@ class OrderProductBox extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.bottomSheet(QuantityBottomSheet(
+                    Get.bottomSheet(UpdateOrderProductBottomSheet(
                       productId: product.id,
                       currentQuantity: orderScreenController
                           .selectedProductsQuantities[product.id],
+                      currentPrice: orderScreenController
+                          .selectedProductPrices[product.id],
                     ));
                   },
                   child: const Icon(

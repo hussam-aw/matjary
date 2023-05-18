@@ -6,33 +6,16 @@ import 'package:matjary/DataAccesslayer/Models/account.dart';
 class StatementScreenController extends GetxController {
   final statementController = Get.find<StatementController>();
 
-  var selectionAccount = false.obs;
-  var fromAcount = ''.obs;
-  var toAccount = ''.obs;
-  var statementAmount = ''.obs;
   DateTime? selectedDate;
 
   void setAccountBasedOnType(Account? account, type) {
     if (account != null) {
-      selectionAccount.value = true;
       if (type == "from") {
-        fromAcount.value = account.name;
-        statementController.setFromAccount(account.name);
+        statementController.setFromAccount(account);
         statementController.setStatementText(account.name);
       } else if (type == "to") {
-        toAccount.value = account.name;
-        statementController.setToAccount(account.name);
+        statementController.setToAccount(account);
       }
-      selectionAccount.value = false;
-    }
-  }
-
-  void setAmount(String amount) {
-    if (amount.isNotEmpty) {
-      var parsedAmount = num.parse(amount);
-      if (parsedAmount > 0.0) statementAmount.value = amount;
-    } else {
-      statementAmount.value = '';
     }
   }
 
