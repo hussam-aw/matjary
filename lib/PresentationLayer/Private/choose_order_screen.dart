@@ -13,6 +13,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class ChooseOrderScreen extends StatelessWidget {
@@ -35,13 +36,9 @@ class ChooseOrderScreen extends StatelessWidget {
               children: [
                 const PageTitle(title: 'إختيار طلب'),
                 spacerHeight(),
-                TextFormField(
-                  controller: TextEditingController(),
-                  textAlign: TextAlign.center,
-                  style: UITextStyle.normalMeduim,
-                  decoration: normalTextFieldStyle.copyWith(
-                    hintText: 'قم بالبحث عن الطلب أو اختر من القائمة',
-                  ),
+                SearchTextField(
+                  hintText: 'قم بالبحث عن الطلب أو اختر من القائمة',
+                  onChanged: (value) {},
                 ),
                 spacerHeight(height: 20),
                 Expanded(
