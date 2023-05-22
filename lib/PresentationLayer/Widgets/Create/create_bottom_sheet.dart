@@ -45,14 +45,14 @@ class CreateBottomSheet extends StatelessWidget {
                 children: [
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.createEditAccountScreen);
+                      Get.toNamed(AppRoutes.createEditOrderScreen);
                     },
                     icon: 'assets/icons/D_sale_point_ic.png',
                     title: 'فاتورة بيع',
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.chooseAccountScreen);
+                      //Get.toNamed(AppRoutes.chooseAccountScreen);
                     },
                     icon: 'assets/icons/DExpense.png',
                     title: 'دفعة نقدية',
@@ -66,21 +66,21 @@ class CreateBottomSheet extends StatelessWidget {
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.createEditCategoryScreen);
+                      //Get.toNamed(AppRoutes.createEditCategoryScreen);
                     },
                     icon: 'assets/icons/D_ORDERS_icon.png',
                     title: 'كشف حساب',
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.createEditOrderScreen);
+                      Get.toNamed(AppRoutes.createEditBankScreen);
                     },
                     icon: 'assets/icons/D_bank_icon.png',
                     title: 'صندوق نقدي',
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      Get.toNamed(AppRoutes.createEditClientScreen);
+                      //Get.toNamed(AppRoutes.createEditClientScreen);
                     },
                     icon: 'assets/icons/D_user_icon.png',
                     title: 'جهة عمل',
