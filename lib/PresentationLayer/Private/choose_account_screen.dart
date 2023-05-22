@@ -68,58 +68,65 @@ class ChooseAccountScreen extends StatelessWidget {
     }
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: UIColors.mainBackground,
-        appBar: customAppBar(showingAppIcon: false),
-        drawer: CustomDrawer(),
-        body: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-            child: Column(
-              children: [
-                const PageTitle(title: 'إختيار حساب'),
-                spacerHeight(),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  style: UITextStyle.normalMeduim,
-                  decoration: normalTextFieldStyle.copyWith(
-                    hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
-                  ),
-                  onChanged: (value) {
-                    searchController.searchText = value;
-                    searchController.search();
-                  },
-                ),
-                spacerHeight(height: 20),
-                Expanded(
-                  child: Obx(
-                    () {
-                      if (accountsController.isLoadingAccounts.value) {
-                        return Center(
-                          child: loadingItem(width: 100, isWhite: true),
-                        );
-                      }
-                      accounts =
-                          accountsController.getAccountsList(accountStyle);
-                      return GetBuilder(
-                          init: searchController,
-                          builder: (context) {
-                            return searchController.searchText.isEmpty
-                                ? buildAccountsList(accounts)
-                                : Obx(() {
-                                    return searchController.searchLoading.value
-                                        ? Center(
-                                            child: loadingItem(
-                                                width: 100, isWhite: true),
-                                          )
-                                        : buildAccountsList(
-                                            searchController.filteredList);
-                                  });
-                          });
+      child: WillPopScope(
+        onWillPop: () async {
+          Get.back(result: null);
+          return false;
+        },
+        child: Scaffold(
+          backgroundColor: UIColors.mainBackground,
+          appBar: customAppBar(showingAppIcon: false),
+          drawer: CustomDrawer(),
+          body: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+              child: Column(
+                children: [
+                  const PageTitle(title: 'إختيار حساب'),
+                  spacerHeight(),
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    style: UITextStyle.normalMeduim,
+                    decoration: normalTextFieldStyle.copyWith(
+                      hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
+                    ),
+                    onChanged: (value) {
+                      searchController.searchText = value;
+                      searchController.search();
                     },
                   ),
-                ),
-              ],
+                  spacerHeight(height: 20),
+                  Expanded(
+                    child: Obx(
+                      () {
+                        if (accountsController.isLoadingAccounts.value) {
+                          return Center(
+                            child: loadingItem(width: 100, isWhite: true),
+                          );
+                        }
+                        accounts =
+                            accountsController.getAccountsList(accountStyle);
+                        return GetBuilder(
+                            init: searchController,
+                            builder: (context) {
+                              return searchController.searchText.isEmpty
+                                  ? buildAccountsList(accounts)
+                                  : Obx(() {
+                                      return searchController
+                                              .searchLoading.value
+                                          ? Center(
+                                              child: loadingItem(
+                                                  width: 100, isWhite: true),
+                                            )
+                                          : buildAccountsList(
+                                              searchController.filteredList);
+                                    });
+                            });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
