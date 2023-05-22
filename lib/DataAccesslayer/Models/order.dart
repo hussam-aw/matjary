@@ -17,7 +17,7 @@ class Order {
   final String discountType;
   final int marketerId;
   final String marketerFeeType;
-  List<Map<String, dynamic>> products;
+  List<Map<String, dynamic>> details;
   Order({
     required this.id,
     required this.total,
@@ -37,7 +37,7 @@ class Order {
     required this.discountType,
     required this.marketerId,
     required this.marketerFeeType,
-    required this.products,
+    required this.details,
   });
 
   Map<String, dynamic> toMap() {
@@ -80,7 +80,15 @@ class Order {
       discountType: map["discount_type"] ?? '',
       marketerId: map["marketer_id"] ?? 0,
       marketerFeeType: map["marketer_fee_type"] ?? '',
-      products: map["products"] ?? [],
+      details: getDetailsList(map["details"]),
     );
+  }
+
+  static List<Map<String, dynamic>> getDetailsList(details) {
+    List<Map<String, dynamic>> result = [];
+    for (int i = 0; i < details.length; i++) {
+      result.add(details[i] as Map<String, dynamic>);
+    }
+    return result;
   }
 }
