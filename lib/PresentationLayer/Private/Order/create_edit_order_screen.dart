@@ -6,6 +6,7 @@ import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart'
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
 import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
 import 'package:matjary/PresentationLayer/Private/Order/order_details.dart';
@@ -104,14 +105,23 @@ class CreateEditOrderScreen extends StatelessWidget {
                 )),
                 Obx(() {
                   return orderScreenController.currentIndex <= 3
-                      ? AcceptButton(
-                          text: orderScreenController.currentIndex.value == 3
-                              ? 'حفظ'
-                              : 'التالي',
-                          onPressed: () {
-                            orderScreenController.goToNextPage();
-                          },
-                        )
+                      ? orderScreenController.currentIndex.value == 3
+                          ? AcceptButton(
+                              text: 'حفظ',
+                              isLoading: orderController.loading.value,
+                              onPressed: () async {
+                                await orderController.createOrder();
+                                if (orderController.orderSaving == true) {
+                                  orderScreenController.goToNextPage();
+                                }
+                              },
+                            )
+                          : AcceptButton(
+                              text: 'التالي',
+                              onPressed: () {
+                                orderScreenController.goToNextPage();
+                              },
+                            )
                       : Container();
                 }),
               ],
