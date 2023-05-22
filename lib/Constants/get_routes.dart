@@ -20,5 +20,6 @@ class AppRoutes {
   static const chooseProductScreen = '/home/chooseProductScreen';
   static const chooseCategoryScreen = '/home/chooseCategoryScreen';
   static const createEditOrderScreen = '/home/createEditOrderScreen';
+  static const ordersScreen = '/home/ordersScreen';
   static const selectProducts = '/home/createEditOrderScreen/selectProducts';
 }
