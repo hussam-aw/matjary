@@ -15,12 +15,28 @@ class OrdersClient {
     }
   }
 
-  Future<dynamic> createOrder(id, total, notes, type, paidUp, restOfTheBill,
-      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
+  Future<dynamic> createOrder(
+      customerId,
+      total,
+      notes,
+      type,
+      paidUp,
+      restOfTheBill,
+      wareId,
+      toWareId,
+      bankId,
+      sellType,
+      status,
+      expenses,
+      discount,
+      marketerId,
+      discountType,
+      products,
+      marketerFeeType) async {
     var response = await http.post(Uri.parse('$baseUrl$orderLink'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
-          "customer_id": id,
+          "customer_id": customerId,
           "user_id": MyApp.appUser!.id,
           "notes": notes,
           "type": type,
@@ -33,6 +49,10 @@ class OrdersClient {
           "status": status,
           "expenses": expenses,
           "discount": discount,
+          "discount_type": discountType,
+          "marketer_id": marketerId,
+          "marketer_fee_type": marketerFeeType,
+          "products": products,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

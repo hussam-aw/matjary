@@ -14,10 +14,26 @@ class OrdersRepo {
     return [];
   }
 
-  Future<Order?> createOrder(id, total, notes, type, paidUp, restOfTheBill,
-      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
+  Future<Order?> createOrder(
+      customerId,
+      total,
+      notes,
+      type,
+      paidUp,
+      restOfTheBill,
+      wareId,
+      toWareId,
+      bankId,
+      sellType,
+      status,
+      expenses,
+      discount,
+      marketerId,
+      discountType,
+      products,
+      marketerFeeType) async {
     var createdOrder = await client.createOrder(
-        id,
+        customerId,
         total,
         notes,
         type,
@@ -29,7 +45,11 @@ class OrdersRepo {
         sellType,
         status,
         expenses,
-        discount);
+        discount,
+        marketerId,
+        discountType,
+        products,
+        marketerFeeType);
     print(createdOrder);
     if (createdOrder != null) {
       return Order.fromMap(jsonDecode(createdOrder));
