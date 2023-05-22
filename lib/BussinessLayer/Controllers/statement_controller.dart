@@ -44,15 +44,6 @@ class StatementController extends GetxController {
     }
   }
 
-  Account? getAccountFromId(accountId) {
-    var account = accountController.accounts
-        .firstWhereOrNull((account) => account.id == accountId);
-    if (account != null) {
-      return account;
-    }
-    return null;
-  }
-
   void setAmount(amount) {
     statementAmount.value = amount;
   }
@@ -71,8 +62,8 @@ class StatementController extends GetxController {
     int? fromId, toId;
     fromId = await boxClient.getFirstSideAccount();
     toId = await boxClient.getSecondSideAccount();
-    from = getAccountFromId(fromId);
-    to = getAccountFromId(toId);
+    from = accountController.getAccountFromId(fromId);
+    to = accountController.getAccountFromId(toId);
     if (from == null && to == null) {
       from = accountController.accounts.isNotEmpty
           ? accountController.accounts[0]
