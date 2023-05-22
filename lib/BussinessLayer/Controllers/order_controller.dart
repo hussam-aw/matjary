@@ -43,25 +43,77 @@ class OrderController extends GetxController {
       TextEditingController(text: '0.0');
   TextEditingController remainingAmountController = TextEditingController();
   RxDouble remainingAmount = 0.0.obs;
+  List<Map<String, dynamic>> orderProducts = [];
   var loading = false.obs;
+  var orderSaving = false;
   HomeController homeController = Get.find<HomeController>();
   final accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
 
-  int convertOrderTypeToInt(String type) {
+  String convertOrderType(String? type) {
     switch (type) {
       case 'بيع للزبائن':
-        return 0;
+        return 'sell_to_customers';
       case 'بيع مفرق':
-        return 1;
+        return 'retail_sale';
       case 'مشتريات':
-        return 2;
+        return 'purchases';
       case 'مردود بيع':
-        return 3;
+        return 'sales_return';
       case 'مردود شراء':
+        return 'purchase_return';
+      case 'نقل':
+        return 'transfer';
+    }
+    return '';
+  }
+
+  String convertBuyingType(String? type) {
+    switch (type) {
+      case 'مباشر':
+        return 'direct';
+      case 'توصيل':
+        return 'delivery';
+      case 'شحن':
+        return 'shipping';
+    }
+    return '';
+  }
+
+  int convertOrderStatusToInt(status) {
+    switch (status) {
+      case 'جاري التجهيز':
+        return 0;
+      case 'تم التسديد':
+        return 1;
+      case 'في شركة الشحن':
+        return 2;
+      case 'قيد التوصيل':
+        return 3;
+      case 'تامة':
         return 4;
     }
     return 5;
+  }
+
+  String converDiscountType(String discountType) {
+    switch (discountType) {
+      case 'رقم':
+        return 'number';
+      case 'نسبة':
+        return 'percent';
+    }
+    return '';
+  }
+
+  void getOrderProductsMap() {
+    for (Product product in selectedProducts) {
+      orderProducts.add({
+        "product_id": product.id,
+        "qty": orderProductsQuantities[product.id],
+        "price": orderProductsPrices[product.id],
+      });
+    }
   }
 
   void setOrderType(orderType) {
@@ -183,23 +235,51 @@ class OrderController extends GetxController {
         TextEditingValue(text: remainingAmount.toStringAsFixed(2));
   }
 
-  // Future<void> createOrder() async {
-  //   if (true)
-  //   // name.isNotEmpty &&
-  //   {
-  //     loading.value = true;
-  //     var order = //await orderRepo.createOrder(id, total, notes, type, paidUp, restOfTheBill, wareId, toWareId, bankId, sellType, status, expenses, discount);
-  //         loading.value = false;
-  //     if (order != null) {
-  //       homeController.getOrders();
-  //       SnackBars.showSuccess('تم انشاء الطلب');
-  //     } else {
-  //       SnackBars.showError('فشل انشاء الطلب');
-  //     }
-  //   } else {
-  //     SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
-  //   }
-  // }
+  Future<void> createOrder() async {
+    String orderType = convertOrderType(type);
+    num paidUp = num.parse(paidAmountController.text);
+    String butyingType = convertBuyingType(buyingType);
+    int orderStatus = convertOrderStatusToInt(status);
+    int? marketerId = marketerAccount != null ? marketerAccount!.id : null;
+    String discountOrderType = converDiscountType(discountType);
+    String? discountMarketerType = marketerAccount != null
+        ? converDiscountType(marketerDiscountType)
+        : null;
+    getOrderProductsMap();
+    loading.value = true;
+    var order = await orderRepo.createOrder(
+        counterPartyAccount!.id,
+        totalOrderAmount.value,
+        notesController.text,
+        orderType,
+        paidUp,
+        remainingAmount.value,
+        wareAccount!.id,
+        null,
+        bankAccount!.id,
+        butyingType,
+        orderStatus,
+        expenses.value,
+        discountAmount.value,
+        marketerId,
+        discountOrderType,
+        orderProducts,
+        discountMarketerType);
+    loading.value = false;
+    if (order != null) {
+      orderSaving = true;
+      homeController.getOrders();
+      boxClient.setCounterPartyAccount(counterPartyAccount!.id);
+      boxClient.setBankAccount(bankAccount!.id);
+      boxClient.setWareAccount(wareAccount!.id);
+      if (marketerAccount != null) {
+        boxClient.setMarketerAccount(marketerAccount!.id);
+      }
+      SnackBars.showSuccess('تم انشاء الطلب');
+    } else {
+      SnackBars.showError('فشل انشاء الطلب');
+    }
+  }
 
   // Future<void> updateOrder(int id) async {
   //   loading.value = true;
@@ -226,13 +306,14 @@ class OrderController extends GetxController {
   // }
 
   void setDefaultAccounts() async {
+    int? counterPartyId, bankId, wareId, marketerId;
     Account? counterParty, bank, marketer;
     Ware? ware;
-    counterParty = await boxClient.getCounterPartyAccount();
-    bank = await boxClient.getBankAccount();
-    ware = await boxClient.getWareAccount();
-    marketer = await boxClient.getMarketerAccount();
-    if (counterParty == null && bank == null && ware == null) {
+    counterPartyId = await boxClient.getCounterPartyAccount();
+    bankId = await boxClient.getBankAccount();
+    wareId = await boxClient.getWareAccount();
+    marketerId = await boxClient.getMarketerAccount();
+    if (counterPartyId == null && bankId == null && wareId == null) {
       counterParty = accountsController.clientAndSupplierAccounts.isNotEmpty
           ? accountsController.clientAndSupplierAccounts[0]
           : null;
@@ -243,6 +324,11 @@ class OrderController extends GetxController {
       marketer = accountsController.marketerAccounts.isNotEmpty
           ? accountsController.marketerAccounts[0]
           : null;
+    } else {
+      counterParty = accountsController.getAccountFromId(counterPartyId);
+      bank = accountsController.getAccountFromId(bankId);
+      ware = homeController.wares.firstWhere((w) => w.id == wareId);
+      marketer = accountsController.getAccountFromId(marketerId);
     }
     setCounterPartyAccount(counterParty);
     setBankAccount(bank);
@@ -288,6 +374,7 @@ class OrderController extends GetxController {
     remainingAmountController.value = const TextEditingValue();
     remainingAmount = 0.0.obs;
     loading = false.obs;
+    orderSaving = false;
   }
 
   @override
