@@ -56,12 +56,12 @@ class BoxClient {
     return null;
   }
 
-  Future<void> setCounterPartyAccount(Account account) async {
+  Future<void> setCounterPartyAccount(int accountId) async {
     await box.remove('counter_party');
-    await box.write('counter_party', account);
+    await box.write('counter_party', accountId);
   }
 
-  Future<Account?> getCounterPartyAccount() async {
+  Future<int?> getCounterPartyAccount() async {
     var counterParty = await box.read('counter_party');
     if (counterParty != null) {
       return counterParty;
@@ -69,12 +69,12 @@ class BoxClient {
     return null;
   }
 
-  Future<void> setBankAccount(Account account) async {
+  Future<void> setBankAccount(int accountId) async {
     await box.remove('bank_account');
-    await box.write('bank_account', account);
+    await box.write('bank_account', accountId);
   }
 
-  Future<Account?> getBankAccount() async {
+  Future<int?> getBankAccount() async {
     var bank = await box.read('bank_account');
     if (bank != null) {
       return bank;
@@ -82,12 +82,12 @@ class BoxClient {
     return null;
   }
 
-  Future<void> setWareAccount(Ware ware) async {
+  Future<void> setWareAccount(int wareId) async {
     await box.remove('ware_account');
-    await box.write('ware_account', ware);
+    await box.write('ware_account', wareId);
   }
 
-  Future<Ware?> getWareAccount() async {
+  Future<int?> getWareAccount() async {
     var ware = await box.read('ware_account');
     if (ware != null) {
       return ware;
@@ -95,12 +95,12 @@ class BoxClient {
     return null;
   }
 
-  Future<void> setMarketerAccount(Account account) async {
+  Future<void> setMarketerAccount(int accountId) async {
     await box.remove('marketer_account');
-    await box.write('marketer_account', account);
+    await box.write('marketer_account', accountId);
   }
 
-  Future<Account?> getMarketerAccount() async {
+  Future<int?> getMarketerAccount() async {
     var marketer = await box.read('marketer_account');
     if (marketer != null) {
       return marketer;
