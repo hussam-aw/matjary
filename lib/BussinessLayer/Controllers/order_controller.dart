@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
@@ -47,7 +48,8 @@ class OrderController extends GetxController {
   var loading = false.obs;
   var orderSaving = false;
   HomeController homeController = Get.find<HomeController>();
-  final accountsController = Get.find<AccountsController>();
+  AccountsController accountsController = Get.find<AccountsController>();
+  OrdersController ordersController = Get.find<OrdersController>();
   BoxClient boxClient = BoxClient();
 
   String convertOrderType(String? type) {
@@ -247,7 +249,7 @@ class OrderController extends GetxController {
         : null;
     getOrderProductsMap();
     loading.value = true;
-    var order = await orderRepo.createOrder(
+    var orderCreationStatus = await orderRepo.createOrder(
         counterPartyAccount!.id,
         totalOrderAmount.value,
         notesController.text,
@@ -266,9 +268,9 @@ class OrderController extends GetxController {
         orderProducts,
         discountMarketerType);
     loading.value = false;
-    if (order != null) {
+    if (orderCreationStatus == true) {
       orderSaving = true;
-      homeController.getOrders();
+      ordersController.getOrders();
       boxClient.setCounterPartyAccount(counterPartyAccount!.id);
       boxClient.setBankAccount(bankAccount!.id);
       boxClient.setWareAccount(wareAccount!.id);
