@@ -9,6 +9,24 @@ class OrdersController extends GetxController {
   List<Order> purchasesOrders = [];
   List<Order> salesOrders = [];
 
+  List<String> orderFilterTypes = [
+    'الكل',
+    'بيع مفرق',
+    'بيع للزبائن',
+    'مشتريات',
+    'مردود بيع',
+    'مردود شراء'
+  ];
+
+  RxMap<String, bool> orderFilterTypesSelection = {
+    'الكل': true,
+    'بيع للزبائن': false,
+    'بيع مفرق': false,
+    'مشتريات': false,
+    'مردود بيع': false,
+    'مردود شراء': false,
+  }.obs;
+
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
     orders = await ordersRepo.getOrders();
@@ -27,5 +45,21 @@ class OrdersController extends GetxController {
         .where((order) =>
             order.type == "sell_to_customers" || order.type == "retail_sale")
         .toList();
+  }
+
+  void resetOrderFilterTypes() {
+    orderFilterTypesSelection.value = {
+      'الكل': false,
+      'بيع للزبائن': false,
+      'بيع مفرق': false,
+      'مشتريات': false,
+      'مردود بيع': false,
+      'مردود شراء': false,
+    };
+  }
+
+  void setOrderFilterType(type) {
+    resetOrderFilterTypes();
+    orderFilterTypesSelection[type] = true;
   }
 }
