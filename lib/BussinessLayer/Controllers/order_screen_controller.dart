@@ -5,11 +5,11 @@ import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
-import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
-import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
-import 'package:matjary/PresentationLayer/Private/Order/order_details.dart';
-import 'package:matjary/PresentationLayer/Private/Order/saving_order.dart';
-import 'package:matjary/PresentationLayer/Private/Order/success_saving_order.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/delivery_details.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_basic_information.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/saving_order.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/success_saving_order.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class OrderScreenController extends GetxController {

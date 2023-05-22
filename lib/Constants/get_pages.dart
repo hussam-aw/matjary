@@ -3,7 +3,7 @@ import 'package:matjary/BussinessLayer/Bindings/home_binding.dart';
 import 'package:matjary/PresentationLayer/Auth/login_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/pin_code_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
-import 'package:matjary/PresentationLayer/Private/Order/select_products_screen.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_category_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_order_screen.dart';
@@ -13,7 +13,7 @@ import 'package:matjary/PresentationLayer/Private/create_edit_account_screen.dar
 import 'package:matjary/PresentationLayer/Private/create_edit_bank_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_category_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_client_screen.dart';
-import 'package:matjary/PresentationLayer/Private/Order/create_edit_order_screen.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/create_edit_order_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_product_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_ware.dart';
 import 'package:matjary/PresentationLayer/Private/create_statement.dart';
