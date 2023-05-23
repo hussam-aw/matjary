@@ -1,13 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
 
 class OrdersController extends GetxController {
   OrdersRepo ordersRepo = OrdersRepo();
   var isLoadingOrders = false.obs;
+  var isLoadingOrdersByType = false.obs;
   List<Order> orders = [];
   List<Order> purchasesOrders = [];
   List<Order> salesOrders = [];
+  List<Order> currentOrders = [];
+  List<Order> filteredOrder = [];
+  String currentOrderFilterType = 'الكل';
 
   List<String> orderFilterTypes = [
     'الكل',
@@ -17,6 +23,14 @@ class OrdersController extends GetxController {
     'مردود بيع',
     'مردود شراء'
   ];
+
+  Map<String, String> counterOrderTypes = {
+    'بيع للزبائن': 'sell_to_customers',
+    'بيع مفرق': 'retail_sale',
+    'مشتريات': 'purchases',
+    'مردود بيع': 'sales_return',
+    'مردود شراء': 'purchase_return',
+  };
 
   RxMap<String, bool> orderFilterTypesSelection = {
     'الكل': true,
@@ -61,5 +75,28 @@ class OrdersController extends GetxController {
   void setOrderFilterType(type) {
     resetOrderFilterTypes();
     orderFilterTypesSelection[type] = true;
+  }
+
+  void getOrdersByType(String type) async {
+    if (type == 'الكل') {
+      currentOrders = orders;
+    } else {
+      currentOrders = salesOrders = orders
+          .where((order) => order.type == counterOrderTypes[type])
+          .toList();
+    }
+    update();
+  }
+
+  List<Order> getOrdersForAccounts(accounts) {
+    filteredOrder = [];
+    for (Account account in accounts) {
+      for (Order order in currentOrders) {
+        if (order.customerId == account.id) {
+          filteredOrder.add(order);
+        }
+      }
+    }
+    return filteredOrder;
   }
 }
