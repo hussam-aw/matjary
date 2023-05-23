@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -49,7 +50,7 @@ class CustomBox extends StatelessWidget {
                 IconButton(
                   padding: EdgeInsets.zero,
                   icon: const Icon(
-                    Icons.edit,
+                    FontAwesomeIcons.penToSquare,
                     color: UIColors.white,
                   ),
                   onPressed: editOnPressed,

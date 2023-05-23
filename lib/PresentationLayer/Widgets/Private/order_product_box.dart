@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -107,7 +108,7 @@ class OrderProductBox extends StatelessWidget {
                     ));
                   },
                   child: const Icon(
-                    Icons.edit,
+                    FontAwesomeIcons.penToSquare,
                     size: 20,
                     color: UIColors.white,
                   ),
