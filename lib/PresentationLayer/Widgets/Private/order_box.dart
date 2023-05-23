@@ -7,7 +7,18 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class OrderBox extends StatelessWidget {
-  const OrderBox({super.key});
+  const OrderBox({
+    super.key,
+    required this.orderId,
+    required this.customerName,
+    required this.orderTotal,
+    required this.orderDate,
+  });
+
+  final int orderId;
+  final String customerName;
+  final num orderTotal;
+  final String orderDate;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +40,9 @@ class OrderBox extends StatelessWidget {
                 color: UIColors.primary,
                 borderRadius: raduis10,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  '#20',
+                  '#$orderId',
                   style: UITextStyle.boldHeadingRedHat,
                 ),
               ),
@@ -44,18 +55,18 @@ class OrderBox extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'الزبون علي',
+                  Text(
+                    'الزبون $customerName',
                     style: UITextStyle.boldBody,
                   ),
                   spacerHeight(height: 12),
-                  const Text(
-                    'إجمالي الفاتورة :   500000',
+                  Text(
+                    'إجمالي الفاتورة :   $orderTotal',
                     style: UITextStyle.normalSmall,
                   ),
                   spacerHeight(height: 8),
                   Text(
-                    '20/05/2023',
+                    orderDate,
                     style: UITextStyle.normalSmall.copyWith(
                       color: UIColors.titleNoteText,
                     ),
