@@ -211,8 +211,7 @@ class OrderController extends GetxController {
 
   void calculateTotalOrderAmount() {
     totalOrderAmount.value = 0.0;
-    totalOrderAmount.value =
-        totalProductsPrice.value - expenses.value - discountAmount.value;
+    totalOrderAmount.value = totalProductsPrice.value - discountAmount.value;
   }
 
   void refreshOrderCalculations() {
