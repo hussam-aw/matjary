@@ -17,7 +17,8 @@ class Order {
   final String discountType;
   final int marketerId;
   final String marketerFeeType;
-  List<Map<String, dynamic>> details;
+  final List<Map<String, dynamic>> details;
+  final String creationDate;
   Order({
     required this.id,
     required this.total,
@@ -38,6 +39,7 @@ class Order {
     required this.marketerId,
     required this.marketerFeeType,
     required this.details,
+    required this.creationDate,
   });
 
   Map<String, dynamic> toMap() {
@@ -81,6 +83,7 @@ class Order {
       marketerId: map["marketer_id"] ?? 0,
       marketerFeeType: map["marketer_fee_type"] ?? '',
       details: getDetailsList(map["details"]),
+      creationDate: getCreationDate(map["created_at"]),
     );
   }
 
@@ -90,5 +93,10 @@ class Order {
       result.add(details[i] as Map<String, dynamic>);
     }
     return result;
+  }
+
+  static String getCreationDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return "${dateTime.year}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.day}";
   }
 }
