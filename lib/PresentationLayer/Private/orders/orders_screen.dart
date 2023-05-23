@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -18,9 +22,34 @@ class OrdersScreen extends StatelessWidget {
   OrdersScreen({super.key});
 
   final ordersController = Get.find<OrdersController>();
+  final searchController = Get.put(SearchController());
+  final accountsController = Get.find<AccountsController>();
+
+  Widget buildOrdersList(List<Order> orders) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return OrderBox(
+          orderId: orders[index].id,
+          customerName:
+              accountsController.getAccountFromId(orders[index].customerId) !=
+                      null
+                  ? accountsController
+                      .getAccountFromId(orders[index].customerId)!
+                      .name
+                  : '',
+          orderTotal: orders[index].total,
+          orderDate: orders[index].creationDate,
+        );
+      },
+      separatorBuilder: (context, index) => spacerHeight(),
+      itemCount: orders.length,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    searchController.list = accountsController.accounts;
+    ordersController.currentOrders = ordersController.orders;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -67,6 +96,8 @@ class OrdersScreen extends StatelessWidget {
                                 onTap: () {
                                   ordersController
                                       .setOrderFilterType(orderFilterType);
+                                  ordersController
+                                      .getOrdersByType(orderFilterType);
                                 },
                               ))
                           .toList(),
@@ -77,19 +108,39 @@ class OrdersScreen extends StatelessWidget {
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
                   onChanged: (value) {
-                    // searchController.searchText = value;
-                    // searchController.search();
+                    searchController.searchText = value;
+                    searchController.search();
                   },
                 ),
                 spacerHeight(height: 22),
                 Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return OrderBox();
-                    },
-                    separatorBuilder: (context, index) => spacerHeight(),
-                    itemCount: 10,
-                  ),
+                  child: GetBuilder(
+                      init: ordersController,
+                      builder: (context) {
+                        return GetBuilder(
+                          init: searchController,
+                          builder: (context) {
+                            if (searchController.searchText.isEmpty) {
+                              return buildOrdersList(
+                                  ordersController.currentOrders);
+                            } else {
+                              return Obx(
+                                () {
+                                  if (searchController.searchLoading.value) {
+                                    return Center(
+                                      child: loadingItem(isWhite: true),
+                                    );
+                                  } else {
+                                    return buildOrdersList(
+                                        ordersController.getOrdersForAccounts(
+                                            searchController.filteredList));
+                                  }
+                                },
+                              );
+                            }
+                          },
+                        );
+                      }),
                 ),
               ],
             ),
