@@ -40,11 +40,11 @@ class OrderScreenController extends GetxController {
     'مردود شراء': false,
   }.obs;
 
-  List<String> buyingTypes = [
-    'مباشر',
-    'توصيل',
-    'شحن',
-  ];
+  Map<String, String> buyingTypes = {
+    'مباشر': 'direct',
+    'توصيل': 'delivery',
+    'شحن': 'shipping',
+  };
 
   RxMap<String, bool> buyingTypesSelection = {
     'مباشر': true,
@@ -406,6 +406,8 @@ class OrderScreenController extends GetxController {
           orderTypes.keys.firstWhere((type) => orderTypes[type] == order.type);
       setOrderType(selectedOrderType);
       getProductsQuantitiesAndPrices(order.details);
+      setbuyingType(buyingTypes.keys
+          .firstWhere((type) => buyingTypes[type] == order.sellType));
     }
   }
 

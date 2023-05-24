@@ -53,18 +53,6 @@ class OrderController extends GetxController {
   OrdersController ordersController = Get.find<OrdersController>();
   BoxClient boxClient = BoxClient();
 
-  String convertBuyingType(String? type) {
-    switch (type) {
-      case 'مباشر':
-        return 'direct';
-      case 'توصيل':
-        return 'delivery';
-      case 'شحن':
-        return 'shipping';
-    }
-    return '';
-  }
-
   int convertOrderStatusToInt(status) {
     switch (status) {
       case 'جاري التجهيز':
@@ -222,7 +210,7 @@ class OrderController extends GetxController {
   Future<void> createOrder() async {
     //String orderType = convertOrderType(type);
     num paidUp = num.parse(paidAmountController.text);
-    String butyingType = convertBuyingType(buyingType);
+    //String butyingType = convertBuyingType(buyingType);
     int orderStatus = convertOrderStatusToInt(status);
     int? marketerId = marketerAccount != null ? marketerAccount!.id : null;
     String discountOrderType = converDiscountType(discountType);
@@ -241,7 +229,7 @@ class OrderController extends GetxController {
         wareAccount!.id,
         null,
         bankAccount!.id,
-        butyingType,
+        buyingType,
         orderStatus,
         expenses.value,
         discountAmount.value,
@@ -370,6 +358,7 @@ class OrderController extends GetxController {
       setWare(
           homeController.wares.firstWhereOrNull((w) => w.id == order.wareId));
       setMarketerAccount(accountsController.getAccountFromId(order.marketerId));
+      setBuyingType(order.sellType);
     }
   }
 
