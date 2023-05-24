@@ -34,7 +34,7 @@ class DeliveryDetails extends StatelessWidget {
               Obx(
                 () {
                   return CustomRadioGroup(
-                    items: orderScreenController.buyingTypes
+                    items: orderScreenController.buyingTypes.keys
                         .map((buyingType) => RadioButtonItem(
                               text: buyingType,
                               selectionColor: UIColors.primary,
@@ -43,7 +43,9 @@ class DeliveryDetails extends StatelessWidget {
                                   .buyingTypesSelection.value[buyingType]!,
                               onTap: () {
                                 orderScreenController.setbuyingType(buyingType);
-                                orderController.setBuyingType(buyingType);
+                                orderController.setBuyingType(
+                                    orderScreenController
+                                        .buyingTypes[buyingType]);
                               },
                             ))
                         .toList(),
