@@ -38,7 +38,7 @@ class OrderBasicInformation extends StatelessWidget {
               Obx(
                 () {
                   return CustomRadioGroup(
-                    items: orderScreenController.orderTypes
+                    items: orderScreenController.orderTypes.keys
                         .map((orderType) => RadioButtonItem(
                               text: orderType,
                               selectionColor: UIColors.primary,
@@ -49,7 +49,9 @@ class OrderBasicInformation extends StatelessWidget {
                                 orderScreenController.setOrderType(orderType);
                                 orderScreenController
                                     .updateSelectedProductsPrices();
-                                orderController.setOrderType(orderType);
+                                orderController.setOrderType(
+                                    orderScreenController
+                                        .orderTypes[orderType]);
                                 orderScreenController.setProductsPrices();
                               },
                             ))
