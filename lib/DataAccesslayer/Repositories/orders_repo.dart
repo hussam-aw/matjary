@@ -57,10 +57,28 @@ class OrdersRepo {
     return false;
   }
 
-  Future<Order?> updateOrder(id, total, notes, type, paidUp, restOfTheBill,
-      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
+  Future<Order?> updateOrder(
+      id,
+      customerId,
+      total,
+      notes,
+      type,
+      paidUp,
+      restOfTheBill,
+      wareId,
+      toWareId,
+      bankId,
+      sellType,
+      status,
+      expenses,
+      discount,
+      marketerId,
+      discountType,
+      details,
+      marketerFeeType) async {
     var updateOrder = await client.updateOrder(
         id,
+        customerId,
         total,
         notes,
         type,
@@ -72,8 +90,11 @@ class OrdersRepo {
         sellType,
         status,
         expenses,
-        discount);
-    print(updateOrder);
+        discount,
+        marketerId,
+        discountType,
+        details,
+        marketerFeeType);
     if (updateOrder != null) {
       return Order.fromMap(jsonDecode(updateOrder));
     }
