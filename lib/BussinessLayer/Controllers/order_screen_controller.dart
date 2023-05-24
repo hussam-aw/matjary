@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/delivery_details.dart';
@@ -23,13 +24,13 @@ class OrderScreenController extends GetxController {
   OrderController orderController = Get.find<OrderController>();
   RxBool finishSavingOrder = false.obs;
 
-  List<String> orderTypes = [
-    'بيع للزبائن',
-    'بيع مفرق',
-    'مشتريات',
-    'مردود بيع',
-    'مردود شراء'
-  ];
+  Map<String, String> orderTypes = {
+    'بيع للزبائن': 'sell_to_customers',
+    'بيع مفرق': 'retail_sale',
+    'مشتريات': 'purchases',
+    'مردود بيع': "sales_return",
+    'مردود شراء': 'purchase_return',
+  };
 
   RxMap<String, bool> orderTypesSelection = {
     'بيع للزبائن': true,
@@ -216,6 +217,17 @@ class OrderScreenController extends GetxController {
         curve: Curves.decelerate, duration: const Duration(milliseconds: 300));
   }
 
+  void getProductsQuantitiesAndPrices(
+      List<Map<String, dynamic>> orderProducts) {
+    for (Map<String, dynamic> product in orderProducts) {
+      selectedProducts.add(homeController.products
+          .firstWhere((p) => p.id == product["product_id"]));
+      selectedProductsQuantities.value[product["product_id"]] =
+          product["quantity"];
+      selectedProductPrices.value[product["product_id"]] = product["price"];
+    }
+  }
+
   bool checkIfProductQuantityIsZero(productId) {
     return selectedProductsQuantities.value[productId] == null ||
         selectedProductsQuantities.value[productId] == 0;
@@ -385,6 +397,16 @@ class OrderScreenController extends GetxController {
     productQuantityController.value = const TextEditingValue();
     productPriceController.value = const TextEditingValue();
     selectedProducts = <Product>[].obs;
+  }
+
+  void initializeOrderScreen(Order? order) {
+    selectedProducts.clear();
+    if (order != null) {
+      selectedOrderType =
+          orderTypes.keys.firstWhere((type) => orderTypes[type] == order.type);
+      setOrderType(selectedOrderType);
+      getProductsQuantitiesAndPrices(order.details);
+    }
   }
 
   @override
