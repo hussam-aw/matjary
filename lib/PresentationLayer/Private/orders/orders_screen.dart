@@ -31,12 +31,7 @@ class OrdersScreen extends StatelessWidget {
         return OrderBox(
           orderId: orders[index].id,
           customerName:
-              accountsController.getAccountFromId(orders[index].customerId) !=
-                      null
-                  ? accountsController
-                      .getAccountFromId(orders[index].customerId)!
-                      .name
-                  : '',
+              ordersController.getCustomerName(orders[index].customerId),
           orderTotal: orders[index].total,
           orderDate: orders[index].creationDate,
         );
