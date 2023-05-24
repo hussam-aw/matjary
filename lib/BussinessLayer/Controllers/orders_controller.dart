@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
@@ -14,6 +15,7 @@ class OrdersController extends GetxController {
   List<Order> currentOrders = [];
   List<Order> filteredOrder = [];
   String currentOrderFilterType = 'الكل';
+  AccountsController accountsController = Get.find<AccountsController>();
 
   List<String> orderFilterTypes = [
     'الكل',
@@ -98,5 +100,11 @@ class OrdersController extends GetxController {
       }
     }
     return filteredOrder;
+  }
+
+  String getCustomerName(int id) {
+    return accountsController.getAccountFromId(id) != null
+        ? accountsController.getAccountFromId(id)!.name
+        : '';
   }
 }
