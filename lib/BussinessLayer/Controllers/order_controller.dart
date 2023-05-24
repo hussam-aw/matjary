@@ -328,7 +328,7 @@ class OrderController extends GetxController {
     } else {
       counterParty = accountsController.getAccountFromId(counterPartyId);
       bank = accountsController.getAccountFromId(bankId);
-      ware = homeController.wares.firstWhere((w) => w.id == wareId);
+      ware = homeController.wares.firstWhereOrNull((w) => w.id == wareId);
       marketer = accountsController.getAccountFromId(marketerId);
     }
     setCounterPartyAccount(counterParty);
