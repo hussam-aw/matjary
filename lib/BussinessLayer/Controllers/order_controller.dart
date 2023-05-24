@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
@@ -51,24 +52,6 @@ class OrderController extends GetxController {
   AccountsController accountsController = Get.find<AccountsController>();
   OrdersController ordersController = Get.find<OrdersController>();
   BoxClient boxClient = BoxClient();
-
-  String convertOrderType(String? type) {
-    switch (type) {
-      case 'بيع للزبائن':
-        return 'sell_to_customers';
-      case 'بيع مفرق':
-        return 'retail_sale';
-      case 'مشتريات':
-        return 'purchases';
-      case 'مردود بيع':
-        return 'sales_return';
-      case 'مردود شراء':
-        return 'purchase_return';
-      case 'نقل':
-        return 'transfer';
-    }
-    return '';
-  }
 
   String convertBuyingType(String? type) {
     switch (type) {
@@ -237,7 +220,7 @@ class OrderController extends GetxController {
   }
 
   Future<void> createOrder() async {
-    String orderType = convertOrderType(type);
+    //String orderType = convertOrderType(type);
     num paidUp = num.parse(paidAmountController.text);
     String butyingType = convertBuyingType(buyingType);
     int orderStatus = convertOrderStatusToInt(status);
@@ -252,7 +235,7 @@ class OrderController extends GetxController {
         counterPartyAccount!.id,
         totalOrderAmount.value,
         notesController.text,
-        orderType,
+        type,
         paidUp,
         remainingAmount.value,
         wareAccount!.id,
@@ -376,6 +359,18 @@ class OrderController extends GetxController {
     remainingAmount = 0.0.obs;
     loading = false.obs;
     orderSaving = false;
+  }
+
+  void initializeOrderDetails(Order? order) {
+    if (order != null) {
+      setOrderType(order.type);
+      setCounterPartyAccount(
+          accountsController.getAccountFromId(order.customerId));
+      setBankAccount(accountsController.getAccountFromId(order.bankId));
+      setWare(
+          homeController.wares.firstWhereOrNull((w) => w.id == order.wareId));
+      setMarketerAccount(accountsController.getAccountFromId(order.marketerId));
+    }
   }
 
   @override
