@@ -30,8 +30,12 @@ class CreateEditOrderScreen extends StatelessWidget {
   final orderController = Get.put(OrderController());
   final orderScreenController = Get.put(OrderScreenController());
 
+  Order? order = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
+    orderScreenController.initializeOrderScreen(order);
+    orderController.initializeOrderDetails(order);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(
