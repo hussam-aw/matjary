@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class OrderBox extends StatelessWidget {
-  const OrderBox({
+  OrderBox({
     super.key,
-    required this.orderId,
-    required this.customerName,
-    required this.orderTotal,
-    required this.orderDate,
+    required this.order,
   });
 
-  final int orderId;
-  final String customerName;
-  final num orderTotal;
-  final String orderDate;
+  final Order order;
+  final accountsController = Get.find<AccountsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,8 @@ class OrderBox extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  '#$orderId',
+                  '#${order.id}',
+                  overflow: TextOverflow.ellipsis,
                   style: UITextStyle.boldHeadingRedHat,
                 ),
               ),
@@ -56,17 +56,17 @@ class OrderBox extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'الزبون $customerName',
+                    'الزبون ${accountsController.getAccountName(order.customerId)}',
                     style: UITextStyle.boldBody,
                   ),
                   spacerHeight(height: 12),
                   Text(
-                    'إجمالي الفاتورة :   $orderTotal',
+                    'إجمالي الفاتورة :   ${order.total}',
                     style: UITextStyle.normalSmall,
                   ),
                   spacerHeight(height: 8),
                   Text(
-                    orderDate,
+                    order.creationDate,
                     style: UITextStyle.normalSmall.copyWith(
                       color: UIColors.titleNoteText,
                     ),
@@ -88,15 +88,20 @@ class OrderBox extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {},
-                    child: Icon(
+                    child: const Icon(
                       FontAwesomeIcons.eye,
                       color: UIColors.primary,
                       size: 17,
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
-                    child: Icon(
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.createEditOrderScreen,
+                        arguments: order,
+                      );
+                    },
+                    child: const Icon(
                       FontAwesomeIcons.penToSquare,
                       color: UIColors.primary,
                       size: 17,

@@ -29,11 +29,7 @@ class OrdersScreen extends StatelessWidget {
     return ListView.separated(
       itemBuilder: (context, index) {
         return OrderBox(
-          orderId: orders[index].id,
-          customerName:
-              ordersController.getCustomerName(orders[index].customerId),
-          orderTotal: orders[index].total,
-          orderDate: orders[index].creationDate,
+          order: orders[index],
         );
       },
       separatorBuilder: (context, index) => spacerHeight(),
