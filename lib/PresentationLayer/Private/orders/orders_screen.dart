@@ -105,33 +105,33 @@ class OrdersScreen extends StatelessWidget {
                 ),
                 spacerHeight(height: 22),
                 Expanded(
-                  child: GetBuilder(
-                      init: ordersController,
-                      builder: (context) {
-                        return GetBuilder(
-                          init: searchController,
-                          builder: (context) {
-                            if (searchController.searchText.isEmpty) {
-                              return buildOrdersList(
-                                  ordersController.currentOrders);
-                            } else {
-                              return Obx(
-                                () {
-                                  if (searchController.searchLoading.value) {
-                                    return Center(
-                                      child: loadingItem(isWhite: true),
-                                    );
-                                  } else {
-                                    return buildOrdersList(
-                                        ordersController.getOrdersForAccounts(
-                                            searchController.filteredList));
-                                  }
-                                },
-                              );
-                            }
-                          },
-                        );
-                      }),
+                  child: Obx(() {
+                    return ordersController.isLoadingOrders.value
+                        ? Center(child: loadingItem(isWhite: true))
+                        : GetBuilder(
+                            init: searchController,
+                            builder: (context) {
+                              if (searchController.searchText.isEmpty) {
+                                return buildOrdersList(
+                                    ordersController.currentOrders);
+                              } else {
+                                return Obx(
+                                  () {
+                                    if (searchController.searchLoading.value) {
+                                      return Center(
+                                        child: loadingItem(isWhite: true),
+                                      );
+                                    } else {
+                                      return buildOrdersList(
+                                          ordersController.getOrdersForAccounts(
+                                              searchController.filteredList));
+                                    }
+                                  },
+                                );
+                              }
+                            },
+                          );
+                  }),
                 ),
               ],
             ),
