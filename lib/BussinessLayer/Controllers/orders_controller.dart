@@ -45,6 +45,9 @@ class OrdersController extends GetxController {
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
     orders = await ordersRepo.getOrders();
+    for (Order order in orders) {
+      print(order.toMap());
+    }
     await getPurchasesOrders();
     await getSalesOrders();
     isLoadingOrders.value = false;
@@ -75,10 +78,12 @@ class OrdersController extends GetxController {
 
   void setOrderFilterType(type) {
     resetOrderFilterTypes();
+    currentOrderFilterType = type;
     orderFilterTypesSelection[type] = true;
   }
 
   void getOrdersByType(String type) async {
+    isLoadingOrders.value = true;
     if (type == 'الكل') {
       currentOrders = orders;
     } else {
@@ -86,7 +91,7 @@ class OrdersController extends GetxController {
           .where((order) => order.type == counterOrderTypes[type])
           .toList();
     }
-    update();
+    isLoadingOrders.value = false;
   }
 
   List<Order> getOrdersForAccounts(accounts) {
