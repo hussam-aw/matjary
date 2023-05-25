@@ -31,7 +31,8 @@ class OrdersClient {
       marketerId,
       discountType,
       details,
-      marketerFeeType) async {
+      marketerFeeType,
+      marketerFee) async {
     var response = await http.post(Uri.parse('$baseUrl$orderLink'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
@@ -51,6 +52,7 @@ class OrdersClient {
           "discount_type": discountType,
           "marketer_id": marketerId,
           "marketer_fee_type": marketerFeeType,
+          "marketer_fee": marketerFee,
           "details": details,
         }),
         headers: <String, String>{
@@ -81,7 +83,8 @@ class OrdersClient {
       marketerId,
       discountType,
       details,
-      marketerFeeType) async {
+      marketerFeeType,
+      marketerFee) async {
     var response = await http.post(Uri.parse('$baseUrl$orderLink/$id'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
@@ -101,6 +104,7 @@ class OrdersClient {
           "discount_type": discountType,
           "marketer_id": marketerId,
           "marketer_fee_type": marketerFeeType,
+          "marketer_fee": marketerFee,
           "details": details,
         }),
         headers: <String, String>{
@@ -109,9 +113,9 @@ class OrdersClient {
 
     print(response.body);
     if (response.statusCode == 201) {
-      return response.body;
+      return true;
     } else {
-      return null;
+      return false;
     }
   }
 

@@ -31,7 +31,8 @@ class OrdersRepo {
       marketerId,
       discountType,
       details,
-      marketerFeeType) async {
+      marketerFeeType,
+      marketerFee) async {
     var orderCreationStatus = await client.createOrder(
         customerId,
         total,
@@ -49,15 +50,16 @@ class OrdersRepo {
         marketerId,
         discountType,
         details,
-        marketerFeeType);
+        marketerFeeType,
+        marketerFee);
 
-    if (orderCreationStatus == true) {
+    if (orderCreationStatus) {
       return true;
     }
     return false;
   }
 
-  Future<Order?> updateOrder(
+  Future<bool> updateOrder(
       id,
       customerId,
       total,
@@ -75,8 +77,9 @@ class OrdersRepo {
       marketerId,
       discountType,
       details,
-      marketerFeeType) async {
-    var updateOrder = await client.updateOrder(
+      marketerFeeType,
+      marketerFee) async {
+    var orderUpdationStatus = await client.updateOrder(
         id,
         customerId,
         total,
@@ -94,11 +97,12 @@ class OrdersRepo {
         marketerId,
         discountType,
         details,
-        marketerFeeType);
-    if (updateOrder != null) {
-      return Order.fromMap(jsonDecode(updateOrder));
+        marketerFeeType,
+        marketerFee);
+    if (orderUpdationStatus) {
+      return true;
     }
-    return null;
+    return false;
   }
 
   Future<Order?> deleteOrder(id) async {
