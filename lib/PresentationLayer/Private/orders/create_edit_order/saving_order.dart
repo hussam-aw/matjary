@@ -157,7 +157,7 @@ class SavingOrder extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15),
         child: CustomRadioGroup(
           scrollDirection: Axis.vertical,
-          items: orderScreenController.discountOrderTypes
+          items: orderScreenController.discountOrderTypes.keys
               .map((discountType) => RadioButtonItem(
                     text: discountType,
                     width: Get.width * .13,
@@ -169,7 +169,9 @@ class SavingOrder extends StatelessWidget {
                         .marketerDiscountSelection.value[discountType]!,
                     onTap: () {
                       orderScreenController.setMarketerDiscount(discountType);
-                      orderController.setMarketerDiscountType(discountType);
+                      orderController.setMarketerDiscountType(
+                          orderScreenController
+                              .discountOrderTypes[discountType]);
                     },
                   ))
               .toList(),
