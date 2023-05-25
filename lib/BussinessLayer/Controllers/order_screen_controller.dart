@@ -52,13 +52,13 @@ class OrderScreenController extends GetxController {
     'شحن': false,
   }.obs;
 
-  List<String> orderStatus = [
-    'تامة',
-    'جاري التجهيز',
-    'تم التسديد',
-    'في شركة الشحن',
-    'قيد التوصيل',
-  ];
+  Map<String, int> orderStatus = {
+    'تامة': 4,
+    'جاري التجهيز': 0,
+    'تم التسديد': 1,
+    'في شركة الشحن': 2,
+    'قيد التوصيل': 3,
+  };
 
   RxMap<String, bool> orderStatusSelection = {
     'تامة': true,
@@ -68,10 +68,10 @@ class OrderScreenController extends GetxController {
     'قيد التوصيل': false,
   }.obs;
 
-  List<String> discountOrderTypes = [
-    'رقم',
-    'نسبة',
-  ];
+  Map<String, String> discountOrderTypes = {
+    'رقم': 'number',
+    'نسبة': 'percent',
+  };
 
   RxMap<String, bool> discountOrderTypesSelection = {
     'رقم': true,
@@ -392,7 +392,7 @@ class OrderScreenController extends GetxController {
     setOrderType(orderTypes[0]);
     setbuyingType(buyingTypes[0]);
     setOrderStatus(orderStatus[0]);
-    setDiscountType(discountOrderTypes[0]);
+
     setMarketerDiscount(discountOrderTypes[0]);
     productQuantityController.value = const TextEditingValue();
     productPriceController.value = const TextEditingValue();
@@ -406,8 +406,21 @@ class OrderScreenController extends GetxController {
           orderTypes.keys.firstWhere((type) => orderTypes[type] == order.type);
       setOrderType(selectedOrderType);
       getProductsQuantitiesAndPrices(order.details);
+      setProductsPrices();
+      setProductsQuantities();
+      setSelectedProducts();
       setbuyingType(buyingTypes.keys
           .firstWhere((type) => buyingTypes[type] == order.sellType));
+      order.discountType.isNotEmpty
+          ? setDiscountType(discountOrderTypes.keys.firstWhere(
+              (type) => discountOrderTypes[type] == order.discountType))
+          : resetDiscountType();
+      setOrderStatus(orderStatus.keys
+          .firstWhere((type) => orderStatus[type] == order.status));
+      order.marketerFeeType.isNotEmpty
+          ? setMarketerDiscount(discountOrderTypes.keys.firstWhere(
+              (type) => discountOrderTypes[type] == order.marketerFeeType))
+          : resetMarketerDiscount();
     }
   }
 
