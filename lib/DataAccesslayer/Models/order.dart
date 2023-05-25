@@ -17,6 +17,7 @@ class Order {
   final String discountType;
   final int marketerId;
   final String marketerFeeType;
+  final num? marketerFee;
   final List<Map<String, dynamic>> details;
   final String creationDate;
   Order({
@@ -38,6 +39,7 @@ class Order {
     required this.discountType,
     required this.marketerId,
     required this.marketerFeeType,
+    required this.marketerFee,
     required this.details,
     required this.creationDate,
   });
@@ -82,6 +84,7 @@ class Order {
       discountType: map["discount_type"] ?? '',
       marketerId: map["marketer_id"] ?? 0,
       marketerFeeType: map["marketer_fee_type"] ?? '',
+      marketerFee: map['marketer_fee'] ?? 0.0,
       details: getDetailsList(map["details"]),
       creationDate: getCreationDate(map["created_at"]),
     );
