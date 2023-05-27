@@ -6,11 +6,12 @@ import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart'
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
-import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
-import 'package:matjary/PresentationLayer/Private/Order/order_details.dart';
-import 'package:matjary/PresentationLayer/Private/Order/saving_order.dart';
-import 'package:matjary/PresentationLayer/Private/Order/success_saving_order.dart';
+import 'package:matjary/DataAccesslayer/Models/order.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/delivery_details.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_basic_information.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/saving_order.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/success_saving_order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/stepper_component.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -29,8 +30,12 @@ class CreateEditOrderScreen extends StatelessWidget {
   final orderController = Get.put(OrderController());
   final orderScreenController = Get.put(OrderScreenController());
 
+  Order? order = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
+    orderScreenController.initializeOrderScreen(order);
+    orderController.initializeOrderDetails(order);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(
@@ -104,14 +109,26 @@ class CreateEditOrderScreen extends StatelessWidget {
                 )),
                 Obx(() {
                   return orderScreenController.currentIndex <= 3
-                      ? AcceptButton(
-                          text: orderScreenController.currentIndex.value == 3
-                              ? 'حفظ'
-                              : 'التالي',
-                          onPressed: () {
-                            orderScreenController.goToNextPage();
-                          },
-                        )
+                      ? orderScreenController.currentIndex.value == 3
+                          ? AcceptButton(
+                              text: order != null ? 'تعديل' : 'حفظ',
+                              isLoading: orderController.loading.value,
+                              onPressed: () async {
+                                order != null
+                                    ? await orderController
+                                        .updateOrder(order!.id)
+                                    : await orderController.createOrder();
+                                if (orderController.orderSaving == true) {
+                                  orderScreenController.goToNextPage();
+                                }
+                              },
+                            )
+                          : AcceptButton(
+                              text: 'التالي',
+                              onPressed: () {
+                                orderScreenController.goToNextPage();
+                              },
+                            )
                       : Container();
                 }),
               ],

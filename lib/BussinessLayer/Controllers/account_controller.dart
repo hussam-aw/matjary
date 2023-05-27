@@ -94,8 +94,8 @@ class AccountController extends GetxController {
           mobileNumber);
       loading.value = false;
       if (account != null) {
-        accountsController.getAcoounts();
-        accountsController.getAccountsBasedOnStyle(account.style);
+        await accountsController.getAcoounts();
+        await accountsController.getAccountsBasedOnStyle(account.style);
         SnackBars.showSuccess('تم انشاء الحساب');
       } else {
         SnackBars.showError('فشل انشاء الحساب');
@@ -139,8 +139,8 @@ class AccountController extends GetxController {
     var account = await accountsRepo.deleteAccount(id);
     loading.value = false;
     if (account != null) {
-      accountsController.getAcoounts();
-      accountsController.getAccountsBasedOnStyle(account.style);
+      await accountsController.getAcoounts();
+      await accountsController.getAccountsBasedOnStyle(account.style);
       SnackBars.showSuccess('تم الحذف بنجاح');
     } else {
       SnackBars.showError('فشل الحذف');

@@ -14,10 +14,27 @@ class OrdersRepo {
     return [];
   }
 
-  Future<Order?> createOrder(id, total, notes, type, paidUp, restOfTheBill,
-      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
-    var createdOrder = await client.createOrder(
-        id,
+  Future<bool> createOrder(
+      customerId,
+      total,
+      notes,
+      type,
+      paidUp,
+      restOfTheBill,
+      wareId,
+      toWareId,
+      bankId,
+      sellType,
+      status,
+      expenses,
+      discount,
+      marketerId,
+      discountType,
+      details,
+      marketerFeeType,
+      marketerFee) async {
+    var orderCreationStatus = await client.createOrder(
+        customerId,
         total,
         notes,
         type,
@@ -29,18 +46,42 @@ class OrdersRepo {
         sellType,
         status,
         expenses,
-        discount);
-    print(createdOrder);
-    if (createdOrder != null) {
-      return Order.fromMap(jsonDecode(createdOrder));
+        discount,
+        marketerId,
+        discountType,
+        details,
+        marketerFeeType,
+        marketerFee);
+
+    if (orderCreationStatus) {
+      return true;
     }
-    return null;
+    return false;
   }
 
-  Future<Order?> updateOrder(id, total, notes, type, paidUp, restOfTheBill,
-      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
-    var updateOrder = await client.updateOrder(
+  Future<bool> updateOrder(
+      id,
+      customerId,
+      total,
+      notes,
+      type,
+      paidUp,
+      restOfTheBill,
+      wareId,
+      toWareId,
+      bankId,
+      sellType,
+      status,
+      expenses,
+      discount,
+      marketerId,
+      discountType,
+      details,
+      marketerFeeType,
+      marketerFee) async {
+    var orderUpdationStatus = await client.updateOrder(
         id,
+        customerId,
         total,
         notes,
         type,
@@ -52,12 +93,16 @@ class OrdersRepo {
         sellType,
         status,
         expenses,
-        discount);
-    print(updateOrder);
-    if (updateOrder != null) {
-      return Order.fromMap(jsonDecode(updateOrder));
+        discount,
+        marketerId,
+        discountType,
+        details,
+        marketerFeeType,
+        marketerFee);
+    if (orderUpdationStatus) {
+      return true;
     }
-    return null;
+    return false;
   }
 
   Future<Order?> deleteOrder(id) async {

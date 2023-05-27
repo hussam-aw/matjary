@@ -75,6 +75,19 @@ class AccountsController extends GetxController {
     return accounts;
   }
 
+  Account? getAccountFromId(accountId) {
+    var account =
+        accounts.firstWhereOrNull((account) => account.id == accountId);
+    if (account != null) {
+      return account;
+    }
+    return null;
+  }
+
+  String getAccountName(int id) {
+    return getAccountFromId(id) != null ? getAccountFromId(id)!.name : '';
+  }
+
   @override
   void onInit() async {
     super.onInit();

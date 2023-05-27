@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
@@ -12,9 +14,9 @@ import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/ware_repo.dart';
 
 class HomeController extends GetxController {
-  AccountsRepo accountsRepo = AccountsRepo();
+  //AccountsRepo accountsRepo = AccountsRepo();
   WareRepo wareRepo = WareRepo();
-  OrdersRepo orderRepo = OrdersRepo();
+  //OrdersRepo orderRepo = OrdersRepo();
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
   CategoriesRepo categoriesRepo = CategoriesRepo();
   var isLoading = false.obs;
@@ -26,15 +28,16 @@ class HomeController extends GetxController {
   // var isLoadingClientAccounts = false.obs;
   List<Ware> wares = [];
   var isLoadingWares = false.obs;
-  List<Order> orders = [];
-  var isLoadingOrders = false.obs;
-  List<Order> purchasesOrders = [];
-  List<Order> salesOrders = [];
+  // List<Order> orders = [];
+  // var isLoadingOrders = false.obs;
+  // List<Order> purchasesOrders = [];
+  // List<Order> salesOrders = [];
   List<Product> products = [];
   var isLoadingProducts = false.obs;
   List<Category> categories = [];
   var isLoadingCategories = false.obs;
   AccountsController accountsController = Get.put(AccountsController());
+  OrdersController ordersController = Get.put(OrdersController());
 
   // Future<void> getAccounts() async {
   //   isLoadingAccounts.value = true;
@@ -60,21 +63,28 @@ class HomeController extends GetxController {
     isLoadingWares.value = false;
   }
 
-  Future<void> getOrders() async {
-    isLoadingOrders.value = true;
-    orders = await orderRepo.getOrders();
-    isLoadingOrders.value = false;
-    getPurchasesOrders();
-    getSalesOrders();
-  }
+  // Future<void> getOrders() async {
+  //   isLoadingOrders.value = true;
+  //   orders = await orderRepo.getOrders();
+  //   isLoadingOrders.value = false;
+  //   for (Order order in orders) {
+  //     print(order.type);
+  //   }
+  //   getPurchasesOrders();
+  //   getSalesOrders();
+  // }
 
-  void getPurchasesOrders() {
-    purchasesOrders = orders.where((order) => order.type == "0").toList();
-  }
+  // void getPurchasesOrders() {
+  //   purchasesOrders =
+  //       orders.where((order) => order.type == "purchases").toList();
+  // }
 
-  void getSalesOrders() {
-    salesOrders = orders.where((order) => order.type == "1").toList();
-  }
+  // void getSalesOrders() {
+  //   salesOrders = orders
+  //       .where((order) =>
+  //           order.type == "sell_to_customers" || order.type == "retail_sale")
+  //       .toList();
+  // }
 
   Future<void> getProducts() async {
     isLoadingProducts.value = true;
@@ -97,7 +107,8 @@ class HomeController extends GetxController {
     await accountsController.getClientAcoounts();
     await accountsController.getBankAcoounts();
     await getWares();
-    await getOrders();
+    //await getOrders();
+    await ordersController.getOrders();
     await getProducts();
     await getCategories();
     isLoading.value = false;

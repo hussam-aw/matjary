@@ -34,7 +34,7 @@ class DeliveryDetails extends StatelessWidget {
               Obx(
                 () {
                   return CustomRadioGroup(
-                    items: orderScreenController.buyingTypes
+                    items: orderScreenController.buyingTypes.keys
                         .map((buyingType) => RadioButtonItem(
                               text: buyingType,
                               selectionColor: UIColors.primary,
@@ -43,7 +43,9 @@ class DeliveryDetails extends StatelessWidget {
                                   .buyingTypesSelection.value[buyingType]!,
                               onTap: () {
                                 orderScreenController.setbuyingType(buyingType);
-                                orderController.setBuyingType(buyingType);
+                                orderController.setBuyingType(
+                                    orderScreenController
+                                        .buyingTypes[buyingType]);
                               },
                             ))
                         .toList(),
@@ -101,7 +103,7 @@ class DeliveryDetails extends StatelessWidget {
               Obx(
                 () {
                   return CustomRadioGroup(
-                    items: orderScreenController.orderStatus
+                    items: orderScreenController.orderStatus.keys
                         .map((orderStatus) => RadioButtonItem(
                               text: orderStatus,
                               selectionColor: UIColors.primary,
@@ -111,7 +113,8 @@ class DeliveryDetails extends StatelessWidget {
                               onTap: () {
                                 orderScreenController
                                     .setOrderStatus(orderStatus);
-                                orderController.setStatus(orderStatus);
+                                orderController.setStatus(orderScreenController
+                                    .orderStatus[orderStatus]);
                               },
                             ))
                         .toList(),
@@ -144,7 +147,7 @@ class DeliveryDetails extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15),
         child: CustomRadioGroup(
           scrollDirection: Axis.vertical,
-          items: orderScreenController.discountOrderTypes
+          items: orderScreenController.discountOrderTypes.keys
               .map((discountType) => RadioButtonItem(
                     text: discountType,
                     width: Get.width * .1,
@@ -156,7 +159,8 @@ class DeliveryDetails extends StatelessWidget {
                         .discountOrderTypesSelection.value[discountType]!,
                     onTap: () {
                       orderScreenController.setDiscountType(discountType);
-                      orderController.setDiscountType(discountType);
+                      orderController.setDiscountType(orderScreenController
+                          .discountOrderTypes[discountType]);
                     },
                   ))
               .toList(),

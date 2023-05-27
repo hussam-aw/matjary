@@ -14,6 +14,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class ChooseWareScreen extends StatelessWidget {
@@ -75,12 +76,8 @@ class ChooseWareScreen extends StatelessWidget {
               children: [
                 const PageTitle(title: 'إختيار مستودع'),
                 spacerHeight(),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  style: UITextStyle.normalMeduim,
-                  decoration: normalTextFieldStyle.copyWith(
-                    hintText: 'قم بالبحث عن اسم المستودع أو اختر من القائمة',
-                  ),
+                SearchTextField(
+                  hintText: 'قم بالبحث عن اسم المستودع أو اختر من القائمة',
                   onChanged: (value) {
                     searchController.searchText = value;
                     searchController.search();

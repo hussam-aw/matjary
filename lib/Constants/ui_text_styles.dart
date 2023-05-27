@@ -16,6 +16,15 @@ class UITextStyle {
     fontWeight: FontWeight.w400,
     fontSize: 25.0,
   );
+
+  static const boldHeadingRedHat = TextStyle(
+    color: Colors.white,
+    fontFamily: 'Red Hat Display',
+    height: 1,
+    fontWeight: FontWeight.bold,
+    fontSize: 20.0,
+  );
+
   static const boldHeading = TextStyle(
     color: Colors.white,
     fontFamily: 'Cairo',

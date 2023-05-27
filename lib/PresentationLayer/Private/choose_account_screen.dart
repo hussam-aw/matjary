@@ -17,6 +17,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class ChooseAccountScreen extends StatelessWidget {
@@ -68,58 +69,61 @@ class ChooseAccountScreen extends StatelessWidget {
     }
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: UIColors.mainBackground,
-        appBar: customAppBar(showingAppIcon: false),
-        drawer: CustomDrawer(),
-        body: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-            child: Column(
-              children: [
-                const PageTitle(title: 'إختيار حساب'),
-                spacerHeight(),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  style: UITextStyle.normalMeduim,
-                  decoration: normalTextFieldStyle.copyWith(
+      child: WillPopScope(
+        onWillPop: () async {
+          Get.back(result: null);
+          return false;
+        },
+        child: Scaffold(
+          backgroundColor: UIColors.mainBackground,
+          appBar: customAppBar(showingAppIcon: false),
+          drawer: CustomDrawer(),
+          body: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+              child: Column(
+                children: [
+                  const PageTitle(title: 'إختيار حساب'),
+                  spacerHeight(),
+                  SearchTextField(
                     hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
-                  ),
-                  onChanged: (value) {
-                    searchController.searchText = value;
-                    searchController.search();
-                  },
-                ),
-                spacerHeight(height: 20),
-                Expanded(
-                  child: Obx(
-                    () {
-                      if (accountsController.isLoadingAccounts.value) {
-                        return Center(
-                          child: loadingItem(width: 100, isWhite: true),
-                        );
-                      }
-                      accounts =
-                          accountsController.getAccountsList(accountStyle);
-                      return GetBuilder(
-                          init: searchController,
-                          builder: (context) {
-                            return searchController.searchText.isEmpty
-                                ? buildAccountsList(accounts)
-                                : Obx(() {
-                                    return searchController.searchLoading.value
-                                        ? Center(
-                                            child: loadingItem(
-                                                width: 100, isWhite: true),
-                                          )
-                                        : buildAccountsList(
-                                            searchController.filteredList);
-                                  });
-                          });
+                    onChanged: (value) {
+                      searchController.searchText = value;
+                      searchController.search();
                     },
                   ),
-                ),
-              ],
+                  spacerHeight(height: 20),
+                  Expanded(
+                    child: Obx(
+                      () {
+                        if (accountsController.isLoadingAccounts.value) {
+                          return Center(
+                            child: loadingItem(width: 100, isWhite: true),
+                          );
+                        }
+                        accounts =
+                            accountsController.getAccountsList(accountStyle);
+                        return GetBuilder(
+                            init: searchController,
+                            builder: (context) {
+                              return searchController.searchText.isEmpty
+                                  ? buildAccountsList(accounts)
+                                  : Obx(() {
+                                      return searchController
+                                              .searchLoading.value
+                                          ? Center(
+                                              child: loadingItem(
+                                                  width: 100, isWhite: true),
+                                            )
+                                          : buildAccountsList(
+                                              searchController.filteredList);
+                                    });
+                            });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

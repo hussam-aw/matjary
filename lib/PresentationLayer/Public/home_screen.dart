@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -23,6 +24,7 @@ class HomeScreen extends StatelessWidget {
 
   final homeController = Get.find<HomeController>();
   final accountsController = Get.find<AccountsController>();
+  final ordersController = Get.find<OrdersController>();
 
   @override
   Widget build(BuildContext context) {
@@ -119,24 +121,28 @@ class HomeScreen extends StatelessWidget {
                               ),
                               spacerHeight(height: 20),
                               Expanded(
-                                child: Row(
-                                  children: [
-                                    InovoiceContainer(
-                                      invoiceType: 'فواتير المشتريات',
-                                      invoiceAmount: homeController
-                                          .purchasesOrders.length
-                                          .toString(),
-                                    ),
-                                    spacerWidth(width: 40),
-                                    InovoiceContainer(
-                                      invoiceType: 'فواتير المبيعات',
-                                      invoiceAmount: homeController
-                                          .salesOrders.length
-                                          .toString(),
-                                      backgroundColor: UIColors.primary,
-                                    )
-                                  ],
-                                ),
+                                child: Obx(() {
+                                  return ordersController.isLoadingOrders.value
+                                      ? loadingItem()
+                                      : Row(
+                                          children: [
+                                            InovoiceContainer(
+                                              invoiceType: 'فواتير المشتريات',
+                                              invoiceAmount: ordersController
+                                                  .purchasesOrders.length
+                                                  .toString(),
+                                            ),
+                                            spacerWidth(width: 40),
+                                            InovoiceContainer(
+                                              invoiceType: 'فواتير المبيعات',
+                                              invoiceAmount: ordersController
+                                                  .salesOrders.length
+                                                  .toString(),
+                                              backgroundColor: UIColors.primary,
+                                            )
+                                          ],
+                                        );
+                                }),
                               ),
                             ],
                           ),
@@ -164,7 +170,7 @@ class HomeScreen extends StatelessWidget {
                                 child: Obx(() {
                                   return accountsController
                                           .isLoadingClientAccounts.value
-                                      ? Container()
+                                      ? loadingItem()
                                       : ListView.separated(
                                           itemBuilder: (context, index) {
                                             return CustomerAccountListTile(

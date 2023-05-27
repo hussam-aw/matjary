@@ -6,30 +6,43 @@ class Order {
   final String notes;
   final String type;
   final int paidUp;
-  final int restOfTheBill;
+  final num restOfTheBill;
   final int wareId;
   final num toWareId;
   final int bankId;
-  final int sellType;
+  final String sellType;
   final int status;
   final num? expenses;
   final num? discount;
-  Order(
-      {required this.id,
-      required this.total,
-      required this.userId,
-      required this.customerId,
-      required this.notes,
-      required this.type,
-      required this.paidUp,
-      required this.restOfTheBill,
-      required this.wareId,
-      required this.toWareId,
-      required this.bankId,
-      required this.sellType,
-      required this.status,
-      required this.expenses,
-      required this.discount});
+  final String discountType;
+  final int marketerId;
+  final String marketerFeeType;
+  final num? marketerFee;
+  final List<Map<String, dynamic>> details;
+  final String creationDate;
+  Order({
+    required this.id,
+    required this.total,
+    required this.userId,
+    required this.customerId,
+    required this.notes,
+    required this.type,
+    required this.paidUp,
+    required this.restOfTheBill,
+    required this.wareId,
+    required this.toWareId,
+    required this.bankId,
+    required this.sellType,
+    required this.status,
+    required this.expenses,
+    required this.discount,
+    required this.discountType,
+    required this.marketerId,
+    required this.marketerFeeType,
+    required this.marketerFee,
+    required this.details,
+    required this.creationDate,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -57,17 +70,36 @@ class Order {
       total: map['total'] as num,
       userId: map['user_id'] as int,
       customerId: map['customer_id'] as int,
-      notes: map['notes'] as String,
+      notes: map['notes'] ?? '',
       type: map['type'] as String,
       paidUp: map['paid_up'] as int,
-      restOfTheBill: map['rest_of_the_bill'] as int,
+      restOfTheBill: map['rest_of_the_bill'] as num,
       wareId: map['ware_id'] as int,
       toWareId: map['to_ware_id'] ?? 0.0,
       bankId: map['bank_id'] as int,
-      sellType: map['sell_type'] as int,
+      sellType: map['sell_type'],
       status: map['status'] as int,
       expenses: map['expenses'] ?? 0.0,
       discount: map['discount'] ?? 0.0,
+      discountType: map["discount_type"] ?? '',
+      marketerId: map["marketer_id"] ?? 0,
+      marketerFeeType: map["marketer_fee_type"] ?? '',
+      marketerFee: map['marketer_fee'] ?? 0.0,
+      details: getDetailsList(map["details"]),
+      creationDate: getCreationDate(map["created_at"]),
     );
+  }
+
+  static List<Map<String, dynamic>> getDetailsList(details) {
+    List<Map<String, dynamic>> result = [];
+    for (int i = 0; i < details.length; i++) {
+      result.add(details[i] as Map<String, dynamic>);
+    }
+    return result;
+  }
+
+  static String getCreationDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return "${dateTime.year}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.day}";
   }
 }

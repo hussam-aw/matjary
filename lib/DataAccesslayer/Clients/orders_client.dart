@@ -7,7 +7,6 @@ import 'package:matjary/main.dart';
 class OrdersClient {
   Future<dynamic> getOrders() async {
     var response = await http.get(Uri.parse("$baseUrl$ordersLink"));
-
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -15,12 +14,29 @@ class OrdersClient {
     }
   }
 
-  Future<dynamic> createOrder(id, total, notes, type, paidUp, restOfTheBill,
-      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
+  Future<dynamic> createOrder(
+      customerId,
+      total,
+      notes,
+      type,
+      paidUp,
+      restOfTheBill,
+      wareId,
+      toWareId,
+      bankId,
+      sellType,
+      status,
+      expenses,
+      discount,
+      marketerId,
+      discountType,
+      details,
+      marketerFeeType,
+      marketerFee) async {
     var response = await http.post(Uri.parse('$baseUrl$orderLink'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
-          "customer_id": id,
+          "customer_id": customerId,
           "user_id": MyApp.appUser!.id,
           "notes": notes,
           "type": type,
@@ -33,25 +49,46 @@ class OrdersClient {
           "status": status,
           "expenses": expenses,
           "discount": discount,
+          "discount_type": discountType,
+          "marketer_id": marketerId,
+          "marketer_fee_type": marketerFeeType,
+          "marketer_fee": marketerFee,
+          "details": details,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
-    print(response.body);
     if (response.statusCode == 201) {
-      return response.body;
+      return true;
     } else {
-      return null;
+      return false;
     }
   }
 
-  Future<dynamic> updateOrder(id, total, notes, type, paidUp, restOfTheBill,
-      wareId, toWareId, bankId, sellType, status, expenses, discount) async {
+  Future<dynamic> updateOrder(
+      id,
+      customerId,
+      total,
+      notes,
+      type,
+      paidUp,
+      restOfTheBill,
+      wareId,
+      toWareId,
+      bankId,
+      sellType,
+      status,
+      expenses,
+      discount,
+      marketerId,
+      discountType,
+      details,
+      marketerFeeType,
+      marketerFee) async {
     var response = await http.post(Uri.parse('$baseUrl$orderLink/$id'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
-          "customer_id": id,
+          "customer_id": customerId,
           "user_id": MyApp.appUser!.id,
           "notes": notes,
           "type": type,
@@ -64,6 +101,11 @@ class OrdersClient {
           "status": status,
           "expenses": expenses,
           "discount": discount,
+          "discount_type": discountType,
+          "marketer_id": marketerId,
+          "marketer_fee_type": marketerFeeType,
+          "marketer_fee": marketerFee,
+          "details": details,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -71,9 +113,9 @@ class OrdersClient {
 
     print(response.body);
     if (response.statusCode == 201) {
-      return response.body;
+      return true;
     } else {
-      return null;
+      return false;
     }
   }
 

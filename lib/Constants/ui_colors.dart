@@ -10,9 +10,11 @@ class UIColors {
   static const lightNormalText = Color(0xffF6F6F6);
   static const menuTitle = Color(0xff3D3E65);
   static const smallText = Color(0xff1c1d40);
+  static const titleNoteText = Color.fromRGBO(255, 255, 255, 0.5);
   // Icon Colors
   static const normalIcon = Color(0xffC5C5C5);
   static const mainIcon = Color(0xff1C1D40);
+  static const titleNoteIcon = Color.fromRGBO(255, 255, 255, 0.5);
   // Border Colors
   static const circleAvatarBorder = Color(0xff707070);
   // Background Colors
@@ -21,6 +23,7 @@ class UIColors {
   static const buttonBackground = Color(0xff6C34F1);
   static const containerBackground = Color(0xff3D3E65);
   static const circleAvatarBackground = Color(0xff707070);
+  static const iconButtonGroupBackground = Color(0xff1C1D40);
   //Snackbars Colors
   static const success = Color.fromARGB(255, 99, 184, 91);
   static const warning = Color.fromARGB(255, 233, 196, 73);

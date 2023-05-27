@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
-import 'package:matjary/PresentationLayer/Private/Order/delivery_details.dart';
-import 'package:matjary/PresentationLayer/Private/Order/order_basic_information.dart';
-import 'package:matjary/PresentationLayer/Private/Order/order_details.dart';
-import 'package:matjary/PresentationLayer/Private/Order/saving_order.dart';
-import 'package:matjary/PresentationLayer/Private/Order/success_saving_order.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/delivery_details.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_basic_information.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/saving_order.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/success_saving_order.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class OrderScreenController extends GetxController {
@@ -23,13 +24,13 @@ class OrderScreenController extends GetxController {
   OrderController orderController = Get.find<OrderController>();
   RxBool finishSavingOrder = false.obs;
 
-  List<String> orderTypes = [
-    'بيع للزبائن',
-    'بيع مفرق',
-    'مشتريات',
-    'مردود بيع',
-    'مردود شراء'
-  ];
+  Map<String, String> orderTypes = {
+    'بيع للزبائن': 'sell_to_customers',
+    'بيع مفرق': 'retail_sale',
+    'مشتريات': 'purchases',
+    'مردود بيع': "sales_return",
+    'مردود شراء': 'purchase_return',
+  };
 
   RxMap<String, bool> orderTypesSelection = {
     'بيع للزبائن': true,
@@ -39,11 +40,11 @@ class OrderScreenController extends GetxController {
     'مردود شراء': false,
   }.obs;
 
-  List<String> buyingTypes = [
-    'مباشر',
-    'توصيل',
-    'شحن',
-  ];
+  Map<String, String> buyingTypes = {
+    'مباشر': 'direct',
+    'توصيل': 'delivery',
+    'شحن': 'shipping',
+  };
 
   RxMap<String, bool> buyingTypesSelection = {
     'مباشر': true,
@@ -51,13 +52,13 @@ class OrderScreenController extends GetxController {
     'شحن': false,
   }.obs;
 
-  List<String> orderStatus = [
-    'تامة',
-    'جاري التجهيز',
-    'تم التسديد',
-    'في شركة الشحن',
-    'قيد التوصيل',
-  ];
+  Map<String, int> orderStatus = {
+    'تامة': 4,
+    'جاري التجهيز': 0,
+    'تم التسديد': 1,
+    'في شركة الشحن': 2,
+    'قيد التوصيل': 3,
+  };
 
   RxMap<String, bool> orderStatusSelection = {
     'تامة': true,
@@ -67,10 +68,10 @@ class OrderScreenController extends GetxController {
     'قيد التوصيل': false,
   }.obs;
 
-  List<String> discountOrderTypes = [
-    'رقم',
-    'نسبة',
-  ];
+  Map<String, String> discountOrderTypes = {
+    'رقم': 'number',
+    'نسبة': 'percent',
+  };
 
   RxMap<String, bool> discountOrderTypesSelection = {
     'رقم': true,
@@ -216,6 +217,17 @@ class OrderScreenController extends GetxController {
         curve: Curves.decelerate, duration: const Duration(milliseconds: 300));
   }
 
+  void getProductsQuantitiesAndPrices(
+      List<Map<String, dynamic>> orderProducts) {
+    for (Map<String, dynamic> product in orderProducts) {
+      selectedProducts.add(homeController.products
+          .firstWhere((p) => p.id == product["product_id"]));
+      selectedProductsQuantities.value[product["product_id"]] =
+          product["quantity"];
+      selectedProductPrices.value[product["product_id"]] = product["price"];
+    }
+  }
+
   bool checkIfProductQuantityIsZero(productId) {
     return selectedProductsQuantities.value[productId] == null ||
         selectedProductsQuantities.value[productId] == 0;
@@ -326,14 +338,12 @@ class OrderScreenController extends GetxController {
   }
 
   void selectAccountBasedOnType(Account? account, type) {
-    if (account != null) {
-      if (type == "clientsAndSuppliers") {
-        orderController.setCounterPartyAccount(account);
-      } else if (type == "bank") {
-        orderController.setBankAccount(account);
-      } else if (type == "marketer") {
-        orderController.setMarketerAccount(account);
-      }
+    if (type == "clientsAndSuppliers") {
+      orderController.setCounterPartyAccount(account);
+    } else if (type == "bank") {
+      orderController.setBankAccount(account);
+    } else if (type == "marketer") {
+      orderController.setMarketerAccount(account);
     }
   }
 
@@ -382,11 +392,36 @@ class OrderScreenController extends GetxController {
     setOrderType(orderTypes[0]);
     setbuyingType(buyingTypes[0]);
     setOrderStatus(orderStatus[0]);
-    setDiscountType(discountOrderTypes[0]);
+
     setMarketerDiscount(discountOrderTypes[0]);
     productQuantityController.value = const TextEditingValue();
     productPriceController.value = const TextEditingValue();
     selectedProducts = <Product>[].obs;
+  }
+
+  void initializeOrderScreen(Order? order) {
+    selectedProducts.clear();
+    if (order != null) {
+      selectedOrderType =
+          orderTypes.keys.firstWhere((type) => orderTypes[type] == order.type);
+      setOrderType(selectedOrderType);
+      getProductsQuantitiesAndPrices(order.details);
+      setProductsPrices();
+      setProductsQuantities();
+      setSelectedProducts();
+      setbuyingType(buyingTypes.keys
+          .firstWhere((type) => buyingTypes[type] == order.sellType));
+      order.discountType.isNotEmpty
+          ? setDiscountType(discountOrderTypes.keys.firstWhere(
+              (type) => discountOrderTypes[type] == order.discountType))
+          : resetDiscountType();
+      setOrderStatus(orderStatus.keys
+          .firstWhere((type) => orderStatus[type] == order.status));
+      order.marketerFeeType.isNotEmpty
+          ? setMarketerDiscount(discountOrderTypes.keys.firstWhere(
+              (type) => discountOrderTypes[type] == order.marketerFeeType))
+          : resetMarketerDiscount();
+    }
   }
 
   @override

@@ -27,7 +27,7 @@ class UpdateOrderProductBottomSheet extends StatelessWidget {
     orderScreenController.productQuantityController.text =
         currentQuantity != null ? currentQuantity.toString() : '';
     orderScreenController.productPriceController.text =
-        currentPrice != null ? currentPrice.toString() : '';
+        currentPrice != null ? currentPrice.toStringAsFixed(2) : '';
     return Container(
       height: Get.width * .6,
       decoration: const BoxDecoration(
