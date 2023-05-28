@@ -117,10 +117,16 @@ class OrderController extends GetxController {
     discountType = type;
   }
 
-  void setDiscountOrder(discount) {
-    discountAmount.value = discount;
-    discountOrderController.value =
-        TextEditingValue(text: discount.toStringAsFixed(2));
+  void setDiscountAmount(discount) {
+    discountAmount.value = discount.toDouble();
+    discountOrderController.value = TextEditingValue(
+        text: discount == 0.0 ? '' : discount.toStringAsFixed(2));
+  }
+
+  void setDiscountPercent(discount) {
+    discountPercent.value = discount;
+    discountOrderController.value = TextEditingValue(
+        text: discount == 0 ? '' : discount.toStringAsFixed(2));
   }
 
   void setStatus(orderStatus) {
@@ -162,6 +168,7 @@ class OrderController extends GetxController {
   void calculateTotalOrderAmount() {
     totalOrderAmount.value = 0.0;
     totalOrderAmount.value = totalProductsPrice.value - discountAmount.value;
+    setRemainingAmount(totalOrderAmount.value);
   }
 
   void refreshOrderCalculations() {
@@ -172,7 +179,7 @@ class OrderController extends GetxController {
 
   void setMarketerDiscount(discount) {
     marketerDiscountController.value =
-        TextEditingValue(text: discount.toStringAsFixed(2));
+        TextEditingValue(text: discount.toStringAsFixed(1));
   }
 
   void setMarketerDiscountType(type) {
@@ -189,7 +196,7 @@ class OrderController extends GetxController {
 
   void setRemainingAmount(amount) {
     remainingAmountController.value =
-        TextEditingValue(text: amount.toStringAsFixed(2));
+        TextEditingValue(text: amount != 0.0 ? amount.toStringAsFixed(2) : '');
   }
 
   void calculateRemainingAmount(String paidAmount) {
@@ -199,21 +206,49 @@ class OrderController extends GetxController {
     setRemainingAmount(remainingAmount.value);
   }
 
-  Future<void> createOrder() async {
-    num paidUp = num.parse(paidAmountController.text);
-    int? marketerId = marketerAccount != null ? marketerAccount!.id : null;
-    String? discountOrderType =
-        num.parse(discountOrderController.text) != 0.0 ? discountType : null;
-    num? discountOrder = num.parse(discountOrderController.text) != 0.0
+  num getPaidAmount() {
+    return num.parse(paidAmountController.text);
+  }
+
+  int? getMarketerId() {
+    return marketerAccount != null ? marketerAccount!.id : null;
+  }
+
+  String? getDiscountOrderType() {
+    num dis = discountOrderController.text.isNotEmpty
+        ? num.parse(discountOrderController.text)
+        : 0.0;
+    return dis != 0.0 ? discountType : null;
+  }
+
+  num? getDiscountOrder(discountOrderType) {
+    num dis = discountOrderController.text.isNotEmpty
+        ? num.parse(discountOrderController.text)
+        : 0.0;
+    return dis != 0.0
         ? discountOrderType == 'percent'
             ? discountPercent.value
             : discountAmount.value
         : null;
-    String? discountMarketerType =
-        marketerAccount != null ? marketerDiscountType : null;
-    num? discountMarketer = marketerAccount != null
-        ? num.parse(marketerDiscountController.text)
-        : null;
+  }
+
+  String? getMarketerDiscountType() {
+    return marketerAccount != null ? marketerDiscountType : null;
+  }
+
+  num? getMarketerDiscount(marketerDiscountType) {
+    return marketerDiscountType == 'percent'
+        ? discountPercent.value
+        : discountAmount.value;
+  }
+
+  Future<void> createOrder() async {
+    String? discountOrderType = getDiscountOrderType();
+    num? discountOrder = getDiscountOrder(discountOrderType);
+    int? marketerId = getMarketerId();
+    String? discountMarketerType = getMarketerDiscountType();
+    num? discountMarketer = getMarketerDiscount(discountMarketerType);
+    num paidAmount = getPaidAmount();
     getOrderProductsMap();
     loading.value = true;
     var orderCreationStatus = await orderRepo.createOrder(
@@ -221,7 +256,7 @@ class OrderController extends GetxController {
         totalOrderAmount.value,
         notesController.text,
         type,
-        paidUp,
+        paidAmount,
         remainingAmount.value,
         wareAccount!.id,
         null,
@@ -239,12 +274,7 @@ class OrderController extends GetxController {
     if (orderCreationStatus == true) {
       orderSaving = true;
       ordersController.getOrders();
-      boxClient.setCounterPartyAccount(counterPartyAccount!.id);
-      boxClient.setBankAccount(bankAccount!.id);
-      boxClient.setWareAccount(wareAccount!.id);
-      if (marketerAccount != null) {
-        boxClient.setMarketerAccount(marketerAccount!.id);
-      }
+      saveSelectedAccountsInStorage();
       SnackBars.showSuccess('تم انشاء الطلب');
     } else {
       SnackBars.showError('فشل انشاء الطلب');
@@ -252,21 +282,12 @@ class OrderController extends GetxController {
   }
 
   Future<void> updateOrder(int id) async {
-    num paidUp = num.parse(paidAmountController.text);
-    int? marketerId = marketerAccount != null ? marketerAccount!.id : null;
-    String? discountOrderType =
-        num.parse(discountOrderController.text) != 0.0 ? discountType : null;
-    num? discountOrder = num.parse(discountOrderController.text) != 0.0
-        ? discountOrderType == 'percent'
-            ? discountPercent.value
-            : discountAmount.value
-        : null;
-    String? discountMarketerType =
-        marketerAccount != null ? marketerDiscountType : null;
-
-    num? discountMarketer = marketerAccount != null
-        ? num.parse(marketerDiscountController.text)
-        : null;
+    String? discountOrderType = getDiscountOrderType();
+    num? discountOrder = getDiscountOrder(discountOrderType);
+    int? marketerId = getMarketerId();
+    String? discountMarketerType = getMarketerDiscountType();
+    num? discountMarketer = getMarketerDiscount(marketerDiscountType);
+    num? paidAmount = getPaidAmount();
     getOrderProductsMap();
     loading.value = true;
     var orderUpdationStatus = await orderRepo.updateOrder(
@@ -275,7 +296,7 @@ class OrderController extends GetxController {
         totalOrderAmount.value,
         notesController.text,
         type,
-        paidUp,
+        paidAmount,
         remainingAmount.value,
         wareAccount!.id,
         null,
@@ -293,12 +314,7 @@ class OrderController extends GetxController {
     if (orderUpdationStatus == true) {
       orderSaving = true;
       ordersController.getOrders();
-      boxClient.setCounterPartyAccount(counterPartyAccount!.id);
-      boxClient.setBankAccount(bankAccount!.id);
-      boxClient.setWareAccount(wareAccount!.id);
-      if (marketerAccount != null) {
-        boxClient.setMarketerAccount(marketerAccount!.id);
-      }
+      saveSelectedAccountsInStorage();
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
       SnackBars.showError('فشل التعديل');
@@ -316,6 +332,15 @@ class OrderController extends GetxController {
   //     SnackBars.showError('فشل الحذف');
   //   }
   // }
+
+  void saveSelectedAccountsInStorage() {
+    boxClient.setCounterPartyAccount(counterPartyAccount!.id);
+    boxClient.setBankAccount(bankAccount!.id);
+    boxClient.setWareAccount(wareAccount!.id);
+    if (marketerAccount != null) {
+      boxClient.setMarketerAccount(marketerAccount!.id);
+    }
+  }
 
   Future<void> setDefaultAccounts() async {
     int? counterPartyId, bankId, wareId, marketerId;
@@ -352,41 +377,38 @@ class OrderController extends GetxController {
     await setDefaultAccounts();
     setOrderType("sell_to_customers");
     setBuyingType("direct");
-    setStatus(0);
+    setStatus(4);
     setexpenses(0.0);
-    setDiscountType("");
-    setDiscountOrder(0.0);
-    setMarketerDiscountType("");
+    setDiscountType("number");
+    setDiscountAmount(0.0);
+    setDiscountPercent(0.0);
+    setMarketerDiscountType("number");
     setMarketerDiscount(0.0);
+    setPaidAmount(0.0);
   }
 
   void resetOrder() {
     type = "";
-    counterPartyController.value = const TextEditingValue();
-    counterPartyAccount = null;
-    bankController.value = const TextEditingValue();
-    bankAccount = null;
-    wareController.value = const TextEditingValue();
-    wareAccount = null;
-    marketerController.value = const TextEditingValue();
-    marketerAccount = null;
+    setCounterPartyAccount(null);
+    setBankAccount(null);
+    setWare(null);
+    setMarketerAccount(null);
     orderProductsQuantities.clear();
     orderProductsPrices.clear();
     selectedProducts.clear();
     buyingType = "";
-    expensesController.value = const TextEditingValue(text: '0.0');
+    setexpenses(0.0);
     discountType = "";
-    discountOrderController.value = const TextEditingValue();
-    status = 0;
-    notesController.value = const TextEditingValue();
+    setDiscountAmount(0.0);
+    setDiscountPercent(0.0);
+    setStatus(4);
+    setNotes('');
     totalProductsPrice = 0.0.obs;
-    expenses = 0.0.obs;
-    discountAmount = 0.0.obs;
-    totalOrderAmount = 0.0.obs;
-    marketerDiscountController.value = const TextEditingValue();
+    setTotalOrderAmount(0.0);
+    setMarketerDiscount(0.0);
     marketerDiscountType = "";
-    paidAmountController.value = const TextEditingValue(text: '0.0');
-    remainingAmountController.value = const TextEditingValue();
+    setPaidAmount(0.0);
+    setRemainingAmount(0.0);
     remainingAmount = 0.0.obs;
     loading = false.obs;
     orderSaving = false;
@@ -406,8 +428,10 @@ class OrderController extends GetxController {
       setexpenses(order.expenses);
       setDiscountType(order.discountType);
       order.discountType.isNotEmpty
-          ? setDiscountOrder(order.discount)
-          : setDiscountOrder(0.0);
+          ? order.discountType == 'percent'
+              ? setDiscountPercent(order.discount)
+              : setDiscountAmount(order.discount)
+          : setDiscountAmount(0.0);
       calculateDiscountBasedOnType();
       setStatus(order.status);
       order.notes.isNotEmpty ? setNotes(order.notes) : setNotes('');
