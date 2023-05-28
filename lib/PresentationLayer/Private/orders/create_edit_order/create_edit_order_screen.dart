@@ -114,12 +114,17 @@ class CreateEditOrderScreen extends StatelessWidget {
                               text: order != null ? 'تعديل' : 'حفظ',
                               isLoading: orderController.loading.value,
                               onPressed: () async {
-                                order != null
-                                    ? await orderController
-                                        .updateOrder(order!.id)
-                                    : await orderController.createOrder();
-                                if (orderController.orderSaving == true) {
-                                  orderScreenController.goToNextPage();
+                                if (orderScreenController
+                                    .checkIfOrderStepCompeleted(
+                                        orderScreenController
+                                            .currentIndex.value)) {
+                                  order != null
+                                      ? await orderController
+                                          .updateOrder(order!.id)
+                                      : await orderController.createOrder();
+                                  if (orderController.orderSaving == true) {
+                                    orderScreenController.goToNextPage();
+                                  }
                                 }
                               },
                             )
