@@ -90,24 +90,29 @@ class ChooseWareScreen extends StatelessWidget {
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
-                        : GetBuilder(
-                            init: searchController,
-                            builder: (context) {
-                              return searchController.searchText.isEmpty
-                                  ? buildWareList(homeController.wares)
-                                  : Obx(
-                                      () {
-                                        return searchController
-                                                .searchLoading.value
-                                            ? Center(
-                                                child: loadingItem(
-                                                    width: 100, isWhite: true),
-                                              )
-                                            : buildWareList(
-                                                searchController.filteredList);
-                                      },
-                                    );
-                            },
+                        : RefreshIndicator(
+                            onRefresh: () async =>
+                                await homeController.getWares(),
+                            child: GetBuilder(
+                              init: searchController,
+                              builder: (context) {
+                                return searchController.searchText.isEmpty
+                                    ? buildWareList(homeController.wares)
+                                    : Obx(
+                                        () {
+                                          return searchController
+                                                  .searchLoading.value
+                                              ? Center(
+                                                  child: loadingItem(
+                                                      width: 100,
+                                                      isWhite: true),
+                                                )
+                                              : buildWareList(searchController
+                                                  .filteredList);
+                                        },
+                                      );
+                              },
+                            ),
                           ),
                   ),
                 ),
