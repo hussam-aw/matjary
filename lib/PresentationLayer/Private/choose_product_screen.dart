@@ -93,22 +93,29 @@ class ChooseProductScreen extends StatelessWidget {
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
-                        : GetBuilder(
-                            init: searchController,
-                            builder: (context) {
-                              return searchController.searchText.isEmpty
-                                  ? buildProductsList(homeController.products)
-                                  : Obx(() {
-                                      return searchController
-                                              .searchLoading.value
-                                          ? Center(
-                                              child: loadingItem(
-                                                  width: 100, isWhite: true),
-                                            )
-                                          : buildProductsList(
-                                              searchController.filteredList);
-                                    });
-                            }),
+                        : RefreshIndicator(
+                            onRefresh: () async =>
+                                await homeController.getProducts(),
+                            child: GetBuilder(
+                                init: searchController,
+                                builder: (context) {
+                                  return searchController.searchText.isEmpty
+                                      ? buildProductsList(
+                                          homeController.products)
+                                      : Obx(() {
+                                          return searchController
+                                                  .searchLoading.value
+                                              ? Center(
+                                                  child: loadingItem(
+                                                      width: 100,
+                                                      isWhite: true),
+                                                )
+                                              : buildProductsList(
+                                                  searchController
+                                                      .filteredList);
+                                        });
+                                }),
+                          ),
                   ),
                 ),
               ],
