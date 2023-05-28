@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
-class CircleTextButton extends StatelessWidget {
-  const CircleTextButton({
+class CircleButton extends StatelessWidget {
+  const CircleButton({
     super.key,
-    required this.text,
-    this.textStyle = UITextStyle.boldHeading,
+    required this.widget,
     required this.onTap,
   });
 
-  final String text;
-  final TextStyle textStyle;
+  final Widget widget;
   final Function() onTap;
 
   @override
@@ -19,21 +17,14 @@ class CircleTextButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 28,
-        height: 28,
-        padding: const EdgeInsets.all(4),
+        width: 30,
+        height: 30,
+        //padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
             color: Colors.transparent,
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white)),
-        child: Center(
-          child: Text(
-            text,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: textStyle,
-          ),
-        ),
+        child: Center(child: widget),
       ),
     );
   }

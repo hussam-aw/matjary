@@ -58,11 +58,13 @@ class OrderBox extends StatelessWidget {
                   Text(
                     'الزبون ${accountsController.getAccountName(order.customerId)}',
                     style: UITextStyle.boldBody,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   spacerHeight(height: 12),
                   Text(
                     'إجمالي الفاتورة :   ${order.total}',
                     style: UITextStyle.normalSmall,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   spacerHeight(height: 8),
                   Text(
@@ -75,40 +77,38 @@ class OrderBox extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              decoration: const BoxDecoration(
-                  borderRadius: raduis15,
-                  color: UIColors.iconButtonGroupBackground),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: const Icon(
-                      FontAwesomeIcons.eye,
-                      color: UIColors.primary,
-                      size: 17,
-                    ),
+          Container(
+            height: 40,
+            width: 90,
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            decoration: const BoxDecoration(
+                borderRadius: raduis15,
+                color: UIColors.iconButtonGroupBackground),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: const Icon(
+                    FontAwesomeIcons.eye,
+                    color: UIColors.primary,
+                    size: 20,
                   ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(
-                        AppRoutes.createEditOrderScreen,
-                        arguments: order,
-                      );
-                    },
-                    child: const Icon(
-                      FontAwesomeIcons.penToSquare,
-                      color: UIColors.primary,
-                      size: 17,
-                    ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.createEditOrderScreen,
+                      arguments: order,
+                    );
+                  },
+                  child: const Icon(
+                    FontAwesomeIcons.penToSquare,
+                    color: UIColors.primary,
+                    size: 20,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

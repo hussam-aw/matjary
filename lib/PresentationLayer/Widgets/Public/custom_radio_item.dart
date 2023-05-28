@@ -8,7 +8,7 @@ class RadioButtonItem extends StatelessWidget {
   const RadioButtonItem({
     super.key,
     required this.text,
-    this.width = 125,
+    this.width = 120,
     this.style = UITextStyle.normalMeduim,
     this.isSelected = false,
     this.selectionColor = UIColors.white,
