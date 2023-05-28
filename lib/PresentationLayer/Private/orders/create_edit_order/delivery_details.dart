@@ -144,14 +144,15 @@ class DeliveryDetails extends StatelessWidget {
       keyboardType: TextInputType.number,
       hintText: hintText,
       suffix: Container(
-        padding: const EdgeInsets.only(left: 15),
+        height: 50,
+        padding: const EdgeInsets.only(left: 10),
         child: CustomRadioGroup(
           scrollDirection: Axis.vertical,
           items: orderScreenController.discountOrderTypes.keys
               .map((discountType) => RadioButtonItem(
                     text: discountType,
-                    width: Get.width * .1,
-                    style: UITextStyle.smallBold,
+                    width: Get.width * .15,
+                    style: UITextStyle.boldSmall,
                     selectionColor: UIColors.primary,
                     unselectionColor: UIColors.mainBackground,
                     selectedTextColor: UIColors.white,
