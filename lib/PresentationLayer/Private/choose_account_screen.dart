@@ -101,24 +101,31 @@ class ChooseAccountScreen extends StatelessWidget {
                             child: loadingItem(width: 100, isWhite: true),
                           );
                         }
+                        accountsController
+                            .getAccountsBasedOnStyle(accountStyle);
+
                         accounts =
                             accountsController.getAccountsList(accountStyle);
-                        return GetBuilder(
-                            init: searchController,
-                            builder: (context) {
-                              return searchController.searchText.isEmpty
-                                  ? buildAccountsList(accounts)
-                                  : Obx(() {
-                                      return searchController
-                                              .searchLoading.value
-                                          ? Center(
-                                              child: loadingItem(
-                                                  width: 100, isWhite: true),
-                                            )
-                                          : buildAccountsList(
-                                              searchController.filteredList);
-                                    });
-                            });
+                        return RefreshIndicator(
+                          onRefresh: () async =>
+                              await accountsController.getAccounts(),
+                          child: GetBuilder(
+                              init: searchController,
+                              builder: (context) {
+                                return searchController.searchText.isEmpty
+                                    ? buildAccountsList(accounts)
+                                    : Obx(() {
+                                        return searchController
+                                                .searchLoading.value
+                                            ? Center(
+                                                child: loadingItem(
+                                                    width: 100, isWhite: true),
+                                              )
+                                            : buildAccountsList(
+                                                searchController.filteredList);
+                                      });
+                              }),
+                        );
                       },
                     ),
                   ),
