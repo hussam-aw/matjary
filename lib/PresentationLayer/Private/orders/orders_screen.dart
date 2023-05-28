@@ -84,10 +84,10 @@ class OrdersScreen extends StatelessWidget {
                                 isSelected: ordersController
                                     .orderFilterTypesSelection
                                     .value[orderFilterType]!,
-                                onTap: () {
+                                onTap: () async {
                                   ordersController
                                       .setOrderFilterType(orderFilterType);
-                                  ordersController
+                                  await ordersController
                                       .getOrdersByType(orderFilterType);
                                 },
                               ))
@@ -107,29 +107,35 @@ class OrdersScreen extends StatelessWidget {
                 Expanded(
                   child: Obx(() {
                     return ordersController.isLoadingOrders.value
-                        ? Center(child: loadingItem(isWhite: true))
-                        : GetBuilder(
-                            init: searchController,
-                            builder: (context) {
-                              if (searchController.searchText.isEmpty) {
-                                return buildOrdersList(
-                                    ordersController.currentOrders);
-                              } else {
-                                return Obx(
-                                  () {
-                                    if (searchController.searchLoading.value) {
-                                      return Center(
-                                        child: loadingItem(isWhite: true),
-                                      );
-                                    } else {
-                                      return buildOrdersList(
-                                          ordersController.getOrdersForAccounts(
-                                              searchController.filteredList));
-                                    }
-                                  },
-                                );
-                              }
-                            },
+                        ? Center(child: loadingItem(width: 100, isWhite: true))
+                        : RefreshIndicator(
+                            onRefresh: () async =>
+                                await ordersController.getOrdersByType(
+                                    ordersController.currentOrderFilterType),
+                            child: GetBuilder(
+                              init: searchController,
+                              builder: (context) {
+                                if (searchController.searchText.isEmpty) {
+                                  return buildOrdersList(
+                                      ordersController.currentOrders);
+                                } else {
+                                  return Obx(
+                                    () {
+                                      if (searchController
+                                          .searchLoading.value) {
+                                        return Center(
+                                          child: loadingItem(isWhite: true),
+                                        );
+                                      } else {
+                                        return buildOrdersList(ordersController
+                                            .getOrdersForAccounts(
+                                                searchController.filteredList));
+                                      }
+                                    },
+                                  );
+                                }
+                              },
+                            ),
                           );
                   }),
                 ),
