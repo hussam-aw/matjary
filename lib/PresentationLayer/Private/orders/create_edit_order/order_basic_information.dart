@@ -198,6 +198,9 @@ class OrderBasicInformation extends StatelessWidget {
                           });
                       orderScreenController.selectAccountBasedOnType(
                           account, 'marketer');
+                      if (orderController.marketerAccount == null) {
+                        orderController.setMarketerDiscount(0.0);
+                      }
                     },
                   ),
                 ],
