@@ -9,6 +9,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/orders_filter_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
@@ -56,19 +57,24 @@ class OrdersScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const PageTitle(title: 'الفواتير'),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.filter_alt_outlined,
-                          size: 30,
-                          color: UIColors.titleNoteIcon,
-                        ),
-                        Text(
-                          'فلترة',
-                          style: UITextStyle.normalBody
-                              .copyWith(color: UIColors.titleNoteText),
-                        ),
-                      ],
+                    InkWell(
+                      onTap: () {
+                        Get.bottomSheet(OrdersFilterBottomSheet());
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.filter_alt_outlined,
+                            size: 30,
+                            color: UIColors.titleNoteIcon,
+                          ),
+                          Text(
+                            'فلترة',
+                            style: UITextStyle.normalBody
+                                .copyWith(color: UIColors.titleNoteText),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
