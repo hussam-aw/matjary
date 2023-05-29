@@ -353,6 +353,12 @@ class OrderScreenController extends GetxController {
     }
   }
 
+  void selectDate(date) async {
+    if (date != null) {
+      orderController.setDate(date.toString().substring(0, 10));
+    }
+  }
+
   bool checkIfOrderStepCompeleted(int stepIndex) {
     switch (stepIndex) {
       case 0:
