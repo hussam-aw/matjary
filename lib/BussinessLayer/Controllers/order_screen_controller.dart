@@ -377,7 +377,7 @@ class OrderScreenController extends GetxController {
         return true;
       case 3:
         if (orderController.paidAmountController.text.isEmpty ||
-            (orderController.marketerAccount == null &&
+            (orderController.marketerAccount != null &&
                 orderController.marketerDiscountController.text.isEmpty)) {
           SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
           return false;
