@@ -45,6 +45,10 @@ class OrderController extends GetxController {
   String marketerDiscountType = "";
   var marketerDiscountPercent = 0.0.obs;
   var marketerDiscountAmount = 0.0.obs;
+  TextEditingController dateController = TextEditingController(
+    text:
+        "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
+  );
   TextEditingController paidAmountController = TextEditingController();
   TextEditingController remainingAmountController = TextEditingController();
   RxDouble remainingAmount = 0.0.obs;
@@ -197,6 +201,10 @@ class OrderController extends GetxController {
 
   void setMarketerDiscountType(type) {
     marketerDiscountType = type;
+  }
+
+  void setDate(date) {
+    dateController.value = TextEditingValue(text: date);
   }
 
   void setTotalOrderAmount(total) {
