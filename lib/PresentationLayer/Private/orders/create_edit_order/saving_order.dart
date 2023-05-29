@@ -178,6 +178,9 @@ class SavingOrder extends StatelessWidget {
               .toList(),
         ),
       ),
+      onChanged: (value) {
+        orderController.setMarketerDiscountBasedOnType(value);
+      },
     );
   }
 }
