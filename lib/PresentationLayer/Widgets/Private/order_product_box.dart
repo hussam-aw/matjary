@@ -61,16 +61,16 @@ class OrderProductBox extends StatelessWidget {
                         'الكمية:',
                         style: UITextStyle.small,
                       ),
-                      spacerWidth(width: 7),
+                      spacerWidth(width: 4),
                       AmountBox(
                         amount: quantity.toString(),
                       ),
-                      spacerWidth(),
+                      spacerWidth(width: 6),
                       const Text(
                         'الافرادي:',
                         style: UITextStyle.small,
                       ),
-                      spacerWidth(width: 7),
+                      spacerWidth(width: 4),
                       AmountBox(
                         amount: price!.toStringAsFixed(2),
                       ),
@@ -85,7 +85,7 @@ class OrderProductBox extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                totalPrice.toStringAsFixed(2),
+                totalPrice.toStringAsFixed(1),
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalMeduim,
               ),
@@ -109,7 +109,7 @@ class OrderProductBox extends StatelessWidget {
                   },
                   child: const Icon(
                     FontAwesomeIcons.penToSquare,
-                    size: 20,
+                    size: 17,
                     color: UIColors.white,
                   ),
                 ),

@@ -14,6 +14,33 @@ class OrdersClient {
     }
   }
 
+  Future<dynamic> getOrdersLastDay() async {
+    var response = await http.get(Uri.parse("$baseUrl$ordersLastDayLink"));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return "";
+    }
+  }
+
+  Future<dynamic> getOrdersLastWeek() async {
+    var response = await http.get(Uri.parse("$baseUrl$ordersLastWeekLink"));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return "";
+    }
+  }
+
+  Future<dynamic> getOrdersLastMonth() async {
+    var response = await http.get(Uri.parse("$baseUrl$ordersLastMonthLink"));
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return "";
+    }
+  }
+
   Future<dynamic> createOrder(
       customerId,
       total,

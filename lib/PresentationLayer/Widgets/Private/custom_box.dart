@@ -25,7 +25,7 @@ class CustomBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 67,
-      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
       decoration: const BoxDecoration(
         color: UIColors.containerBackground,
       ),
@@ -38,38 +38,41 @@ class CustomBox extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: UITextStyle.normalMeduim.copyWith(
                 color: UIColors.lightNormalText,
               ),
             ),
           ),
-          Expanded(
-            flex: 2,
+          SizedBox(
+            width: 80,
+            //height: 50,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  icon: const Icon(
+                InkWell(
+                  onTap: editOnPressed,
+                  child: const Icon(
                     FontAwesomeIcons.penToSquare,
                     color: UIColors.white,
                   ),
-                  onPressed: editOnPressed,
                 ),
-                IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: const Icon(
-                      Icons.delete,
-                      color: UIColors.white,
-                    ),
-                    onPressed: () {
-                      Get.dialog(
-                        CustomDialog(
-                          title: deleteDialogTitle,
-                          buttonText: deleteDialogButtonText,
-                          confirmOnPressed: deleteOnPressed,
-                        ),
-                      );
-                    }),
+                InkWell(
+                  onTap: () {
+                    Get.dialog(
+                      CustomDialog(
+                        title: deleteDialogTitle,
+                        buttonText: deleteDialogButtonText,
+                        confirmOnPressed: deleteOnPressed,
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.delete,
+                    color: UIColors.white,
+                    size: 27,
+                  ),
+                ),
               ],
             ),
           ),

@@ -353,6 +353,12 @@ class OrderScreenController extends GetxController {
     }
   }
 
+  void selectDate(date) async {
+    if (date != null) {
+      orderController.setDate(date.toString().substring(0, 10));
+    }
+  }
+
   bool checkIfOrderStepCompeleted(int stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -370,14 +376,15 @@ class OrderScreenController extends GetxController {
         }
         return true;
       case 2:
-        if (orderController.expensesController.text.isEmpty ||
-            orderController.discountOrderController.text.isEmpty) {
+        if (orderController.expensesController.text.isEmpty) {
           SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
           return false;
         }
         return true;
       case 3:
-        if (orderController.paidAmountController.text.isEmpty) {
+        if (orderController.paidAmountController.text.isEmpty ||
+            (orderController.marketerAccount != null &&
+                orderController.marketerDiscountController.text.isEmpty)) {
           SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
           return false;
         }
@@ -389,11 +396,10 @@ class OrderScreenController extends GetxController {
   void resetOrderScreen() {
     goToInitialPage();
     selectedOrderType = 'بيع للزبائن';
-    setOrderType(orderTypes[0]);
-    setbuyingType(buyingTypes[0]);
-    setOrderStatus(orderStatus[0]);
-
-    setMarketerDiscount(discountOrderTypes[0]);
+    setOrderType(selectedOrderType);
+    setbuyingType('مباشر');
+    setOrderStatus('تامة');
+    setMarketerDiscount('رقم');
     productQuantityController.value = const TextEditingValue();
     productPriceController.value = const TextEditingValue();
     selectedProducts = <Product>[].obs;

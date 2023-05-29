@@ -52,64 +52,71 @@ class ChooseCategoryScreen extends StatelessWidget {
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
-                        : GetBuilder(
-                            init: searchController,
-                            builder: (context) {
-                              return searchController.searchText.isEmpty
-                                  ? ListView.separated(
-                                      itemBuilder: (context, index) {
-                                        return CustomBox(
-                                          title: homeController
-                                              .categories[index].name,
-                                          editOnPressed: () {
-                                            //Navigate to edit category screen
-                                          },
-                                          deleteDialogTitle:
-                                              'هل تريد بالتأكيد حذف الفئة؟',
-                                          deleteOnPressed: () {
-                                            //Delete from category controller
-                                            Get.back();
-                                          },
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return spacerHeight();
-                                      },
-                                      itemCount:
-                                          homeController.categories.length,
-                                    )
-                                  : Obx(() {
-                                      return searchController
-                                              .searchLoading.value
-                                          ? Center(
-                                              child: loadingItem(
-                                                  width: 100, isWhite: true),
-                                            )
-                                          : ListView.separated(
-                                              itemBuilder: (context, index) {
-                                                return CustomBox(
-                                                  title: searchController
-                                                      .filteredList[index].name,
-                                                  editOnPressed: () {
-                                                    //Navigate to edit category screen
-                                                  },
-                                                  deleteDialogTitle:
-                                                      'هل تريد بالتأكيد حذف الحساب؟',
-                                                  deleteOnPressed: () {
-                                                    //Delete from category controller
-                                                    Get.back();
-                                                  },
-                                                );
+                        : RefreshIndicator(
+                            onRefresh: () async =>
+                                await homeController.getCategories(),
+                            child: GetBuilder(
+                                init: searchController,
+                                builder: (context) {
+                                  return searchController.searchText.isEmpty
+                                      ? ListView.separated(
+                                          itemBuilder: (context, index) {
+                                            return CustomBox(
+                                              title: homeController
+                                                  .categories[index].name,
+                                              editOnPressed: () {
+                                                //Navigate to edit category screen
                                               },
-                                              separatorBuilder:
-                                                  (context, index) {
-                                                return spacerHeight();
+                                              deleteDialogTitle:
+                                                  'هل تريد بالتأكيد حذف الفئة؟',
+                                              deleteOnPressed: () {
+                                                //Delete from category controller
+                                                Get.back();
                                               },
-                                              itemCount: searchController
-                                                  .filteredList.length,
                                             );
-                                    });
-                            }),
+                                          },
+                                          separatorBuilder: (context, index) {
+                                            return spacerHeight();
+                                          },
+                                          itemCount:
+                                              homeController.categories.length,
+                                        )
+                                      : Obx(() {
+                                          return searchController
+                                                  .searchLoading.value
+                                              ? Center(
+                                                  child: loadingItem(
+                                                      width: 100,
+                                                      isWhite: true),
+                                                )
+                                              : ListView.separated(
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return CustomBox(
+                                                      title: searchController
+                                                          .filteredList[index]
+                                                          .name,
+                                                      editOnPressed: () {
+                                                        //Navigate to edit category screen
+                                                      },
+                                                      deleteDialogTitle:
+                                                          'هل تريد بالتأكيد حذف الحساب؟',
+                                                      deleteOnPressed: () {
+                                                        //Delete from category controller
+                                                        Get.back();
+                                                      },
+                                                    );
+                                                  },
+                                                  separatorBuilder:
+                                                      (context, index) {
+                                                    return spacerHeight();
+                                                  },
+                                                  itemCount: searchController
+                                                      .filteredList.length,
+                                                );
+                                        });
+                                }),
+                          ),
                   ),
                 ),
               ],

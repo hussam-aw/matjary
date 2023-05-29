@@ -103,7 +103,7 @@ class HomeController extends GetxController {
     // await getAccounts();
     // await getBankAccounts();
     // await getClientAccounts();
-    await accountsController.getAcoounts();
+    await accountsController.getAccounts();
     await accountsController.getClientAcoounts();
     await accountsController.getBankAcoounts();
     await getWares();

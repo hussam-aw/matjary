@@ -44,28 +44,36 @@ class SelectionOrderProductBox extends StatelessWidget {
                 style: UITextStyle.normalBody,
               ),
             ),
-            Expanded(
-              flex: 2,
+            Container(
+              width: 120,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleTextButton(
-                    text: '+',
+                  CircleButton(
+                    widget: Icon(
+                      Icons.add,
+                      color: UIColors.white,
+                    ),
                     onTap: () {
                       orderScreenController.increaseProductQuantity(productId);
                     },
                   ),
                   spacerWidth(width: 5),
-                  CircleTextButton(
-                    text: '-',
+                  CircleButton(
+                    widget: const Icon(
+                      Icons.remove,
+                      color: UIColors.white,
+                    ),
                     onTap: () {
                       orderScreenController.decreaseProductQuantity(productId);
                     },
                   ),
                   spacerWidth(width: 5),
-                  CircleTextButton(
-                    text: '123',
-                    textStyle: UITextStyle.normalSmall,
+                  CircleButton(
+                    widget: const Text(
+                      '123',
+                      style: UITextStyle.normalBody,
+                    ),
                     onTap: () {
                       Get.bottomSheet(UpdateOrderProductBottomSheet(
                         productId: productId,
@@ -77,8 +85,8 @@ class SelectionOrderProductBox extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              flex: 1,
+            Container(
+              width: 50,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -86,6 +94,7 @@ class SelectionOrderProductBox extends StatelessWidget {
                               .selectedProductsQuantities[productId] ??
                           0)
                       .toString(),
+                  overflow: TextOverflow.ellipsis,
                   style: UITextStyle.boldLarge,
                 ),
               ),

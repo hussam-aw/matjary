@@ -11,8 +11,8 @@ class AmountBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 35,
-      height: 16,
+      width: 40,
+      height: 20,
       decoration: const BoxDecoration(
         color: UIColors.white,
         borderRadius: raduis15,
@@ -20,7 +20,7 @@ class AmountBox extends StatelessWidget {
       child: Center(
         child: Text(
           amount,
-          style: UITextStyle.smallBold.copyWith(color: UIColors.smallText),
+          style: UITextStyle.normalSmall.copyWith(color: UIColors.smallText),
         ),
       ),
     );

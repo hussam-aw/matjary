@@ -45,9 +45,6 @@ class OrdersController extends GetxController {
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
     orders = await ordersRepo.getOrders();
-    for (Order order in orders) {
-      print(order.toMap());
-    }
     await getPurchasesOrders();
     await getSalesOrders();
     isLoadingOrders.value = false;
@@ -82,12 +79,13 @@ class OrdersController extends GetxController {
     orderFilterTypesSelection[type] = true;
   }
 
-  void getOrdersByType(String type) async {
+  Future<void> getOrdersByType(String type) async {
     isLoadingOrders.value = true;
+    orders = await ordersRepo.getOrders();
     if (type == 'الكل') {
       currentOrders = orders;
     } else {
-      currentOrders = salesOrders = orders
+      currentOrders = orders
           .where((order) => order.type == counterOrderTypes[type])
           .toList();
     }
@@ -104,5 +102,23 @@ class OrdersController extends GetxController {
       }
     }
     return filteredOrder;
+  }
+
+  Future<void> getOrdersLast() async {
+    isLoadingOrders.value = true;
+    currentOrders = await ordersRepo.getOrdersLastDay();
+    isLoadingOrders.value = false;
+  }
+
+  Future<void> getOrdersWeek() async {
+    isLoadingOrders.value = true;
+    currentOrders = await ordersRepo.getOrdersLastWeek();
+    isLoadingOrders.value = false;
+  }
+
+  Future<void> getOrdersMonth() async {
+    isLoadingOrders.value = true;
+    currentOrders = await ordersRepo.getOrdersLastMonth();
+    isLoadingOrders.value = false;
   }
 }
