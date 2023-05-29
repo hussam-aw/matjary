@@ -38,10 +38,13 @@ class OrderController extends GetxController {
   var totalProductsPrice = 0.0.obs;
   var expenses = 0.0.obs;
   var discountPercent = 0.0.obs;
+  var discountNumber = 0.0.obs;
   var discountAmount = 0.0.obs;
   var totalOrderAmount = 0.0.obs;
   TextEditingController marketerDiscountController = TextEditingController();
   String marketerDiscountType = "";
+  var marketerDiscountPercent = 0.0.obs;
+  var marketerDiscountAmount = 0.0.obs;
   TextEditingController paidAmountController = TextEditingController();
   TextEditingController remainingAmountController = TextEditingController();
   RxDouble remainingAmount = 0.0.obs;
@@ -117,16 +120,14 @@ class OrderController extends GetxController {
     discountType = type;
   }
 
-  void setDiscountAmount(discount) {
-    discountAmount.value = discount.toDouble();
+  void setDiscountOrder(discount) {
+    if (discount != null) {
+      discountType == 'percent'
+          ? discountPercent.value = discount.toDouble()
+          : discountNumber.value = discount.toDouble();
+    }
     discountOrderController.value = TextEditingValue(
         text: discount == 0.0 ? '' : discount.toStringAsFixed(2));
-  }
-
-  void setDiscountPercent(discount) {
-    discountPercent.value = discount;
-    discountOrderController.value = TextEditingValue(
-        text: discount == 0 ? '' : discount.toStringAsFixed(2));
   }
 
   void setStatus(orderStatus) {
@@ -152,16 +153,16 @@ class OrderController extends GetxController {
 
   void calculateDiscountBasedOnType() {
     if (discountType == 'percent') {
-      discountPercent.value = double.parse(discountOrderController.text);
-      discountAmount.value = discountOrderController.text.isNotEmpty
-          ? double.parse(discountOrderController.text) *
-              totalProductsPrice.value /
-              100
-          : 0.0;
-    } else {
-      discountAmount.value = discountOrderController.text.isNotEmpty
+      discountPercent.value = discountOrderController.text.isNotEmpty
           ? double.parse(discountOrderController.text)
           : 0.0;
+      discountAmount.value =
+          discountPercent.value * totalProductsPrice.value / 100;
+    } else {
+      discountNumber.value = discountOrderController.text.isNotEmpty
+          ? double.parse(discountOrderController.text)
+          : 0.0;
+      discountAmount.value = discountNumber.value;
     }
   }
 
@@ -178,8 +179,20 @@ class OrderController extends GetxController {
   }
 
   void setMarketerDiscount(discount) {
-    marketerDiscountController.value =
-        TextEditingValue(text: discount.toStringAsFixed(1));
+    marketerDiscountController.value = TextEditingValue(
+        text: discount == 0.0 ? '' : discount.toStringAsFixed(2));
+  }
+
+  void setMarketerDiscountBasedOnType(discount) {
+    if (discountType == 'percent') {
+      marketerDiscountPercent.value = marketerDiscountController.text.isNotEmpty
+          ? double.parse(marketerDiscountController.text)
+          : 0.0;
+    } else {
+      marketerDiscountAmount.value = marketerDiscountController.text.isNotEmpty
+          ? double.parse(marketerDiscountController.text)
+          : 0.0;
+    }
   }
 
   void setMarketerDiscountType(type) {
@@ -222,13 +235,10 @@ class OrderController extends GetxController {
   }
 
   num? getDiscountOrder(discountOrderType) {
-    num dis = discountOrderController.text.isNotEmpty
-        ? num.parse(discountOrderController.text)
-        : 0.0;
-    return dis != 0.0
+    return discountOrderType != null
         ? discountOrderType == 'percent'
             ? discountPercent.value
-            : discountAmount.value
+            : discountNumber.value
         : null;
   }
 
@@ -237,9 +247,11 @@ class OrderController extends GetxController {
   }
 
   num? getMarketerDiscount(marketerDiscountType) {
-    return marketerDiscountType == 'percent'
-        ? discountPercent.value
-        : discountAmount.value;
+    return marketerDiscountType != null
+        ? marketerDiscountType == 'percent'
+            ? marketerDiscountPercent.value
+            : marketerDiscountAmount.value
+        : null;
   }
 
   Future<void> createOrder() async {
@@ -248,6 +260,7 @@ class OrderController extends GetxController {
     int? marketerId = getMarketerId();
     String? discountMarketerType = getMarketerDiscountType();
     num? discountMarketer = getMarketerDiscount(discountMarketerType);
+    print(discountMarketer);
     num paidAmount = getPaidAmount();
     getOrderProductsMap();
     loading.value = true;
@@ -380,8 +393,7 @@ class OrderController extends GetxController {
     setStatus(4);
     setexpenses(0.0);
     setDiscountType("number");
-    setDiscountAmount(0.0);
-    setDiscountPercent(0.0);
+    setDiscountOrder(0.0);
     setMarketerDiscountType("number");
     setMarketerDiscount(0.0);
     setPaidAmount(0.0);
@@ -399,8 +411,7 @@ class OrderController extends GetxController {
     buyingType = "";
     setexpenses(0.0);
     discountType = "";
-    setDiscountAmount(0.0);
-    setDiscountPercent(0.0);
+    setDiscountOrder(0.0);
     setStatus(4);
     setNotes('');
     totalProductsPrice = 0.0.obs;
@@ -424,23 +435,17 @@ class OrderController extends GetxController {
       setWare(
           homeController.wares.firstWhereOrNull((w) => w.id == order.wareId));
       setMarketerAccount(accountsController.getAccountFromId(order.marketerId));
+      calculateTotalProductsPrice();
       setBuyingType(order.sellType);
       setexpenses(order.expenses);
       setDiscountType(order.discountType);
-      order.discountType.isNotEmpty
-          ? order.discountType == 'percent'
-              ? setDiscountPercent(order.discount)
-              : setDiscountAmount(order.discount)
-          : setDiscountAmount(0.0);
+      setDiscountOrder(order.discount);
       calculateDiscountBasedOnType();
       setStatus(order.status);
-      order.notes.isNotEmpty ? setNotes(order.notes) : setNotes('');
+      setNotes(order.notes);
       setMarketerDiscountType(order.marketerFeeType);
-      order.marketerFeeType.isNotEmpty
-          ? setMarketerDiscount(order.marketerFee)
-          : setMarketerDiscount(0.0);
-      calculateTotalProductsPrice();
-      setTotalOrderAmount(order.total);
+      setMarketerDiscount(order.marketerFee);
+      calculateTotalOrderAmount();
       setPaidAmount(order.paidUp);
       setRemainingAmount(order.restOfTheBill);
     }
