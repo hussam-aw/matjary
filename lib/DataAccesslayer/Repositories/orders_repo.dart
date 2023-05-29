@@ -14,6 +14,33 @@ class OrdersRepo {
     return [];
   }
 
+  Future<List<Order>> getOrdersLastDay() async {
+    var response = await client.getOrdersLastDay();
+    if (response != "") {
+      final parsed = json.decode(response).cast<Map<String, dynamic>>();
+      return parsed.map<Order>((json) => Order.fromMap(json)).toList();
+    }
+    return [];
+  }
+
+  Future<List<Order>> getOrdersLastWeek() async {
+    var response = await client.getOrdersLastWeek();
+    if (response != "") {
+      final parsed = json.decode(response).cast<Map<String, dynamic>>();
+      return parsed.map<Order>((json) => Order.fromMap(json)).toList();
+    }
+    return [];
+  }
+
+  Future<List<Order>> getOrdersLastMonth() async {
+    var response = await client.getOrdersLastMonth();
+    if (response != "") {
+      final parsed = json.decode(response).cast<Map<String, dynamic>>();
+      return parsed.map<Order>((json) => Order.fromMap(json)).toList();
+    }
+    return [];
+  }
+
   Future<bool> createOrder(
       customerId,
       total,

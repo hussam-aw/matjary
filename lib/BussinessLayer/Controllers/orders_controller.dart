@@ -103,4 +103,22 @@ class OrdersController extends GetxController {
     }
     return filteredOrder;
   }
+
+  Future<void> getOrdersLast() async {
+    isLoadingOrders.value = true;
+    currentOrders = await ordersRepo.getOrdersLastDay();
+    isLoadingOrders.value = false;
+  }
+
+  Future<void> getOrdersWeek() async {
+    isLoadingOrders.value = true;
+    currentOrders = await ordersRepo.getOrdersLastWeek();
+    isLoadingOrders.value = false;
+  }
+
+  Future<void> getOrdersMonth() async {
+    isLoadingOrders.value = true;
+    currentOrders = await ordersRepo.getOrdersLastMonth();
+    isLoadingOrders.value = false;
+  }
 }
