@@ -59,7 +59,8 @@ class OrdersRepo {
       discountType,
       details,
       marketerFeeType,
-      marketerFee) async {
+      marketerFee,
+      date) async {
     var orderCreationStatus = await client.createOrder(
         customerId,
         total,
@@ -78,7 +79,8 @@ class OrdersRepo {
         discountType,
         details,
         marketerFeeType,
-        marketerFee);
+        marketerFee,
+        date);
 
     if (orderCreationStatus) {
       return true;
