@@ -182,6 +182,10 @@ class OrderController extends GetxController {
     calculateTotalOrderAmount();
   }
 
+  void setMarketerDiscountType(type) {
+    marketerDiscountType = type;
+  }
+
   void setMarketerDiscount(discount) {
     marketerDiscountController.value = TextEditingValue(
         text: discount == 0.0 ? '' : discount.toStringAsFixed(2));
@@ -197,10 +201,6 @@ class OrderController extends GetxController {
           ? double.parse(marketerDiscountController.text)
           : 0.0;
     }
-  }
-
-  void setMarketerDiscountType(type) {
-    marketerDiscountType = type;
   }
 
   void setDate(date) {
@@ -453,6 +453,7 @@ class OrderController extends GetxController {
       setNotes(order.notes);
       setMarketerDiscountType(order.marketerFeeType);
       setMarketerDiscount(order.marketerFee);
+      setMarketerDiscountBasedOnType(order.discount);
       calculateTotalOrderAmount();
       setPaidAmount(order.paidUp);
       setRemainingAmount(order.restOfTheBill);
