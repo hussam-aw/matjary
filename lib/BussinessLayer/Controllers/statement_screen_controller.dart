@@ -22,7 +22,6 @@ class StatementScreenController extends GetxController {
   void selectDate(date) async {
     if (date != null) {
       statementController.setDate(date.toString().substring(0, 10));
-      update();
     }
   }
 }
