@@ -45,10 +45,7 @@ class OrderController extends GetxController {
   String marketerDiscountType = "";
   var marketerDiscountPercent = 0.0.obs;
   var marketerDiscountAmount = 0.0.obs;
-  TextEditingController dateController = TextEditingController(
-    text:
-        "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
-  );
+  TextEditingController dateController = TextEditingController();
   TextEditingController paidAmountController = TextEditingController();
   TextEditingController remainingAmountController = TextEditingController();
   RxDouble remainingAmount = 0.0.obs;
@@ -182,6 +179,10 @@ class OrderController extends GetxController {
     calculateTotalOrderAmount();
   }
 
+  void setMarketerDiscountType(type) {
+    marketerDiscountType = type;
+  }
+
   void setMarketerDiscount(discount) {
     marketerDiscountController.value = TextEditingValue(
         text: discount == 0.0 ? '' : discount.toStringAsFixed(2));
@@ -199,11 +200,11 @@ class OrderController extends GetxController {
     }
   }
 
-  void setMarketerDiscountType(type) {
-    marketerDiscountType = type;
-  }
-
-  void setDate(date) {
+  void setDate(String date) {
+    if (date.isEmpty) {
+      date =
+          "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}";
+    }
     dateController.value = TextEditingValue(text: date);
   }
 
@@ -263,34 +264,37 @@ class OrderController extends GetxController {
   }
 
   Future<void> createOrder() async {
+    String? date = dateController.text;
     String? discountOrderType = getDiscountOrderType();
     num? discountOrder = getDiscountOrder(discountOrderType);
     int? marketerId = getMarketerId();
     String? discountMarketerType = getMarketerDiscountType();
     num? discountMarketer = getMarketerDiscount(discountMarketerType);
-    print(discountMarketer);
+    print(date);
     num paidAmount = getPaidAmount();
     getOrderProductsMap();
     loading.value = true;
     var orderCreationStatus = await orderRepo.createOrder(
-        counterPartyAccount!.id,
-        totalOrderAmount.value,
-        notesController.text,
-        type,
-        paidAmount,
-        remainingAmount.value,
-        wareAccount!.id,
-        null,
-        bankAccount!.id,
-        buyingType,
-        status,
-        expenses.value,
-        discountOrder,
-        marketerId,
-        discountOrderType,
-        orderProducts,
-        discountMarketerType,
-        discountMarketer);
+      counterPartyAccount!.id,
+      totalOrderAmount.value,
+      notesController.text,
+      type,
+      paidAmount,
+      remainingAmount.value,
+      wareAccount!.id,
+      null,
+      bankAccount!.id,
+      buyingType,
+      status,
+      expenses.value,
+      discountOrder,
+      marketerId,
+      discountOrderType,
+      orderProducts,
+      discountMarketerType,
+      discountMarketer,
+      date,
+    );
     loading.value = false;
     if (orderCreationStatus == true) {
       orderSaving = true;
@@ -396,6 +400,7 @@ class OrderController extends GetxController {
 
   Future<void> setDefaultFields() async {
     await setDefaultAccounts();
+    setDate('');
     setOrderType("sell_to_customers");
     setBuyingType("direct");
     setStatus(4);
@@ -413,6 +418,7 @@ class OrderController extends GetxController {
     setBankAccount(null);
     setWare(null);
     setMarketerAccount(null);
+    setDate('');
     orderProductsQuantities.clear();
     orderProductsPrices.clear();
     selectedProducts.clear();
@@ -443,6 +449,7 @@ class OrderController extends GetxController {
       setWare(
           homeController.wares.firstWhereOrNull((w) => w.id == order.wareId));
       setMarketerAccount(accountsController.getAccountFromId(order.marketerId));
+      //setDate(order.creationDate);
       calculateTotalProductsPrice();
       setBuyingType(order.sellType);
       setexpenses(order.expenses);
@@ -453,6 +460,7 @@ class OrderController extends GetxController {
       setNotes(order.notes);
       setMarketerDiscountType(order.marketerFeeType);
       setMarketerDiscount(order.marketerFee);
+      setMarketerDiscountBasedOnType(order.discount);
       calculateTotalOrderAmount();
       setPaidAmount(order.paidUp);
       setRemainingAmount(order.restOfTheBill);

@@ -176,34 +176,29 @@ class CreateStatementScreen extends StatelessWidget {
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'تاريخ القيد'),
                           spacerHeight(),
-                          GetBuilder(
-                              init: statementScreenController,
-                              builder: (con) {
-                                return TextFormField(
-                                  readOnly: true,
-                                  controller:
-                                      statementController.dateController,
-                                  keyboardType: TextInputType.datetime,
-                                  style: UITextStyle.normalBody,
-                                  decoration: textFieldStyle.copyWith(
-                                      suffixIcon: IconButton(
-                                    onPressed: () async {
-                                      statementScreenController.selectDate(
-                                          await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.parse(
-                                                  statementController
-                                                      .dateController.text),
-                                              firstDate: DateTime(1900),
-                                              lastDate: DateTime(2100)));
-                                    },
-                                    icon: const Icon(
-                                      Icons.date_range,
-                                      color: UIColors.white,
-                                    ),
-                                  )),
-                                );
-                              }),
+                          TextFormField(
+                            readOnly: true,
+                            controller: statementController.dateController,
+                            keyboardType: TextInputType.datetime,
+                            style: UITextStyle.normalBody,
+                            decoration: textFieldStyle.copyWith(
+                                suffixIcon: IconButton(
+                              onPressed: () async {
+                                statementScreenController.selectDate(
+                                    await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.parse(
+                                            statementController
+                                                .dateController.text),
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100)));
+                              },
+                              icon: const Icon(
+                                Icons.date_range,
+                                color: UIColors.white,
+                              ),
+                            )),
+                          ),
                           spacerHeight(height: 20),
                           const SectionTitle(title: 'البيان'),
                           spacerHeight(),
