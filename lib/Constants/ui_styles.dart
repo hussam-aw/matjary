@@ -81,6 +81,7 @@ final normalTextFieldStyle = InputDecoration(
 const raduis10 = BorderRadius.all(Radius.circular(10));
 const raduis15 = BorderRadius.all(Radius.circular(15));
 const radius19 = BorderRadius.all(Radius.circular(19));
+const radius20 = BorderRadius.all(Radius.circular(20));
 const raduis32top = BorderRadius.only(
   topLeft: Radius.circular(32),
   topRight: Radius.circular(32),
