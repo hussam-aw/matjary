@@ -30,11 +30,13 @@ class InovoiceContainer extends StatelessWidget {
           children: [
             Text(
               invoiceType,
+              overflow: TextOverflow.ellipsis,
               style: UITextStyle.normalSmall,
             ),
             spacerHeight(),
             Text(
               invoiceAmount,
+              overflow: TextOverflow.ellipsis,
               style: UITextStyle.boldHeading.apply(fontSizeFactor: 1.2),
             ),
           ],

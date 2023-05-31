@@ -155,81 +155,80 @@ class HomeScreen extends StatelessWidget {
                                                 size: 50,
                                               ),
                                               spacerWidth(),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text(
-                                                    'السيولة النقدية',
-                                                    style:
-                                                        UITextStyle.normalSmall,
-                                                  ),
-                                                  spacerHeight(height: 10),
-                                                  const Text(
-                                                    '1.500.000',
-                                                    style:
-                                                        UITextStyle.boldHeading,
-                                                  ),
-                                                ],
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      'السيولة النقدية',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: UITextStyle
+                                                          .normalSmall,
+                                                    ),
+                                                    spacerHeight(height: 10),
+                                                    const Text(
+                                                      '1.500.000',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: UITextStyle
+                                                          .boldHeading,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              OrderIconButton(
-                                                onTap: () {},
-                                                title: 'استلام',
-                                                icon: FontAwesomeIcons
-                                                    .solidCircleDown,
-                                              ),
-                                              spacerWidth(width: 10),
-                                              OrderIconButton(
-                                                onTap: () {},
-                                                title: 'ارسال',
-                                                icon: FontAwesomeIcons
-                                                    .solidCircleUp,
-                                              )
-                                            ],
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            OrderIconButton(
+                                              onTap: () {},
+                                              title: 'استلام',
+                                              icon: FontAwesomeIcons
+                                                  .solidCircleDown,
+                                            ),
+                                            spacerWidth(width: 10),
+                                            OrderIconButton(
+                                              onTap: () {},
+                                              title: 'ارسال',
+                                              icon: FontAwesomeIcons
+                                                  .solidCircleUp,
+                                            )
+                                          ],
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
                                 spacerHeight(height: 20),
-                                Expanded(
-                                  child: Obx(() {
-                                    return ordersController
-                                            .isLoadingOrders.value
-                                        ? loadingItem()
-                                        : Row(
-                                            children: [
-                                              InovoiceContainer(
-                                                invoiceType: 'فواتير المشتريات',
-                                                invoiceAmount: ordersController
-                                                    .purchasesOrders.length
-                                                    .toString(),
-                                              ),
-                                              spacerWidth(width: 40),
-                                              InovoiceContainer(
-                                                invoiceType: 'فواتير المبيعات',
-                                                invoiceAmount: ordersController
-                                                    .salesOrders.length
-                                                    .toString(),
-                                                backgroundColor:
-                                                    UIColors.primary,
-                                              )
-                                            ],
-                                          );
-                                  }),
-                                ),
+                                Obx(() {
+                                  return ordersController.isLoadingOrders.value
+                                      ? loadingItem()
+                                      : Row(
+                                          children: [
+                                            InovoiceContainer(
+                                              invoiceType: 'فواتير المشتريات',
+                                              invoiceAmount: ordersController
+                                                  .purchasesOrders.length
+                                                  .toString(),
+                                            ),
+                                            spacerWidth(width: 40),
+                                            InovoiceContainer(
+                                              invoiceType: 'فواتير المبيعات',
+                                              invoiceAmount: ordersController
+                                                  .salesOrders.length
+                                                  .toString(),
+                                              backgroundColor: UIColors.primary,
+                                            )
+                                          ],
+                                        );
+                                }),
                               ],
                             ),
                           ),

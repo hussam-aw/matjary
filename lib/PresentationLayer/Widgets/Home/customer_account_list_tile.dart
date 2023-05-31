@@ -26,45 +26,44 @@ class CustomerAccountListTile extends StatelessWidget {
         Expanded(
           flex: 3,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircleAvatar(
-                radius: 22,
-                backgroundImage: AssetImage(customerImage),
-              ),
-              spacerWidth(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Text(
-                    customerName,
-                    style: UITextStyle.boldBody,
+                  CircleAvatar(
+                    radius: 22,
+                    backgroundImage: AssetImage(customerImage),
                   ),
-                  spacerHeight(),
-                  Text(
-                    customerStatus,
-                    style: UITextStyle.normalSmall,
+                  spacerWidth(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        customerName,
+                        overflow: TextOverflow.ellipsis,
+                        style: UITextStyle.boldBody,
+                      ),
+                      spacerHeight(),
+                      Text(
+                        customerStatus,
+                        overflow: TextOverflow.ellipsis,
+                        style: UITextStyle.normalSmall,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
               Text(
                 customerBalance,
                 style: UITextStyle.boldMeduim,
               ),
-              spacerWidth(width: 20),
-              const Icon(
-                FontAwesomeIcons.arrowLeft,
-                color: UIColors.normalIcon,
-              ),
             ],
           ),
+        ),
+        spacerWidth(width: 20),
+        const Icon(
+          FontAwesomeIcons.arrowLeft,
+          color: UIColors.normalIcon,
         )
       ],
     );
