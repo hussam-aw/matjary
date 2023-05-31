@@ -64,10 +64,12 @@ class DeliveryDetails extends StatelessWidget {
                           spacerHeight(),
                           CustomTextFormField(
                             controller: orderController.expensesController,
-                            keyboardType: TextInputType.number,
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true, signed: false),
                             hintText: '5000',
                             formatters: [
-                              FilteringTextInputFormatter.digitsOnly
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d+\.?\d{0,2}')),
                             ],
                             onChanged: (value) {
                               orderController.convertExpensesToDouble(value);
@@ -88,9 +90,22 @@ class DeliveryDetails extends StatelessWidget {
                                         .discountOrderTypesSelection
                                         .value['رقم'] ==
                                     true
-                                ? discountTextField('5000',
-                                    [FilteringTextInputFormatter.digitsOnly])
-                                : discountTextField('100%', [
+                                ? Obx(() {
+                                    return discountTextField(
+                                        '5000',
+                                        const TextInputType.numberWithOptions(
+                                            decimal: true, signed: false),
+                                        [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(r'^\d+\.?\d{0,2}')),
+                                          NumericalRangeFormatter(
+                                              min: 0.0,
+                                              max: orderController
+                                                  .totalProductsPrice.value)
+                                        ]);
+                                  })
+                                : discountTextField(
+                                    '100%', TextInputType.number, [
                                     FilteringTextInputFormatter.digitsOnly,
                                     NumericalRangeFormatter(min: 0, max: 100)
                                   ]);
@@ -142,11 +157,11 @@ class DeliveryDetails extends StatelessWidget {
   }
 
   Widget discountTextField(
-      String hintText, List<TextInputFormatter>? formatters) {
+      String hintText, keyboardType, List<TextInputFormatter>? formatters) {
     return CustomTextFormField(
       controller: orderController.discountOrderController,
       formatters: formatters,
-      keyboardType: TextInputType.number,
+      keyboardType: keyboardType,
       hintText: hintText,
       suffix: Container(
         height: 50,

@@ -105,7 +105,11 @@ class SavingOrder extends StatelessWidget {
                           controller: orderController.paidAmountController,
                           hintText: '300.000',
                           formatters: [
-                            FilteringTextInputFormatter.digitsOnly,
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d{0,2}')),
+                            NumericalRangeFormatter(
+                                min: 0.0,
+                                max: orderController.totalProductsPrice.value)
                           ],
                           onChanged: (value) {
                             orderController.calculateRemainingAmount(value);
@@ -130,7 +134,7 @@ class SavingOrder extends StatelessWidget {
                             readOnly: true,
                             controller:
                                 orderController.remainingAmountController,
-                            hintText: orderController.totalOrderAmount.value
+                            hintText: orderController.totalProductsPrice.value
                                 .toStringAsFixed(2),
                           );
                         })
