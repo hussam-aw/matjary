@@ -79,7 +79,8 @@ class SavingOrder extends StatelessWidget {
                                   .marketerDiscountSelection.value['رقم'] ==
                               true
                           ? marketerDiscountTextField('5000', [
-                              FilteringTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d+\.?\d{0,2}')),
                             ])
                           : marketerDiscountTextField('100%', [
                               FilteringTextInputFormatter.digitsOnly,
