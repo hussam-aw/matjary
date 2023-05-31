@@ -114,7 +114,9 @@ class OrdersClient {
       discountType,
       details,
       marketerFeeType,
-      marketerFee) async {
+      marketerFee,
+      date) async {
+    print(date);
     var response = await http.post(Uri.parse('$baseUrl$orderLink/$id'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
@@ -136,6 +138,7 @@ class OrdersClient {
           "marketer_fee_type": marketerFeeType,
           "marketer_fee": marketerFee,
           "details": details,
+          "updated_at": date,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

@@ -107,7 +107,8 @@ class OrdersRepo {
       discountType,
       details,
       marketerFeeType,
-      marketerFee) async {
+      marketerFee,
+      date) async {
     var orderUpdationStatus = await client.updateOrder(
         id,
         customerId,
@@ -127,7 +128,8 @@ class OrdersRepo {
         discountType,
         details,
         marketerFeeType,
-        marketerFee);
+        marketerFee,
+        date);
     if (orderUpdationStatus) {
       return true;
     }
