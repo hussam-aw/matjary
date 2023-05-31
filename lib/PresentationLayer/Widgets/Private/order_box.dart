@@ -68,7 +68,7 @@ class OrderBox extends StatelessWidget {
                   ),
                   spacerHeight(height: 8),
                   Text(
-                    order.creationDate,
+                    order.getDate(order.creationDate),
                     style: UITextStyle.normalSmall.copyWith(
                       color: UIColors.titleNoteText,
                     ),
