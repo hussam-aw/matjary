@@ -8,12 +8,12 @@ class InovoiceContainer extends StatelessWidget {
   InovoiceContainer({
     super.key,
     required this.invoiceType,
-    required this.invoiceAmountWidget,
+    required this.invoiceCountWidget,
     this.backgroundColor,
   });
 
   String invoiceType;
-  Widget invoiceAmountWidget;
+  Widget invoiceCountWidget;
   Color? backgroundColor;
 
   @override
@@ -34,7 +34,7 @@ class InovoiceContainer extends StatelessWidget {
               style: UITextStyle.normalSmall,
             ),
             spacerHeight(),
-            invoiceAmountWidget,
+            invoiceCountWidget,
           ],
         ),
       ),
