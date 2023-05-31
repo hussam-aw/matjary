@@ -61,7 +61,6 @@ class OrdersClient {
       marketerFeeType,
       marketerFee,
       date) async {
-    print(date);
     var response = await http.post(Uri.parse('$baseUrl$orderLink'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
@@ -88,6 +87,7 @@ class OrdersClient {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
+    print(response.body);
     if (response.statusCode == 201) {
       return true;
     } else {

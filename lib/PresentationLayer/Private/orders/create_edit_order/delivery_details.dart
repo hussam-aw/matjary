@@ -5,7 +5,6 @@ import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/numerical_range_formatter.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
@@ -26,110 +25,116 @@ class DeliveryDetails extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SectionTitle(title: 'نوع البيع'),
-              spacerHeight(),
-              Obx(
-                () {
-                  return CustomRadioGroup(
-                    items: orderScreenController.buyingTypes.keys
-                        .map((buyingType) => RadioButtonItem(
-                              text: buyingType,
-                              selectionColor: UIColors.primary,
-                              selectedTextColor: UIColors.white,
-                              isSelected: orderScreenController
-                                  .buyingTypesSelection.value[buyingType]!,
-                              onTap: () {
-                                orderScreenController.setbuyingType(buyingType);
-                                orderController.setBuyingType(
-                                    orderScreenController
-                                        .buyingTypes[buyingType]);
-                              },
-                            ))
-                        .toList(),
-                  );
-                },
-              ),
-              spacerHeight(height: 22),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const SectionTitle(title: 'مصاريف الفاتورة'),
-                        spacerHeight(),
-                        CustomTextFormField(
-                          controller: orderController.expensesController,
-                          keyboardType: TextInputType.number,
-                          hintText: '5000',
-                          formatters: [FilteringTextInputFormatter.digitsOnly],
-                          onChanged: (value) {
-                            orderController.convertExpensesToDouble(value);
-                            orderController.calculateTotalOrderAmount();
-                          },
-                        ),
-                      ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SectionTitle(title: 'نوع البيع'),
+                spacerHeight(),
+                Obx(
+                  () {
+                    return CustomRadioGroup(
+                      items: orderScreenController.buyingTypes.keys
+                          .map((buyingType) => RadioButtonItem(
+                                text: buyingType,
+                                selectionColor: UIColors.primary,
+                                selectedTextColor: UIColors.white,
+                                isSelected: orderScreenController
+                                    .buyingTypesSelection.value[buyingType]!,
+                                onTap: () {
+                                  orderScreenController
+                                      .setbuyingType(buyingType);
+                                  orderController.setBuyingType(
+                                      orderScreenController
+                                          .buyingTypes[buyingType]);
+                                },
+                              ))
+                          .toList(),
+                    );
+                  },
+                ),
+                spacerHeight(height: 22),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const SectionTitle(title: 'مصاريف الفاتورة'),
+                          spacerHeight(),
+                          CustomTextFormField(
+                            controller: orderController.expensesController,
+                            keyboardType: TextInputType.number,
+                            hintText: '5000',
+                            formatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            onChanged: (value) {
+                              orderController.convertExpensesToDouble(value);
+                              orderController.calculateTotalOrderAmount();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  spacerWidth(width: 20),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const SectionTitle(title: 'الحسم على الفاتورة'),
-                        spacerHeight(),
-                        Obx(() {
-                          return orderScreenController
-                                      .discountOrderTypesSelection
-                                      .value['رقم'] ==
-                                  true
-                              ? discountTextField('5000',
-                                  [FilteringTextInputFormatter.digitsOnly])
-                              : discountTextField('100%', [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  NumericalRangeFormatter(min: 0, max: 100)
-                                ]);
-                        }),
-                      ],
+                    spacerWidth(width: 20),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const SectionTitle(title: 'الحسم على الفاتورة'),
+                          spacerHeight(),
+                          Obx(() {
+                            return orderScreenController
+                                        .discountOrderTypesSelection
+                                        .value['رقم'] ==
+                                    true
+                                ? discountTextField('5000',
+                                    [FilteringTextInputFormatter.digitsOnly])
+                                : discountTextField('100%', [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    NumericalRangeFormatter(min: 0, max: 100)
+                                  ]);
+                          }),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              spacerHeight(height: 22),
-              const SectionTitle(title: 'حالة الطلب'),
-              spacerHeight(),
-              Obx(
-                () {
-                  return CustomRadioGroup(
-                    items: orderScreenController.orderStatus.keys
-                        .map((orderStatus) => RadioButtonItem(
-                              text: orderStatus,
-                              selectionColor: UIColors.primary,
-                              selectedTextColor: UIColors.white,
-                              isSelected: orderScreenController
-                                  .orderStatusSelection.value[orderStatus]!,
-                              onTap: () {
-                                orderScreenController
-                                    .setOrderStatus(orderStatus);
-                                orderController.setStatus(orderScreenController
-                                    .orderStatus[orderStatus]);
-                              },
-                            ))
-                        .toList(),
-                  );
-                },
-              ),
-              spacerHeight(height: 22),
-              const SectionTitle(title: 'ملاحظات'),
-              spacerHeight(),
-              CustomTextFormField(
-                controller: orderController.notesController,
-                maxLines: 5,
-                hintText: 'شب التوصيل: حسام',
-              ),
-            ],
+                  ],
+                ),
+                spacerHeight(height: 22),
+                const SectionTitle(title: 'حالة الطلب'),
+                spacerHeight(),
+                Obx(
+                  () {
+                    return CustomRadioGroup(
+                      items: orderScreenController.orderStatus.keys
+                          .map((orderStatus) => RadioButtonItem(
+                                text: orderStatus,
+                                selectionColor: UIColors.primary,
+                                selectedTextColor: UIColors.white,
+                                isSelected: orderScreenController
+                                    .orderStatusSelection.value[orderStatus]!,
+                                onTap: () {
+                                  orderScreenController
+                                      .setOrderStatus(orderStatus);
+                                  orderController.setStatus(
+                                      orderScreenController
+                                          .orderStatus[orderStatus]);
+                                },
+                              ))
+                          .toList(),
+                    );
+                  },
+                ),
+                spacerHeight(height: 22),
+                const SectionTitle(title: 'ملاحظات'),
+                spacerHeight(),
+                CustomTextFormField(
+                  controller: orderController.notesController,
+                  maxLines: 5,
+                  hintText: 'شب التوصيل: حسام',
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
+import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
@@ -285,7 +286,7 @@ class OrderScreenController extends GetxController {
         }
       }
       Get.back();
-      SnackBars.showSuccess('تم اختيار المنتجات');
+      //SnackBars.showSuccess('تم اختيار المنتجات');
     } else {
       SnackBars.showWarning('يرجى اختيار المنتجات');
     }
@@ -355,7 +356,10 @@ class OrderScreenController extends GetxController {
 
   void selectDate(date) async {
     if (date != null) {
-      orderController.setDate(date.toString().substring(0, 10));
+      //orderController.setDate(date.toString().substring(0, 10));
+      orderController.dateController.text = DateFormatter.getFormated(date);
+      print(orderController.dateController.text);
+      update();
     }
   }
 

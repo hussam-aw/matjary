@@ -11,13 +11,17 @@ import 'package:matjary/PresentationLayer/Widgets/Create/create_bottom_sheet.dar
 import 'package:matjary/PresentationLayer/Widgets/Home/customer_account_list_tile.dart';
 import 'package:matjary/PresentationLayer/Widgets/Home/invoice_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Home/order_icon_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/bottom_navigation_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
+import 'package:matjary/main.dart';
+
+import '../../Constants/get_routes.dart';
+import '../Widgets/Create/create_menu_item.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -39,174 +43,257 @@ class HomeScreen extends StatelessWidget {
           child: Obx(() {
             return homeController.isLoading.value
                 ? Center(child: loadingItem(width: 100, isWhite: true))
-                : Column(
-                    children: [
-                      Expanded(
-                        flex: 7,
-                        child: Padding(
-                          padding: const EdgeInsets.all(30),
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          width: Get.width,
+                          child: Text(
+                            "مرحباً بك : ${MyApp.appUser!.name}",
+                            style: UITextStyle.boldBody,
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             children: [
-                              Expanded(
-                                child: Container(
-                                  width: width,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 4),
-                                  decoration: const BoxDecoration(
-                                    color: UIColors.containerBackground,
-                                    borderRadius: radius19,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: Row(
-                                          children: [
-                                            const Icon(
-                                              FontAwesomeIcons.moneyCheckDollar,
-                                              color: UIColors.primary,
-                                              size: 50,
-                                            ),
-                                            spacerWidth(),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Text(
-                                                  'رصيد الصندوق',
-                                                  style:
-                                                      UITextStyle.normalSmall,
-                                                ),
-                                                spacerHeight(height: 10),
-                                                const Text(
-                                                  '1.500.000',
-                                                  style:
-                                                      UITextStyle.boldHeading,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            OrderIconButton(
-                                              onTap: () {},
-                                              title: 'استلام',
-                                              icon: FontAwesomeIcons
-                                                  .solidCircleDown,
-                                            ),
-                                            spacerWidth(width: 10),
-                                            OrderIconButton(
-                                              onTap: () {},
-                                              title: 'ارسال',
-                                              icon: FontAwesomeIcons
-                                                  .solidCircleUp,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              AcceptButton(
+                                text: "أنشئ فاتورة جديدة",
+                                onPressed: () {},
+                                backgroundColor: Colors.transparent,
+                                style: acceptButtonWithBorderStyle,
+                                textStyle: UITextStyle.boldBody,
+                              ),
+                              spacerHeight(
+                                height: 5,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(20),
+                                width: Get.width,
+                                child: Text(
+                                  "أو تابع حساباتك المالية ",
+                                  style: UITextStyle.normalSmall
+                                      .apply(color: Colors.white54),
+                                  textAlign: TextAlign.right,
                                 ),
                               ),
-                              spacerHeight(height: 20),
-                              Expanded(
-                                child: Obx(() {
-                                  return ordersController.isLoadingOrders.value
-                                      ? loadingItem()
-                                      : Row(
-                                          children: [
-                                            InovoiceContainer(
-                                              invoiceType: 'فواتير المشتريات',
-                                              invoiceAmount: ordersController
-                                                  .purchasesOrders.length
-                                                  .toString(),
-                                            ),
-                                            spacerWidth(width: 40),
-                                            InovoiceContainer(
-                                              invoiceType: 'فواتير المبيعات',
-                                              invoiceAmount: ordersController
-                                                  .salesOrders.length
-                                                  .toString(),
-                                              backgroundColor: UIColors.primary,
-                                            )
-                                          ],
-                                        );
-                                }),
-                              ),
+                              SizedBox(
+                                height: 80,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CreateMenuItem(
+                                      onTap: () {
+                                        //Get.toNamed(AppRoutes.createEditCategoryScreen);
+                                      },
+                                      icon: 'assets/icons/D_ORDERS_icon.png',
+                                      title: 'كشف حساب',
+                                      textColor: Colors.white54,
+                                    ),
+                                    CreateMenuItem(
+                                      onTap: () {
+                                        //Get.toNamed(AppRoutes.chooseAccountScreen);
+                                      },
+                                      icon: 'assets/icons/DExpense.png',
+                                      title: 'دفعة نقدية',
+                                      textColor: Colors.white54,
+                                    ),
+                                    CreateMenuItem(
+                                      onTap: () {
+                                        Get.toNamed(
+                                            AppRoutes.createStatementScreen);
+                                      },
+                                      icon: 'assets/icons/D_calc_icon.png',
+                                      title: 'قيد محاسبي',
+                                      textColor: Colors.white54,
+                                    ),
+                                    CreateMenuItem(
+                                      onTap: () {
+                                        //Get.toNamed(AppRoutes.chooseAccountScreen);
+                                      },
+                                      icon: 'assets/icons/D_ware_icon.png',
+                                      title: 'جرد بضاعة',
+                                      textColor: Colors.white54,
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 8,
-                        child: Container(
-                          width: Get.width,
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 35, right: 35),
-                          decoration: const BoxDecoration(
-                            color: UIColors.containerBackground,
-                            borderRadius: raduis32top,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'حسابات العملاء',
-                                style: UITextStyle.boldBody,
-                              ),
-                              spacerHeight(height: 10),
-                              Expanded(
-                                child: Obx(() {
-                                  return accountsController
-                                          .isLoadingClientAccounts.value
-                                      ? loadingItem()
-                                      : ListView.separated(
-                                          itemBuilder: (context, index) {
-                                            return CustomerAccountListTile(
-                                              customerName: accountsController
-                                                  .clientAccounts[index].name,
-                                              customerImage:
-                                                  'assets/images/user.png',
-                                              customerStatus: 'زبون',
-                                              customerBalance:
-                                                  accountsController
-                                                      .clientAccounts[index]
-                                                      .balance
-                                                      .toString(),
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) {
-                                            return spacerHeight(height: 25);
-                                          },
-                                          itemCount: accountsController
-                                                  .clientAccounts.isEmpty
-                                              ? 0
-                                              : accountsController
-                                                          .clientAccounts
-                                                          .length <
-                                                      5
-                                                  ? accountsController
-                                                      .clientAccounts.length
-                                                  : 5,
-                                        );
-                                }),
-                              ),
-                            ],
+                        SizedBox(
+                          height: 300,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: width,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 4),
+                                    decoration: const BoxDecoration(
+                                      color: UIColors.containerBackground,
+                                      borderRadius: radius19,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                FontAwesomeIcons
+                                                    .moneyCheckDollar,
+                                                color: UIColors.primary,
+                                                size: 50,
+                                              ),
+                                              spacerWidth(),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    'السيولة النقدية',
+                                                    style:
+                                                        UITextStyle.normalSmall,
+                                                  ),
+                                                  spacerHeight(height: 10),
+                                                  const Text(
+                                                    '1.500.000',
+                                                    style:
+                                                        UITextStyle.boldHeading,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              OrderIconButton(
+                                                onTap: () {},
+                                                title: 'استلام',
+                                                icon: FontAwesomeIcons
+                                                    .solidCircleDown,
+                                              ),
+                                              spacerWidth(width: 10),
+                                              OrderIconButton(
+                                                onTap: () {},
+                                                title: 'ارسال',
+                                                icon: FontAwesomeIcons
+                                                    .solidCircleUp,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                spacerHeight(height: 20),
+                                Expanded(
+                                  child: Obx(() {
+                                    return ordersController
+                                            .isLoadingOrders.value
+                                        ? loadingItem()
+                                        : Row(
+                                            children: [
+                                              InovoiceContainer(
+                                                invoiceType: 'فواتير المشتريات',
+                                                invoiceAmount: ordersController
+                                                    .purchasesOrders.length
+                                                    .toString(),
+                                              ),
+                                              spacerWidth(width: 40),
+                                              InovoiceContainer(
+                                                invoiceType: 'فواتير المبيعات',
+                                                invoiceAmount: ordersController
+                                                    .salesOrders.length
+                                                    .toString(),
+                                                backgroundColor:
+                                                    UIColors.primary,
+                                              )
+                                            ],
+                                          );
+                                  }),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 400,
+                          child: Container(
+                            width: Get.width,
+                            padding: const EdgeInsets.only(
+                                top: 30, left: 35, right: 35),
+                            decoration: const BoxDecoration(
+                              color: UIColors.containerBackground,
+                              borderRadius: raduis32top,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'حسابات العملاء',
+                                  style: UITextStyle.boldBody,
+                                ),
+                                spacerHeight(height: 10),
+                                Expanded(
+                                  child: Obx(() {
+                                    return accountsController
+                                            .isLoadingClientAccounts.value
+                                        ? loadingItem()
+                                        : ListView.separated(
+                                            itemBuilder: (context, index) {
+                                              return CustomerAccountListTile(
+                                                customerName: accountsController
+                                                    .clientAccounts[index].name,
+                                                customerImage:
+                                                    'assets/images/user.png',
+                                                customerStatus: 'زبون',
+                                                customerBalance:
+                                                    accountsController
+                                                        .clientAccounts[index]
+                                                        .balance
+                                                        .toString(),
+                                              );
+                                            },
+                                            separatorBuilder: (context, index) {
+                                              return spacerHeight(height: 25);
+                                            },
+                                            itemCount: accountsController
+                                                    .clientAccounts.isEmpty
+                                                ? 0
+                                                : accountsController
+                                                            .clientAccounts
+                                                            .length <
+                                                        5
+                                                    ? accountsController
+                                                        .clientAccounts.length
+                                                    : 5,
+                                          );
+                                  }),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   );
           }),
         ),
@@ -223,7 +310,7 @@ class HomeScreen extends StatelessWidget {
             color: UIColors.primary,
           ),
           onPressed: () {
-            Get.bottomSheet(CreateBottomSheet());
+            Get.bottomSheet(const CreateBottomSheet());
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
-import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/delivery_details.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_basic_information.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/saving_order.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/success_saving_order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/stepper_component.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class CreateEditOrderScreen extends StatelessWidget {
   CreateEditOrderScreen({super.key});
@@ -30,7 +17,7 @@ class CreateEditOrderScreen extends StatelessWidget {
   final orderController = Get.put(OrderController());
   final orderScreenController = Get.put(OrderScreenController());
 
-  Order? order = Get.arguments;
+  final Order? order = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +31,7 @@ class CreateEditOrderScreen extends StatelessWidget {
           return false;
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: UIColors.mainBackground,
           appBar: customAppBar(showingAppIcon: false),
           drawer: CustomDrawer(),
@@ -86,7 +74,7 @@ class CreateEditOrderScreen extends StatelessWidget {
                               orderScreenController.currentIndex.value,
                           index: 3,
                           isLast: true,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.check,
                             size: 28,
                             color: UIColors.mainIcon,
@@ -103,8 +91,13 @@ class CreateEditOrderScreen extends StatelessWidget {
                   controller: orderScreenController.pageController,
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return orderScreenController.getSelectedPage(
-                        orderScreenController.currentIndex.value);
+                    return SingleChildScrollView(
+                      child: SizedBox(
+                        height: Get.height - 100,
+                        child: orderScreenController.getSelectedPage(
+                            orderScreenController.currentIndex.value),
+                      ),
+                    );
                   },
                 )),
                 Obx(() {
