@@ -355,11 +355,14 @@ class OrderScreenController extends GetxController {
   }
 
   void selectDate(date) async {
+    print(date);
     if (date != null) {
       //orderController.setDate(date.toString().substring(0, 10));
       orderController.setDate(DateFormatter.getFormated(date));
       //print(orderController.dateController.text);
       //update();
+    } else {
+      orderController.setDate('');
     }
   }
 
@@ -411,6 +414,7 @@ class OrderScreenController extends GetxController {
 
   void initializeOrderScreen(Order? order) {
     selectedProducts.clear();
+    selectDate(null);
     if (order != null) {
       selectedOrderType =
           orderTypes.keys.firstWhere((type) => orderTypes[type] == order.type);
