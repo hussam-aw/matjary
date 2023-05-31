@@ -99,19 +99,19 @@ class HomeController extends GetxController {
   }
 
   void fetchData() async {
-    isLoading.value = true;
+    //isLoading.value = true;
     // await getAccounts();
     // await getBankAccounts();
     // await getClientAccounts();
+    ordersController.getOrders();
     await accountsController.getAccounts();
-    await accountsController.getClientAcoounts();
-    await accountsController.getBankAcoounts();
-    await getWares();
+    accountsController.getClientAcoounts();
+    accountsController.getBankAcoounts();
+    getWares();
     //await getOrders();
-    await ordersController.getOrders();
-    await getProducts();
-    await getCategories();
-    isLoading.value = false;
+    getProducts();
+    getCategories();
+    //isLoading.value = false;
   }
 
   @override
