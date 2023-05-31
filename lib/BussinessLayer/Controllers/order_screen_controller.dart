@@ -357,9 +357,9 @@ class OrderScreenController extends GetxController {
   void selectDate(date) async {
     if (date != null) {
       //orderController.setDate(date.toString().substring(0, 10));
-      orderController.dateController.text = DateFormatter.getFormated(date);
-      print(orderController.dateController.text);
-      update();
+      orderController.setDate(DateFormatter.getFormated(date));
+      //print(orderController.dateController.text);
+      //update();
     }
   }
 
@@ -415,6 +415,7 @@ class OrderScreenController extends GetxController {
       selectedOrderType =
           orderTypes.keys.firstWhere((type) => orderTypes[type] == order.type);
       setOrderType(selectedOrderType);
+      selectDate(DateTime.parse(order.updationDate));
       getProductsQuantitiesAndPrices(order.details);
       setProductsPrices();
       setProductsQuantities();
