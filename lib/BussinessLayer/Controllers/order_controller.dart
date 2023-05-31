@@ -170,7 +170,7 @@ class OrderController extends GetxController {
   void calculateTotalOrderAmount() {
     totalOrderAmount.value = 0.0;
     totalOrderAmount.value = totalProductsPrice.value - discountAmount.value;
-    setRemainingAmount(totalOrderAmount.value);
+    setRemainingAmount(totalProductsPrice.value);
   }
 
   void refreshOrderCalculations() {
@@ -223,8 +223,8 @@ class OrderController extends GetxController {
 
   void calculateRemainingAmount(String paidAmount) {
     remainingAmount.value = paidAmount.isNotEmpty
-        ? totalOrderAmount.value - double.parse(paidAmount)
-        : totalOrderAmount.value;
+        ? totalProductsPrice.value - double.parse(paidAmount)
+        : totalProductsPrice.value;
     setRemainingAmount(remainingAmount.value);
   }
 
@@ -270,7 +270,6 @@ class OrderController extends GetxController {
     int? marketerId = getMarketerId();
     String? discountMarketerType = getMarketerDiscountType();
     num? discountMarketer = getMarketerDiscount(discountMarketerType);
-    print(date);
     num paidAmount = getPaidAmount();
     getOrderProductsMap();
     loading.value = true;
@@ -307,6 +306,7 @@ class OrderController extends GetxController {
   }
 
   Future<void> updateOrder(int id) async {
+    String? date = dateController.text;
     String? discountOrderType = getDiscountOrderType();
     num? discountOrder = getDiscountOrder(discountOrderType);
     int? marketerId = getMarketerId();
@@ -334,7 +334,8 @@ class OrderController extends GetxController {
         discountOrderType,
         orderProducts,
         discountMarketerType,
-        discountMarketer);
+        discountMarketer,
+        date);
     loading.value = false;
     if (orderUpdationStatus == true) {
       orderSaving = true;
@@ -418,7 +419,6 @@ class OrderController extends GetxController {
     setBankAccount(null);
     setWare(null);
     setMarketerAccount(null);
-    setDate('');
     orderProductsQuantities.clear();
     orderProductsPrices.clear();
     selectedProducts.clear();
@@ -449,7 +449,6 @@ class OrderController extends GetxController {
       setWare(
           homeController.wares.firstWhereOrNull((w) => w.id == order.wareId));
       setMarketerAccount(accountsController.getAccountFromId(order.marketerId));
-      //setDate(order.creationDate);
       calculateTotalProductsPrice();
       setBuyingType(order.sellType);
       setexpenses(order.expenses);
