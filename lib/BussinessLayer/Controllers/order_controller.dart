@@ -189,7 +189,7 @@ class OrderController extends GetxController {
   }
 
   void setMarketerDiscountBasedOnType(discount) {
-    if (discountType == 'percent') {
+    if (marketerDiscountType == 'percent') {
       marketerDiscountPercent.value = marketerDiscountController.text.isNotEmpty
           ? double.parse(marketerDiscountController.text)
           : 0.0;
@@ -459,7 +459,7 @@ class OrderController extends GetxController {
       setNotes(order.notes);
       setMarketerDiscountType(order.marketerFeeType);
       setMarketerDiscount(order.marketerFee);
-      setMarketerDiscountBasedOnType(order.discount);
+      setMarketerDiscountBasedOnType(order.marketerFee);
       calculateTotalOrderAmount();
       setPaidAmount(order.paidUp);
       setRemainingAmount(order.restOfTheBill);
