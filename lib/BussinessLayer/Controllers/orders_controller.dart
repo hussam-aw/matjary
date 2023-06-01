@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
@@ -13,7 +15,7 @@ class OrdersController extends GetxController {
   List<Order> purchasesOrders = [];
   List<Order> salesOrders = [];
   List<Order> currentOrders = [];
-  List<Order> filteredOrder = [];
+  List<Order> filteredOrders = [];
   String currentOrderFilterType = 'الكل';
 
   List<String> orderFilterTypes = [
@@ -48,6 +50,7 @@ class OrdersController extends GetxController {
     await getPurchasesOrders();
     await getSalesOrders();
     isLoadingOrders.value = false;
+    filteredOrders = orders;
   }
 
   Future<void> getPurchasesOrders() async {
@@ -89,36 +92,54 @@ class OrdersController extends GetxController {
           .where((order) => order.type == counterOrderTypes[type])
           .toList();
     }
+    filteredOrders = currentOrders;
     isLoadingOrders.value = false;
   }
 
   List<Order> getOrdersForAccounts(accounts) {
-    filteredOrder = [];
+    List<Order> orders = [];
     for (Account account in accounts) {
       for (Order order in currentOrders) {
         if (order.customerId == account.id) {
-          filteredOrder.add(order);
+          orders.add(order);
         }
       }
     }
-    return filteredOrder;
+    return orders;
   }
 
-  Future<void> getOrdersLast() async {
+  Future<void> getFilteredOrders(filter) async {
     isLoadingOrders.value = true;
-    currentOrders = await ordersRepo.getOrdersLastDay();
+    currentOrders = filteredOrders;
+    var currentDate = DateTime.now();
+    switch (filter) {
+      case 'last_day':
+        currentOrders = filteredOrders
+            .where(
+              (order) =>
+                  currentDate.day == order.creationDate.day &&
+                  currentDate.month == order.creationDate.month &&
+                  currentDate.year == order.creationDate.year,
+            )
+            .toList();
+        break;
+      case 'last_week':
+        var cuurrentWeekStart = currentDate.subtract(const Duration(days: 7));
+        currentOrders = filteredOrders
+            .where((order) =>
+                order.creationDate.isAfter(cuurrentWeekStart) &&
+                order.creationDate.isBefore(currentDate))
+            .toList();
+        break;
+      case 'last_month':
+        currentOrders = filteredOrders
+            .where((order) =>
+                currentDate.month == order.creationDate.month &&
+                currentDate.year == order.creationDate.year)
+            .toList();
+        break;
+    }
     isLoadingOrders.value = false;
-  }
-
-  Future<void> getOrdersWeek() async {
-    isLoadingOrders.value = true;
-    currentOrders = await ordersRepo.getOrdersLastWeek();
-    isLoadingOrders.value = false;
-  }
-
-  Future<void> getOrdersMonth() async {
-    isLoadingOrders.value = true;
-    currentOrders = await ordersRepo.getOrdersLastMonth();
-    isLoadingOrders.value = false;
+    Get.back();
   }
 }
