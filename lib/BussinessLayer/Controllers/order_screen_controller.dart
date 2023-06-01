@@ -419,7 +419,7 @@ class OrderScreenController extends GetxController {
       selectedOrderType =
           orderTypes.keys.firstWhere((type) => orderTypes[type] == order.type);
       setOrderType(selectedOrderType);
-      selectDate(DateTime.parse(order.updationDate));
+      selectDate(order.updationDate);
       getProductsQuantitiesAndPrices(order.details);
       setProductsPrices();
       setProductsQuantities();
