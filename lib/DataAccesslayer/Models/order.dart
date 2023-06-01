@@ -19,8 +19,8 @@ class Order {
   final String marketerFeeType;
   final num? marketerFee;
   final List<Map<String, dynamic>> details;
-  final String creationDate;
-  final String updationDate;
+  final DateTime creationDate;
+  final DateTime updationDate;
   Order({
     required this.id,
     required this.total,
@@ -88,8 +88,8 @@ class Order {
       marketerFeeType: map["marketer_fee_type"] ?? '',
       marketerFee: map['marketer_fee'] ?? 0.0,
       details: getDetailsList(map["details"]),
-      creationDate: map["created_at"],
-      updationDate: map["updated_at"],
+      creationDate: getDate(map["created_at"]),
+      updationDate: getDate(map["updated_at"]),
     );
   }
 
@@ -101,8 +101,11 @@ class Order {
     return result;
   }
 
-  String getDate(String date) {
-    DateTime dateTime = DateTime.parse(date);
-    return "${dateTime.year}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.day}";
+  String getDateString(DateTime date) {
+    return "${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day}";
+  }
+
+  static DateTime getDate(String date) {
+    return DateTime.parse(date);
   }
 }
