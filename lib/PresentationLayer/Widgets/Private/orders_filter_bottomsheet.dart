@@ -24,7 +24,8 @@ class OrdersFilterBottomSheet extends StatelessWidget {
       child: Column(
         children: [
           InkWell(
-            onTap: () async => await ordersController.getOrdersLast(),
+            onTap: () async =>
+                await ordersController.getFilteredOrders('last_day'),
             child: Text(
               'فواتير اليوم',
               style: UITextStyle.normalHeading.copyWith(
@@ -34,7 +35,8 @@ class OrdersFilterBottomSheet extends StatelessWidget {
           ),
           spacerHeight(height: 22),
           InkWell(
-            onTap: () async => await ordersController.getOrdersWeek(),
+            onTap: () async =>
+                await ordersController.getFilteredOrders('last_week'),
             child: Text(
               'فواتير الأسبوع',
               style: UITextStyle.normalHeading.copyWith(
@@ -44,7 +46,8 @@ class OrdersFilterBottomSheet extends StatelessWidget {
           ),
           spacerHeight(height: 22),
           InkWell(
-            onTap: () async => await ordersController.getOrdersMonth(),
+            onTap: () async =>
+                await ordersController.getFilteredOrders('last_month'),
             child: Text(
               'فواتير آخر شهر',
               style: UITextStyle.normalHeading.copyWith(
