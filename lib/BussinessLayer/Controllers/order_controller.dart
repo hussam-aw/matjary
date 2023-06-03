@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
@@ -55,6 +56,7 @@ class OrderController extends GetxController {
   HomeController homeController = Get.find<HomeController>();
   AccountsController accountsController = Get.find<AccountsController>();
   OrdersController ordersController = Get.find<OrdersController>();
+  WaresController waresController = Get.find<WaresController>();
   BoxClient boxClient = BoxClient();
 
   void getOrderProductsMap() {
@@ -384,14 +386,14 @@ class OrderController extends GetxController {
       bank = accountsController.bankAccounts.isNotEmpty
           ? accountsController.bankAccounts[0]
           : null;
-      ware = homeController.wares.isNotEmpty ? homeController.wares[0] : null;
+      ware = waresController.wares.isNotEmpty ? waresController.wares[0] : null;
       marketer = accountsController.marketerAccounts.isNotEmpty
           ? accountsController.marketerAccounts[0]
           : null;
     } else {
       counterParty = accountsController.getAccountFromId(counterPartyId);
       bank = accountsController.getAccountFromId(bankId);
-      ware = homeController.wares.firstWhereOrNull((w) => w.id == wareId);
+      ware = waresController.getWareFromId(wareId);
       marketer = accountsController.getAccountFromId(marketerId);
     }
     setCounterPartyAccount(counterParty);
@@ -446,8 +448,7 @@ class OrderController extends GetxController {
       setCounterPartyAccount(
           accountsController.getAccountFromId(order.customerId));
       setBankAccount(accountsController.getAccountFromId(order.bankId));
-      setWare(
-          homeController.wares.firstWhereOrNull((w) => w.id == order.wareId));
+      setWare(waresController.getWareFromId(order.wareId));
       setMarketerAccount(accountsController.getAccountFromId(order.marketerId));
       calculateTotalProductsPrice();
       setBuyingType(order.sellType);

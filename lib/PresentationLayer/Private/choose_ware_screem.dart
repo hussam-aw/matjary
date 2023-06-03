@@ -4,6 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/ware_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
@@ -20,7 +21,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class ChooseWareScreen extends StatelessWidget {
   ChooseWareScreen({super.key});
 
-  final HomeController homeController = Get.find<HomeController>();
+  final WaresController waresController = Get.find<WaresController>();
   final SearchController searchController = Get.put(SearchController());
   late var controller;
 
@@ -58,7 +59,7 @@ class ChooseWareScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = homeController.wares;
+    searchController.list = waresController.wares;
     print(screenMode);
     if (screenMode == null) {
       controller = Get.put(WareController());
@@ -86,18 +87,18 @@ class ChooseWareScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => homeController.isLoadingWares.value
+                    () => waresController.isLoadingWares.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
                         : RefreshIndicator(
                             onRefresh: () async =>
-                                await homeController.getWares(),
+                                await waresController.getWares(),
                             child: GetBuilder(
                               init: searchController,
                               builder: (context) {
                                 return searchController.searchText.isEmpty
-                                    ? buildWareList(homeController.wares)
+                                    ? buildWareList(waresController.wares)
                                     : Obx(
                                         () {
                                           return searchController

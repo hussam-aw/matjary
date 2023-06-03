@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 
 import '../../DataAccesslayer/Models/ware.dart';
 import '../../DataAccesslayer/Repositories/ware_repo.dart';
@@ -13,6 +14,7 @@ class WareController extends GetxController {
   List<Ware> wares = [];
   var loading = false.obs;
   HomeController homeController = Get.find<HomeController>();
+  WaresController waresController = Get.find<WaresController>();
 
   void setWareDetails(Ware? ware) {
     if (ware != null) {
@@ -29,7 +31,7 @@ class WareController extends GetxController {
     if (ware == null) {
       SnackBars.showSuccess('حدث خطأ أثناء الإضافة');
     } else {
-      homeController.getWares();
+      waresController.getWares();
       SnackBars.showSuccess('تمت إضافة مستودع جديد');
     }
   }
@@ -39,7 +41,7 @@ class WareController extends GetxController {
     var account = await wareRepo.updateWare(id, nameOfWareController.text);
     loading.value = false;
     if (account != null) {
-      homeController.getWares();
+      waresController.getWares();
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
       SnackBars.showError('فشل التعديل');
@@ -51,7 +53,7 @@ class WareController extends GetxController {
     var ware = await wareRepo.deleteWare(id);
     loading.value = false;
     if (ware != null) {
-      homeController.getWares();
+      waresController.getWares();
       SnackBars.showSuccess('تم الحذف بنجاح');
     } else {
       SnackBars.showError('فشل الحذف');
