@@ -20,14 +20,14 @@ class OrdersController extends GetxController {
 
   List<String> orderFilterTypes = [
     'الكل',
-    'بيع مفرق',
     'بيع للزبائن',
+    'بيع مفرق',
     'مشتريات',
     'مردود بيع',
-    'مردود شراء'
+    'مردود شراء',
   ];
 
-  Map<String, String> counterOrderTypes = {
+  Map<String, String> orderTypes = {
     'بيع للزبائن': 'sell_to_customers',
     'بيع مفرق': 'retail_sale',
     'مشتريات': 'purchases',
@@ -43,6 +43,22 @@ class OrdersController extends GetxController {
     'مردود بيع': false,
     'مردود شراء': false,
   }.obs;
+
+  Map<String, String> counterOrderTypes = {
+    'sell_to_customers': 'بيع للزبائن',
+    'retail_sale': 'بيع مفرق',
+    'purchases': 'مشتريات',
+    "sales_return": 'مردود بيع',
+    'purchase_return': 'مردود شراء',
+  };
+
+  Map<int, String> counterOrderStatus = {
+    4: 'تامة',
+    0: 'جاري التجهيز',
+    1: 'تم التسديد',
+    2: 'في شركة الشحن',
+    3: 'قيد التوصيل',
+  };
 
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
@@ -88,9 +104,8 @@ class OrdersController extends GetxController {
     if (type == 'الكل') {
       currentOrders = orders;
     } else {
-      currentOrders = orders
-          .where((order) => order.type == counterOrderTypes[type])
-          .toList();
+      currentOrders =
+          orders.where((order) => order.type == orderTypes[type]).toList();
     }
     filteredOrders = currentOrders;
     isLoadingOrders.value = false;
