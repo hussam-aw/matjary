@@ -350,6 +350,18 @@ class OrderController extends GetxController {
     }
   }
 
+  Future<void> deleteOrder(id) async {
+    loading.value = true;
+    var order = await orderRepo.deleteOrder(id);
+    loading.value = false;
+    if (order != null) {
+      await ordersController.getOrders();
+      SnackBars.showSuccess('تم الحذف بنجاح');
+    } else {
+      SnackBars.showError('فشل الحذف');
+    }
+  }
+
   // Future<void> deleteOrder(id) async {
   //   loading.value = true;
   //   var order = await orderRepo.deleteOrder(id);
