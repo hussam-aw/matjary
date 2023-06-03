@@ -14,6 +14,7 @@ class PageTitle extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Text(
           title,
+          overflow: TextOverflow.ellipsis,
           style: UITextStyle.boldHeading,
         ),
       ),
