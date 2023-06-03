@@ -14,20 +14,22 @@ class OrderInfoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          itemTitle,
-          overflow: TextOverflow.ellipsis,
-          style: UITextStyle.normalBody,
-        ),
-        spacerHeight(),
-        Text(
-          itemText,
-          overflow: TextOverflow.ellipsis,
-          style: UITextStyle.normalBody,
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            itemTitle,
+            overflow: TextOverflow.ellipsis,
+            style: UITextStyle.normalBody,
+          ),
+          spacerHeight(),
+          Text(
+            itemText,
+            overflow: TextOverflow.ellipsis,
+            style: UITextStyle.normalBody,
+          ),
+        ],
+      ),
     );
   }
 }

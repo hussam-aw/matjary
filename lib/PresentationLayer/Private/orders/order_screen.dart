@@ -46,7 +46,8 @@ class OrderScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    PageTitle(title: 'فاتورة رقم  ${order.id}#'),
+                    Expanded(
+                        child: PageTitle(title: 'فاتورة رقم  ${order.id}#')),
                     Row(
                       children: [
                         InkWell(
@@ -192,7 +193,10 @@ class OrderScreen extends StatelessWidget {
                         ),
                         spacerHeight(height: 22),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.orderDetailsScreen,
+                                arguments: order);
+                          },
                           style: acceptButtonStyle,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
