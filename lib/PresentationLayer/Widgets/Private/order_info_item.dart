@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
-class OrderDetailsItem extends StatelessWidget {
-  const OrderDetailsItem({
+class OrderInfoItem extends StatelessWidget {
+  const OrderInfoItem({
     super.key,
     required this.itemTitle,
     required this.itemText,

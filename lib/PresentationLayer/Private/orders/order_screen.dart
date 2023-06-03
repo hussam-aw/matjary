@@ -11,7 +11,7 @@ import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_amount_container.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/order_datails_item.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/order_info_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
@@ -114,13 +114,13 @@ class OrderScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'النوع',
                                         itemText: ordersController
                                             .counterOrderTypes[order.type]
                                             .toString(),
                                       ),
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'الطرف المقابل',
                                         itemText: accountsController
                                             .getAccountName(order.customerId),
@@ -132,12 +132,12 @@ class OrderScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'الصندوق المرتبط',
                                         itemText: accountsController
                                             .getAccountName(order.bankId),
                                       ),
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'المستودع المرتبط',
                                         itemText: waresController
                                             .getWareName(order.wareId),
@@ -149,13 +149,13 @@ class OrderScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'حالة الفاتورة',
                                         itemText: ordersController
                                             .counterOrderStatus[order.status]
                                             .toString(),
                                       ),
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'مرتبطة بالمسوق',
                                         itemText: order.marketerId != null
                                             ? accountsController.getAccountName(
@@ -169,12 +169,12 @@ class OrderScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'تاريخ الانشاء',
                                         itemText: order
                                             .getDateString(order.creationDate),
                                       ),
-                                      OrderDetailsItem(
+                                      OrderInfoItem(
                                         itemTitle: 'تاريخ آخر تعديل',
                                         itemText: DateUtils.isSameDay(
                                                 order.creationDate,
