@@ -35,7 +35,7 @@ class CreateEditClientScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SectionTitle(title: 'المعلومات الأساسية'),
+                            SectionTitle(title: 'المعلومات الأساسية'),
                             spacerHeight(),
                             CustomTextFormField(
                               controller: TextEditingController(),
@@ -66,7 +66,7 @@ class CreateEditClientScreen extends StatelessWidget {
                               hintText: 'العنوان',
                             ),
                             spacerHeight(height: 20),
-                            const SectionTitle(title: 'نوع الحساب'),
+                            SectionTitle(title: 'نوع الحساب'),
                             spacerHeight(),
                             CustomDropdownFormField(
                               items: const [

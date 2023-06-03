@@ -37,7 +37,7 @@ class CreateEditCategoryScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SectionTitle(title: 'المعلومات الأساسية'),
+                        SectionTitle(title: 'المعلومات الأساسية'),
                         spacerHeight(),
                         CustomTextFormField(
                           controller: categoryController.nameController,

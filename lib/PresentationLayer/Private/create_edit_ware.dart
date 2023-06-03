@@ -40,7 +40,7 @@ class CreateEditWareScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SectionTitle(title: 'المعلومات الأساسية'),
+                          SectionTitle(title: 'المعلومات الأساسية'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller: wareController.nameOfWareController,

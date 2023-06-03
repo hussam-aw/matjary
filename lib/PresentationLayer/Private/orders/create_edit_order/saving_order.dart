@@ -72,7 +72,7 @@ class SavingOrder extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SectionTitle(title: 'نسبة المسوق ( البائع )'),
+                    SectionTitle(title: 'نسبة المسوق ( البائع )'),
                     spacerHeight(),
                     Obx(() {
                       return orderScreenController

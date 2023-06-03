@@ -89,7 +89,7 @@ class CreateStatementScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SectionTitle(title: 'من الحساب'),
+                          SectionTitle(title: 'من الحساب'),
                           spacerHeight(),
                           Row(
                             children: [
@@ -125,7 +125,7 @@ class CreateStatementScreen extends StatelessWidget {
                             ],
                           ),
                           spacerHeight(height: 20),
-                          const SectionTitle(title: 'إلى الحساب'),
+                          SectionTitle(title: 'إلى الحساب'),
                           spacerHeight(),
                           Row(
                             children: [
@@ -160,7 +160,7 @@ class CreateStatementScreen extends StatelessWidget {
                             ],
                           ),
                           spacerHeight(height: 20),
-                          const SectionTitle(title: 'مبلغ القيد'),
+                          SectionTitle(title: 'مبلغ القيد'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller:
@@ -174,7 +174,7 @@ class CreateStatementScreen extends StatelessWidget {
                             },
                           ),
                           spacerHeight(height: 20),
-                          const SectionTitle(title: 'تاريخ القيد'),
+                          SectionTitle(title: 'تاريخ القيد'),
                           spacerHeight(),
                           TextFormField(
                             readOnly: true,
@@ -200,7 +200,7 @@ class CreateStatementScreen extends StatelessWidget {
                             )),
                           ),
                           spacerHeight(height: 20),
-                          const SectionTitle(title: 'البيان'),
+                          SectionTitle(title: 'البيان'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller:

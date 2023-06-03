@@ -49,7 +49,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SectionTitle(title: 'المعلومات الأساسية'),
+                              SectionTitle(title: 'المعلومات الأساسية'),
                               spacerHeight(),
                               CustomTextFormField(
                                 controller: accountController.nameController,
@@ -63,7 +63,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                                 hintText: 'المبلغ الإبتدائي ( الجرد الأولي )',
                               ),
                               spacerHeight(height: 20),
-                              const SectionTitle(title: 'نمط الحساب'),
+                              SectionTitle(title: 'نمط الحساب'),
                               spacerHeight(),
                               GetBuilder(
                                 init: accountScreenController,
@@ -95,7 +95,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                                 },
                               ),
                               spacerHeight(height: 20),
-                              const SectionTitle(title: 'نوع الحساب'),
+                              SectionTitle(title: 'نوع الحساب'),
                               spacerHeight(),
                               CustomDropdownFormField(
                                 value: accountController.style,
