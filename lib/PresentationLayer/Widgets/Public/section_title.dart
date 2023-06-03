@@ -19,7 +19,7 @@ class SectionTitle extends StatelessWidget {
       child: Text(
         title,
         style: UITextStyle.normalBody.copyWith(
-          color: UIColors.normalText,
+          color: titleColor,
         ),
       ),
     );
