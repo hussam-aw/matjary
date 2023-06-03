@@ -95,8 +95,10 @@ class Order {
 
   static List<Map<String, dynamic>> getDetailsList(details) {
     List<Map<String, dynamic>> result = [];
-    for (int i = 0; i < details.length; i++) {
-      result.add(details[i] as Map<String, dynamic>);
+    if (details != null) {
+      for (int i = 0; i < details.length; i++) {
+        result.add(details[i] as Map<String, dynamic>);
+      }
     }
     return result;
   }
