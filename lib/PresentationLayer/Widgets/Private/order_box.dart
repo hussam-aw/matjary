@@ -88,7 +88,12 @@ class OrderBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.orderScreen,
+                      arguments: order,
+                    );
+                  },
                   child: const Icon(
                     FontAwesomeIcons.eye,
                     color: UIColors.primary,
