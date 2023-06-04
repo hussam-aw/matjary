@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
@@ -23,7 +24,7 @@ import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 class SelectProductsScreen extends StatelessWidget {
   SelectProductsScreen({super.key});
 
-  final homeController = Get.find<HomeController>();
+  final productsController = Get.find<ProductsController>();
   final searchController = Get.put(SearchController());
   final orderScreenController = Get.find<OrderScreenController>();
 
@@ -31,8 +32,8 @@ class SelectProductsScreen extends StatelessWidget {
     return ListView.separated(
       itemBuilder: (context, index) {
         return SelectionOrderProductBox(
-          productId: homeController.products[index].id,
-          productName: homeController.products[index].name,
+          productId: productsController.products[index].id,
+          productName: productsController.products[index].name,
         );
       },
       separatorBuilder: (context, index) {
@@ -44,7 +45,7 @@ class SelectProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = homeController.products;
+    searchController.list = productsController.products;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -97,7 +98,7 @@ class SelectProductsScreen extends StatelessWidget {
                     init: searchController,
                     builder: (context) {
                       return searchController.searchText.isEmpty
-                          ? buildProductsList(homeController.products)
+                          ? buildProductsList(productsController.products)
                           : Obx(() {
                               return searchController.searchLoading.value
                                   ? Center(

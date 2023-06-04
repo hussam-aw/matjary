@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -20,7 +21,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class ChooseProductScreen extends StatelessWidget {
   ChooseProductScreen({super.key});
 
-  final HomeController homeController = Get.find<HomeController>();
+  final ProductsController productsController = Get.find<ProductsController>();
   final ProductController productController = Get.put(ProductController());
   final SearchController searchController = Get.put(SearchController());
   late var controller;
@@ -60,7 +61,7 @@ class ChooseProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = homeController.products;
+    searchController.list = productsController.products;
     if (screenMode == null) {
       controller = Get.put(ProductController());
     } else {
@@ -89,19 +90,19 @@ class ChooseProductScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => homeController.isLoadingProducts.value
+                    () => productsController.isLoadingProducts.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
                         : RefreshIndicator(
                             onRefresh: () async =>
-                                await homeController.getProducts(),
+                                await productsController.getProducts(),
                             child: GetBuilder(
                                 init: searchController,
                                 builder: (context) {
                                   return searchController.searchText.isEmpty
                                       ? buildProductsList(
-                                          homeController.products)
+                                          productsController.products)
                                       : Obx(() {
                                           return searchController
                                                   .searchLoading.value

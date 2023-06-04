@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
@@ -21,7 +22,8 @@ class OrderScreenController extends GetxController {
   TextEditingController productQuantityController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   RxList<Product> selectedProducts = <Product>[].obs;
-  HomeController homeController = Get.find<HomeController>();
+  //HomeController homeController = Get.find<HomeController>();
+  ProductsController productsController = Get.find<ProductsController>();
   OrderController orderController = Get.find<OrderController>();
   RxBool finishSavingOrder = false.obs;
 
@@ -221,7 +223,7 @@ class OrderScreenController extends GetxController {
   void getProductsQuantitiesAndPrices(
       List<Map<String, dynamic>> orderProducts) {
     for (Map<String, dynamic> product in orderProducts) {
-      selectedProducts.add(homeController.products
+      selectedProducts.add(productsController.products
           .firstWhere((p) => p.id == product["product_id"]));
       selectedProductsQuantities.value[product["product_id"]] =
           product["quantity"];
@@ -278,7 +280,7 @@ class OrderScreenController extends GetxController {
 
   void getSelectedProducts() {
     if (selectedProductsQuantities.isNotEmpty) {
-      for (Product product in homeController.products) {
+      for (Product product in productsController.products) {
         if (selectedProductsQuantities[product.id] != null) {
           selectedProducts.add(product);
           selectedProductPrices[product.id] =

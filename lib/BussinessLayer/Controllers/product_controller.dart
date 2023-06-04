@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/image_picker_helper.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
@@ -25,6 +26,7 @@ class ProductController extends GetxController {
   List<String> selectedImages = [];
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
   var homeController = Get.find<HomeController>();
+  ProductsController productsController = Get.find<ProductsController>();
   var loading = false.obs;
 
   String convertAffectedExchangeStateToString(String state) {
@@ -105,7 +107,7 @@ class ProductController extends GetxController {
       );
       loading.value = false;
       if (product != null) {
-        homeController.getProducts();
+        productsController.getProducts();
         SnackBars.showSuccess('تم انشاء المنتج');
       } else {
         SnackBars.showError('فشل انشاء المنتج');
@@ -141,7 +143,7 @@ class ProductController extends GetxController {
     );
     loading.value = false;
     if (product != null) {
-      homeController.getProducts();
+      productsController.getProducts();
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
       SnackBars.showError('فشل التعديل');
@@ -153,7 +155,7 @@ class ProductController extends GetxController {
     var product = await prdouctsRepo.deleteProduct(id);
     loading.value = false;
     if (product != null) {
-      homeController.getProducts();
+      productsController.getProducts();
       SnackBars.showSuccess('تم الحذف بنجاح');
     } else {
       SnackBars.showError('فشل الحذف');
