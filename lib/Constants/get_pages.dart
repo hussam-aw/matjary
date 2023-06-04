@@ -3,6 +3,7 @@ import 'package:matjary/BussinessLayer/Bindings/home_binding.dart';
 import 'package:matjary/PresentationLayer/Auth/login_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/pin_code_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
+import 'package:matjary/PresentationLayer/Private/create_edit_payment_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
@@ -72,4 +73,7 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: AppRoutes.ordersScreen, page: () => OrdersScreen()),
   GetPage(name: AppRoutes.orderScreen, page: () => OrderScreen()),
   GetPage(name: AppRoutes.orderDetailsScreen, page: () => OrderDetailsScreen()),
+  GetPage(
+      name: AppRoutes.createEditPaymentScreen,
+      page: () => CreateEditPaymentScreen()),
 ];
