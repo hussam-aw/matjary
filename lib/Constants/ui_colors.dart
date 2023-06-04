@@ -17,6 +17,7 @@ class UIColors {
   static const titleNoteIcon = Color.fromRGBO(255, 255, 255, 0.5);
   // Border Colors
   static const circleAvatarBorder = Color(0xff707070);
+  static const containerBorder = Color(0xff707070);
   // Background Colors
   static const mainBackground = Color.fromARGB(255, 38, 39, 82);
   static const textFieldBackground = Color(0xff3D3E65);
