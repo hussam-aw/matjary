@@ -59,6 +59,14 @@ class OrderController extends GetxController {
   WaresController waresController = Get.find<WaresController>();
   BoxClient boxClient = BoxClient();
 
+  int getOrderProductsQuantitiesCount(details) {
+    int count = 0;
+    for (var product in details) {
+      count += product['quantity'] as int;
+    }
+    return count;
+  }
+
   void getOrderProductsMap() {
     for (Product product in selectedProducts) {
       orderProducts.add({
