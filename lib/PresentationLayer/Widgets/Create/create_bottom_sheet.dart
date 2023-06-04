@@ -52,7 +52,7 @@ class CreateBottomSheet extends StatelessWidget {
                   ),
                   CreateMenuItem(
                     onTap: () {
-                      //Get.toNamed(AppRoutes.chooseAccountScreen);
+                      Get.toNamed(AppRoutes.createEditPaymentScreen);
                     },
                     icon: 'assets/icons/DExpense.png',
                     title: 'دفعة نقدية',
