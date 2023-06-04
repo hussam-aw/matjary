@@ -6,17 +6,19 @@ class CustomRadioGroup extends StatelessWidget {
   CustomRadioGroup({
     super.key,
     required this.items,
+    this.height = 45,
     this.scrollDirection = Axis.horizontal,
   });
 
-  final List<RadioButtonItem> items;
+  final List<Widget> items;
+  final double height;
   final Axis scrollDirection;
 
   @override
   Widget build(BuildContext context) {
     return items.length <= 2
         ? Container(
-            height: 45,
+            height: height,
             child: scrollDirection == Axis.horizontal
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
