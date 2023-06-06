@@ -28,4 +28,6 @@ class AppRoutes {
   static const orderDetailsScreen =
       '/home/ordersScreen/orderScreen/orderDetailsScreen';
   static const createEditPaymentScreen = '/home/createEditPaymentScreen';
+  static const paymentsScreen = '/home/paymentsScreen';
+  static const wareReportScreen = '/home/wareReportScreen';
 }
