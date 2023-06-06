@@ -60,7 +60,9 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       AcceptButton(
                         text: "أنشئ فاتورة جديدة",
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.createEditOrderScreen);
+                        },
                         backgroundColor: Colors.transparent,
                         style: acceptButtonWithBorderStyle,
                         textStyle: UITextStyle.boldBody,
@@ -93,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             CreateMenuItem(
                               onTap: () {
-                                //Get.toNamed(AppRoutes.chooseAccountScreen);
+                                Get.toNamed(AppRoutes.createEditPaymentScreen);
                               },
                               icon: 'assets/icons/DExpense.png',
                               title: 'دفعة نقدية',
@@ -109,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             CreateMenuItem(
                               onTap: () {
-                                //Get.toNamed(AppRoutes.chooseAccountScreen);
+                                Get.toNamed(AppRoutes.wareReportScreen);
                               },
                               icon: 'assets/icons/D_ware_icon.png',
                               title: 'جرد بضاعة',
