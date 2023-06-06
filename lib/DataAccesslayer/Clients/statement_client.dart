@@ -5,6 +5,16 @@ import 'package:matjary/Constants/api_links.dart';
 import 'package:matjary/main.dart';
 
 class StatementClinet {
+  Future<dynamic> getStatements(userId) async {
+    var response = await http.get(Uri.parse("$baseUrl$statementLink/useId"));
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return "";
+    }
+  }
+
   Future<dynamic> createStatement(
       firstSideId, secondSideId, userId, statement, amount, date) async {
     var response = await http.post(Uri.parse('$baseUrl$statementLink'),
