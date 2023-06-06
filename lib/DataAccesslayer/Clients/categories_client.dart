@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
+import 'package:matjary/main.dart';
 
 class CategoriesClient {
   Future<dynamic> getCategories() async {
@@ -18,7 +19,7 @@ class CategoriesClient {
     var response = await http.post(Uri.parse("$baseUrl$categoryLink"),
         body: jsonEncode(<String, dynamic>{
           "name": name,
-          "user_id": userId,
+          "user_id": MyApp.appUser!.id,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

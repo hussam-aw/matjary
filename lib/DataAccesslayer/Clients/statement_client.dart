@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
+import 'package:matjary/main.dart';
 
 class StatementClinet {
   Future<dynamic> createStatement(
@@ -10,7 +11,7 @@ class StatementClinet {
         body: jsonEncode(<String, dynamic>{
           "first_side_id": firstSideId,
           "second_side_id": secondSideId,
-          "user_id": userId,
+          "user_id": MyApp.appUser!.id,
           "statement": statement,
           "amount": amount,
           "date": date,

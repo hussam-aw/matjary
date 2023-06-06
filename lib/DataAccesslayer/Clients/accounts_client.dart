@@ -45,7 +45,7 @@ class AccountsClient {
           "email": email,
           "address": address,
           "phone": mobileNumber,
-          "user_id": id,
+          "user_id": MyApp.appUser!.id,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -62,6 +62,7 @@ class AccountsClient {
   Future<dynamic> updateAccount(id, name, balance, type, style) async {
     var response = await http.post(Uri.parse('$baseUrl$accountLink/$id'),
         body: jsonEncode(<String, dynamic>{
+          "user_id": MyApp.appUser!.id,
           "name": name,
           "balance": balance,
           "type": type,

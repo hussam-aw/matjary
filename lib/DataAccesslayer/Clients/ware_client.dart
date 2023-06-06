@@ -17,9 +17,9 @@ class WareClient {
   Future<dynamic> postWare(name, userId) async {
     var response = await http.post(Uri.parse("$baseUrl$wareLink"),
         //var response = await http.post(Uri.parse("http://matjary2.brain.sy/api/v1/ware"),
-        body: jsonEncode(<String, String>{
+        body: jsonEncode(<String, dynamic>{
           "name": name,
-          "user_id": userId.toString(),
+          "user_id": MyApp.appUser!.id,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

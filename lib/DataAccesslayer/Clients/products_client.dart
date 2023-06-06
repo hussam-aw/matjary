@@ -5,6 +5,7 @@ import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
 import 'package:matjary/DataAccesslayer/Repositories/user_repo.dart';
+import 'package:matjary/main.dart';
 
 class ProductsClient {
   Future<dynamic> getProducts() async {
@@ -41,7 +42,7 @@ class ProductsClient {
       'quantity': quantity.toString(),
       'affected_exchange': affectedExchange.toString(),
       'initial_price': initialPrice.toString(),
-      'user_id': userId.toString(),
+      'user_id': MyApp.appUser!.id.toString(),
     });
     for (String path in images) {
       request.files.add(await http.MultipartFile.fromPath('images[]', path));
@@ -81,7 +82,7 @@ class ProductsClient {
       'quantity': quantity.toString(),
       'affected_exchange': affectedExchange.toString(),
       'initial_price': initialPrice.toString(),
-      'user_id': userId.toString(),
+      'user_id': MyApp.appUser!.id.toString(),
     });
     for (String path in images) {
       request.files.add(await http.MultipartFile.fromPath('images[]', path));
