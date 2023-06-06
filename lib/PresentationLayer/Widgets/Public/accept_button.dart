@@ -36,6 +36,7 @@ class AcceptButton extends StatelessWidget {
             if (isLoading) loadingItem(isWhite: true),
             Text(
               text,
+              overflow: TextOverflow.ellipsis,
               style: textStyle,
             ),
           ],
