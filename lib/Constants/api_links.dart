@@ -17,3 +17,4 @@ const categoriesLink = "/categories/1";
 const categoryLink = "/category";
 const statementLink = "/financialTransactioner";
 const paymentLink = "/financialTransaction";
+const statementsLink = "/financialTransactions";
