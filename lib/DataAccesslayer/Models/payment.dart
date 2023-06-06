@@ -32,8 +32,12 @@ class Payment {
       counterPartyId: map["first_side_id"] as int,
       bankId: map["second_side_id"] as int,
       amount: map["amount"],
-      statement: map["statement"],
+      statement: map["statement"] ?? '',
       date: DateTime.parse(map['created_at']),
     );
+  }
+
+  String getDateString(DateTime date) {
+    return "${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day}";
   }
 }
