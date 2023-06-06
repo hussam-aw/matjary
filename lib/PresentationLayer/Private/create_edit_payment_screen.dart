@@ -55,25 +55,50 @@ class CreateEditPaymentScreen extends StatelessWidget {
                             builder: (context) {
                               return CustomRadioGroup(
                                 height: 100,
-                                items:
-                                    paymentScreenController.paymentTypes.values
-                                        .map(
-                                          (paymentType) => IconRadioItem(
-                                            icon: Ionicons.happy,
-                                            text: paymentType,
-                                            isSelected: paymentScreenController
-                                                    .paymentTypesSelection[
-                                                paymentType]!,
-                                            onTap: () {
-                                              paymentScreenController
-                                                  .setPaymentType(paymentType);
+                                items: [
+                                  IconRadioItem(
+                                    icon: FontAwesomeIcons.solidCircleDown,
+                                    text: paymentScreenController
+                                        .paymentTypes[0]
+                                        .toString(),
+                                    isSelected: paymentScreenController
+                                            .paymentTypesSelection[
+                                        paymentScreenController
+                                            .paymentTypes[0]]!,
+                                    onTap: () {
+                                      paymentScreenController.setPaymentType(
+                                          paymentScreenController
+                                              .paymentTypes[0]);
 
-                                              paymentController
-                                                  .setPaymentType(paymentType);
-                                            },
-                                          ),
-                                        )
-                                        .toList(),
+                                      paymentController.setPaymentType(
+                                          paymentScreenController
+                                                  .counterPaymentTypes[
+                                              paymentScreenController
+                                                  .paymentTypes[0]]);
+                                    },
+                                  ),
+                                  IconRadioItem(
+                                    icon: FontAwesomeIcons.solidCircleDown,
+                                    text: paymentScreenController
+                                        .paymentTypes[1]
+                                        .toString(),
+                                    isSelected: paymentScreenController
+                                            .paymentTypesSelection[
+                                        paymentScreenController
+                                            .paymentTypes[1]]!,
+                                    onTap: () {
+                                      paymentScreenController.setPaymentType(
+                                          paymentScreenController
+                                              .paymentTypes[1]);
+
+                                      paymentController.setPaymentType(
+                                          paymentScreenController
+                                                  .counterPaymentTypes[
+                                              paymentScreenController
+                                                  .paymentTypes[1]]);
+                                    },
+                                  ),
+                                ],
                               );
                             }),
                         spacerHeight(height: 30),
