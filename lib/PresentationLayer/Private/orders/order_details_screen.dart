@@ -5,7 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/order_details_item.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/table_details_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/table_titles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -45,12 +45,16 @@ class OrderDetailsScreen extends StatelessWidget {
                   flex: 7,
                   child: ListView.separated(
                     itemBuilder: (context, index) {
-                      return OrderDetailsItem(
-                        productName: productsController
-                            .getProductName(order.details[index]['product_id']),
-                        productQuantity: order.details[index]['quantity'],
-                        productPrice: order.details[index]['price'],
-                        productTotal: order.details[index]['total_price'],
+                      return TableDetailsItem(
+                        firstColumnItem: productsController
+                            .getProductName(order.details[index]['product_id'])
+                            .toString(),
+                        secondColumnItem:
+                            order.details[index]['quantity'].toString(),
+                        thirdColumnItem:
+                            order.details[index]['price'].toString(),
+                        fourthColumnItem:
+                            order.details[index]['total_price'].toString(),
                       );
                     },
                     separatorBuilder: (context, index) =>
