@@ -21,7 +21,7 @@ class WaresController extends GetxController {
     return null;
   }
 
-  String getWareName(int id) {
+  String getWareName(int? id) {
     return getWareFromId(id) != null ? getWareFromId(id)!.name : '';
   }
 }
