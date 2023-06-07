@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/DataAccesslayer/Repositories/payments_repo.dart';
+import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class PaymentController extends GetxController {
@@ -20,7 +20,7 @@ class PaymentController extends GetxController {
   String? date;
   TextEditingController notesController = TextEditingController();
   String? notes;
-  PaymentsRepo paymentsRepo = PaymentsRepo();
+  StatementRepo statementRepo = StatementRepo();
   AccountsController accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
@@ -70,7 +70,7 @@ class PaymentController extends GetxController {
         amount.toString().isNotEmpty &&
         date.isNotEmpty) {
       loading.value = true;
-      var payment = await paymentsRepo.createPayment(
+      var payment = await statementRepo.createPayment(
         paymentType,
         counterPartyAccount!.id,
         bankAccount!.id,
