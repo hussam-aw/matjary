@@ -47,8 +47,7 @@ class ChooseProductScreen extends StatelessWidget {
             : NormalBox(
                 title: productsList[index].name,
                 onTap: () {
-                  controller.setAccountBasedOnType(
-                      productsList[index].name, screenMode);
+                  //Get.toNamed(arguments: productsList[index]);
                 },
               );
       },
@@ -64,8 +63,6 @@ class ChooseProductScreen extends StatelessWidget {
     searchController.list = productsController.products;
     if (screenMode == null) {
       controller = Get.put(ProductController());
-    } else {
-      controller = Get.find<OrderController>();
     }
     return Directionality(
       textDirection: TextDirection.rtl,
