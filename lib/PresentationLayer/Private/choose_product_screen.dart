@@ -47,7 +47,10 @@ class ChooseProductScreen extends StatelessWidget {
             : NormalBox(
                 title: productsList[index].name,
                 onTap: () {
-                  //Get.toNamed(arguments: productsList[index]);
+                  Get.toNamed(
+                    AppRoutes.productQtyReportScreen,
+                    arguments: productsList[index],
+                  );
                 },
               );
       },
