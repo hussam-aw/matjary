@@ -46,7 +46,12 @@ class ChooseWareScreen extends StatelessWidget {
             : NormalBox(
                 title: wareList[index].name,
                 onTap: () {
-                  Get.back(result: wareList[index]);
+                  if (screenMode == 'reportSelection') {
+                    Get.toNamed(AppRoutes.singleWareReportScreen,
+                        arguments: wareList[index]);
+                  } else {
+                    Get.back(result: wareList[index]);
+                  }
                 },
               );
       },
@@ -60,7 +65,6 @@ class ChooseWareScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchController.list = waresController.wares;
-    print(screenMode);
     if (screenMode == null) {
       controller = Get.put(WareController());
     }
