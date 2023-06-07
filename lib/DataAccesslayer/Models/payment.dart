@@ -29,8 +29,8 @@ class Payment {
   factory Payment.fromMap(Map<String, dynamic> map) {
     return Payment(
       type: map["type"],
-      counterPartyId: map["first_side_id"] as int,
-      bankId: map["second_side_id"] as int,
+      counterPartyId: map["first_side_id"]['id'] as int,
+      bankId: map["second_side_id"]['id'] as int,
       amount: map["amount"],
       statement: map["statement"] ?? '',
       date: DateTime.parse(map['created_at']),
