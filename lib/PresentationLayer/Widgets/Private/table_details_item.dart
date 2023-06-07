@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
-class OrderDetailsItem extends StatelessWidget {
-  const OrderDetailsItem({
+class TableDetailsItem extends StatelessWidget {
+  const TableDetailsItem({
     super.key,
-    required this.productName,
-    required this.productQuantity,
-    required this.productPrice,
-    required this.productTotal,
+    required this.firstColumnItem,
+    required this.secondColumnItem,
+    required this.thirdColumnItem,
+    required this.fourthColumnItem,
   });
 
-  final String productName;
-  final int productQuantity;
-  final num productPrice;
-  final num productTotal;
+  final String firstColumnItem;
+  final String secondColumnItem;
+  final String thirdColumnItem;
+  final String fourthColumnItem;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class OrderDetailsItem extends StatelessWidget {
           Expanded(
             child: Center(
               child: Text(
-                productName,
+                firstColumnItem,
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
@@ -39,7 +39,7 @@ class OrderDetailsItem extends StatelessWidget {
           Expanded(
             child: Center(
               child: Text(
-                productQuantity.toString(),
+                secondColumnItem,
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
@@ -48,7 +48,7 @@ class OrderDetailsItem extends StatelessWidget {
           Expanded(
             child: Center(
               child: Text(
-                productPrice.toString(),
+                thirdColumnItem,
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
@@ -57,7 +57,7 @@ class OrderDetailsItem extends StatelessWidget {
           Expanded(
             child: Center(
               child: Text(
-                productTotal.toString(),
+                fourthColumnItem,
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
