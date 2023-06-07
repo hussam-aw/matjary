@@ -15,6 +15,5 @@ const productsLink = "/products/1";
 const productLink = "/product";
 const categoriesLink = "/categories/1";
 const categoryLink = "/category";
-const statementLink = "/financialTransactioner";
-const paymentLink = "/financialTransaction";
+const statementLink = "/financialTransaction";
 const statementsLink = "/financialTransactions";
