@@ -1,6 +1,7 @@
 class Statement {
   int firstSideId;
   int secondSideId;
+  String type;
   String statement;
   num amount;
   DateTime date;
@@ -8,6 +9,7 @@ class Statement {
   Statement({
     required this.firstSideId,
     required this.secondSideId,
+    required this.type,
     required this.statement,
     required this.amount,
     required this.date,
@@ -17,6 +19,7 @@ class Statement {
     return <String, dynamic>{
       'first_side_id': firstSideId,
       'second_side_id': secondSideId,
+      'type': type,
       'statement': statement,
       'amount': amount,
       'date': date,
@@ -27,6 +30,7 @@ class Statement {
     return Statement(
       firstSideId: map['first_side_id'] as int,
       secondSideId: map['second_side_id'] as int,
+      type: '',
       statement: map['statement'] ?? '',
       amount: map['amount'],
       date: DateTime.parse(map['date']),
