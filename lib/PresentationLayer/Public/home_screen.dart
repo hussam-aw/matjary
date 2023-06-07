@@ -111,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             CreateMenuItem(
                               onTap: () {
-                                Get.toNamed(AppRoutes.wareReportScreen);
+                                Get.toNamed(AppRoutes.productReportScreen);
                               },
                               icon: 'assets/icons/D_ware_icon.png',
                               title: 'جرد بضاعة',
