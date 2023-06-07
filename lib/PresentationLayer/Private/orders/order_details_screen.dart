@@ -5,8 +5,8 @@ import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/order_details_info_titles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_details_item.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/table_titles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -34,7 +34,7 @@ class OrderDetailsScreen extends StatelessWidget {
               children: [
                 PageTitle(title: 'فاتورة رقم  ${order.id}#'),
                 spacerHeight(height: 30),
-                const OrderDetailsInfoTitles(
+                const TableTitles(
                   firstColumnTitle: 'المنتج',
                   secondColumnTitle: 'الكمية',
                   thirdColumnTitle: 'الافرادي',
@@ -59,7 +59,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 spacerHeight(),
-                OrderDetailsInfoTitles(
+                TableTitles(
                   titleTextStyle: UITextStyle.boldMeduim,
                   firstColumnTitle: 'الإجمالي',
                   secondColumnTitle: orderController
