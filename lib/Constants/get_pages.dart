@@ -5,6 +5,7 @@ import 'package:matjary/PresentationLayer/Auth/pin_code_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/create_ware_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/single_ware_report_screen.dart';
+import 'package:matjary/PresentationLayer/Private/Reports/wares_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_payment_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
@@ -12,7 +13,7 @@ import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_category_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_order_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_product_screen.dart';
-import 'package:matjary/PresentationLayer/Private/choose_ware_screem.dart';
+import 'package:matjary/PresentationLayer/Private/choose_ware_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_bank_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_category_screen.dart';
@@ -89,4 +90,8 @@ List<GetPage<dynamic>> getPages = [
   GetPage(
       name: AppRoutes.singleWareReportScreen,
       page: () => SingleWareReportScreen()),
+  GetPage(name: AppRoutes.waresReportScreen, page: () => WaresReportScreen()),
+  GetPage(
+      name: AppRoutes.productQtyReportScreen,
+      page: () => ProductReportScreen()),
 ];
