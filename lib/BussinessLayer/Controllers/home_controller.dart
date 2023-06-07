@@ -2,18 +2,23 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/statements_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
+import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/categories_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
+import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/ware_repo.dart';
+import 'package:matjary/main.dart';
 
 class HomeController extends GetxController {
   //AccountsRepo accountsRepo = AccountsRepo();
@@ -38,10 +43,13 @@ class HomeController extends GetxController {
   // var isLoadingProducts = false.obs;
   List<Category> categories = [];
   var isLoadingCategories = false.obs;
+  StatementRepo statementRepo = StatementRepo();
   AccountsController accountsController = Get.put(AccountsController());
   OrdersController ordersController = Get.put(OrdersController());
   WaresController waresController = Get.put(WaresController());
   ProductsController productsController = Get.put(ProductsController());
+  StatementsController statementController = Get.put(StatementsController());
+  PaymentsController paymentsController = Get.put(PaymentsController());
   // Future<void> getAccounts() async {
   //   isLoadingAccounts.value = true;
   //   accounts = await accountsRepo.getAccounts();
@@ -110,6 +118,7 @@ class HomeController extends GetxController {
     waresController.getWares();
     productsController.getProducts();
     getCategories();
+    await statementController.getStatements();
     //isLoading.value = false;
   }
 
