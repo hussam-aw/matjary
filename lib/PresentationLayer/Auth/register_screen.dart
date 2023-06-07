@@ -64,6 +64,7 @@ class RegisterScreen extends StatelessWidget {
                           spacerHeight(),
                           AccetpIconButton(
                             onPressed: () {},
+                            center: true,
                             icon: const Icon(FontAwesomeIcons.squareFacebook),
                             text: Text(
                               'متابعة باستخدام الفيسبوك',
