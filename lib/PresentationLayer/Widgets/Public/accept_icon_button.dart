@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class AccetpIconButton extends StatelessWidget {
   const AccetpIconButton({
@@ -32,11 +33,9 @@ class AccetpIconButton extends StatelessWidget {
             mainAxisAlignment:
                 center ? MainAxisAlignment.center : MainAxisAlignment.start,
             children: [
-              Expanded(child: icon),
-              Expanded(
-                flex: 14,
-                child: Center(child: text),
-              ),
+              icon,
+              spacerWidth(),
+              Center(child: text),
             ],
           ),
         ),
