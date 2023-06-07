@@ -17,3 +17,5 @@ const categoriesLink = "/categories/1";
 const categoryLink = "/category";
 const statementLink = "/financialTransaction";
 const statementsLink = "/financialTransactions";
+const wareContentLink = "/wareContent";
+const productReportLink = "/productInsidWareById";
