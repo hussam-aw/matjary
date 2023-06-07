@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
@@ -17,6 +19,7 @@ class OrderBox extends StatelessWidget {
   });
 
   final Order order;
+  final orderController = Get.put(OrderController());
   final accountsController = Get.find<AccountsController>();
 
   @override
@@ -33,17 +36,25 @@ class OrderBox extends StatelessWidget {
         children: [
           Expanded(
             flex: 1,
-            child: Container(
-              height: 67,
-              decoration: const BoxDecoration(
-                color: UIColors.primary,
-                borderRadius: raduis10,
-              ),
-              child: Center(
-                child: Text(
-                  '#${order.id}',
-                  overflow: TextOverflow.ellipsis,
-                  style: UITextStyle.boldHeadingRedHat,
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(
+                  AppRoutes.orderScreen,
+                  arguments: order,
+                );
+              },
+              child: Container(
+                height: 67,
+                decoration: const BoxDecoration(
+                  color: UIColors.primary,
+                  borderRadius: raduis10,
+                ),
+                child: Center(
+                  child: Text(
+                    '#${order.id}',
+                    overflow: TextOverflow.ellipsis,
+                    style: UITextStyle.boldHeadingRedHat,
+                  ),
                 ),
               ),
             ),
@@ -89,15 +100,22 @@ class OrderBox extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.toNamed(
-                      AppRoutes.orderScreen,
-                      arguments: order,
+                    Get.dialog(
+                      CustomDialog(
+                        title: 'هل تريد حذف الفاتورة؟',
+                        buttonText: 'حذف',
+                        confirmOnPressed: () async {
+                          await orderController.deleteOrder(order.id);
+                          Get.until((route) =>
+                              route.settings.name == AppRoutes.ordersScreen);
+                        },
+                      ),
                     );
                   },
                   child: const Icon(
-                    FontAwesomeIcons.eye,
+                    Icons.delete,
+                    size: 27,
                     color: UIColors.primary,
-                    size: 20,
                   ),
                 ),
                 InkWell(
