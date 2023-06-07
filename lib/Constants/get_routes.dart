@@ -34,4 +34,8 @@ class AppRoutes {
       '/home/productReportScreen/createWareReportScreen';
   static const singleWareReportScreen =
       '/home/productReportScreen/singleWareReportScreen';
+  static const waresReportScreen =
+      '/home/productReportScreen/waresReportScreen';
+  static const productQtyReportScreen =
+      '/home/productReportScreen/chooseProductScreen/productQtyReportScreen';
 }
