@@ -13,7 +13,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class PaymentBox extends StatelessWidget {
   PaymentBox({super.key, required this.payment});
 
-  final paymentScreenController = Get.find<PaymentScreenController>();
+  final paymentScreenController = Get.put(PaymentScreenController());
   final accountsController = Get.find<AccountsController>();
   final Payment payment;
 
@@ -83,7 +83,7 @@ class PaymentBox extends StatelessWidget {
                   ),
                   spacerHeight(height: 12),
                   Text(
-                    'الطرف المقابل: ${accountsController.getAccountName(payment.counterPartyId)}',
+                    'الطرف المقابل: ${payment.counterParty.name}',
                     style: UITextStyle.normalSmall,
                     overflow: TextOverflow.ellipsis,
                   ),

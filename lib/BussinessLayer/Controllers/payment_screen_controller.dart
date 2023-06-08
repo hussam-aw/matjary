@@ -3,7 +3,7 @@ import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 
 class PaymentScreenController extends GetxController {
-  final paymentController = Get.find<PaymentController>();
+  final paymentController = Get.put(PaymentController());
 
   List<String> paymentTypes = [
     'مقبوضات',
