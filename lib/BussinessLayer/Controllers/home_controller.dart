@@ -15,6 +15,7 @@ import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/categories_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
+import 'package:matjary/DataAccesslayer/Repositories/payments_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 import 'package:matjary/DataAccesslayer/Repositories/ware_repo.dart';
@@ -43,12 +44,11 @@ class HomeController extends GetxController {
   // var isLoadingProducts = false.obs;
   List<Category> categories = [];
   var isLoadingCategories = false.obs;
-  StatementRepo statementRepo = StatementRepo();
+  PaymentsRepo paymentsRepo = PaymentsRepo();
   AccountsController accountsController = Get.put(AccountsController());
   OrdersController ordersController = Get.put(OrdersController());
   WaresController waresController = Get.put(WaresController());
   ProductsController productsController = Get.put(ProductsController());
-  StatementsController statementController = Get.put(StatementsController());
   PaymentsController paymentsController = Get.put(PaymentsController());
   // Future<void> getAccounts() async {
   //   isLoadingAccounts.value = true;
@@ -118,7 +118,7 @@ class HomeController extends GetxController {
     waresController.getWares();
     productsController.getProducts();
     getCategories();
-    await statementController.getStatements();
+    paymentsController.getPayments();
     //isLoading.value = false;
   }
 
