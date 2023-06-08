@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/payment_box.dart';
@@ -10,7 +12,9 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class PaymentsScreen extends StatelessWidget {
-  const PaymentsScreen({super.key});
+  PaymentsScreen({super.key});
+
+  final paymentsController = Get.find<PaymentsController>();
 
   Widget buildPaymentsList(List<Payment> payments) {
     return ListView.separated(
@@ -39,18 +43,18 @@ class PaymentsScreen extends StatelessWidget {
               children: [
                 const PageTitle(title: 'الدفعات'),
                 spacerHeight(height: 22),
-                // Expanded(
-                //   child: Obx(() {
-                //     return ordersController.isLoadingOrders.value
-                //         ? Center(child: loadingItem(width: 100, isWhite: true))
-                //         : RefreshIndicator(
-                //             onRefresh: () async =>
-                //                 await ordersController.getOrdersByType(
-                //                     ordersController.currentOrderFilterType),
-                //             child: buildPaymentsList(payments),
-                //           );
-                //   }),
-                // ),
+                Expanded(
+                  child: Obx(() {
+                    return paymentsController.isLoading.value
+                        ? Center(child: loadingItem(width: 100, isWhite: true))
+                        : RefreshIndicator(
+                            onRefresh: () async =>
+                                await paymentsController.getPayments(),
+                            child:
+                                buildPaymentsList(paymentsController.payments),
+                          );
+                  }),
+                ),
               ],
             ),
           ),
