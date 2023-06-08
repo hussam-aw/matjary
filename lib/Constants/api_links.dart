@@ -19,3 +19,4 @@ const statementLink = "/financialTransaction";
 const statementsLink = "/financialTransactions";
 const wareContentLink = "/wareContent";
 const productReportLink = "/productInsidWareById";
+const paymentsLink = "/paymentsByUserId";
