@@ -18,8 +18,17 @@ class ReportsRepo {
     return [];
   }
 
-  Future<List<ProductReport>> getProductReports(productReport) async {
-    var response = await client.getProductReports(productReport);
+  Future<ProductReport?> getProductReport(productReport) async {
+    var response = await client.getProductReport(productReport);
+    if (response != "") {
+      final parsed = json.decode(response);
+      return ProductReport.fromMap(parsed);
+    }
+    return null;
+  }
+
+  Future<List<ProductReport>> getAllProductsReports() async {
+    var response = await client.getAllProductReports();
     if (response != "") {
       final parsed = json.decode(response).cast<Map<String, dynamic>>();
       return parsed
