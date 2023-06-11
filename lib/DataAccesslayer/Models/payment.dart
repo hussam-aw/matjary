@@ -24,7 +24,7 @@ class Payment {
       "bank_id": bank,
       "amount": amount,
       "statement": statement,
-      "created_at": date,
+      "date": date,
     };
   }
 
@@ -35,7 +35,7 @@ class Payment {
       bank: Account.fromMap(map["other_side"]),
       amount: map["amount"],
       statement: map["statement"] ?? '',
-      date: DateTime.parse(map['created_at']),
+      date: DateTime.parse(map['date']),
     );
   }
 
