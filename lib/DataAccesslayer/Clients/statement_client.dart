@@ -48,7 +48,7 @@ class StatementClinet {
           "bank_id": bankId,
           "amount": amount,
           "statement": statement,
-          "created_at": date,
+          "date": date,
           "user_id": MyApp.appUser!.id,
         }),
         headers: <String, String>{
