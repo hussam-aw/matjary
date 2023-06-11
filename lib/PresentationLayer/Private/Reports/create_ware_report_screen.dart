@@ -59,7 +59,9 @@ class CreateWareReportScreen extends StatelessWidget {
                 spacerHeight(),
                 AcceptButton(
                   text: 'جرد شامل',
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.waresReportScreen);
+                  },
                 ),
                 spacerHeight(height: 22),
                 SectionTitle(title: 'أو إختر المستودع'),
