@@ -128,7 +128,7 @@ class OrderBox extends StatelessWidget {
                   child: const Icon(
                     FontAwesomeIcons.penToSquare,
                     color: UIColors.primary,
-                    size: 20,
+                    size: 22,
                   ),
                 ),
               ],
