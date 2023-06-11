@@ -30,47 +30,44 @@ class PaymentBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Container(
-              height: 67,
+              height: 70,
               decoration: const BoxDecoration(
                 color: UIColors.primary,
                 borderRadius: raduis10,
               ),
               child: Center(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Icon(
-                        paymentScreenController
-                                    .counterPaymentTypes[payment.type] ==
-                                'مقبوضات'
-                            ? FontAwesomeIcons.solidCircleDown
-                            : FontAwesomeIcons.solidCircleUp,
-                        size: 40,
-                        color: UIColors.white,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Icon(
+                          paymentScreenController
+                              .getPaymenetTypeIcon(payment.type),
+                          size: 35,
+                          color: UIColors.white,
+                        ),
                       ),
-                    ),
-                    spacerHeight(),
-                    Expanded(
-                      child: Text(
-                        paymentScreenController
-                                    .counterPaymentTypes[payment.type] ==
-                                'مقبوضات'
-                            ? 'مقبوضات'
-                            : 'مدفوعات',
-                        overflow: TextOverflow.ellipsis,
-                        style: UITextStyle.normalMeduim,
+                      spacerHeight(height: 24),
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          paymentScreenController.getPaymentType(payment.type),
+                          overflow: TextOverflow.ellipsis,
+                          style: UITextStyle.normalMeduim,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Column(
@@ -118,7 +115,7 @@ class PaymentBox extends StatelessWidget {
                   child: const Icon(
                     FontAwesomeIcons.penToSquare,
                     color: UIColors.primary,
-                    size: 20,
+                    size: 22,
                   ),
                 ),
                 InkWell(
@@ -131,7 +128,7 @@ class PaymentBox extends StatelessWidget {
                   child: const Icon(
                     Icons.delete,
                     color: UIColors.primary,
-                    size: 20,
+                    size: 27,
                   ),
                 ),
               ],
