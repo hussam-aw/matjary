@@ -28,13 +28,13 @@ class StatementRepo {
     return null;
   }
 
-  Future<Payment?> createPayment(
+  Future<bool?> createPayment(
       type, accountId, bankId, statement, amount, date) async {
     var createdPayment = await client.createPayment(
         type, accountId, bankId, statement, amount, date);
     print(createdPayment);
     if (createdPayment != null) {
-      return Payment.fromMap(jsonDecode(createdPayment));
+      return true;
     }
     return null;
   }
