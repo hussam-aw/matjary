@@ -5,16 +5,16 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 class TableDetailsItem extends StatelessWidget {
   const TableDetailsItem({
     super.key,
-    required this.firstColumnItem,
-    required this.secondColumnItem,
-    required this.thirdColumnItem,
-    required this.fourthColumnItem,
+    this.firstColumnItem,
+    this.secondColumnItem,
+    this.thirdColumnItem,
+    this.fourthColumnItem,
   });
 
-  final String firstColumnItem;
-  final String secondColumnItem;
-  final String thirdColumnItem;
-  final String fourthColumnItem;
+  final String? firstColumnItem;
+  final String? secondColumnItem;
+  final String? thirdColumnItem;
+  final dynamic fourthColumnItem;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,30 @@ class TableDetailsItem extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: secondColumnItem != null ? 1 : 2,
             child: Center(
               child: Text(
-                firstColumnItem,
+                firstColumnItem!,
+                overflow: TextOverflow.ellipsis,
+                style: UITextStyle.normalBody,
+              ),
+            ),
+          ),
+          secondColumnItem != null
+              ? Expanded(
+                  child: Center(
+                    child: Text(
+                      secondColumnItem!,
+                      overflow: TextOverflow.ellipsis,
+                      style: UITextStyle.normalBody,
+                    ),
+                  ),
+                )
+              : Container(),
+          Expanded(
+            child: Center(
+              child: Text(
+                thirdColumnItem!,
                 overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
@@ -38,29 +59,13 @@ class TableDetailsItem extends StatelessWidget {
           ),
           Expanded(
             child: Center(
-              child: Text(
-                secondColumnItem,
-                overflow: TextOverflow.ellipsis,
-                style: UITextStyle.normalBody,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                thirdColumnItem,
-                overflow: TextOverflow.ellipsis,
-                style: UITextStyle.normalBody,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                fourthColumnItem,
-                overflow: TextOverflow.ellipsis,
-                style: UITextStyle.normalBody,
-              ),
+              child: (fourthColumnItem is String)
+                  ? Text(
+                      fourthColumnItem,
+                      overflow: TextOverflow.ellipsis,
+                      style: UITextStyle.normalBody,
+                    )
+                  : fourthColumnItem,
             ),
           ),
         ],
