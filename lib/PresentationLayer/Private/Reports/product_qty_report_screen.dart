@@ -22,6 +22,7 @@ class ProductQtyReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    reportsController.getProductReport(product.id);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -52,15 +53,19 @@ class ProductQtyReportScreen extends StatelessWidget {
                         : ListView.separated(
                             itemBuilder: (context, index) {
                               return TableDetailsItem(
-                                firstColumnItem: '',
+                                firstColumnItem: reportsController
+                                    .productReport!.wares[index]['ware'],
                                 secondColumnItem: '',
                                 thirdColumnItem: '',
-                                fourthColumnItem: '',
+                                fourthColumnItem: reportsController
+                                    .productReport!.wares[index]['quantity']
+                                    .toString(),
                               );
                             },
                             separatorBuilder: (context, index) =>
                                 spacerHeight(height: 10),
-                            itemCount: reportsController.productReports.length,
+                            itemCount:
+                                reportsController.productReport!.wares.length,
                           );
                   }),
                 ),
