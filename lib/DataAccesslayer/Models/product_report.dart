@@ -2,7 +2,7 @@ class ProductReport {
   int id;
   String productName;
   int quantity;
-  List<Map<String, int>> wares;
+  List<dynamic> wares;
 
   ProductReport({
     required this.id,
