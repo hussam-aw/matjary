@@ -13,6 +13,5 @@ class PaymentsController extends GetxController {
     isLoading.value = true;
     payments = await paymentsRepo.getPayments();
     isLoading.value = false;
-    print(payments);
   }
 }

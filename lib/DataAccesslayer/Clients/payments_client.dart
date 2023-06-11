@@ -6,7 +6,7 @@ class PaymentsClient {
   Future<dynamic> getPayments() async {
     var response =
         await http.get(Uri.parse("$baseUrl$paymentsLink/${MyApp.appUser!.id}"));
-    print(response.body);
+
     if (response.statusCode == 200) {
       return response.body;
     } else {
