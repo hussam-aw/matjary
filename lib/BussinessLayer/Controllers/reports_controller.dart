@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:matjary/DataAccesslayer/Models/product_report.dart';
 import 'package:matjary/DataAccesslayer/Models/product_with_quantity.dart';
-import 'package:matjary/DataAccesslayer/Models/ware_report.dart';
 import 'package:matjary/DataAccesslayer/Repositories/reports_repo.dart';
 
 class ReportsController extends GetxController {
