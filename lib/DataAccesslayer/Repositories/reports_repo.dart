@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:matjary/DataAccesslayer/Clients/reports_client.dart';
 import 'package:matjary/DataAccesslayer/Models/product_report.dart';
-import 'package:matjary/DataAccesslayer/Models/ware_report.dart';
+import 'package:matjary/DataAccesslayer/Models/product_with_quantity.dart';
 
 class ReportsRepo {
   ReportsClient client = ReportsClient();
 
-  Future<List<WareReport>> getWareReports(wareId) async {
-    var response = await client.getWareReports(wareId);
+  Future<List<ProductWithQuantity>> getWareReport(wareId) async {
+    var response = await client.getWareReport(wareId);
     if (response != "") {
       final parsed = json.decode(response).cast<Map<String, dynamic>>();
       return parsed
-          .map<WareReport>((json) => WareReport.fromMap(json))
+          .map<ProductWithQuantity>((json) => ProductWithQuantity.fromMap(json))
           .toList();
     }
     return [];
