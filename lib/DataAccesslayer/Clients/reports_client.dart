@@ -3,7 +3,7 @@ import 'package:matjary/Constants/api_links.dart';
 import 'package:matjary/main.dart';
 
 class ReportsClient {
-  Future<dynamic> getWareReports(wareId) async {
+  Future<dynamic> getWareReport(wareId) async {
     var response =
         await http.get(Uri.parse("$baseUrl$wareContentLink/$wareId"));
 
