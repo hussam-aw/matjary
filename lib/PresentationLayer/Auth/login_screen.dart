@@ -48,13 +48,16 @@ class LoginScreen extends StatelessWidget {
                                 hintText: 'كلمة المرور',
                               ),
                               spacerHeight(),
-                              AcceptButton(
-                                backgroundColor: UIColors.containerBackground,
-                                onPressed: () async {
-                                  await authController.login();
-                                },
-                                text: 'متابعة',
-                              ),
+                              Obx(() {
+                                return AcceptButton(
+                                  backgroundColor: UIColors.containerBackground,
+                                  text: 'متابعة',
+                                  onPressed: () async {
+                                    await authController.login();
+                                  },
+                                  isLoading: authController.logging.value,
+                                );
+                              }),
                               spacerHeight(),
                               AcceptButton(
                                 onPressed: () {
