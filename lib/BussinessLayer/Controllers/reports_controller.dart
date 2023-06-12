@@ -1,18 +1,19 @@
 import 'package:get/get.dart';
 import 'package:matjary/DataAccesslayer/Models/product_report.dart';
+import 'package:matjary/DataAccesslayer/Models/product_with_quantity.dart';
 import 'package:matjary/DataAccesslayer/Models/ware_report.dart';
 import 'package:matjary/DataAccesslayer/Repositories/reports_repo.dart';
 
 class ReportsController extends GetxController {
-  List<WareReport> wareReports = [];
+  List<ProductWithQuantity> productsWithQuantity = [];
   ProductReport? productReport = null;
   List<ProductReport> productsReports = [];
   ReportsRepo reportsRepo = ReportsRepo();
   var isloading = false.obs;
 
-  Future<void> getWareReports(wareId) async {
+  Future<void> getWareReport(wareId) async {
     isloading.value = true;
-    wareReports = await reportsRepo.getWareReports(wareId);
+    productsWithQuantity = await reportsRepo.getWareReport(wareId);
     isloading.value = false;
   }
 
