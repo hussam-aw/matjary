@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/reports_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/ware_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -20,11 +21,12 @@ class SingleWareReportScreen extends StatelessWidget {
   SingleWareReportScreen({super.key});
 
   ReportsController reportsController = Get.put(ReportsController());
+  ProductsController productsController = Get.find<ProductsController>();
   Ware ware = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    reportsController.getWareReports(ware.id);
+    reportsController.getWareReport(ware.id);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -55,18 +57,19 @@ class SingleWareReportScreen extends StatelessWidget {
                         : ListView.separated(
                             itemBuilder: (context, index) {
                               return TableDetailsItem(
-                                firstColumnItem: reportsController
-                                    .wareReports[index].product.name,
-                                secondColumnItem: '',
+                                firstColumnItem: productsController
+                                    .getProductName(reportsController
+                                        .productsWithQuantity[index].productId),
                                 thirdColumnItem: '',
                                 fourthColumnItem: reportsController
-                                    .wareReports[index].quantity
+                                    .productsWithQuantity[index].quantity
                                     .toString(),
                               );
                             },
                             separatorBuilder: (context, index) =>
                                 spacerHeight(height: 10),
-                            itemCount: reportsController.wareReports.length,
+                            itemCount:
+                                reportsController.productsWithQuantity.length,
                           );
                   }),
                 ),
