@@ -33,11 +33,20 @@ class AcceptButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (isLoading) loadingItem(isWhite: true),
-            Text(
-              text,
-              overflow: TextOverflow.ellipsis,
-              style: textStyle,
+            if (isLoading)
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: loadingItem(isWhite: true),
+                ),
+              ),
+            Expanded(
+              child: Text(
+                text,
+                textAlign: isLoading ? TextAlign.right : TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: textStyle,
+              ),
             ),
           ],
         ));
