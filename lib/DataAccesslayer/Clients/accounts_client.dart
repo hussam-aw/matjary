@@ -25,7 +25,8 @@ class AccountsClient {
   }
 
   Future<dynamic> getClientAccounts() async {
-    var response = await http.get(Uri.parse("$baseUrl$clientAccoutsLink"));
+    var response = await http
+        .get(Uri.parse("$baseUrl$clientAccoutsLink/${MyApp.appUser!.id}"));
 
     if (response.statusCode == 200) {
       return response.body;

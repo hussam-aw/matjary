@@ -6,7 +6,8 @@ import 'package:matjary/main.dart';
 
 class OrdersClient {
   Future<dynamic> getOrders() async {
-    var response = await http.get(Uri.parse("$baseUrl$ordersLink"));
+    var response =
+        await http.get(Uri.parse("$baseUrl$ordersLink/${MyApp.appUser!.id}"));
     if (response.statusCode == 200) {
       return response.body;
     } else {
