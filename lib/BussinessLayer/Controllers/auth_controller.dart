@@ -40,6 +40,6 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     await boxClient.removeUserData();
     MyApp.appUser = null;
-    Get.toNamed(AppRoutes.loginScreen);
+    Get.offAllNamed(AppRoutes.loginScreen);
   }
 }
