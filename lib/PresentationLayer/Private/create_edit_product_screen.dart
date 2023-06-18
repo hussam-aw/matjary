@@ -82,10 +82,13 @@ class CreateEditProductScreen extends StatelessWidget {
                                         ? loadingItem()
                                         : CustomDropdownFormField(
                                             value: productController.category,
-                                            items: homeController.categories
-                                                .map(
-                                                    (category) => category.name)
-                                                .toList(),
+                                            items: homeController
+                                                    .categories.isNotEmpty
+                                                ? homeController.categories
+                                                    .map((category) =>
+                                                        category.name)
+                                                    .toList()
+                                                : [''],
                                             onChanged: (value) {
                                               productController.category =
                                                   value;
