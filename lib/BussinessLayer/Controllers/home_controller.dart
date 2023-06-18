@@ -112,6 +112,7 @@ class HomeController extends GetxController {
   void fetchData() async {
     //isLoading.value = true;
     ordersController.getOrders();
+    accountsController.getCachAmount();
     await accountsController.getAccounts();
     accountsController.getClientAcoounts();
     accountsController.getBankAcoounts();
