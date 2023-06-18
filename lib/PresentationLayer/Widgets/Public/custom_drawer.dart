@@ -69,8 +69,8 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
               DrawerListTile(
-                title: "البنوك",
-                subtitle: "تصفح و تعديل البنوك",
+                title: "الصناديق النقدية",
+                subtitle: "تصفح و تعديل الصناديق النقدية",
                 iconData: Ionicons.cart,
                 onTap: () {
                   Get.toNamed(
