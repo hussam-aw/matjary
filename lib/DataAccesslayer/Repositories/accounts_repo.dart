@@ -41,6 +41,14 @@ class AccountsRepo {
     return [];
   }
 
+  Future<double> getCashAmount() async {
+    var response = await client.getCashAmount();
+
+    final parsed = json.decode(response);
+
+    return parsed.toDouble();
+  }
+
   Future<Account?> createAccount(
       id, name, balance, type, style, email, address, mobileNumber) async {
     var createdAccount = await client.createAccount(

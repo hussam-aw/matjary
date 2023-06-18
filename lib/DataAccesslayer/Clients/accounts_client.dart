@@ -5,7 +5,8 @@ import 'package:matjary/Constants/api_links.dart';
 
 class AccountsClient {
   Future<dynamic> getAccounts() async {
-    var response = await http.get(Uri.parse("$baseUrl$accountsLink"));
+    var response =
+        await http.get(Uri.parse("$baseUrl$accountsLink/${MyApp.appUser!.id}"));
 
     if (response.statusCode == 200) {
       return response.body;
@@ -27,6 +28,17 @@ class AccountsClient {
   Future<dynamic> getClientAccounts() async {
     var response = await http
         .get(Uri.parse("$baseUrl$clientAccoutsLink/${MyApp.appUser!.id}"));
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return "";
+    }
+  }
+
+  Future<dynamic> getCashAmount() async {
+    var response = await http
+        .get(Uri.parse("$baseUrl$cashAmountLink/${MyApp.appUser!.id}"));
 
     if (response.statusCode == 200) {
       return response.body;
