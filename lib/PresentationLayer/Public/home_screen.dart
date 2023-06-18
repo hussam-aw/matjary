@@ -12,12 +12,14 @@ import 'package:matjary/PresentationLayer/Widgets/Home/customer_account_list_til
 import 'package:matjary/PresentationLayer/Widgets/Home/invoice_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Home/order_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/bottom_navigation_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
+import 'package:matjary/PresentationLayer/Widgets/shimmers/amount_shimmer.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/customer_list_tile_shimmer.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/order_count_shimmer.dart';
 import 'package:matjary/main.dart';
@@ -165,10 +167,19 @@ class HomeScreen extends StatelessWidget {
                                               style: UITextStyle.normalSmall,
                                             ),
                                             spacerHeight(height: 10),
-                                            const Text(
-                                              '1.500.000',
-                                              overflow: TextOverflow.ellipsis,
-                                              style: UITextStyle.boldHeading,
+                                            Obx(
+                                              () => accountsController
+                                                      .isLoadingCashAmount.value
+                                                  ? AmountShimmer()
+                                                  : Text(
+                                                      accountsController
+                                                          .cashAmount.value
+                                                          .toString(),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: UITextStyle
+                                                          .boldHeading,
+                                                    ),
                                             ),
                                           ],
                                         ),
@@ -300,17 +311,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: const CustomBottomNavigationBar(),
-        floatingActionButton: FloatingActionButton(
-          elevation: 0.0,
-          backgroundColor: UIColors.white,
-          shape: const RoundedRectangleBorder(
-            borderRadius: raduis15,
-          ),
-          child: const Icon(
-            size: 45,
-            FontAwesomeIcons.plus,
-            color: UIColors.primary,
-          ),
+        floatingActionButton: AddButton(
           onPressed: () {
             Get.bottomSheet(const CreateBottomSheet());
           },
