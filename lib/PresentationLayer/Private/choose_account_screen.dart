@@ -13,6 +13,7 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
@@ -133,6 +134,15 @@ class ChooseAccountScreen extends StatelessWidget {
               ),
             ),
           ),
+          floatingActionButton: AddButton(
+            backgroundColor: UIColors.primary,
+            iconColor: UIColors.white,
+            onPressed: () {
+              Get.toNamed(AppRoutes.createEditAccountScreen);
+            },
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         ),
       ),
     );
