@@ -5,11 +5,13 @@ import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/orders_filter_bottomsheet.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
@@ -149,6 +151,14 @@ class OrdersScreen extends StatelessWidget {
             ),
           ),
         ),
+        floatingActionButton: AddButton(
+          backgroundColor: UIColors.primary,
+          iconColor: UIColors.white,
+          onPressed: () {
+            Get.toNamed(AppRoutes.createEditOrderScreen);
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
