@@ -164,7 +164,9 @@ class ProductController extends GetxController {
 
   @override
   void onInit() {
-    category = homeController.categories[0].name;
+    category = homeController.categories.isNotEmpty
+        ? homeController.categories[0].name
+        : '';
     affectedExchangeState = "يتأثر";
     selectedImages.clear();
     print(selectedImages.length);
