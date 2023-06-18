@@ -16,6 +16,8 @@ class AccountsController extends GetxController {
   List<Account> marketerAccounts = [];
   var isLoadingMarketerAccounts = false.obs;
   List<Account> clientAndSupplierAccounts = [];
+  var isLoadingCashAmount = false.obs;
+  var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
 
   Future<void> getAccounts() async {
@@ -47,10 +49,11 @@ class AccountsController extends GetxController {
         accounts.where((account) => account.style == 10).toList();
   }
 
-  void getAccountsBasedOnStyle(style) {
+  void getAccountsBasedOnStyle(style) async {
     switch (style) {
       case 'bank':
-        getBankAcoounts();
+        await getBankAcoounts();
+        await getCachAmount();
         break;
       case 'client':
         getClientAcoounts();
@@ -89,6 +92,12 @@ class AccountsController extends GetxController {
 
   String getAccountName(int id) {
     return getAccountFromId(id) != null ? getAccountFromId(id)!.name : '';
+  }
+
+  Future<void> getCachAmount() async {
+    isLoadingCashAmount.value = true;
+    cashAmount.value = await accountsRepo.getCashAmount();
+    isLoadingCashAmount.value = false;
   }
 
   @override
