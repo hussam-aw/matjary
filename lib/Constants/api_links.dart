@@ -21,3 +21,4 @@ const paymentsLink = "/paymentsByUserId";
 const wareContentLink = "/wareContent";
 const productReportLink = "/productInsidWaresById";
 const allproductsReportLink = "/productsInsidWares";
+const cashAmountLink = "/cashByUserId";
