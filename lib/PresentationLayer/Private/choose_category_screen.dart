@@ -10,6 +10,7 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
@@ -31,34 +32,49 @@ class ChooseCategoryScreen extends StatelessWidget {
   String? screenMode = Get.arguments;
 
   Widget buildCategoriesList(cateoriesList) {
+    List<dynamic> categoriesWidgetList = screenMode == null
+        ? cateoriesList
+            .map((category) => CustomBox(
+                  title: category.name,
+                  editOnPressed: () {
+                    Get.toNamed(AppRoutes.createEditCategoryScreen,
+                        arguments: category);
+                  },
+                  deleteDialogTitle: 'هل تريد بالتأكيد حذف التصنيف؟',
+                  deleteOnPressed: () {
+                    controller.deleteCategory(category.id);
+                    Get.back();
+                  },
+                ))
+            .toList()
+        : cateoriesList
+            .map((category) => NormalBox(
+                  title: category.name,
+                  onTap: () {
+                    Get.back(
+                      result: category,
+                    );
+                  },
+                ))
+            .toList();
+    if (screenMode != null) {
+      categoriesWidgetList.insert(
+          0,
+          NormalBox(
+              title: 'غير مصنف',
+              onTap: () {
+                Get.back(result: null);
+              }));
+    }
+
     return ListView.separated(
       itemBuilder: (context, index) {
-        return screenMode == null
-            ? CustomBox(
-                title: cateoriesList[index].name,
-                editOnPressed: () {
-                  Get.toNamed(AppRoutes.createEditCategoryScreen,
-                      arguments: cateoriesList[index]);
-                },
-                deleteDialogTitle: 'هل تريد بالتأكيد حذف التصنيف؟',
-                deleteOnPressed: () {
-                  controller.deleteCategory(cateoriesList[index].id);
-                  Get.back();
-                },
-              )
-            : NormalBox(
-                title: cateoriesList[index].name,
-                onTap: () {
-                  Get.back(
-                    result: cateoriesList[index],
-                  );
-                },
-              );
+        return categoriesWidgetList[index];
       },
       separatorBuilder: (context, index) {
         return spacerHeight();
       },
-      itemCount: cateoriesList.length,
+      itemCount: categoriesWidgetList.length,
     );
   }
 
