@@ -99,6 +99,13 @@ class CreateBottomSheet extends StatelessWidget {
                     icon: 'assets/icons/D_ware_icon.png',
                     title: 'مستودع',
                   ),
+                  CreateMenuItem(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditCategoryScreen);
+                    },
+                    icon: 'assets/icons/D_ware_icon.png',
+                    title: 'تصنيف بضاعة',
+                  ),
                 ],
               ),
             ),
