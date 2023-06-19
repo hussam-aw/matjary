@@ -8,6 +8,7 @@ import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/image_picker_helper.dart';
+import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -17,7 +18,8 @@ class ProductController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController modelNumberController = TextEditingController();
   TextEditingController initialPriceController = TextEditingController();
-  String? category;
+  TextEditingController categoryNameController = TextEditingController();
+  int? categoryId;
   TextEditingController quantityController = TextEditingController();
   String? affectedExchangeState;
   TextEditingController retailPriceController = TextEditingController();
@@ -29,6 +31,17 @@ class ProductController extends GetxController {
   var categoriesController = Get.find<CategoriesController>();
   ProductsController productsController = Get.find<ProductsController>();
   var loading = false.obs;
+
+  void setCategory(cat) {
+    if (cat != null) {
+      categoryId = cat.id;
+      categoryNameController.value = TextEditingValue(
+          text: categoriesController.getCategoryName(categoryId));
+    } else {
+      categoryId = null;
+      categoryNameController.value = TextEditingValue(text: 'غير مصنف');
+    }
+  }
 
   String convertAffectedExchangeStateToString(String state) {
     if (state == "0") {
@@ -44,12 +57,6 @@ class ProductController extends GetxController {
     return "1";
   }
 
-  int getCategoryId(categoryName) {
-    return categoriesController.categories
-        .firstWhere((category) => category.name == categoryName)
-        .id;
-  }
-
   void setImages(images) {
     selectedImages = images;
   }
@@ -61,7 +68,7 @@ class ProductController extends GetxController {
           TextEditingController(text: product.specialNumber);
       initialPriceController =
           TextEditingController(text: product.initialPrice.toString());
-      category = product.category;
+      setCategory(categoriesController.getCategoryFromId(product.categoryId));
       quantityController =
           TextEditingController(text: product.quantity.toString());
       affectedExchangeState = convertAffectedExchangeStateToString(
@@ -95,7 +102,7 @@ class ProductController extends GetxController {
 
       var product = await prdouctsRepo.createProduct(
         name,
-        getCategoryId(category),
+        categoryId,
         specialNumber,
         num.parse(wholesalePrice),
         num.parse(retailPrice),
@@ -131,7 +138,7 @@ class ProductController extends GetxController {
     var product = await prdouctsRepo.updateProduct(
       id,
       name,
-      getCategoryId(category),
+      categoryId,
       specialNumber,
       num.parse(wholesalePrice),
       num.parse(retailPrice),
@@ -165,9 +172,7 @@ class ProductController extends GetxController {
 
   @override
   void onInit() {
-    category = categoriesController.categories.isNotEmpty
-        ? categoriesController.categories[0].name
-        : '';
+    categoryId = null;
     affectedExchangeState = "يتأثر";
     selectedImages.clear();
     print(selectedImages.length);
