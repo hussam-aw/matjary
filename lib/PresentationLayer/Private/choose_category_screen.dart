@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/category_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/ware_controller.dart';
@@ -9,6 +11,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -20,12 +23,51 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class ChooseCategoryScreen extends StatelessWidget {
   ChooseCategoryScreen({super.key});
 
-  final HomeController homeController = Get.find<HomeController>();
+  final CategoriesController categoriesController =
+      Get.find<CategoriesController>();
   final SearchController searchController = Get.put(SearchController());
+  late var controller;
+
+  String? screenMode = Get.arguments;
+
+  Widget buildCategoriesList(cateoriesList) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return screenMode == null
+            ? CustomBox(
+                title: cateoriesList[index].name,
+                editOnPressed: () {
+                  Get.toNamed(AppRoutes.createEditCategoryScreen,
+                      arguments: cateoriesList[index]);
+                },
+                deleteDialogTitle: 'هل تريد بالتأكيد حذف التصنيف؟',
+                deleteOnPressed: () {
+                  controller.deleteCategory(cateoriesList[index].id);
+                  Get.back();
+                },
+              )
+            : NormalBox(
+                title: cateoriesList[index].name,
+                onTap: () {
+                  Get.back(
+                    result: cateoriesList[index],
+                  );
+                },
+              );
+      },
+      separatorBuilder: (context, index) {
+        return spacerHeight();
+      },
+      itemCount: cateoriesList.length,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = homeController.categories;
+    searchController.list = categoriesController.categories;
+    if (screenMode == null) {
+      controller = Get.put(CategoryController());
+    }
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -49,39 +91,19 @@ class ChooseCategoryScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => homeController.isLoadingCategories.value
+                    () => categoriesController.isLoadingCategories.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
                         : RefreshIndicator(
                             onRefresh: () async =>
-                                await homeController.getCategories(),
+                                await categoriesController.getCategories(),
                             child: GetBuilder(
                                 init: searchController,
                                 builder: (context) {
                                   return searchController.searchText.isEmpty
-                                      ? ListView.separated(
-                                          itemBuilder: (context, index) {
-                                            return CustomBox(
-                                              title: homeController
-                                                  .categories[index].name,
-                                              editOnPressed: () {
-                                                //Navigate to edit category screen
-                                              },
-                                              deleteDialogTitle:
-                                                  'هل تريد بالتأكيد حذف الفئة؟',
-                                              deleteOnPressed: () {
-                                                //Delete from category controller
-                                                Get.back();
-                                              },
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) {
-                                            return spacerHeight();
-                                          },
-                                          itemCount:
-                                              homeController.categories.length,
-                                        )
+                                      ? buildCategoriesList(
+                                          categoriesController.categories)
                                       : Obx(() {
                                           return searchController
                                                   .searchLoading.value
@@ -90,31 +112,9 @@ class ChooseCategoryScreen extends StatelessWidget {
                                                       width: 100,
                                                       isWhite: true),
                                                 )
-                                              : ListView.separated(
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return CustomBox(
-                                                      title: searchController
-                                                          .filteredList[index]
-                                                          .name,
-                                                      editOnPressed: () {
-                                                        //Navigate to edit category screen
-                                                      },
-                                                      deleteDialogTitle:
-                                                          'هل تريد بالتأكيد حذف الحساب؟',
-                                                      deleteOnPressed: () {
-                                                        //Delete from category controller
-                                                        Get.back();
-                                                      },
-                                                    );
-                                                  },
-                                                  separatorBuilder:
-                                                      (context, index) {
-                                                    return spacerHeight();
-                                                  },
-                                                  itemCount: searchController
-                                                      .filteredList.length,
-                                                );
+                                              : buildCategoriesList(
+                                                  searchController
+                                                      .filteredList);
                                         });
                                 }),
                           ),
