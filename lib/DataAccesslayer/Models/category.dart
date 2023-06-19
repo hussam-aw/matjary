@@ -1,19 +1,19 @@
 class Category {
   final int id;
   final String name;
-  final String parent;
+  final int? parentId;
 
   Category({
     required this.id,
     required this.name,
-    required this.parent,
+    this.parentId,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'parent': parent,
+      'parent': parentId,
     };
   }
 
@@ -21,7 +21,7 @@ class Category {
     return Category(
       id: map['id'] as int,
       name: map['name'] ?? '',
-      parent: map['parent'] ?? '',
+      parentId: map['parent'],
     );
   }
 }
