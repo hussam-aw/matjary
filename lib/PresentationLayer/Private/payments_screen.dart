@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/payment_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
@@ -59,6 +61,14 @@ class PaymentsScreen extends StatelessWidget {
             ),
           ),
         ),
+        floatingActionButton: AddButton(
+          backgroundColor: UIColors.primary,
+          iconColor: UIColors.white,
+          onPressed: () {
+            Get.toNamed(AppRoutes.createEditPaymentScreen);
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
   }
