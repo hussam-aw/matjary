@@ -133,7 +133,7 @@ class ChooseWareScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditWareScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
   }

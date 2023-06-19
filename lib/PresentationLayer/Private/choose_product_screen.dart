@@ -131,7 +131,7 @@ class ChooseProductScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditProductScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
   }

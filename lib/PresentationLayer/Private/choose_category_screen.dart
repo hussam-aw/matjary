@@ -147,7 +147,7 @@ class ChooseCategoryScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditCategoryScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
   }

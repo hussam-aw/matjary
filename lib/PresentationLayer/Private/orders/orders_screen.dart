@@ -158,7 +158,7 @@ class OrdersScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditOrderScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       ),
     );
   }
