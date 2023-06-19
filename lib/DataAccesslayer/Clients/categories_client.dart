@@ -16,15 +16,46 @@ class CategoriesClient {
     }
   }
 
-  Future<dynamic> createCategory(name, userId) async {
+  Future<dynamic> createCategory(name, userId, parentId) async {
     var response = await http.post(Uri.parse("$baseUrl$categoryLink"),
         body: jsonEncode(<String, dynamic>{
           "name": name,
           "user_id": MyApp.appUser!.id,
+          "parent_id": parentId,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
+    if (response.statusCode == 201) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> updateCategory(id, name, parentId) async {
+    var response = await http.post(Uri.parse('$baseUrl$categoryLink/$id'),
+        body: jsonEncode(<String, dynamic>{
+          "name": name,
+          "user_id": MyApp.appUser!.id,
+          "parent_id": parentId,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+
+    print(response.body);
+    if (response.statusCode == 201) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> deleteCategory(id) async {
+    var response = await http.delete(Uri.parse('$baseUrl$categoryLink/$id'));
+
+    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
