@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/category_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+import '../Widgets/Public/spacerWidth.dart';
+
 class CreateEditCategoryScreen extends StatelessWidget {
   CreateEditCategoryScreen({super.key});
 
   final categoryController = Get.put(CategoryController());
+  final Category? category = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    categoryController.setCategoryDetails(category);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -43,6 +51,34 @@ class CreateEditCategoryScreen extends StatelessWidget {
                           controller: categoryController.nameController,
                           hintText: 'اسم التصنيف',
                         ),
+                        spacerHeight(),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextFormField(
+                                readOnly: true,
+                                controller:
+                                    categoryController.parentCategoryController,
+                                hintText: 'التصنيف الأب (اختياري)',
+                              ),
+                            ),
+                            spacerWidth(),
+                            CustomIconButton(
+                              icon: const Icon(
+                                FontAwesomeIcons.magnifyingGlass,
+                                color: UIColors.mainIcon,
+                              ),
+                              onPressed: () async {
+                                var category = await Get.toNamed(
+                                  AppRoutes.chooseCategoryScreen,
+                                  arguments: 'selection',
+                                );
+                                categoryController
+                                    .setParentCategory(category.id);
+                              },
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -52,9 +88,13 @@ class CreateEditCategoryScreen extends StatelessWidget {
               Obx(
                 () {
                   return AcceptButton(
-                    text: 'إنشاء',
+                    text: category != null ? 'تعديل' : 'إنشاء',
                     onPressed: () {
-                      categoryController.createCategory();
+                      if (category != null) {
+                        categoryController.updateCategory(category!.id);
+                      } else {
+                        categoryController.createCategory();
+                      }
                     },
                     isLoading: categoryController.loading.value,
                   );
