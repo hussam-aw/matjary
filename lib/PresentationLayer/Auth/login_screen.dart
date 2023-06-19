@@ -45,6 +45,7 @@ class LoginScreen extends StatelessWidget {
                                 controller:
                                     authController.loginPasswordController,
                                 keyboardType: TextInputType.visiblePassword,
+                                obsecureText: true,
                                 hintText: 'كلمة المرور',
                               ),
                               spacerHeight(),

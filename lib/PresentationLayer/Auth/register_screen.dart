@@ -46,12 +46,14 @@ class RegisterScreen extends StatelessWidget {
                           CustomTextFormField(
                             controller: TextEditingController(),
                             keyboardType: TextInputType.visiblePassword,
+                            obsecureText: true,
                             hintText: 'كلمة المرور',
                           ),
                           spacerHeight(),
                           CustomTextFormField(
                             controller: TextEditingController(),
                             keyboardType: TextInputType.visiblePassword,
+                            obsecureText: true,
                             hintText: 'تأكيد كلمة المرور',
                           ),
                           spacerHeight(),
