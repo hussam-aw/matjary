@@ -26,10 +26,10 @@ class WareRepo {
   }
 
   Future<Ware?> updateWare(id, name) async {
-    var updatedAccount = await client.updateWare(id, name);
-    print(updatedAccount);
-    if (updatedAccount != null) {
-      return Ware.fromMap(jsonDecode(updatedAccount));
+    var updatedWare = await client.updateWare(id, name);
+    print(updatedWare);
+    if (updatedWare != null) {
+      return Ware.fromMap(jsonDecode(updatedWare));
     }
     return null;
   }
