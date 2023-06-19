@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/image_picker_helper.dart';
@@ -25,7 +26,7 @@ class ProductController extends GetxController {
   List<String> imagePaths = [];
   List<String> selectedImages = [];
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
-  var homeController = Get.find<HomeController>();
+  var categoriesController = Get.find<CategoriesController>();
   ProductsController productsController = Get.find<ProductsController>();
   var loading = false.obs;
 
@@ -44,7 +45,7 @@ class ProductController extends GetxController {
   }
 
   int getCategoryId(categoryName) {
-    return homeController.categories
+    return categoriesController.categories
         .firstWhere((category) => category.name == categoryName)
         .id;
   }
@@ -164,8 +165,8 @@ class ProductController extends GetxController {
 
   @override
   void onInit() {
-    category = homeController.categories.isNotEmpty
-        ? homeController.categories[0].name
+    category = categoriesController.categories.isNotEmpty
+        ? categoriesController.categories[0].name
         : '';
     affectedExchangeState = "يتأثر";
     selectedImages.clear();

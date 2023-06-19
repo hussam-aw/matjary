@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
@@ -26,7 +27,7 @@ class HomeController extends GetxController {
   // WareRepo wareRepo = WareRepo();
   //OrdersRepo orderRepo = OrdersRepo();
   // PrdouctsRepo prdouctsRepo = PrdouctsRepo();
-  CategoriesRepo categoriesRepo = CategoriesRepo();
+  // CategoriesRepo categoriesRepo = CategoriesRepo();
   //var isLoading = false.obs;
   // List<Account> accounts = [];
   // var isLoadingAccounts = false.obs;
@@ -42,10 +43,11 @@ class HomeController extends GetxController {
   // List<Order> salesOrders = [];
   // List<Product> products = [];
   // var isLoadingProducts = false.obs;
-  List<Category> categories = [];
-  var isLoadingCategories = false.obs;
+  // List<Category> categories = [];
+  // var isLoadingCategories = false.obs;
   PaymentsRepo paymentsRepo = PaymentsRepo();
   AccountsController accountsController = Get.put(AccountsController());
+  CategoriesController categoriesController = Get.put(CategoriesController());
   OrdersController ordersController = Get.put(OrdersController());
   WaresController waresController = Get.put(WaresController());
   ProductsController productsController = Get.put(ProductsController());
@@ -103,11 +105,11 @@ class HomeController extends GetxController {
   //   isLoadingProducts.value = false;
   // }
 
-  Future<void> getCategories() async {
-    isLoadingCategories.value = true;
-    categories = await categoriesRepo.getCategories();
-    isLoadingCategories.value = false;
-  }
+  // Future<void> getCategories() async {
+  //   isLoadingCategories.value = true;
+  //   categories = await categoriesRepo.getCategories();
+  //   isLoadingCategories.value = false;
+  // }
 
   void fetchData() async {
     //isLoading.value = true;
@@ -117,7 +119,7 @@ class HomeController extends GetxController {
     accountsController.getClientAcoounts();
     accountsController.getBankAcoounts();
     productsController.getProducts();
-    getCategories();
+    categoriesController.getCategories();
     paymentsController.getPayments();
     waresController.getWares();
     //isLoading.value = false;

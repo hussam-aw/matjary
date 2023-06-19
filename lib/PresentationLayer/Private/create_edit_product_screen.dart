@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_screen_controller.dart';
@@ -10,6 +11,7 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Clients/categories_client.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
@@ -31,7 +33,7 @@ class CreateEditProductScreen extends StatelessWidget {
 
   final productController = Get.put(ProductController());
   final productScreenController = Get.put(ProductScreenController());
-  final homeController = Get.find<HomeController>();
+  final categoriesController = Get.find<CategoriesController>();
 
   final Product? product = Get.arguments;
 
@@ -77,18 +79,16 @@ class CreateEditProductScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Obx(() {
-                                    return homeController
+                                    return categoriesController
                                             .isLoadingCategories.value
                                         ? loadingItem()
                                         : CustomDropdownFormField(
                                             value: productController.category,
-                                            items: homeController
-                                                    .categories.isNotEmpty
-                                                ? homeController.categories
-                                                    .map((category) =>
-                                                        category.name)
-                                                    .toList()
-                                                : [''],
+                                            items: categoriesController
+                                                .categories
+                                                .map(
+                                                    (category) => category.name)
+                                                .toList(),
                                             onChanged: (value) {
                                               productController.category =
                                                   value;
