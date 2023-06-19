@@ -91,8 +91,8 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
               DrawerListTile(
-                title: "الفئات",
-                subtitle: "تصفح و تعديل الفئات",
+                title: "تصنيفات البضاعة",
+                subtitle: "تصفح و تعديل تصنيفات البضاعة",
                 iconData: Ionicons.menu,
                 onTap: () {
                   Get.toNamed(
