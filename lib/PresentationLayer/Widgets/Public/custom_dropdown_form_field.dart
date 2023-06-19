@@ -4,19 +4,20 @@ import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
 class CustomDropdownFormField extends StatelessWidget {
-  const CustomDropdownFormField({
+  CustomDropdownFormField({
     super.key,
     required this.items,
     this.value,
     required this.onChanged,
   });
 
-  final List<String> items;
+  List<String> items;
   final String? value;
   final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty) items = [''];
     return DropdownButtonFormField(
       value: value != null || value != "" ? items[0] : '',
       isDense: true,
