@@ -78,33 +78,25 @@ class CreateEditProductScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: Obx(() {
-                                    return categoriesController
-                                            .isLoadingCategories.value
-                                        ? loadingItem()
-                                        : CustomDropdownFormField(
-                                            value: productController.category,
-                                            items: categoriesController
-                                                .categories
-                                                .map(
-                                                    (category) => category.name)
-                                                .toList(),
-                                            onChanged: (value) {
-                                              productController.category =
-                                                  value;
-                                            },
-                                          );
-                                  }),
+                                  child: CustomTextFormField(
+                                    readOnly: true,
+                                    controller: productController
+                                        .categoryNameController,
+                                    hintText: 'غير مصنف',
+                                  ),
                                 ),
                                 spacerWidth(),
                                 CustomIconButton(
                                   icon: const Icon(
-                                    FontAwesomeIcons.plus,
+                                    FontAwesomeIcons.magnifyingGlass,
                                     color: UIColors.mainIcon,
                                   ),
-                                  onPressed: () {
-                                    Get.toNamed(
-                                        AppRoutes.createEditCategoryScreen);
+                                  onPressed: () async {
+                                    var category = await Get.toNamed(
+                                      AppRoutes.chooseCategoryScreen,
+                                      arguments: 'selection',
+                                    );
+                                    productController.setCategory(category);
                                   },
                                 ),
                               ],
