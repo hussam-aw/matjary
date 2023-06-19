@@ -8,7 +8,7 @@ class Product {
   final String quantity;
   final String affectedExchange;
   final String initialPrice;
-  final String category;
+  final int? categoryId;
   final List<String> images;
 
   Product({
@@ -21,7 +21,7 @@ class Product {
     required this.quantity,
     required this.affectedExchange,
     required this.initialPrice,
-    required this.category,
+    required this.categoryId,
     required this.images,
   });
 
@@ -36,7 +36,7 @@ class Product {
       "quantity": quantity,
       "affected_exchange": affectedExchange,
       "initial_price": initialPrice,
-      "category": category,
+      "category": categoryId,
       "images": images,
     };
   }
@@ -52,7 +52,7 @@ class Product {
       quantity: map['quantity'].toString(),
       affectedExchange: map['affected_exchange'].toString(),
       initialPrice: map['initial_price'].toString(),
-      category: map['category'] ?? "",
+      categoryId: map['category'],
       images: getImages(map['images'] ?? []),
     );
   }
