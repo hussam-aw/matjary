@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.controller,
     this.hintText = '',
     this.keyboardType = TextInputType.name,
+    this.obsecureText = false,
     this.style = UITextStyle.normalBody,
     this.maxLines = 1,
     this.readOnly = false,
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final bool obsecureText;
   final TextStyle style;
   final int maxLines;
   final bool readOnly;
@@ -35,6 +37,7 @@ class CustomTextFormField extends StatelessWidget {
       readOnly: readOnly,
       controller: controller,
       keyboardType: keyboardType,
+      obscureText: obsecureText,
       style: style,
       maxLines: maxLines,
       decoration: textFieldStyle.copyWith(
