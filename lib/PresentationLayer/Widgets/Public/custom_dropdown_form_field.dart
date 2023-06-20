@@ -19,7 +19,7 @@ class CustomDropdownFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     if (items.isEmpty) items = [''];
     return DropdownButtonFormField(
-      value: value != null || value != "" ? items[0] : '',
+      value: value == null || value == "" ? items[0] : value,
       isDense: true,
       isExpanded: true,
       decoration: textFieldStyle,
