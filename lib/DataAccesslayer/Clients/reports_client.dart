@@ -15,8 +15,8 @@ class ReportsClient {
   }
 
   Future<dynamic> getProductReport(productId) async {
-    var response =
-        await http.get(Uri.parse("$baseUrl$productReportLink/$productId"));
+    var response = await http.get(Uri.parse(
+        "$baseUrl$productReportLink/${MyApp.appUser!.id}/$productId"));
 
     if (response.statusCode == 200) {
       return response.body;
