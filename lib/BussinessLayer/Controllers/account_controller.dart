@@ -78,10 +78,7 @@ class AccountController extends GetxController {
     if (name.isNotEmpty &&
         balance.isNotEmpty &&
         type!.isNotEmpty &&
-        style!.isNotEmpty &&
-        email.isNotEmpty &&
-        mobileNumber.isNotEmpty &&
-        address.isNotEmpty) {
+        style!.isNotEmpty) {
       loading.value = true;
       var account = await accountsRepo.createAccount(
           MyApp.appUser!.id,
@@ -112,6 +109,7 @@ class AccountController extends GetxController {
       type = convertAccountTypeToString(account.type);
       style = convertAccountStyleToString(account.style);
       emailController = TextEditingController(text: account.email);
+      print(emailController.text);
       mobilePhoneController = TextEditingController(text: account.mobileNumber);
       addressController = TextEditingController(text: account.address);
     }
