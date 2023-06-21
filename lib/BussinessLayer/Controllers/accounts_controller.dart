@@ -15,7 +15,7 @@ class AccountsController extends GetxController {
   var isLoadingEmployeeAccounts = false.obs;
   List<Account> marketerAccounts = [];
   var isLoadingMarketerAccounts = false.obs;
-  List<Account> clientAndSupplierAccounts = [];
+  List<Account> customersAccounts = [];
   var isLoadingCashAmount = false.obs;
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
@@ -23,25 +23,31 @@ class AccountsController extends GetxController {
   Future<void> getAccounts() async {
     isLoadingAccounts.value = true;
     accounts = await accountsRepo.getAccounts();
+    getBankAcoounts();
+    getClientAcoounts();
+    getSupplierAccounts();
+    getMarketerAccounts();
+    getCustomersAccounts();
     isLoadingAccounts.value = false;
   }
 
-  Future<void> getBankAcoounts() async {
-    isLoadingBankAccounts.value = true;
+  void getBankAcoounts() {
     bankAccounts = accounts.where((account) => account.style == 1).toList();
-    isLoadingBankAccounts.value = false;
   }
 
-  Future<void> getClientAcoounts() async {
-    isLoadingClientAccounts.value = true;
+  void getClientAcoounts() {
     clientAccounts = accounts.where((account) => account.style == 2).toList();
-    isLoadingClientAccounts.value = false;
   }
 
-  void getClientsAndSupplierAccounts() {
-    clientAndSupplierAccounts = accounts
-        .where((account) => account.style == 2 || account.style == 3)
+  void getCustomersAccounts() {
+    customersAccounts = accounts
+        .where((account) =>
+            account.style == 2 || account.style == 3 || account.style == 10)
         .toList();
+  }
+
+  void getSupplierAccounts() {
+    supplierAccounts = accounts.where((account) => account.style == 3).toList();
   }
 
   void getMarketerAccounts() {
@@ -52,14 +58,14 @@ class AccountsController extends GetxController {
   void getAccountsBasedOnStyle(style) async {
     switch (style) {
       case 'bank':
-        await getBankAcoounts();
+        getBankAcoounts();
         await getCachAmount();
         break;
       case 'client':
         getClientAcoounts();
         break;
-      case 'clientsAndSuppliers':
-        getClientsAndSupplierAccounts();
+      case 'customers':
+        getCustomersAccounts();
         break;
       case 'marketer':
         getMarketerAccounts();
@@ -73,8 +79,8 @@ class AccountsController extends GetxController {
         return bankAccounts;
       case 'client':
         return clientAccounts;
-      case 'clientsAndSuppliers':
-        return clientAndSupplierAccounts;
+      case 'customers':
+        return customersAccounts;
       case 'marketer':
         return marketerAccounts;
     }
