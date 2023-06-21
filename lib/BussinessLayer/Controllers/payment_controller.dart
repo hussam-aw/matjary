@@ -82,6 +82,8 @@ class PaymentController extends GetxController {
       if (payment != null) {
         boxClient.setCounterPartyAccount(counterPartyAccount!.id);
         boxClient.setBankAccount(bankAccount!.id);
+        await accountsController.getAccounts();
+        accountsController.getClientAcoounts();
         SnackBars.showSuccess('تم انشاء القيد الدفعة');
       } else {
         SnackBars.showError('فشل انشاء الدفعة');

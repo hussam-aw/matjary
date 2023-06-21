@@ -25,6 +25,7 @@ class StatementController extends GetxController {
   TextEditingController statementTextController = TextEditingController();
   StatementRepo statementRepo = StatementRepo();
   var accountController = Get.find<AccountsController>();
+  var accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
 
@@ -101,6 +102,8 @@ class StatementController extends GetxController {
       if (statement != null) {
         boxClient.setFirstSideAccount(fromAccount!.id);
         boxClient.setSecondSideAccount(toAccount!.id);
+        await accountsController.getAccounts();
+        accountsController.getClientAcoounts();
         SnackBars.showSuccess('تم انشاء القيد المحاسبي');
       } else {
         SnackBars.showError('فشل انشاء القيد المحاسبي');
