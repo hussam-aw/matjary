@@ -29,8 +29,12 @@ class CreateEditPaymentScreen extends StatelessWidget {
   final paymentScreenController = Get.put(PaymentScreenController());
   final accountsController = Get.find<AccountsController>();
 
+  var paymentType = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
+    paymentScreenController.setPaymentType(paymentType);
+    paymentController.setPaymentType(paymentType);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -66,7 +70,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                         paymentScreenController
                                             .paymentTypes[0]]!,
                                     onTap: () {
-                                      paymentScreenController.setPaymentType(
+                                      paymentScreenController.changePaymentType(
                                           paymentScreenController
                                               .paymentTypes[0]);
 
@@ -85,7 +89,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                         paymentScreenController
                                             .paymentTypes[1]]!,
                                     onTap: () {
-                                      paymentScreenController.setPaymentType(
+                                      paymentScreenController.changePaymentType(
                                           paymentScreenController
                                               .paymentTypes[1]);
 
@@ -153,9 +157,9 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                     AppRoutes.chooseAccountScreen,
                                     arguments: {
                                       'mode': 'selection',
-                                      'style': 'clientsAndSuppliers',
-                                      'accounts': accountsController
-                                          .clientAndSupplierAccounts
+                                      'style': 'customers',
+                                      'accounts':
+                                          accountsController.customersAccounts
                                     });
                                 paymentController
                                     .setCounterPartyAccount(account);
