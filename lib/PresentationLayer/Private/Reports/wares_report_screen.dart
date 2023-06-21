@@ -48,28 +48,38 @@ class WaresReportScreen extends StatelessWidget {
                   child: Obx(() {
                     return reportsController.isloading.value
                         ? Center(child: loadingItem(width: 100, isWhite: true))
-                        : ListView.separated(
-                            itemBuilder: (context, index) {
-                              return TableDetailsItem(
-                                firstColumnItem: reportsController
-                                    .productsReports[index].productName,
-                                thirdColumnItem: reportsController
-                                    .productsReports[index].quantity
-                                    .toString(),
-                                fourthColumnItem: InkWell(
-                                  onTap: () {},
-                                  child: Icon(
-                                    Icons.info,
-                                    size: 30,
-                                    color: UIColors.white,
+                        : reportsController.productsReports.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'لا يوجد تقارير',
+                                  style: UITextStyle.normalBody.copyWith(
+                                    color: UIColors.normalText,
                                   ),
                                 ),
+                              )
+                            : ListView.separated(
+                                itemBuilder: (context, index) {
+                                  return TableDetailsItem(
+                                    firstColumnItem: reportsController
+                                        .productsReports[index].productName,
+                                    thirdColumnItem: reportsController
+                                        .productsReports[index].quantity
+                                        .toString(),
+                                    fourthColumnItem: InkWell(
+                                      onTap: () {},
+                                      child: Icon(
+                                        Icons.info,
+                                        size: 30,
+                                        color: UIColors.white,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) =>
+                                    spacerHeight(height: 10),
+                                itemCount:
+                                    reportsController.productsReports.length,
                               );
-                            },
-                            separatorBuilder: (context, index) =>
-                                spacerHeight(height: 10),
-                            itemCount: reportsController.productsReports.length,
-                          );
                   }),
                 ),
                 spacerHeight(height: 22),

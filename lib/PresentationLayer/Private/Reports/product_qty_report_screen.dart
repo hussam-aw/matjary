@@ -50,23 +50,32 @@ class ProductQtyReportScreen extends StatelessWidget {
                   child: Obx(() {
                     return reportsController.isloading.value
                         ? Center(child: loadingItem(width: 100, isWhite: true))
-                        : ListView.separated(
-                            itemBuilder: (context, index) {
-                              return TableDetailsItem(
-                                firstColumnItem: reportsController
-                                    .productReport!.wares[index]['ware'],
-                                secondColumnItem: '',
-                                thirdColumnItem: '',
-                                fourthColumnItem: reportsController
-                                    .productReport!.wares[index]['quantity']
-                                    .toString(),
+                        : reportsController.productReport == null
+                            ? Center(
+                                child: Text(
+                                  'لا يوجد تقارير',
+                                  style: UITextStyle.normalBody.copyWith(
+                                    color: UIColors.normalText,
+                                  ),
+                                ),
+                              )
+                            : ListView.separated(
+                                itemBuilder: (context, index) {
+                                  return TableDetailsItem(
+                                    firstColumnItem: reportsController
+                                        .productReport!.wares[index]['ware'],
+                                    secondColumnItem: '',
+                                    thirdColumnItem: '',
+                                    fourthColumnItem: reportsController
+                                        .productReport!.wares[index]['quantity']
+                                        .toString(),
+                                  );
+                                },
+                                separatorBuilder: (context, index) =>
+                                    spacerHeight(height: 10),
+                                itemCount: reportsController
+                                    .productReport!.wares.length,
                               );
-                            },
-                            separatorBuilder: (context, index) =>
-                                spacerHeight(height: 10),
-                            itemCount:
-                                reportsController.productReport!.wares.length,
-                          );
                   }),
                 ),
                 AccetpIconButton(

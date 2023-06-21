@@ -67,15 +67,24 @@ class ChooseCategoryScreen extends StatelessWidget {
               }));
     }
 
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return categoriesWidgetList[index];
-      },
-      separatorBuilder: (context, index) {
-        return spacerHeight();
-      },
-      itemCount: categoriesWidgetList.length,
-    );
+    return cateoriesList.isEmpty
+        ? Center(
+            child: Text(
+              'لا يوجد تصنيفات',
+              style: UITextStyle.normalBody.copyWith(
+                color: UIColors.normalText,
+              ),
+            ),
+          )
+        : ListView.separated(
+            itemBuilder: (context, index) {
+              return categoriesWidgetList[index];
+            },
+            separatorBuilder: (context, index) {
+              return spacerHeight();
+            },
+            itemCount: categoriesWidgetList.length,
+          );
   }
 
   @override

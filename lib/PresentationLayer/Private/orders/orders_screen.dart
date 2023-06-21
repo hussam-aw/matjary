@@ -29,15 +29,24 @@ class OrdersScreen extends StatelessWidget {
   final accountsController = Get.find<AccountsController>();
 
   Widget buildOrdersList(List<Order> orders) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return OrderBox(
-          order: orders[index],
-        );
-      },
-      separatorBuilder: (context, index) => spacerHeight(),
-      itemCount: orders.length,
-    );
+    return orders.isEmpty
+        ? Center(
+            child: Text(
+              'لا يوجد فواتير',
+              style: UITextStyle.normalBody.copyWith(
+                color: UIColors.normalText,
+              ),
+            ),
+          )
+        : ListView.separated(
+            itemBuilder: (context, index) {
+              return OrderBox(
+                order: orders[index],
+              );
+            },
+            separatorBuilder: (context, index) => spacerHeight(),
+            itemCount: orders.length,
+          );
   }
 
   @override

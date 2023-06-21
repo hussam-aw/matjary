@@ -4,6 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
+import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -21,21 +22,30 @@ class CreateWareReportScreen extends StatelessWidget {
   final SearchController searchController = Get.put(SearchController());
 
   Widget buildWareList(wareList) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return NormalBox(
-          title: wareList[index].name,
-          onTap: () {
-            Get.toNamed(AppRoutes.singleWareReportScreen,
-                arguments: wareList[index]);
-          },
-        );
-      },
-      separatorBuilder: (context, index) {
-        return spacerHeight();
-      },
-      itemCount: wareList.length,
-    );
+    return wareList.isEmpty
+        ? Center(
+            child: Text(
+              'لا يوجد مستودعات',
+              style: UITextStyle.normalBody.copyWith(
+                color: UIColors.normalText,
+              ),
+            ),
+          )
+        : ListView.separated(
+            itemBuilder: (context, index) {
+              return NormalBox(
+                title: wareList[index].name,
+                onTap: () {
+                  Get.toNamed(AppRoutes.singleWareReportScreen,
+                      arguments: wareList[index]);
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return spacerHeight();
+            },
+            itemCount: wareList.length,
+          );
   }
 
   @override
