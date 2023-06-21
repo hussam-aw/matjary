@@ -116,8 +116,6 @@ class HomeController extends GetxController {
     ordersController.getOrders();
     accountsController.getCachAmount();
     await accountsController.getAccounts();
-    accountsController.getClientAcoounts();
-    accountsController.getBankAcoounts();
     productsController.getProducts();
     categoriesController.getCategories();
     paymentsController.getPayments();
