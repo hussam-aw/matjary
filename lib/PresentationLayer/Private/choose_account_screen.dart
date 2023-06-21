@@ -150,7 +150,7 @@ class ChooseAccountScreen extends StatelessWidget {
               Get.toNamed(AppRoutes.createEditAccountScreen);
             },
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         ),
       ),
     );

@@ -78,7 +78,7 @@ class PaymentsScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditPaymentScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }
