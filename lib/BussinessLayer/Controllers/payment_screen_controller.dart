@@ -30,8 +30,14 @@ class PaymentScreenController extends GetxController {
   }
 
   void setPaymentType(type) {
-    resetPaymentType();
-    paymentTypesSelection[type] = true;
+    if (type != null) {
+      resetPaymentType();
+      paymentTypesSelection[type] = true;
+    }
+  }
+
+  void changePaymentType(type) {
+    setPaymentType(type);
     update();
   }
 
