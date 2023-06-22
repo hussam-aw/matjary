@@ -16,7 +16,7 @@ class AccountsController extends GetxController {
   List<Account> marketerAccounts = [];
   var isLoadingMarketerAccounts = false.obs;
   List<Account> customersAccounts = [];
-  var isLoadingCashAmount = false.obs;
+  //var isLoadingCashAmount = false.obs;
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
 
@@ -28,22 +28,18 @@ class AccountsController extends GetxController {
     getSupplierAccounts();
     getMarketerAccounts();
     getCustomersAccounts();
+    await getCachAmount();
     isLoadingAccounts.value = false;
   }
 
   Future<void> getBankAcoounts() async {
+    isLoadingBankAccounts.value = true;
     bankAccounts = accounts.where((account) => account.style == 1).toList();
+    isLoadingBankAccounts.value = false;
   }
 
   void getClientAcoounts() {
     clientAccounts = accounts.where((account) => account.style == 2).toList();
-  }
-
-  void getCustomersAccounts() {
-    customersAccounts = accounts
-        .where((account) =>
-            account.style == 2 || account.style == 3 || account.style == 10)
-        .toList();
   }
 
   void getSupplierAccounts() {
@@ -55,20 +51,33 @@ class AccountsController extends GetxController {
         accounts.where((account) => account.style == 10).toList();
   }
 
+  void getCustomersAccounts() {
+    customersAccounts = accounts
+        .where((account) =>
+            account.style == 2 || account.style == 3 || account.style == 10)
+        .toList();
+  }
+
   void getAccountsBasedOnStyle(style) async {
     switch (style) {
       case 'bank':
-        await getBankAcoounts();
+        getBankAcoounts();
         await getCachAmount();
         break;
       case 'client':
         getClientAcoounts();
+        getCustomersAccounts();
         break;
-      case 'customers':
+      case 'supplier':
+        getSupplierAccounts();
         getCustomersAccounts();
         break;
       case 'marketer':
         getMarketerAccounts();
+        getCustomersAccounts();
+        break;
+      case 'customers':
+        getCustomersAccounts();
         break;
     }
   }
@@ -79,10 +88,13 @@ class AccountsController extends GetxController {
         return bankAccounts;
       case 'client':
         return clientAccounts;
-      case 'customers':
-        return customersAccounts;
+
       case 'marketer':
         return marketerAccounts;
+      case 'customers':
+        return customersAccounts;
+      case 'employers':
+        return customersAccounts;
     }
     return accounts;
   }
@@ -101,9 +113,7 @@ class AccountsController extends GetxController {
   }
 
   Future<void> getCachAmount() async {
-    isLoadingCashAmount.value = true;
     cashAmount.value = await accountsRepo.getCashAmount();
-    isLoadingCashAmount.value = false;
   }
 
   @override
