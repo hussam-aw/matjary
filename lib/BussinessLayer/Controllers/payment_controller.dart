@@ -31,7 +31,9 @@ class PaymentController extends GetxController {
   };
 
   void setPaymentType(type) {
-    paymentType = counterPaymentTypes[type]!;
+    if (type != null) {
+      paymentType = counterPaymentTypes[type]!;
+    }
   }
 
   void setBankAccount(Account? account) {
