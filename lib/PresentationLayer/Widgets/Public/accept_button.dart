@@ -44,7 +44,7 @@ class AcceptButton extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: isLoading ? TextAlign.right : TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
                 style: textStyle,
               ),
             ),

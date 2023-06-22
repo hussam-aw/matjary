@@ -40,7 +40,8 @@ class RadioButtonItem extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            //overflow: TextOverflow.ellipsis,
             style: style.copyWith(
               color: isSelected ? selectedTextColor : UIColors.normalText,
             ),

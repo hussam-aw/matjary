@@ -30,7 +30,7 @@ class OrderProductBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
+      //height: 90,
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
       decoration: const BoxDecoration(
         color: UIColors.containerBackground,
@@ -45,48 +45,46 @@ class OrderProductBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    product.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: UITextStyle.normalBody,
-                  ),
+                Text(
+                  product.name,
+                  softWrap: true,
+                  //overflow: TextOverflow.ellipsis,
+                  style: UITextStyle.normalBody,
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Text(
-                        'الكمية:',
-                        style: UITextStyle.small,
-                      ),
-                      spacerWidth(width: 4),
-                      AmountBox(
-                        amount: quantity.toString(),
-                      ),
-                      spacerWidth(width: 6),
-                      const Text(
-                        'الافرادي:',
-                        style: UITextStyle.small,
-                      ),
-                      spacerWidth(width: 4),
-                      AmountBox(
-                        amount: price!.toStringAsFixed(2),
-                      ),
-                    ],
-                  ),
+                spacerHeight(),
+                Row(
+                  children: [
+                    const Text(
+                      'الكمية:',
+                      style: UITextStyle.small,
+                    ),
+                    spacerWidth(width: 4),
+                    AmountBox(
+                      amount: quantity.toString(),
+                    ),
+                    spacerWidth(width: 6),
+                    const Text(
+                      'الافرادي:',
+                      style: UITextStyle.small,
+                    ),
+                    spacerWidth(width: 4),
+                    AmountBox(
+                      amount: price!.toStringAsFixed(2),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
+          spacerWidth(),
           Expanded(
             flex: 1,
             child: Align(
               alignment: Alignment.center,
               child: Text(
                 totalPrice.toStringAsFixed(1),
-                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                //overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalMeduim,
               ),
             ),
@@ -113,6 +111,7 @@ class OrderProductBox extends StatelessWidget {
                     color: UIColors.white,
                   ),
                 ),
+                spacerHeight(),
                 InkWell(
                   onTap: () {
                     orderScreenController.deleteSelectedProduct(product.id);

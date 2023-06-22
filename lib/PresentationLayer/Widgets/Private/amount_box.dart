@@ -20,6 +20,7 @@ class AmountBox extends StatelessWidget {
       child: Center(
         child: Text(
           amount,
+          softWrap: true,
           style: UITextStyle.normalSmall.copyWith(color: UIColors.smallText),
         ),
       ),

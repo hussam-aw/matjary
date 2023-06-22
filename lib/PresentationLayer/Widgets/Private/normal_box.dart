@@ -17,7 +17,7 @@ class NormalBox extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 55,
+        //height: 55,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
         decoration: const BoxDecoration(
           color: UIColors.containerBackground,
@@ -25,7 +25,8 @@ class NormalBox extends StatelessWidget {
         child: Text(
           title,
           textAlign: TextAlign.right,
-          overflow: TextOverflow.ellipsis,
+          softWrap: true,
+          //overflow: TextOverflow.ellipsis,
           style: UITextStyle.normalMeduim.copyWith(
             color: UIColors.lightNormalText,
           ),

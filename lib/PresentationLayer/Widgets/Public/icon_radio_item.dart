@@ -52,7 +52,8 @@ class IconRadioItem extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
-                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                //overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalMeduim,
               ),
             ),

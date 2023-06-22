@@ -24,7 +24,7 @@ class CustomBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 67,
+      //height: 67,
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
       decoration: const BoxDecoration(
         color: UIColors.containerBackground,
@@ -36,8 +36,8 @@ class CustomBox extends StatelessWidget {
             flex: 5,
             child: Text(
               title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              //overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: UITextStyle.normalMeduim.copyWith(
                 color: UIColors.lightNormalText,

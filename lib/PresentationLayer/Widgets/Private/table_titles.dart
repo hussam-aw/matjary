@@ -39,7 +39,7 @@ class TableTitles extends StatelessWidget {
             child: Center(
               child: Text(
                 firstColumnTitle,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
                 style: titleTextStyle,
               ),
             ),
@@ -48,7 +48,7 @@ class TableTitles extends StatelessWidget {
             child: Center(
               child: Text(
                 secondColumnTitle,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
                 style: titleTextStyle,
               ),
             ),
@@ -57,7 +57,7 @@ class TableTitles extends StatelessWidget {
             child: Center(
               child: Text(
                 thirdColumnTitle,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
                 style: titleTextStyle,
               ),
             ),
@@ -66,7 +66,7 @@ class TableTitles extends StatelessWidget {
             child: Center(
               child: Text(
                 fourthColumnTitle,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
                 style: titleTextStyle,
               ),
             ),

@@ -20,7 +20,7 @@ class PaymentBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
+      //height: 90,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: const BoxDecoration(
         color: UIColors.containerBackground,
@@ -32,7 +32,7 @@ class PaymentBox extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              height: 70,
+              //height: 70,
               decoration: const BoxDecoration(
                 color: UIColors.primary,
                 borderRadius: raduis10,
@@ -42,23 +42,18 @@ class PaymentBox extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Column(
                     children: [
-                      Expanded(
-                        flex: 2,
-                        child: Icon(
-                          paymentScreenController
-                              .getPaymenetTypeIcon(payment.type),
-                          size: 35,
-                          color: UIColors.white,
-                        ),
+                      Icon(
+                        paymentScreenController
+                            .getPaymenetTypeIcon(payment.type),
+                        size: 35,
+                        color: UIColors.white,
                       ),
-                      spacerHeight(height: 24),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          paymentScreenController.getPaymentType(payment.type),
-                          overflow: TextOverflow.ellipsis,
-                          style: UITextStyle.normalMeduim,
-                        ),
+                      spacerHeight(),
+                      Text(
+                        paymentScreenController.getPaymentType(payment.type),
+                        softWrap: true,
+                        //overflow: TextOverflow.ellipsis,
+                        style: UITextStyle.normalMeduim,
                       ),
                     ],
                   ),
@@ -76,17 +71,20 @@ class PaymentBox extends StatelessWidget {
                   Text(
                     payment.amount.toString(),
                     style: UITextStyle.boldBody,
-                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    //overflow: TextOverflow.ellipsis,
                   ),
                   spacerHeight(height: 12),
                   Text(
                     'الطرف المقابل: ${payment.counterParty.name}',
                     style: UITextStyle.normalSmall,
-                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    //overflow: TextOverflow.ellipsis,
                   ),
                   spacerHeight(height: 8),
                   Text(
                     payment.getDateString(payment.date),
+                    softWrap: true,
                     style: UITextStyle.normalSmall.copyWith(
                       color: UIColors.titleNoteText,
                     ),
