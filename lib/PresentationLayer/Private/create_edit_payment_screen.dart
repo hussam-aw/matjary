@@ -76,7 +76,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
 
                                       paymentController.setPaymentType(
                                           paymentScreenController
-                                              .counterPaymentTypes[0]);
+                                              .paymentTypes[0]);
                                     },
                                   ),
                                   IconRadioItem(
@@ -95,7 +95,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
 
                                       paymentController.setPaymentType(
                                           paymentScreenController
-                                              .counterPaymentTypes[1]);
+                                              .paymentTypes[1]);
                                     },
                                   ),
                                 ],
