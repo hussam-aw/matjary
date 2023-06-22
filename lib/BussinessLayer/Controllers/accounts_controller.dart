@@ -31,7 +31,7 @@ class AccountsController extends GetxController {
     isLoadingAccounts.value = false;
   }
 
-  void getBankAcoounts() {
+  Future<void> getBankAcoounts() async {
     bankAccounts = accounts.where((account) => account.style == 1).toList();
   }
 
@@ -58,7 +58,7 @@ class AccountsController extends GetxController {
   void getAccountsBasedOnStyle(style) async {
     switch (style) {
       case 'bank':
-        getBankAcoounts();
+        await getBankAcoounts();
         await getCachAmount();
         break;
       case 'client':
