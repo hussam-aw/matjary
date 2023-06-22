@@ -172,8 +172,9 @@ class CreateEditPaymentScreen extends StatelessWidget {
                         spacerHeight(),
                         CustomTextFormField(
                           controller: paymentController.amountController,
-                          keyboardType: TextInputType.numberWithOptions(
+                          keyboardType: const TextInputType.numberWithOptions(
                               decimal: true, signed: false),
+                          hintText: 'أدخل المبلغ',
                           formatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,2}'))

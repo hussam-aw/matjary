@@ -104,7 +104,7 @@ class SavingOrder extends StatelessWidget {
                         spacerHeight(),
                         CustomTextFormField(
                           controller: orderController.paidAmountController,
-                          hintText: '300.000',
+                          hintText: 'أدخل المبلغ',
                           formatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,2}')),

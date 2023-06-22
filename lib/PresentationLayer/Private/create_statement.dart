@@ -166,6 +166,7 @@ class CreateStatementScreen extends StatelessWidget {
                             controller:
                                 statementController.amountController.value,
                             keyboardType: TextInputType.number,
+                            hintText: 'أدخل المبلغ',
                             formatters: [
                               FilteringTextInputFormatter.digitsOnly
                             ],
