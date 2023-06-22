@@ -56,6 +56,7 @@ class OrderProductBox extends StatelessWidget {
                   children: [
                     const Text(
                       'الكمية:',
+                      softWrap: true,
                       style: UITextStyle.small,
                     ),
                     spacerWidth(width: 4),
@@ -65,6 +66,7 @@ class OrderProductBox extends StatelessWidget {
                     spacerWidth(width: 6),
                     const Text(
                       'الافرادي:',
+                      softWrap: true,
                       style: UITextStyle.small,
                     ),
                     spacerWidth(width: 4),
