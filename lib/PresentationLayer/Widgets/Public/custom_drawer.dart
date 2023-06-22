@@ -76,8 +76,8 @@ class CustomDrawer extends StatelessWidget {
                   Get.toNamed(
                     AppRoutes.chooseAccountScreen,
                     arguments: {
-                      'style': 'bank',
-                      'accounts': accountsController.bankAccounts
+                      'style': 'employers',
+                      'accounts': accountsController.customersAccounts
                     },
                   );
                 },
