@@ -24,7 +24,11 @@ class CustomRadioGroup extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: items,
+                      children: [
+                        Expanded(child: items[0]),
+                        spacerWidth(width: 60),
+                        Expanded(child: items[1]),
+                      ],
                     ),
                   )
                 : Padding(
