@@ -111,8 +111,8 @@ class ChooseAccountScreen extends StatelessWidget {
                             child: loadingItem(width: 100, isWhite: true),
                           );
                         }
-                        accountsController
-                            .getAccountsBasedOnStyle(accountStyle);
+                        // accountsController
+                        //     .getAccountsBasedOnStyle(accountStyle);
 
                         accounts =
                             accountsController.getAccountsList(accountStyle);
