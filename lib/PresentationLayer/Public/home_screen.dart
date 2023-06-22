@@ -54,6 +54,7 @@ class HomeScreen extends StatelessWidget {
                   width: Get.width,
                   child: Text(
                     "مرحباً بك : ${MyApp.appUser!.name}",
+                    softWrap: true,
                     style: UITextStyle.boldBody,
                     textAlign: TextAlign.right,
                   ),
@@ -79,6 +80,7 @@ class HomeScreen extends StatelessWidget {
                         width: Get.width,
                         child: Text(
                           "أو تابع حساباتك المالية ",
+                          softWrap: true,
                           style: UITextStyle.normalSmall
                               .apply(color: Colors.white54),
                           textAlign: TextAlign.right,
@@ -166,19 +168,21 @@ class HomeScreen extends StatelessWidget {
                                             const Text(
                                               'السيولة النقدية',
                                               overflow: TextOverflow.ellipsis,
+                                              softWrap: true,
                                               style: UITextStyle.normalSmall,
                                             ),
                                             spacerHeight(height: 10),
                                             Obx(
                                               () => accountsController
-                                                      .isLoadingCashAmount.value
+                                                      .isLoadingAccounts.value
                                                   ? AmountShimmer()
                                                   : Text(
                                                       accountsController
                                                           .cashAmount.value
                                                           .toString(),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                      softWrap: true,
+                                                      // overflow:
+                                                      //     TextOverflow.ellipsis,
                                                       style: UITextStyle
                                                           .boldHeading,
                                                     ),
@@ -230,7 +234,8 @@ class HomeScreen extends StatelessWidget {
                                     : Text(
                                         ordersController.purchasesOrders.length
                                             .toString(),
-                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
+                                        //overflow: TextOverflow.ellipsis,
                                         style: UITextStyle.boldHeading
                                             .apply(fontSizeFactor: 1.2),
                                       );
@@ -245,7 +250,8 @@ class HomeScreen extends StatelessWidget {
                                     : Text(
                                         ordersController.salesOrders.length
                                             .toString(),
-                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
+                                        // overflow: TextOverflow.ellipsis,
                                         style: UITextStyle.boldHeading
                                             .apply(fontSizeFactor: 1.2),
                                       );
@@ -273,6 +279,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         const Text(
                           'حسابات العملاء',
+                          softWrap: true,
                           style: UITextStyle.boldBody,
                         ),
                         spacerHeight(height: 10),
