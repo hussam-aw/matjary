@@ -25,7 +25,7 @@ class OrderBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
+      //height: 90,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: const BoxDecoration(
         color: UIColors.containerBackground,
@@ -52,7 +52,8 @@ class OrderBox extends StatelessWidget {
                 child: Center(
                   child: Text(
                     '#${order.id}',
-                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    //overflow: TextOverflow.ellipsis,
                     style: UITextStyle.boldHeadingRedHat,
                   ),
                 ),
@@ -69,13 +70,13 @@ class OrderBox extends StatelessWidget {
                   Text(
                     'الزبون ${accountsController.getAccountName(order.customerId)}',
                     style: UITextStyle.boldBody,
-                    overflow: TextOverflow.ellipsis,
+                    //overflow: TextOverflow.ellipsis,
                   ),
                   spacerHeight(height: 12),
                   Text(
                     'إجمالي الفاتورة :   ${order.total}',
                     style: UITextStyle.normalSmall,
-                    overflow: TextOverflow.ellipsis,
+                    //overflow: TextOverflow.ellipsis,
                   ),
                   spacerHeight(height: 8),
                   Text(

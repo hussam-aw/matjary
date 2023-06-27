@@ -4,6 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
+import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/payment_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
@@ -19,15 +20,24 @@ class PaymentsScreen extends StatelessWidget {
   final paymentsController = Get.find<PaymentsController>();
 
   Widget buildPaymentsList(List<Payment> payments) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return PaymentBox(
-          payment: payments[index],
-        );
-      },
-      separatorBuilder: (context, index) => spacerHeight(),
-      itemCount: payments.length,
-    );
+    return payments.isEmpty
+        ? Center(
+            child: Text(
+              'لا يوجد دفعات',
+              style: UITextStyle.normalBody.copyWith(
+                color: UIColors.normalText,
+              ),
+            ),
+          )
+        : ListView.separated(
+            itemBuilder: (context, index) {
+              return PaymentBox(
+                payment: payments[index],
+              );
+            },
+            separatorBuilder: (context, index) => spacerHeight(),
+            itemCount: payments.length,
+          );
   }
 
   @override
@@ -68,7 +78,7 @@ class PaymentsScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditPaymentScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }

@@ -16,7 +16,7 @@ class StatementController extends GetxController {
   Account? toAccount;
   RxString toAccountName = ''.obs;
   Rx<TextEditingController> amountController =
-      TextEditingController(text: "0.0").obs;
+      TextEditingController(text: "0").obs;
   RxString statementAmount = ''.obs;
   TextEditingController dateController = TextEditingController(
     text:
@@ -25,6 +25,7 @@ class StatementController extends GetxController {
   TextEditingController statementTextController = TextEditingController();
   StatementRepo statementRepo = StatementRepo();
   var accountController = Get.find<AccountsController>();
+  var accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
 
@@ -74,7 +75,7 @@ class StatementController extends GetxController {
     }
     setFromAccount(from);
     setToAccount(to);
-    setStatementText(from!.name);
+    if (from != null) setStatementText(from.name);
   }
 
   Future<void> createStatement() async {
@@ -101,6 +102,7 @@ class StatementController extends GetxController {
       if (statement != null) {
         boxClient.setFirstSideAccount(fromAccount!.id);
         boxClient.setSecondSideAccount(toAccount!.id);
+        await accountsController.getAccounts();
         SnackBars.showSuccess('تم انشاء القيد المحاسبي');
       } else {
         SnackBars.showError('فشل انشاء القيد المحاسبي');

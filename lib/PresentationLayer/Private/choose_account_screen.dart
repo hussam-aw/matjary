@@ -33,33 +33,42 @@ class ChooseAccountScreen extends StatelessWidget {
   var accounts = Get.arguments['accounts'];
 
   Widget buildAccountsList(accountList) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return screenMode == null
-            ? CustomBox(
-                title: accountList[index].name,
-                editOnPressed: () {
-                  Get.toNamed(AppRoutes.createEditAccountScreen,
-                      arguments: accountList[index]);
-                },
-                deleteDialogTitle: 'هل تريد بالتأكيد حذف الحساب؟',
-                deleteOnPressed: () {
-                  controller.deleteAccount(accountList[index].id);
-                  Get.back();
-                },
-              )
-            : NormalBox(
-                title: accountList[index].name,
-                onTap: () {
-                  Get.back(result: accountList[index]);
-                },
-              );
-      },
-      separatorBuilder: (context, index) {
-        return spacerHeight();
-      },
-      itemCount: accountList.length,
-    );
+    return accountList.isEmpty
+        ? Center(
+            child: Text(
+              'لا يوجد حسابات',
+              style: UITextStyle.normalBody.copyWith(
+                color: UIColors.normalText,
+              ),
+            ),
+          )
+        : ListView.separated(
+            itemBuilder: (context, index) {
+              return screenMode == null
+                  ? CustomBox(
+                      title: accountList[index].name,
+                      editOnPressed: () {
+                        Get.toNamed(AppRoutes.createEditAccountScreen,
+                            arguments: accountList[index]);
+                      },
+                      deleteDialogTitle: 'هل تريد بالتأكيد حذف الحساب؟',
+                      deleteOnPressed: () {
+                        controller.deleteAccount(accountList[index].id);
+                        Get.back();
+                      },
+                    )
+                  : NormalBox(
+                      title: accountList[index].name,
+                      onTap: () {
+                        Get.back(result: accountList[index]);
+                      },
+                    );
+            },
+            separatorBuilder: (context, index) {
+              return spacerHeight();
+            },
+            itemCount: accountList.length,
+          );
   }
 
   @override
@@ -102,8 +111,8 @@ class ChooseAccountScreen extends StatelessWidget {
                             child: loadingItem(width: 100, isWhite: true),
                           );
                         }
-                        accountsController
-                            .getAccountsBasedOnStyle(accountStyle);
+                        // accountsController
+                        //     .getAccountsBasedOnStyle(accountStyle);
 
                         accounts =
                             accountsController.getAccountsList(accountStyle);

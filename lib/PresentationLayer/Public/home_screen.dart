@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
@@ -32,6 +33,7 @@ class HomeScreen extends StatelessWidget {
 
   final homeController = Get.find<HomeController>();
   final accountsController = Get.find<AccountsController>();
+  final accountController = Get.put(AccountController());
   final ordersController = Get.find<OrdersController>();
 
   @override
@@ -52,6 +54,7 @@ class HomeScreen extends StatelessWidget {
                   width: Get.width,
                   child: Text(
                     "مرحباً بك : ${MyApp.appUser!.name}",
+                    softWrap: true,
                     style: UITextStyle.boldBody,
                     textAlign: TextAlign.right,
                   ),
@@ -77,6 +80,7 @@ class HomeScreen extends StatelessWidget {
                         width: Get.width,
                         child: Text(
                           "أو تابع حساباتك المالية ",
+                          softWrap: true,
                           style: UITextStyle.normalSmall
                               .apply(color: Colors.white54),
                           textAlign: TextAlign.right,
@@ -164,19 +168,21 @@ class HomeScreen extends StatelessWidget {
                                             const Text(
                                               'السيولة النقدية',
                                               overflow: TextOverflow.ellipsis,
+                                              softWrap: true,
                                               style: UITextStyle.normalSmall,
                                             ),
                                             spacerHeight(height: 10),
                                             Obx(
                                               () => accountsController
-                                                      .isLoadingCashAmount.value
+                                                      .isLoadingAccounts.value
                                                   ? AmountShimmer()
                                                   : Text(
                                                       accountsController
                                                           .cashAmount.value
                                                           .toString(),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                      softWrap: true,
+                                                      // overflow:
+                                                      //     TextOverflow.ellipsis,
                                                       style: UITextStyle
                                                           .boldHeading,
                                                     ),
@@ -191,13 +197,23 @@ class HomeScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     OrderIconButton(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.toNamed(
+                                          AppRoutes.createEditPaymentScreen,
+                                          arguments: 'مقبوضات',
+                                        );
+                                      },
                                       title: 'استلام',
                                       icon: FontAwesomeIcons.solidCircleDown,
                                     ),
                                     spacerWidth(width: 10),
                                     OrderIconButton(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.toNamed(
+                                          AppRoutes.createEditPaymentScreen,
+                                          arguments: 'مدفوعات',
+                                        );
+                                      },
                                       title: 'ارسال',
                                       icon: FontAwesomeIcons.solidCircleUp,
                                     )
@@ -218,7 +234,8 @@ class HomeScreen extends StatelessWidget {
                                     : Text(
                                         ordersController.purchasesOrders.length
                                             .toString(),
-                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
+                                        //overflow: TextOverflow.ellipsis,
                                         style: UITextStyle.boldHeading
                                             .apply(fontSizeFactor: 1.2),
                                       );
@@ -233,7 +250,8 @@ class HomeScreen extends StatelessWidget {
                                     : Text(
                                         ordersController.salesOrders.length
                                             .toString(),
-                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
+                                        // overflow: TextOverflow.ellipsis,
                                         style: UITextStyle.boldHeading
                                             .apply(fontSizeFactor: 1.2),
                                       );
@@ -261,6 +279,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         const Text(
                           'حسابات العملاء',
+                          softWrap: true,
                           style: UITextStyle.boldBody,
                         ),
                         spacerHeight(height: 10),
@@ -279,11 +298,15 @@ class HomeScreen extends StatelessWidget {
                                     itemBuilder: (context, index) {
                                       return CustomerAccountListTile(
                                         customerName: accountsController
-                                            .clientAccounts[index].name,
+                                            .customersAccounts[index].name,
                                         customerImage: 'assets/images/user.png',
-                                        customerStatus: 'زبون',
+                                        customerStatus: accountController
+                                            .convertAccountStyleToString(
+                                                accountsController
+                                                    .customersAccounts[index]
+                                                    .style),
                                         customerBalance: accountsController
-                                            .clientAccounts[index].balance
+                                            .customersAccounts[index].balance
                                             .toString(),
                                       );
                                     },
@@ -291,13 +314,13 @@ class HomeScreen extends StatelessWidget {
                                       return spacerHeight(height: 25);
                                     },
                                     itemCount: accountsController
-                                            .clientAccounts.isEmpty
+                                            .customersAccounts.isEmpty
                                         ? 0
                                         : accountsController
-                                                    .clientAccounts.length <
+                                                    .customersAccounts.length <
                                                 5
                                             ? accountsController
-                                                .clientAccounts.length
+                                                .customersAccounts.length
                                             : 5,
                                   );
                           }),

@@ -29,38 +29,47 @@ class ChooseWareScreen extends StatelessWidget {
   String? screenMode = Get.arguments['mode'];
 
   Widget buildWareList(wareList) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return screenMode == null
-            ? CustomBox(
-                title: wareList[index].name,
-                editOnPressed: () {
-                  Get.toNamed(AppRoutes.createEditWareScreen,
-                      arguments: wareList[index]);
-                },
-                deleteDialogTitle: 'هل تريد بالتأكيد حذف المستودع؟',
-                deleteOnPressed: () {
-                  controller.deleteWare(wareList[index].id);
-                  Get.back();
-                },
-              )
-            : NormalBox(
-                title: wareList[index].name,
-                onTap: () {
-                  if (screenMode == 'reportSelection') {
-                    Get.toNamed(AppRoutes.singleWareReportScreen,
-                        arguments: wareList[index]);
-                  } else {
-                    Get.back(result: wareList[index]);
-                  }
-                },
-              );
-      },
-      separatorBuilder: (context, index) {
-        return spacerHeight();
-      },
-      itemCount: wareList.length,
-    );
+    return wareList.isEmpty
+        ? Center(
+            child: Text(
+              'لا يوجد مستودعات',
+              style: UITextStyle.normalBody.copyWith(
+                color: UIColors.normalText,
+              ),
+            ),
+          )
+        : ListView.separated(
+            itemBuilder: (context, index) {
+              return screenMode == null
+                  ? CustomBox(
+                      title: wareList[index].name,
+                      editOnPressed: () {
+                        Get.toNamed(AppRoutes.createEditWareScreen,
+                            arguments: wareList[index]);
+                      },
+                      deleteDialogTitle: 'هل تريد بالتأكيد حذف المستودع؟',
+                      deleteOnPressed: () {
+                        controller.deleteWare(wareList[index].id);
+                        Get.back();
+                      },
+                    )
+                  : NormalBox(
+                      title: wareList[index].name,
+                      onTap: () {
+                        if (screenMode == 'reportSelection') {
+                          Get.toNamed(AppRoutes.singleWareReportScreen,
+                              arguments: wareList[index]);
+                        } else {
+                          Get.back(result: wareList[index]);
+                        }
+                      },
+                    );
+            },
+            separatorBuilder: (context, index) {
+              return spacerHeight();
+            },
+            itemCount: wareList.length,
+          );
   }
 
   @override
@@ -133,7 +142,7 @@ class ChooseWareScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditWareScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }

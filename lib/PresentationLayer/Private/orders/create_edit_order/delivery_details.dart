@@ -66,7 +66,7 @@ class DeliveryDetails extends StatelessWidget {
                             controller: orderController.expensesController,
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true, signed: false),
-                            hintText: '5000',
+                            hintText: 'أدخل المبلغ (اختياري)',
                             formatters: [
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'^\d+\.?\d{0,2}')),
@@ -92,7 +92,7 @@ class DeliveryDetails extends StatelessWidget {
                                     true
                                 ? Obx(() {
                                     return discountTextField(
-                                        '5000',
+                                        'أدخل المبلغ (اختياري)',
                                         const TextInputType.numberWithOptions(
                                             decimal: true, signed: false),
                                         [

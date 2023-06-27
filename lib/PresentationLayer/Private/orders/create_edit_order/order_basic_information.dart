@@ -81,12 +81,11 @@ class OrderBasicInformation extends StatelessWidget {
                           AppRoutes.chooseAccountScreen,
                           arguments: {
                             'mode': 'selection',
-                            'style': 'clientsAndSuppliers',
-                            'accounts':
-                                accountsController.clientAndSupplierAccounts
+                            'style': 'customers',
+                            'accounts': accountsController.customersAccounts
                           });
                       orderScreenController.selectAccountBasedOnType(
-                          account, 'clientsAndSuppliers');
+                          account, 'customers');
                     },
                   ),
                 ],

@@ -21,6 +21,7 @@ class InovoiceContainer extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 100,
+        padding: EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
           color: backgroundColor ?? UIColors.containerBackground,
           borderRadius: radius19,
@@ -28,13 +29,15 @@ class InovoiceContainer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              invoiceType,
-              overflow: TextOverflow.ellipsis,
-              style: UITextStyle.normalSmall,
+            Expanded(
+              child: Text(
+                invoiceType,
+                softWrap: true,
+                //overflow: TextOverflow.ellipsis,
+                style: UITextStyle.normalSmall,
+              ),
             ),
-            spacerHeight(),
-            invoiceCountWidget,
+            Expanded(child: invoiceCountWidget),
           ],
         ),
       ),

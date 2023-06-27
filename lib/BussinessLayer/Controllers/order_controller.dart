@@ -30,7 +30,7 @@ class OrderController extends GetxController {
   Map<int, num> orderProductsPrices = {};
   List<Product> selectedProducts = [];
   String buyingType = "";
-  TextEditingController expensesController = TextEditingController();
+  TextEditingController expensesController = TextEditingController(text: '0');
   String discountType = "";
   TextEditingController discountOrderController =
       TextEditingController(text: '0.0');
@@ -123,8 +123,7 @@ class OrderController extends GetxController {
 
   void setexpenses(orderExpenses) {
     expenses.value = orderExpenses.toDouble();
-    expensesController.value =
-        TextEditingValue(text: orderExpenses.toStringAsFixed(2));
+    expensesController.value = TextEditingValue(text: orderExpenses.toString());
   }
 
   void setDiscountType(type) {
@@ -308,7 +307,8 @@ class OrderController extends GetxController {
     loading.value = false;
     if (orderCreationStatus == true) {
       orderSaving = true;
-      ordersController.getOrders();
+      await ordersController.getOrders();
+      await accountsController.getAccounts();
       saveSelectedAccountsInStorage();
       SnackBars.showSuccess('تم انشاء الطلب');
     } else {
@@ -350,7 +350,8 @@ class OrderController extends GetxController {
     loading.value = false;
     if (orderUpdationStatus == true) {
       orderSaving = true;
-      ordersController.getOrders();
+      await ordersController.getOrders();
+      await accountsController.getAccounts();
       saveSelectedAccountsInStorage();
       SnackBars.showSuccess('تم التعديل بنجاح');
     } else {
@@ -364,6 +365,7 @@ class OrderController extends GetxController {
     loading.value = false;
     if (order != null) {
       await ordersController.getOrders();
+      await accountsController.getAccounts();
       SnackBars.showSuccess('تم الحذف بنجاح');
     } else {
       SnackBars.showError('فشل الحذف');
@@ -400,8 +402,8 @@ class OrderController extends GetxController {
     wareId = await boxClient.getWareAccount();
     marketerId = await boxClient.getMarketerAccount();
     if (counterPartyId == null && bankId == null && wareId == null) {
-      counterParty = accountsController.clientAndSupplierAccounts.isNotEmpty
-          ? accountsController.clientAndSupplierAccounts[0]
+      counterParty = accountsController.customersAccounts.isNotEmpty
+          ? accountsController.customersAccounts[0]
           : null;
       bank = accountsController.bankAccounts.isNotEmpty
           ? accountsController.bankAccounts[0]
@@ -427,12 +429,12 @@ class OrderController extends GetxController {
     setOrderType("sell_to_customers");
     setBuyingType("direct");
     setStatus(4);
-    setexpenses(0.0);
+    setexpenses(0);
     setDiscountType("number");
     setDiscountOrder(0.0);
     setMarketerDiscountType("number");
     setMarketerDiscount(0.0);
-    setPaidAmount(0.0);
+    setPaidAmount(0);
   }
 
   void resetOrder() {
@@ -489,8 +491,8 @@ class OrderController extends GetxController {
 
   @override
   void onInit() {
-    accountsController.getClientsAndSupplierAccounts();
-    accountsController.getMarketerAccounts();
+    // accountsController.getCustomersAccounts();
+    // accountsController.getMarketerAccounts();
     super.onInit();
   }
 

@@ -28,31 +28,39 @@ class CustomerAccountListTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundImage: AssetImage(customerImage),
-                  ),
-                  spacerWidth(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        customerName,
-                        overflow: TextOverflow.ellipsis,
-                        style: UITextStyle.boldBody,
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 22,
+                      backgroundImage: AssetImage(customerImage),
+                    ),
+                    spacerWidth(),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            customerName,
+                            softWrap: true,
+                            //overflow: TextOverflow.ellipsis,
+                            style: UITextStyle.boldBody,
+                          ),
+                          spacerHeight(),
+                          Text(
+                            customerStatus,
+                            softWrap: true,
+                            //overflow: TextOverflow.ellipsis,
+                            style: UITextStyle.normalSmall,
+                          ),
+                        ],
                       ),
-                      spacerHeight(),
-                      Text(
-                        customerStatus,
-                        overflow: TextOverflow.ellipsis,
-                        style: UITextStyle.normalSmall,
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
+              spacerWidth(),
               Text(
                 customerBalance,
                 style: UITextStyle.boldMeduim,

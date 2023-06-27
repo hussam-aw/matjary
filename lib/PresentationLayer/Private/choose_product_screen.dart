@@ -30,36 +30,45 @@ class ChooseProductScreen extends StatelessWidget {
   String? screenMode = Get.arguments;
 
   Widget buildProductsList(productsList) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return screenMode == null
-            ? CustomBox(
-                title: productsList[index].name,
-                editOnPressed: () {
-                  Get.toNamed(AppRoutes.createEditProductScreen,
-                      arguments: productsList[index]);
-                },
-                deleteDialogTitle: 'هل تريد بالتأكيد حذف المنتج؟',
-                deleteOnPressed: () {
-                  controller.deleteProduct(productsList[index].id);
-                  Get.back();
-                },
-              )
-            : NormalBox(
-                title: productsList[index].name,
-                onTap: () {
-                  Get.toNamed(
-                    AppRoutes.productQtyReportScreen,
-                    arguments: productsList[index],
-                  );
-                },
-              );
-      },
-      separatorBuilder: (context, index) {
-        return spacerHeight();
-      },
-      itemCount: productsList.length,
-    );
+    return productsList.isEmpty
+        ? Center(
+            child: Text(
+              'لا يوجد منتجات',
+              style: UITextStyle.normalBody.copyWith(
+                color: UIColors.normalText,
+              ),
+            ),
+          )
+        : ListView.separated(
+            itemBuilder: (context, index) {
+              return screenMode == null
+                  ? CustomBox(
+                      title: productsList[index].name,
+                      editOnPressed: () {
+                        Get.toNamed(AppRoutes.createEditProductScreen,
+                            arguments: productsList[index]);
+                      },
+                      deleteDialogTitle: 'هل تريد بالتأكيد حذف المنتج؟',
+                      deleteOnPressed: () {
+                        controller.deleteProduct(productsList[index].id);
+                        Get.back();
+                      },
+                    )
+                  : NormalBox(
+                      title: productsList[index].name,
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.productQtyReportScreen,
+                          arguments: productsList[index],
+                        );
+                      },
+                    );
+            },
+            separatorBuilder: (context, index) {
+              return spacerHeight();
+            },
+            itemCount: productsList.length,
+          );
   }
 
   @override
@@ -131,7 +140,7 @@ class ChooseProductScreen extends StatelessWidget {
             Get.toNamed(AppRoutes.createEditProductScreen);
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }

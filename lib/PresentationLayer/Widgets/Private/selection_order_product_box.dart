@@ -27,7 +27,7 @@ class SelectionOrderProductBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return Container(
-        height: 60,
+        //height: 60,
         color: orderScreenController.checkIfProductQuantityIsZero(productId)
             ? UIColors.containerBackground
             : UIColors.primary,
@@ -39,8 +39,8 @@ class SelectionOrderProductBox extends StatelessWidget {
               flex: 2,
               child: Text(
                 productName,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                // overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
             ),
@@ -94,7 +94,7 @@ class SelectionOrderProductBox extends StatelessWidget {
                               .selectedProductsQuantities[productId] ??
                           0)
                       .toString(),
-                  overflow: TextOverflow.ellipsis,
+                  //overflow: TextOverflow.ellipsis,
                   style: UITextStyle.boldLarge,
                 ),
               ),

@@ -12,7 +12,7 @@ class PaymentController extends GetxController {
   Account? bankAccount;
   TextEditingController counterPartyController = TextEditingController();
   Account? counterPartyAccount;
-  TextEditingController amountController = TextEditingController(text: '0.0');
+  TextEditingController amountController = TextEditingController(text: '0');
   String? amount;
   TextEditingController dateController = TextEditingController(
       text:
@@ -25,8 +25,15 @@ class PaymentController extends GetxController {
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
 
+  Map<String, String> counterPaymentTypes = {
+    'مقبوضات': 'income',
+    'مدفوعات': 'payment',
+  };
+
   void setPaymentType(type) {
-    paymentType = type;
+    if (type != null) {
+      paymentType = counterPaymentTypes[type]!;
+    }
   }
 
   void setBankAccount(Account? account) {
@@ -82,6 +89,7 @@ class PaymentController extends GetxController {
       if (payment != null) {
         boxClient.setCounterPartyAccount(counterPartyAccount!.id);
         boxClient.setBankAccount(bankAccount!.id);
+        await accountsController.getAccounts();
         SnackBars.showSuccess('تم انشاء القيد الدفعة');
       } else {
         SnackBars.showError('فشل انشاء الدفعة');

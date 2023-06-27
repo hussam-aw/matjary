@@ -18,6 +18,7 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Text(
         title,
+        softWrap: true,
         style: UITextStyle.normalBody.copyWith(
           color: titleColor,
         ),

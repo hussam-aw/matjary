@@ -69,6 +69,20 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
               DrawerListTile(
+                title: "جهات العمل",
+                subtitle: "الزبائن والموردين والموزعين والمسوقين",
+                iconData: FontAwesomeIcons.fileInvoice,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.chooseAccountScreen,
+                    arguments: {
+                      'style': 'employers',
+                      'accounts': accountsController.customersAccounts
+                    },
+                  );
+                },
+              ),
+              DrawerListTile(
                 title: "الصناديق النقدية",
                 subtitle: "تصفح و تعديل الصناديق النقدية",
                 iconData: Ionicons.cart,

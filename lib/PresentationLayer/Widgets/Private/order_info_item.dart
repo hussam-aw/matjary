@@ -19,13 +19,15 @@ class OrderInfoItem extends StatelessWidget {
         children: [
           Text(
             itemTitle,
-            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            //overflow: TextOverflow.ellipsis,
             style: UITextStyle.normalBody,
           ),
           spacerHeight(),
           Text(
             itemText,
-            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            //overflow: TextOverflow.ellipsis,
             style: UITextStyle.normalBody,
           ),
         ],

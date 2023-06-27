@@ -32,7 +32,7 @@ class TableDetailsItem extends StatelessWidget {
             child: Center(
               child: Text(
                 firstColumnItem!,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
             ),
@@ -42,7 +42,7 @@ class TableDetailsItem extends StatelessWidget {
                   child: Center(
                     child: Text(
                       secondColumnItem!,
-                      overflow: TextOverflow.ellipsis,
+                      //overflow: TextOverflow.ellipsis,
                       style: UITextStyle.normalBody,
                     ),
                   ),
@@ -52,7 +52,7 @@ class TableDetailsItem extends StatelessWidget {
             child: Center(
               child: Text(
                 thirdColumnItem!,
-                overflow: TextOverflow.ellipsis,
+                //overflow: TextOverflow.ellipsis,
                 style: UITextStyle.normalBody,
               ),
             ),
@@ -62,7 +62,7 @@ class TableDetailsItem extends StatelessWidget {
               child: (fourthColumnItem is String)
                   ? Text(
                       fourthColumnItem,
-                      overflow: TextOverflow.ellipsis,
+                      //overflow: TextOverflow.ellipsis,
                       style: UITextStyle.normalBody,
                     )
                   : fourthColumnItem,

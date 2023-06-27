@@ -29,7 +29,8 @@ class OrderAmountContainer extends StatelessWidget {
             Text(
               title,
               maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              //overflow: TextOverflow.ellipsis,
               style: UITextStyle.normalBody.copyWith(
                 color: UIColors.normalText,
               ),
@@ -37,6 +38,7 @@ class OrderAmountContainer extends StatelessWidget {
             spacerHeight(),
             Text(
               amount,
+              softWrap: true,
               style: UITextStyle.boldHeading.apply(),
             ),
           ],
