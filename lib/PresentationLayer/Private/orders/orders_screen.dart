@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
@@ -25,7 +23,7 @@ class OrdersScreen extends StatelessWidget {
   OrdersScreen({super.key});
 
   final ordersController = Get.find<OrdersController>();
-  final searchController = Get.put(SearchController());
+  final searchController = Get.put(ListSearchController());
   final accountsController = Get.find<AccountsController>();
 
   Widget buildOrdersList(List<Order> orders) {

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/category_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';

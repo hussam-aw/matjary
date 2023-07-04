@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class AppRoutes {
   static const splashScreen = "/";
   static const introScreen = "/intro";

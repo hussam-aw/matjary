@@ -1,9 +1,6 @@
 import 'package:get/state_manager.dart';
 
-import '../../DataAccesslayer/Models/product.dart';
-import '../../DataAccesslayer/Repositories/products_repo.dart';
-
-class SearchController extends GetxController {
+class ListSearchController extends GetxController {
   List<dynamic> list = [];
   List<dynamic> filteredList = [];
   String searchText = "";

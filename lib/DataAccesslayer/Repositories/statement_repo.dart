@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:matjary/DataAccesslayer/Clients/statement_client.dart';
-import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/DataAccesslayer/Models/statement.dart';
 import 'package:matjary/main.dart';
 

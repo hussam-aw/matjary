@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:matjary/DataAccesslayer/Models/payment.dart';
-import 'package:matjary/DataAccesslayer/Models/statement.dart';
 import 'package:matjary/DataAccesslayer/Repositories/payments_repo.dart';
-import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 
 class PaymentsController extends GetxController {
   List<Payment> payments = [];

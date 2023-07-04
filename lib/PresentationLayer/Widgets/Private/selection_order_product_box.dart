@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/circle_text_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/update_order_product_bottomsheet.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
-import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class SelectionOrderProductBox extends StatelessWidget {
   SelectionOrderProductBox({

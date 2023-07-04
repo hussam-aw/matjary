@@ -12,7 +12,6 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_amount_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_info_item.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';

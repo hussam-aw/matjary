@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:get/get_connect/http/src/multipart/form_data.dart';
-import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
-import 'package:matjary/DataAccesslayer/Repositories/user_repo.dart';
 import 'package:matjary/main.dart';
 
 class ProductsClient {

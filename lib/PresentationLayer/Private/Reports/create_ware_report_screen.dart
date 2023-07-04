@@ -19,7 +19,7 @@ class CreateWareReportScreen extends StatelessWidget {
   CreateWareReportScreen({super.key});
 
   final WaresController waresController = Get.find<WaresController>();
-  final SearchController searchController = Get.put(SearchController());
+  final ListSearchController searchController = Get.put(ListSearchController());
 
   Widget buildWareList(wareList) {
     return wareList.isEmpty

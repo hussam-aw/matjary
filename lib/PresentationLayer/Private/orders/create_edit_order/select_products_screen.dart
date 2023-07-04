@@ -19,13 +19,12 @@ import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
-import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class SelectProductsScreen extends StatelessWidget {
   SelectProductsScreen({super.key});
 
   final productsController = Get.find<ProductsController>();
-  final searchController = Get.put(SearchController());
+  final searchController = Get.put(ListSearchController());
   final orderScreenController = Get.find<OrderScreenController>();
 
   Widget buildProductsList(productsList) {

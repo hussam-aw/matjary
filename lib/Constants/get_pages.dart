@@ -8,7 +8,6 @@ import 'package:matjary/PresentationLayer/Private/Reports/product_qty_report_scr
 import 'package:matjary/PresentationLayer/Private/Reports/single_ware_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/wares_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_payment_screen.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_category_screen.dart';

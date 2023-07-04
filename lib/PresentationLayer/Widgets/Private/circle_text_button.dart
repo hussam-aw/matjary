@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
 
 class CircleButton extends StatelessWidget {
   const CircleButton({
