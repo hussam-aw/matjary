@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/auth_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/main.dart';
