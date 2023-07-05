@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/selection_order_product_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
@@ -24,17 +26,34 @@ class SelectProductsScreen extends StatelessWidget {
   final orderScreenController = Get.find<OrderScreenController>();
 
   Widget buildProductsList(productsList) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        return SelectionOrderProductBox(
-          productId: productsController.products[index].id,
-          productName: productsController.products[index].name,
-        );
-      },
-      separatorBuilder: (context, index) {
-        return spacerHeight();
-      },
-      itemCount: productsList.length,
+    return Stack(
+      children: [
+        ListView.separated(
+          itemBuilder: (context, index) {
+            return SelectionOrderProductBox(
+              productId: productsController.products[index].id,
+              productName: productsController.products[index].name,
+            );
+          },
+          separatorBuilder: (context, index) {
+            return spacerHeight();
+          },
+          itemCount: productsList.length,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: AddButton(
+              backgroundColor: UIColors.primary,
+              iconColor: UIColors.white,
+              onPressed: () {
+                Get.toNamed(AppRoutes.createEditProductScreen);
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 
