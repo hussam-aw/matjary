@@ -52,7 +52,6 @@ class PaymentScreenController extends GetxController {
   }
 
   void selectDate(date) async {
-    print(date);
     if (date != null) {
       paymentController.setDate(DateFormatter.getFormated(date));
     } else {

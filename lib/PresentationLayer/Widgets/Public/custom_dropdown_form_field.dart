@@ -3,6 +3,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
+// ignore: must_be_immutable
 class CustomDropdownFormField extends StatelessWidget {
   CustomDropdownFormField({
     super.key,

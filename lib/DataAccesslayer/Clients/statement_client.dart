@@ -7,7 +7,7 @@ import 'package:matjary/main.dart';
 class StatementClinet {
   Future<dynamic> getStatements(id) async {
     var response = await http.get(Uri.parse("$baseUrl$statementsLink/$id"));
-    print(response.body);
+
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -31,7 +31,6 @@ class StatementClinet {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -55,7 +54,6 @@ class StatementClinet {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
-    print(response.body);
     if (response.statusCode == 201) {
       return true;
     } else {

@@ -168,7 +168,6 @@ class ProductController extends GetxController {
     categoryId = null;
     affectedExchangeState = "يتأثر";
     selectedImages.clear();
-    print(selectedImages.length);
     super.onInit();
   }
 }

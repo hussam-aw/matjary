@@ -44,7 +44,6 @@ class CategoriesClient {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -55,7 +54,6 @@ class CategoriesClient {
   Future<dynamic> deleteCategory(id) async {
     var response = await http.delete(Uri.parse('$baseUrl$categoryLink/$id'));
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {

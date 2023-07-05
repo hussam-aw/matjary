@@ -108,7 +108,7 @@ class AccountController extends GetxController {
       type = convertAccountTypeToString(account.type);
       style = convertAccountStyleToString(account.style);
       emailController = TextEditingController(text: account.email);
-      print(emailController.text);
+
       mobilePhoneController = TextEditingController(text: account.mobileNumber);
       addressController = TextEditingController(text: account.address);
     }
@@ -140,5 +140,4 @@ class AccountController extends GetxController {
       SnackBars.showError('فشل الحذف');
     }
   }
-
 }

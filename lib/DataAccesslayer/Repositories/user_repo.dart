@@ -7,7 +7,6 @@ class UserRepo {
 
   Future<User?> login(email, password) async {
     var data = await client.login(email, password);
-    print(data);
     if (data != null) {
       return User.fromMap(jsonDecode(data));
     }

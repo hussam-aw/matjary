@@ -16,6 +16,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class ChooseProductScreen extends StatelessWidget {
   ChooseProductScreen({super.key});
 

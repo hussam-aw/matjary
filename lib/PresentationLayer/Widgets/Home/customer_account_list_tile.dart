@@ -5,6 +5,7 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
+// ignore: must_be_immutable
 class CustomerAccountListTile extends StatelessWidget {
   CustomerAccountListTile({
     super.key,

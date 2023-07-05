@@ -30,7 +30,6 @@ class StatementRepo {
       type, accountId, bankId, statement, amount, date) async {
     var createdPayment = await client.createPayment(
         type, accountId, bankId, statement, amount, date);
-    print(createdPayment);
     if (createdPayment != null) {
       return true;
     }

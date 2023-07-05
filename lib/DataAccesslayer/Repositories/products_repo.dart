@@ -38,7 +38,6 @@ class PrdouctsRepo {
         initialPrice,
         userId,
         images);
-    print(updatedProduct);
     if (updatedProduct != null) {
       return Product.fromMap(jsonDecode(updatedProduct));
     }
@@ -71,7 +70,6 @@ class PrdouctsRepo {
         initialPrice,
         userId,
         images);
-    print(createdProduct);
     if (createdProduct != null) {
       return Product.fromMap(jsonDecode(createdProduct));
     }
@@ -80,7 +78,6 @@ class PrdouctsRepo {
 
   Future<Product?> deleteProduct(id) async {
     var deletedProduct = await client.deleteProduct(id);
-    print(deletedProduct);
     if (deletedProduct != null) {
       return Product.fromMap(jsonDecode(deletedProduct));
     }

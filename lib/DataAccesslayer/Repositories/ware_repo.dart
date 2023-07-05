@@ -27,7 +27,6 @@ class WareRepo {
 
   Future<Ware?> updateWare(id, name) async {
     var updatedWare = await client.updateWare(id, name);
-    print(updatedWare);
     if (updatedWare != null) {
       return Ware.fromMap(jsonDecode(updatedWare));
     }
@@ -36,7 +35,6 @@ class WareRepo {
 
   Future<Ware?> deleteWare(id) async {
     var deletedWare = await client.deleteWare(id);
-    print(deletedWare);
     if (deletedWare != null) {
       return Ware.fromMap(jsonDecode(deletedWare));
     }

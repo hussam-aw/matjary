@@ -88,7 +88,7 @@ class OrdersClient {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-    print(response.body);
+
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -117,7 +117,6 @@ class OrdersClient {
       marketerFeeType,
       marketerFee,
       date) async {
-    print(date);
     var response = await http.post(Uri.parse('$baseUrl$orderLink/$id'),
         body: jsonEncode(<String, dynamic>{
           "total": total,
@@ -145,7 +144,6 @@ class OrdersClient {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
-    print(response.body);
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -156,7 +154,6 @@ class OrdersClient {
   Future<dynamic> deleteOrder(id) async {
     var response = await http.delete(Uri.parse('$baseUrl$orderLink/$id'));
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {

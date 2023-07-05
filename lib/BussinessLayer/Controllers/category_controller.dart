@@ -71,10 +71,4 @@ class CategoryController extends GetxController {
       SnackBars.showError('فشل الحذف');
     }
   }
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
 }

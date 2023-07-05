@@ -48,7 +48,6 @@ class ProductsClient {
     if (response.statusCode == 201) {
       return await response.stream.bytesToString();
     } else {
-      print(response.statusCode);
       return null;
     }
   }
@@ -88,7 +87,6 @@ class ProductsClient {
     if (response.statusCode == 201) {
       return await response.stream.bytesToString();
     } else {
-      print(response.statusCode);
       return null;
     }
   }
@@ -96,7 +94,6 @@ class ProductsClient {
   Future<dynamic> deleteProduct(id) async {
     var response = await http.delete(Uri.parse('$baseUrl$productLink/$id'));
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {

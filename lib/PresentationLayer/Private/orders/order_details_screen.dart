@@ -12,6 +12,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class OrderDetailsScreen extends StatelessWidget {
   OrderDetailsScreen({super.key});
 

@@ -207,7 +207,6 @@ class OrderController extends GetxController {
   }
 
   void setDate(String date) {
-    print(date);
     if (date.isEmpty) {
       date =
           "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}";
@@ -491,11 +490,5 @@ class OrderController extends GetxController {
     // accountsController.getCustomersAccounts();
     // accountsController.getMarketerAccounts();
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
   }
 }

@@ -20,6 +20,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
+// ignore: must_be_immutable
 class OrderScreen extends StatelessWidget {
   OrderScreen({super.key});
 

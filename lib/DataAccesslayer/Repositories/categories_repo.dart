@@ -25,7 +25,6 @@ class CategoriesRepo {
 
   Future<Category?> updateCategory(id, name, parentId) async {
     var updatedCategory = await client.updateCategory(id, name, parentId);
-    print(updatedCategory);
     if (updatedCategory != null) {
       return Category.fromMap(jsonDecode(updatedCategory));
     }

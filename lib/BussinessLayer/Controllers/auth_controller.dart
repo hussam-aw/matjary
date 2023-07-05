@@ -23,7 +23,6 @@ class AuthController extends GetxController {
           loginEmailController.value.text, loginPasswordController.value.text);
 
       if (user != null) {
-        print("user not null");
         MyApp.appUser = user;
         await client.setAuthedUser(user);
         SnackBars.showSuccess("${'أهلاً بك'}${user.name}");

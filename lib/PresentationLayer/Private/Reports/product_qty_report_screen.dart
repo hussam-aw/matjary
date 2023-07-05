@@ -14,6 +14,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class ProductQtyReportScreen extends StatelessWidget {
   ProductQtyReportScreen({super.key});
 

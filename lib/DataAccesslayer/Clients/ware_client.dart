@@ -25,8 +25,6 @@ class WareClient {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -44,7 +42,6 @@ class WareClient {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -55,7 +52,6 @@ class WareClient {
   Future<dynamic> deleteWare(id) async {
     var response = await http.delete(Uri.parse('$baseUrl$wareLink/$id'));
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
