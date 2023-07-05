@@ -25,9 +25,9 @@ class CategoryController extends GetxController {
     nameController.value = TextEditingValue(text: categoryName);
   }
 
-  void setParentCategory(categoryId) {
-    if (categoryId != null) {
-      parentId = categoryId;
+  void setParentCategory(category) {
+    if (category != null) {
+      parentId = category.id;
       parentCategoryController.value = TextEditingValue(
           text: categoriesController.getCategoryName(parentId));
     }

@@ -72,8 +72,7 @@ class CreateEditCategoryScreen extends StatelessWidget {
                                   AppRoutes.chooseCategoryScreen,
                                   arguments: 'selection',
                                 );
-                                categoryController
-                                    .setParentCategory(category.id);
+                                categoryController.setParentCategory(category);
                               },
                             ),
                           ],
