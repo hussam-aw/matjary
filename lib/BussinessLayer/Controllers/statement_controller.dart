@@ -54,7 +54,7 @@ class StatementController extends GetxController {
 
   void setStatementText(accountName) {
     statementTextController.value =
-        TextEditingValue(text: 'تسجيل دفعة نقدية من الزبون ${accountName}');
+        TextEditingValue(text: 'تسجيل دفعة نقدية من الزبون $accountName');
   }
 
   void setDefaultAccounts() async {

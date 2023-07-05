@@ -65,7 +65,7 @@ class CreateWareReportScreen extends StatelessWidget {
               children: [
                 const PageTitle(title: 'تقرير جرد مستودعات'),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'إنشاء جرد لكل المستودعات'),
+                const SectionTitle(title: 'إنشاء جرد لكل المستودعات'),
                 spacerHeight(),
                 AcceptButton(
                   text: 'جرد شامل',
@@ -74,7 +74,7 @@ class CreateWareReportScreen extends StatelessWidget {
                   },
                 ),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'أو إختر المستودع'),
+                const SectionTitle(title: 'أو إختر المستودع'),
                 spacerHeight(),
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم المستودع  أو إختر من القائمة',

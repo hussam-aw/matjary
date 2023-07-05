@@ -101,7 +101,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                               );
                             }),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'إختر الصندوق'),
+                        const SectionTitle(title: 'إختر الصندوق'),
                         spacerHeight(),
                         Row(
                           children: [
@@ -133,7 +133,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           ],
                         ),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'الطرف المقابل'),
+                        const SectionTitle(title: 'الطرف المقابل'),
                         spacerHeight(),
                         Row(
                           children: [
@@ -167,7 +167,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           ],
                         ),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'مبلغ الدفعة'),
+                        const SectionTitle(title: 'مبلغ الدفعة'),
                         spacerHeight(),
                         CustomTextFormField(
                           controller: paymentController.amountController,
@@ -183,7 +183,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           },
                         ),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'تاريخ الدفعة'),
+                        const SectionTitle(title: 'تاريخ الدفعة'),
                         spacerHeight(),
                         TextFormField(
                           readOnly: true,
@@ -209,7 +209,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           )),
                         ),
                         spacerHeight(height: 20),
-                        SectionTitle(title: 'ملاحظات'),
+                        const SectionTitle(title: 'ملاحظات'),
                         spacerHeight(),
                         CustomTextFormField(
                           controller: paymentController.notesController,

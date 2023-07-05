@@ -174,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                                             Obx(
                                               () => accountsController
                                                       .isLoadingAccounts.value
-                                                  ? AmountShimmer()
+                                                  ? const AmountShimmer()
                                                   : Text(
                                                       accountsController
                                                           .cashAmount.value
@@ -287,7 +287,7 @@ class HomeScreen extends StatelessWidget {
                             return accountsController.isLoadingAccounts.value
                                 ? ListView.separated(
                                     itemBuilder: (context, index) {
-                                      return CustomerListTileShimmer();
+                                      return const CustomerListTileShimmer();
                                     },
                                     separatorBuilder: (context, index) =>
                                         spacerHeight(height: 25),

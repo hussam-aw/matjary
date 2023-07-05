@@ -83,7 +83,7 @@ List<GetPage<dynamic>> getPages = [
       page: () => CreateEditPaymentScreen()),
   GetPage(name: AppRoutes.paymentsScreen, page: () => PaymentsScreen()),
   GetPage(
-      name: AppRoutes.productReportScreen, page: () => ProductReportScreen()),
+      name: AppRoutes.productReportScreen, page: () => const ProductReportScreen()),
   GetPage(
       name: AppRoutes.createWareReportScreen,
       page: () => CreateWareReportScreen()),

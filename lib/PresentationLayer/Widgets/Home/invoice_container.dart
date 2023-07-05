@@ -20,7 +20,7 @@ class InovoiceContainer extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 100,
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
           color: backgroundColor ?? UIColors.containerBackground,
           borderRadius: radius19,

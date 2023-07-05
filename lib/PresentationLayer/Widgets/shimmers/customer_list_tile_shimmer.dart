@@ -20,8 +20,8 @@ class CustomerListTileShimmer extends StatelessWidget {
               Row(
                 children: [
                   Shimmerwidget.circular(
-                      width: Size.fromRadius(22).width,
-                      height: Size.fromRadius(22).height),
+                      width: const Size.fromRadius(22).width,
+                      height: const Size.fromRadius(22).height),
                   spacerWidth(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

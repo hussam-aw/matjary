@@ -32,7 +32,7 @@ class ProductController extends GetxController {
           text: categoriesController.getCategoryName(categoryId));
     } else {
       categoryId = null;
-      categoryNameController.value = TextEditingValue(text: 'غير مصنف');
+      categoryNameController.value = const TextEditingValue(text: 'غير مصنف');
     }
   }
 

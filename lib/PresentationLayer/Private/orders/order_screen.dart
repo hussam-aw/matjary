@@ -103,7 +103,7 @@ class OrderScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SectionTitle(
+                              const SectionTitle(
                                 title: 'معلومات الفاتورة',
                                 titleColor: UIColors.white,
                               ),
@@ -197,11 +197,11 @@ class OrderScreen extends StatelessWidget {
                                 arguments: order);
                           },
                           style: acceptButtonStyle,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text(
                                   'تفاصيل الفاتورة (البنود)',
                                   style: UITextStyle.normalBody,

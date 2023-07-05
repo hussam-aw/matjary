@@ -116,8 +116,4 @@ class AccountsController extends GetxController {
     cashAmount.value = await accountsRepo.getCashAmount();
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-  }
 }

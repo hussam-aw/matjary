@@ -20,7 +20,7 @@ class OrderDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionTitle(title: 'تفاصيل الفاتورة'),
+            const SectionTitle(title: 'تفاصيل الفاتورة'),
             spacerHeight(),
             SizedBox(
               width: 120,

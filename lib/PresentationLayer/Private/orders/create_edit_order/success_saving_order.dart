@@ -41,7 +41,7 @@ class SuccessSavingOrder extends StatelessWidget {
                       ),
                     ),
                     spacerHeight(),
-                    Text(
+                    const Text(
                       'تم الحفظ بنجاح',
                       style: UITextStyle.boldHeading,
                     ),

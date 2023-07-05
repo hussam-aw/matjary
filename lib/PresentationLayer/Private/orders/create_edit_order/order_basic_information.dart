@@ -32,7 +32,7 @@ class OrderBasicInformation extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SectionTitle(title: 'نوع الفاتورة'),
+              const SectionTitle(title: 'نوع الفاتورة'),
               spacerHeight(),
               Obx(
                 () {
@@ -59,7 +59,7 @@ class OrderBasicInformation extends StatelessWidget {
                 },
               ),
               spacerHeight(height: 22),
-              SectionTitle(title: 'الطرف المقابل ( زبون أو مورد )'),
+              const SectionTitle(title: 'الطرف المقابل ( زبون أو مورد )'),
               spacerHeight(),
               Row(
                 children: [
@@ -91,7 +91,7 @@ class OrderBasicInformation extends StatelessWidget {
                 ],
               ),
               spacerHeight(height: 22),
-              SectionTitle(title: 'الصندوق ( النقدية )'),
+              const SectionTitle(title: 'الصندوق ( النقدية )'),
               spacerHeight(),
               Row(
                 children: [
@@ -133,7 +133,7 @@ class OrderBasicInformation extends StatelessWidget {
                 ),
               ),
               spacerHeight(height: 22),
-              SectionTitle(title: 'المستودع'),
+              const SectionTitle(title: 'المستودع'),
               spacerHeight(),
               Row(
                 children: [
@@ -170,7 +170,7 @@ class OrderBasicInformation extends StatelessWidget {
                 ),
               ),
               spacerHeight(height: 22),
-              SectionTitle(title: 'حساب المسوق ( المندوب )'),
+              const SectionTitle(title: 'حساب المسوق ( المندوب )'),
               spacerHeight(),
               Row(
                 children: [
@@ -204,7 +204,7 @@ class OrderBasicInformation extends StatelessWidget {
                 ],
               ),
               spacerHeight(height: 22),
-              SectionTitle(title: 'تاريخ الانشاء'),
+              const SectionTitle(title: 'تاريخ الانشاء'),
               spacerHeight(),
               TextFormField(
                 readOnly: true,

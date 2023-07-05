@@ -29,7 +29,7 @@ class DeliveryDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SectionTitle(title: 'نوع البيع'),
+                const SectionTitle(title: 'نوع البيع'),
                 spacerHeight(),
                 Obx(
                   () {
@@ -60,7 +60,7 @@ class DeliveryDetails extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          SectionTitle(title: 'مصاريف الفاتورة'),
+                          const SectionTitle(title: 'مصاريف الفاتورة'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller: orderController.expensesController,
@@ -83,7 +83,7 @@ class DeliveryDetails extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          SectionTitle(title: 'الحسم على الفاتورة'),
+                          const SectionTitle(title: 'الحسم على الفاتورة'),
                           spacerHeight(),
                           Obx(() {
                             return orderScreenController
@@ -116,7 +116,7 @@ class DeliveryDetails extends StatelessWidget {
                   ],
                 ),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'حالة الطلب'),
+                const SectionTitle(title: 'حالة الطلب'),
                 spacerHeight(),
                 Obx(
                   () {
@@ -141,7 +141,7 @@ class DeliveryDetails extends StatelessWidget {
                   },
                 ),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'ملاحظات'),
+                const SectionTitle(title: 'ملاحظات'),
                 spacerHeight(),
                 CustomTextFormField(
                   controller: orderController.notesController,

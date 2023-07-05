@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class CustomRadioGroup extends StatelessWidget {
-  CustomRadioGroup({
+  const CustomRadioGroup({
     super.key,
     required this.items,
     this.height = 45,
@@ -16,7 +16,7 @@ class CustomRadioGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return items.length <= 2
-        ? Container(
+        ? SizedBox(
             height: height,
             child: scrollDirection == Axis.horizontal
                 ? Padding(

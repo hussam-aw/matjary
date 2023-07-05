@@ -39,13 +39,13 @@ class SelectionOrderProductBox extends StatelessWidget {
                 style: UITextStyle.normalBody,
               ),
             ),
-            Container(
+            SizedBox(
               width: 120,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleButton(
-                    widget: Icon(
+                    widget: const Icon(
                       Icons.add,
                       color: UIColors.white,
                     ),
@@ -80,7 +80,7 @@ class SelectionOrderProductBox extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               width: 50,
               child: Align(
                 alignment: Alignment.center,

@@ -16,6 +16,7 @@ class ClientAccount extends Account {
     required super.accountingName,
   });
 
+  @override
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,

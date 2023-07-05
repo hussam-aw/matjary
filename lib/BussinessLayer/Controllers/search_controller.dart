@@ -21,10 +21,6 @@ class ListSearchController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-  }
 
   @override
   void onClose() {

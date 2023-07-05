@@ -57,7 +57,7 @@ class CreateEditProductScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SectionTitle(title: 'المعلومات الأساسية'),
+                            const SectionTitle(title: 'المعلومات الأساسية'),
                             spacerHeight(),
                             CustomTextFormField(
                               controller: productController.nameController,
@@ -111,7 +111,7 @@ class CreateEditProductScreen extends StatelessWidget {
                               hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
                             ),
                             spacerHeight(height: 20),
-                            SectionTitle(title: 'يتأثر بتغيرات الصرف'),
+                            const SectionTitle(title: 'يتأثر بتغيرات الصرف'),
                             spacerHeight(),
                             GetBuilder(
                                 init: productScreenController,
@@ -150,7 +150,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                   );
                                 }),
                             spacerHeight(height: 20),
-                            SectionTitle(title: 'أسعار البيع'),
+                            const SectionTitle(title: 'أسعار البيع'),
                             spacerHeight(),
                             Row(
                               children: [

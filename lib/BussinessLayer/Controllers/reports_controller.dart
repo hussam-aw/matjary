@@ -5,7 +5,7 @@ import 'package:matjary/DataAccesslayer/Repositories/reports_repo.dart';
 
 class ReportsController extends GetxController {
   List<ProductWithQuantity> productsWithQuantity = [];
-  ProductReport? productReport = null;
+  ProductReport? productReport;
   List<ProductReport> productsReports = [];
   ReportsRepo reportsRepo = ReportsRepo();
   var isloading = false.obs;

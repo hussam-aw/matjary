@@ -23,6 +23,7 @@ class ProductScreenController extends GetxController {
   }
 
   void getSelectedImages() async {
+    selectedImages.clear();
     selectedImages = await imagePickerHelper.pickImages();
     update();
   }

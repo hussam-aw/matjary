@@ -33,7 +33,7 @@ class CreateEditBankScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SectionTitle(title: 'المعلومات الأساسية'),
+                          const SectionTitle(title: 'المعلومات الأساسية'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller: TextEditingController(),

@@ -37,7 +37,7 @@ class ProductQtyReportScreen extends StatelessWidget {
               children: [
                 PageTitle(title: 'جرد: ${product.name}'),
                 spacerHeight(height: 22),
-                TableTitles(
+                const TableTitles(
                   isDecorated: true,
                   firstColumnTitle: 'المستودع',
                   secondColumnTitle: '',

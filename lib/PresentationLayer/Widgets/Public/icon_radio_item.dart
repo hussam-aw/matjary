@@ -5,7 +5,7 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class IconRadioItem extends StatelessWidget {
-  IconRadioItem({
+  const IconRadioItem({
     super.key,
     required this.icon,
     required this.text,

@@ -39,7 +39,7 @@ class SingleWareReportScreen extends StatelessWidget {
               children: [
                 PageTitle(title: 'جرد المستودع : ${ware.name}'),
                 spacerHeight(height: 22),
-                TableTitles(
+                const TableTitles(
                   isDecorated: true,
                   firstColumnTitle: 'المنتج',
                   secondColumnTitle: '',
