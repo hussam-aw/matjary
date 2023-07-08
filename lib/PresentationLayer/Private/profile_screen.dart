@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
@@ -11,6 +12,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
+import 'package:matjary/main.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -71,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               spacerHeight(height: 22),
                               Text(
-                                'علي السعيد',
+                                MyApp.appUser!.name,
                                 softWrap: true,
                                 style: UITextStyle.normalHeading.copyWith(
                                   color: UIColors.lightNormalText,
@@ -98,7 +100,8 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                   spacerWidth(width: 6),
                                   Text(
-                                    '25/07/2023',
+                                    DateFormatter.getDateString(
+                                        MyApp.appUser!.expiryDate),
                                     softWrap: true,
                                     style: UITextStyle.normalSmall.copyWith(
                                       color: UIColors.lightNormalText,
