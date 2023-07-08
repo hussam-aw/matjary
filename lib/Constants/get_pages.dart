@@ -27,6 +27,7 @@ import 'package:matjary/PresentationLayer/Private/orders/order_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/orders_screen.dart';
 import 'package:matjary/PresentationLayer/Private/payments_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/product_report_screen.dart';
+import 'package:matjary/PresentationLayer/Private/profile_screen.dart';
 import 'package:matjary/PresentationLayer/Public/home_screen.dart';
 import 'package:matjary/PresentationLayer/Public/introduction.dart';
 
@@ -83,7 +84,8 @@ List<GetPage<dynamic>> getPages = [
       page: () => CreateEditPaymentScreen()),
   GetPage(name: AppRoutes.paymentsScreen, page: () => PaymentsScreen()),
   GetPage(
-      name: AppRoutes.productReportScreen, page: () => const ProductReportScreen()),
+      name: AppRoutes.productReportScreen,
+      page: () => const ProductReportScreen()),
   GetPage(
       name: AppRoutes.createWareReportScreen,
       page: () => CreateWareReportScreen()),
@@ -94,4 +96,5 @@ List<GetPage<dynamic>> getPages = [
   GetPage(
       name: AppRoutes.productQtyReportScreen,
       page: () => ProductQtyReportScreen()),
+  GetPage(name: AppRoutes.profileScreen, page: () => ProfileScreen()),
 ];
