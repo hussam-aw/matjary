@@ -5,7 +5,8 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 // ElevatedButton Styles
 const acceptButtonStyle = ButtonStyle(
   elevation: MaterialStatePropertyAll(0),
-  backgroundColor: MaterialStatePropertyAll<Color>(UIColors.primary),
+  backgroundColor:
+      MaterialStatePropertyAll<Color>(UIColors.continueButtonBackgroud),
   shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
     RoundedRectangleBorder(
       borderRadius: raduis15,
