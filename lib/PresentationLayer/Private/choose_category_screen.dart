@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/category_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -23,8 +22,6 @@ class ChooseCategoryScreen extends StatelessWidget {
   final CategoriesController categoriesController =
       Get.find<CategoriesController>();
   final ListSearchController searchController = Get.put(ListSearchController());
-  late var controller;
-
   String? screenMode = Get.arguments;
 
   Widget buildCategoriesList(cateoriesList) {
@@ -32,14 +29,9 @@ class ChooseCategoryScreen extends StatelessWidget {
         ? cateoriesList
             .map((category) => CustomBox(
                   title: category.name,
-                  editOnPressed: () {
+                  onTap: () {
                     Get.toNamed(AppRoutes.createEditCategoryScreen,
                         arguments: category);
-                  },
-                  deleteDialogTitle: 'هل تريد بالتأكيد حذف التصنيف؟',
-                  deleteOnPressed: () {
-                    controller.deleteCategory(category.id);
-                    Get.back();
                   },
                 ))
             .toList()
@@ -86,9 +78,7 @@ class ChooseCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchController.list = categoriesController.categories;
-    if (screenMode == null) {
-      controller = Get.put(CategoryController());
-    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(

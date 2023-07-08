@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/ware_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
@@ -22,7 +21,6 @@ class ChooseWareScreen extends StatelessWidget {
 
   final WaresController waresController = Get.find<WaresController>();
   final ListSearchController searchController = Get.put(ListSearchController());
-  late var controller;
 
   String? screenMode = Get.arguments['mode'];
 
@@ -41,14 +39,9 @@ class ChooseWareScreen extends StatelessWidget {
               return screenMode == null
                   ? CustomBox(
                       title: wareList[index].name,
-                      editOnPressed: () {
+                      onTap: () {
                         Get.toNamed(AppRoutes.createEditWareScreen,
                             arguments: wareList[index]);
-                      },
-                      deleteDialogTitle: 'هل تريد بالتأكيد حذف المستودع؟',
-                      deleteOnPressed: () {
-                        controller.deleteWare(wareList[index].id);
-                        Get.back();
                       },
                     )
                   : NormalBox(
@@ -73,9 +66,6 @@ class ChooseWareScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchController.list = waresController.wares;
-    if (screenMode == null) {
-      controller = Get.put(WareController());
-    }
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(

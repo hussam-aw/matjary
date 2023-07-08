@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
@@ -22,7 +21,6 @@ class ChooseAccountScreen extends StatelessWidget {
 
   final AccountsController accountsController = Get.find<AccountsController>();
   final ListSearchController searchController = Get.put(ListSearchController());
-  late var controller;
 
   String? screenMode = Get.arguments['mode'];
   String? accountStyle = Get.arguments['style'];
@@ -43,14 +41,9 @@ class ChooseAccountScreen extends StatelessWidget {
               return screenMode == null
                   ? CustomBox(
                       title: accountList[index].name,
-                      editOnPressed: () {
+                      onTap: () {
                         Get.toNamed(AppRoutes.createEditAccountScreen,
                             arguments: accountList[index]);
-                      },
-                      deleteDialogTitle: 'هل تريد بالتأكيد حذف الحساب؟',
-                      deleteOnPressed: () {
-                        controller.deleteAccount(accountList[index].id);
-                        Get.back();
                       },
                     )
                   : NormalBox(
@@ -70,9 +63,7 @@ class ChooseAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchController.list = accounts;
-    if (screenMode == null) {
-      controller = Get.put(AccountController());
-    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(

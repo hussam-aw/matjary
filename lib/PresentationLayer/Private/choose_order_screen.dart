@@ -49,14 +49,8 @@ class ChooseOrderScreen extends StatelessWidget {
                               return CustomBox(
                                 title: ordersController.orders[index].id
                                     .toString(),
-                                editOnPressed: () {
+                                onTap: () {
                                   //Navigate to edit order screen
-                                },
-                                deleteDialogTitle:
-                                    'هل تريد بالتأكيد حذف الطلب؟',
-                                deleteOnPressed: () {
-                                  //Delete from order controller
-                                  Get.back();
                                 },
                               );
                             },
