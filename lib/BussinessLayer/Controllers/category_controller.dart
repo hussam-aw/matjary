@@ -17,7 +17,8 @@ class CategoryController extends GetxController {
   void setCategoryDetails(Category? category) {
     if (category != null) {
       setCategoryName(category.name);
-      setParentCategory(category.parentId);
+      setParentCategory(
+          categoriesController.getCategoryFromId(category.parentId));
     }
   }
 
