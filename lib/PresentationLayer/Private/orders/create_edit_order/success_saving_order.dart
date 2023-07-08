@@ -56,13 +56,14 @@ class SuccessSavingOrder extends StatelessWidget {
             child: Column(
               children: [
                 AcceptButton(
-                  text: 'إنشاء فاتورة جديدة',
                   onPressed: () {
                     orderController.resetOrder();
                     orderController.setDefaultFields();
                     orderScreenController.resetOrderScreen();
                     orderScreenController.goToInitialPage();
                   },
+                  backgroundColor: UIColors.primary,
+                  text: 'إنشاء فاتورة جديدة',
                 ),
                 spacerHeight(),
                 AcceptButton(

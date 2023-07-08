@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   Get.toNamed(AppRoutes.registerScreen);
                                 },
-                                style: acceptButtonWithBorderStyle,
+                                backgroundColor: UIColors.primary,
                                 text: 'إنشاء حساب',
                               ),
                             ],

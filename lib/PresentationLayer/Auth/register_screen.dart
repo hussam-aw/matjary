@@ -60,12 +60,14 @@ class RegisterScreen extends StatelessWidget {
                             onPressed: () {
                               Get.toNamed(AppRoutes.pinCodeScreen);
                             },
+                            backgroundColor: UIColors.primary,
                             text: 'إنشاء حساب',
                           ),
                           spacerHeight(),
                           AccetpIconButton(
                             onPressed: () {},
                             center: true,
+                            backgroundColor: UIColors.buttonBackground,
                             icon: const Icon(FontAwesomeIcons.squareFacebook),
                             text: Text(
                               'متابعة باستخدام الفيسبوك',

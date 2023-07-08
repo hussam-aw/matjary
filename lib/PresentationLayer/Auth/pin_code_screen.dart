@@ -41,8 +41,9 @@ class PinCodeScreen extends StatelessWidget {
                         const CustomPinCodeFields(length: 5),
                         spacerHeight(),
                         AcceptButton(
-                          text: 'تأكيد',
                           onPressed: () {},
+                          text: 'تأكيد',
+                          backgroundColor: UIColors.primary,
                         ),
                         spacerHeight(),
                         Row(

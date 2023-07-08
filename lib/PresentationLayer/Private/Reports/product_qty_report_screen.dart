@@ -83,7 +83,6 @@ class ProductQtyReportScreen extends StatelessWidget {
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
-                  backgroundColor: UIColors.primary,
                   onPressed: () {},
                 ),
               ],
