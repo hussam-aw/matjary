@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/amount_box.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/update_order_product_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
@@ -28,106 +25,133 @@ class OrderProductBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //height: 90,
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
-      decoration: const BoxDecoration(
-        color: UIColors.containerBackground,
-        borderRadius: raduis15,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.name,
-                  softWrap: true,
-                  //overflow: TextOverflow.ellipsis,
-                  style: UITextStyle.normalBody,
-                ),
-                spacerHeight(),
-                Row(
-                  children: [
-                    const Text(
-                      'الكمية:',
-                      softWrap: true,
-                      style: UITextStyle.small,
-                    ),
-                    spacerWidth(width: 4),
-                    AmountBox(
-                      amount: quantity.toString(),
-                    ),
-                    spacerWidth(width: 6),
-                    const Text(
-                      'الافرادي:',
-                      softWrap: true,
-                      style: UITextStyle.small,
-                    ),
-                    spacerWidth(width: 4),
-                    AmountBox(
-                      amount: price!.toStringAsFixed(2),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          spacerWidth(),
-          Expanded(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                totalPrice.toStringAsFixed(1),
-                softWrap: true,
-                //overflow: TextOverflow.ellipsis,
-                style: UITextStyle.normalMeduim,
+    return InkWell(
+      onLongPress: () {
+        orderScreenController.openUpdateProductBottomSheet(product);
+      },
+      child: GetBuilder(
+          init: orderScreenController,
+          builder: (context) {
+            return Container(
+              //height: 90,
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+              decoration: BoxDecoration(
+                color: orderScreenController
+                        .checkIfProductSelectedForUpdate(product)
+                    ? UIColors.primary
+                    : UIColors.containerBackground,
+                borderRadius: raduis15,
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Get.bottomSheet(UpdateOrderProductBottomSheet(
-                      productId: product.id,
-                      currentQuantity: orderScreenController
-                          .selectedProductsQuantities[product.id],
-                      currentPrice: orderScreenController
-                          .selectedProductPrices[product.id],
-                    ));
-                  },
-                  child: const Icon(
-                    FontAwesomeIcons.penToSquare,
-                    size: 17,
-                    color: UIColors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          softWrap: true,
+                          //overflow: TextOverflow.ellipsis,
+                          style: UITextStyle.normalBody,
+                        ),
+                        spacerHeight(),
+                        Row(
+                          children: [
+                            const Text(
+                              'الكمية:',
+                              softWrap: true,
+                              style: UITextStyle.small,
+                            ),
+                            spacerWidth(),
+                            Text(
+                              quantity.toString(),
+                              softWrap: true,
+                              style: UITextStyle.normalSmall,
+                            ),
+                            spacerWidth(width: 10),
+                            const Text(
+                              'الافرادي:',
+                              softWrap: true,
+                              style: UITextStyle.small,
+                            ),
+                            spacerWidth(),
+                            Text(
+                              price!.toStringAsFixed(2),
+                              softWrap: true,
+                              style: UITextStyle.normalSmall,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                spacerHeight(),
-                InkWell(
-                  onTap: () {
-                    orderScreenController.deleteSelectedProduct(product.id);
-                  },
-                  child: const Icon(
-                    Icons.delete,
-                    size: 20,
-                    color: UIColors.white,
+                  spacerWidth(),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        const Text(
+                          'الإجمالي',
+                          softWrap: true,
+                          //overflow: TextOverflow.ellipsis,
+                          style: UITextStyle.normalBody,
+                        ),
+                        spacerHeight(),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            totalPrice.toStringAsFixed(1),
+                            softWrap: true,
+                            //overflow: TextOverflow.ellipsis,
+                            style: UITextStyle.normalMeduim,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     crossAxisAlignment: CrossAxisAlignment.end,
+                  //     children: [
+                  //       InkWell(
+                  //         onTap: () {
+                  //           Get.bottomSheet(UpdateOrderProductBottomSheet(
+                  //             productId: product.id,
+                  //             currentQuantity: orderScreenController
+                  //                 .selectedProductsQuantities[product.id],
+                  //             currentPrice: orderScreenController
+                  //                 .selectedProductPrices[product.id],
+                  //           ));
+                  //         },
+                  //         child: const Icon(
+                  //           FontAwesomeIcons.penToSquare,
+                  //           size: 17,
+                  //           color: UIColors.white,
+                  //         ),
+                  //       ),
+                  //       spacerHeight(),
+                  //       InkWell(
+                  //         onTap: () {
+                  //           orderScreenController.deleteSelectedProduct(product.id);
+                  //         },
+                  //         child: const Icon(
+                  //           Icons.delete,
+                  //           size: 20,
+                  //           color: UIColors.white,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }
