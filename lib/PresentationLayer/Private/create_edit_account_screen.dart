@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_screen_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
@@ -37,7 +39,37 @@ class CreateEditAccountScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إنشاء | تعديل حساب'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: const PageTitle(title: 'إنشاء | تعديل حساب'),
+                    ),
+                    if (account != null)
+                      InkWell(
+                        onTap: () {
+                          Get.dialog(
+                            CustomDialog(
+                              title: 'هل تريد حذف الحساب؟',
+                              buttonText: 'حذف',
+                              confirmOnPressed: () async {
+                                await accountController
+                                    .deleteAccount(account!.id);
+                                Get.until((route) =>
+                                    route.settings.name ==
+                                    AppRoutes.chooseAccountScreen);
+                              },
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          size: 30,
+                          color: UIColors.primary,
+                        ),
+                      ),
+                  ],
+                ),
                 Expanded(
                   flex: 5,
                   child: SingleChildScrollView(

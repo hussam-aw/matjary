@@ -14,6 +14,7 @@ import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
@@ -47,7 +48,37 @@ class CreateEditProductScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إنشاء | تعديل منتج'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: const PageTitle(title: 'إنشاء | تعديل منتج'),
+                    ),
+                    if (product != null)
+                      InkWell(
+                        onTap: () {
+                          Get.dialog(
+                            CustomDialog(
+                              title: 'هل تريد حذف المنتج؟',
+                              buttonText: 'حذف',
+                              confirmOnPressed: () async {
+                                await productController
+                                    .deleteProduct(product!.id);
+                                Get.until((route) =>
+                                    route.settings.name ==
+                                    AppRoutes.chooseProductScreen);
+                              },
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          size: 30,
+                          color: UIColors.primary,
+                        ),
+                      ),
+                  ],
+                ),
                 Expanded(
                   flex: 5,
                   child: SingleChildScrollView(
