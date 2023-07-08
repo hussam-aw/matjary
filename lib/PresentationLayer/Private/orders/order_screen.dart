@@ -13,6 +13,7 @@ import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_amount_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_info_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -192,12 +193,12 @@ class OrderScreen extends StatelessWidget {
                           ),
                         ),
                         spacerHeight(height: 22),
-                        ElevatedButton(
+                        CustomButton(
                           onPressed: () {
                             Get.toNamed(AppRoutes.orderDetailsScreen,
                                 arguments: order);
                           },
-                          style: acceptButtonStyle,
+                          backgroundColor: UIColors.primary,
                           child: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
                             child: Row(
