@@ -35,11 +35,13 @@ class CustomDrawer extends StatelessWidget {
                     Text(MyApp.appUser != null ? MyApp.appUser!.email : ""),
               ),
               if (MyApp.appUser != null)
-                const DrawerListTile(
+                DrawerListTile(
                   title: "الحساب الشخصي",
                   subtitle: "التعديل على بيانات الملف الشخصي",
                   iconData: Icons.people,
-                  onTap: null,
+                  onTap: () {
+                    Get.toNamed(AppRoutes.profileScreen);
+                  },
                 ),
               if (MyApp.appUser == null)
                 const DrawerListTile(
