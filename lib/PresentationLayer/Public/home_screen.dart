@@ -63,13 +63,11 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       AcceptButton(
-                        text: "أنشئ فاتورة جديدة",
                         onPressed: () {
                           Get.toNamed(AppRoutes.createEditOrderScreen);
                         },
-                        backgroundColor: Colors.transparent,
-                        style: acceptButtonWithBorderStyle,
                         textStyle: UITextStyle.boldBody,
+                        text: "أنشئ فاتورة جديدة",
                       ),
                       spacerHeight(
                         height: 5,
