@@ -277,6 +277,13 @@ class OrderScreenController extends GetxController {
     }
   }
 
+  bool checkIfProductSelectedForUpdate(product) {
+    if (selectedProductId != null) {
+      return selectedProductId == product.id;
+    }
+    return false;
+  }
+
   void openUpdateProductBottomSheet(product) {
     selectedProductId = product.id;
     update();
