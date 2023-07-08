@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
+import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
@@ -12,6 +14,7 @@ import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/saving_order.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/success_saving_order.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/update_order_product_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class OrderScreenController extends GetxController {
@@ -21,6 +24,7 @@ class OrderScreenController extends GetxController {
   TextEditingController productQuantityController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   RxList<Product> selectedProducts = <Product>[].obs;
+  int? selectedProductId = null;
   //HomeController homeController = Get.find<HomeController>();
   ProductsController productsController = Get.find<ProductsController>();
   OrderController orderController = Get.find<OrderController>();
@@ -271,6 +275,19 @@ class OrderScreenController extends GetxController {
     } else {
       SnackBars.showWarning('يرجى ادخال السعر');
     }
+  }
+
+  void openUpdateProductBottomSheet(product) {
+    selectedProductId = product.id;
+    update();
+    Get.bottomSheet(
+      barrierColor: UIColors.white.withOpacity(0),
+      UpdateOrderProductBottomSheet(
+        productId: product.id,
+        currentQuantity: selectedProductsQuantities[product.id],
+        currentPrice: selectedProductPrices[product.id],
+      ),
+    );
   }
 
   num calculateTotalProdcutPrice(price, quantity) {
