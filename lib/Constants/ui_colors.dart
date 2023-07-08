@@ -22,6 +22,7 @@ class UIColors {
   static const mainBackground = Color.fromARGB(255, 38, 39, 82);
   static const textFieldBackground = Color(0xff3D3E65);
   static const buttonBackground = Color(0xff6C34F1);
+  static const continueButtonBackgroud = Color(0xff41E356);
   static const containerBackground = Color(0xff3D3E65);
   static const circleAvatarBackground = Color(0xff707070);
   static const iconButtonGroupBackground = Color(0xff1C1D40);
