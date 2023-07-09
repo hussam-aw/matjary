@@ -157,6 +157,8 @@ class CreateEditProductScreen extends StatelessWidget {
                                           text: 'يتأثر',
                                           isSelected:
                                               productScreenController.affected,
+                                          selectionColor: UIColors.white,
+                                          selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
                                             productController
                                                     .affectedExchangeState =
@@ -169,6 +171,8 @@ class CreateEditProductScreen extends StatelessWidget {
                                           text: 'لا يتأثر',
                                           isSelected: productScreenController
                                               .notAffected,
+                                          selectionColor: UIColors.white,
+                                          selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
                                             productController
                                                     .affectedExchangeState =
