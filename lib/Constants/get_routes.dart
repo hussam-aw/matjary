@@ -38,4 +38,6 @@ class AppRoutes {
       '/home/productReportScreen/chooseProductScreen/productQtyReportScreen';
   static const profileScreen = '/home/profileScreen';
   static const accountStatementTypeScreen = '/home/accountStatementTypeScreen';
+  static const accountStatementScreen =
+      '/accountStatementTypeScreen/accountStatementScreen';
 }
