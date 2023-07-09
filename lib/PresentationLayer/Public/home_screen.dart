@@ -294,6 +294,14 @@ class HomeScreen extends StatelessWidget {
                                 : ListView.separated(
                                     itemBuilder: (context, index) {
                                       return CustomerAccountListTile(
+                                        onTap: () {
+                                          Get.toNamed(
+                                            AppRoutes
+                                                .accountStatementTypeScreen,
+                                            arguments: accountsController
+                                                .customersAccounts[index],
+                                          );
+                                        },
                                         customerName: accountsController
                                             .customersAccounts[index].name,
                                         customerImage: 'assets/images/user.png',
