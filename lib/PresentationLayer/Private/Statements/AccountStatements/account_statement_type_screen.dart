@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Statements/account_statement_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -11,7 +13,6 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 // ignore: must_be_immutable
 class AccountStatementTypeScreen extends StatelessWidget {
@@ -38,38 +39,11 @@ class AccountStatementTypeScreen extends StatelessWidget {
                     children: [
                       const PageTitle(title: 'كشف حساب'),
                       spacerHeight(height: 22),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 32,
-                            backgroundImage:
-                                AssetImage('assets/images/user.png'),
-                          ),
-                          spacerWidth(),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  account!.name,
-                                  softWrap: true,
-                                  style: UITextStyle.normalMeduim.copyWith(
-                                    color: UIColors.lightNormalText,
-                                  ),
-                                ),
-                                spacerHeight(),
-                                Text(
-                                  accountController.convertAccountStyleToString(
-                                      account!.type),
-                                  softWrap: true,
-                                  style: UITextStyle.normalBody.copyWith(
-                                    color: UIColors.lightNormalText,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      AccountStatementHeader(
+                        accountName: account!.name,
+                        accountType: accountController
+                            .convertAccountTypeToString(account!.type),
+                        accountImage: 'assets/images/user.png',
                       ),
                       spacerHeight(height: 22),
                       CustomRadioGroup(
@@ -110,7 +84,12 @@ class AccountStatementTypeScreen extends StatelessWidget {
                 ),
                 AcceptButton(
                   text: 'كشف حساب',
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(
+                      AppRoutes.accountStatementScreen,
+                      arguments: account,
+                    );
+                  },
                 )
               ],
             ),
