@@ -34,6 +34,7 @@ class DeliveryDetails extends StatelessWidget {
                 Obx(
                   () {
                     return CustomRadioGroup(
+                      scrollDirection: Axis.horizontal,
                       items: orderScreenController.buyingTypes.keys
                           .map((buyingType) => RadioButtonItem(
                                 text: buyingType,
@@ -121,6 +122,7 @@ class DeliveryDetails extends StatelessWidget {
                 Obx(
                   () {
                     return CustomRadioGroup(
+                      scrollDirection: Axis.horizontal,
                       items: orderScreenController.orderStatus.keys
                           .map((orderStatus) => RadioButtonItem(
                                 text: orderStatus,
@@ -165,9 +167,11 @@ class DeliveryDetails extends StatelessWidget {
       hintText: hintText,
       suffix: Container(
         height: 50,
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 12, top: 5, bottom: 4),
         child: CustomRadioGroup(
-          scrollDirection: Axis.vertical,
+          scrollDirection: Axis.horizontal,
+          crossAxisSpacing: 6,
+          childAspectRatio: .25,
           items: orderScreenController.discountOrderTypes.keys
               .map((discountType) => RadioButtonItem(
                     text: discountType,

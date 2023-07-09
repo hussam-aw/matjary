@@ -37,6 +37,7 @@ class OrderBasicInformation extends StatelessWidget {
               Obx(
                 () {
                   return CustomRadioGroup(
+                    scrollDirection: Axis.horizontal,
                     items: orderScreenController.orderTypes.keys
                         .map((orderType) => RadioButtonItem(
                               text: orderType,
