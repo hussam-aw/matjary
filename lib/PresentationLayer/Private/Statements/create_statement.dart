@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
@@ -11,16 +10,11 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -89,7 +83,7 @@ class CreateStatementScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SectionTitle(title: 'من الحساب'),
+                          const SectionTitle(title: 'من الحساب'),
                           spacerHeight(),
                           Row(
                             children: [
@@ -125,7 +119,7 @@ class CreateStatementScreen extends StatelessWidget {
                             ],
                           ),
                           spacerHeight(height: 20),
-                          SectionTitle(title: 'إلى الحساب'),
+                          const SectionTitle(title: 'إلى الحساب'),
                           spacerHeight(),
                           Row(
                             children: [
@@ -160,7 +154,7 @@ class CreateStatementScreen extends StatelessWidget {
                             ],
                           ),
                           spacerHeight(height: 20),
-                          SectionTitle(title: 'مبلغ القيد'),
+                          const SectionTitle(title: 'مبلغ القيد'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller:
@@ -175,7 +169,7 @@ class CreateStatementScreen extends StatelessWidget {
                             },
                           ),
                           spacerHeight(height: 20),
-                          SectionTitle(title: 'تاريخ القيد'),
+                          const SectionTitle(title: 'تاريخ القيد'),
                           spacerHeight(),
                           TextFormField(
                             readOnly: true,
@@ -201,7 +195,7 @@ class CreateStatementScreen extends StatelessWidget {
                             )),
                           ),
                           spacerHeight(height: 20),
-                          SectionTitle(title: 'البيان'),
+                          const SectionTitle(title: 'البيان'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller:

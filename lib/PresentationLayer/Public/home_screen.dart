@@ -17,7 +17,6 @@ import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/bottom_navigation_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/amount_shimmer.dart';
@@ -64,13 +63,11 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       AcceptButton(
-                        text: "أنشئ فاتورة جديدة",
                         onPressed: () {
                           Get.toNamed(AppRoutes.createEditOrderScreen);
                         },
-                        backgroundColor: Colors.transparent,
-                        style: acceptButtonWithBorderStyle,
                         textStyle: UITextStyle.boldBody,
+                        text: "أنشئ فاتورة جديدة",
                       ),
                       spacerHeight(
                         height: 5,
@@ -175,7 +172,7 @@ class HomeScreen extends StatelessWidget {
                                             Obx(
                                               () => accountsController
                                                       .isLoadingAccounts.value
-                                                  ? AmountShimmer()
+                                                  ? const AmountShimmer()
                                                   : Text(
                                                       accountsController
                                                           .cashAmount.value
@@ -288,7 +285,7 @@ class HomeScreen extends StatelessWidget {
                             return accountsController.isLoadingAccounts.value
                                 ? ListView.separated(
                                     itemBuilder: (context, index) {
-                                      return CustomerListTileShimmer();
+                                      return const CustomerListTileShimmer();
                                     },
                                     separatorBuilder: (context, index) =>
                                         spacerHeight(height: 25),
@@ -297,6 +294,14 @@ class HomeScreen extends StatelessWidget {
                                 : ListView.separated(
                                     itemBuilder: (context, index) {
                                       return CustomerAccountListTile(
+                                        onTap: () {
+                                          Get.toNamed(
+                                            AppRoutes
+                                                .accountStatementTypeScreen,
+                                            arguments: accountsController
+                                                .customersAccounts[index],
+                                          );
+                                        },
                                         customerName: accountsController
                                             .customersAccounts[index].name,
                                         customerImage: 'assets/images/user.png',

@@ -45,43 +45,36 @@ class CreateEditOrderScreen extends StatelessWidget {
                       : spacerHeight(height: 40);
                 }),
                 spacerHeight(),
-                Container(
-                  //padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Obx(
-                    () => Row(
-                      children: [
-                        StepperComponent(
-                          title: 'المعلومات الرئيسية',
-                          currentIndex:
-                              orderScreenController.currentIndex.value,
-                          index: 0,
+                Obx(
+                  () => Row(
+                    children: [
+                      StepperComponent(
+                        title: 'المعلومات الرئيسية',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 0,
+                      ),
+                      StepperComponent(
+                        title: 'تفاصيل الفاتورة',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 1,
+                      ),
+                      StepperComponent(
+                        title: 'تفاصيل التسليم',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 2,
+                      ),
+                      StepperComponent(
+                        title: 'حفظ الفاتورة',
+                        currentIndex: orderScreenController.currentIndex.value,
+                        index: 3,
+                        isLast: true,
+                        icon: const Icon(
+                          Icons.check,
+                          size: 28,
+                          color: UIColors.mainIcon,
                         ),
-                        StepperComponent(
-                          title: 'تفاصيل الفاتورة',
-                          currentIndex:
-                              orderScreenController.currentIndex.value,
-                          index: 1,
-                        ),
-                        StepperComponent(
-                          title: 'تفاصيل التسليم',
-                          currentIndex:
-                              orderScreenController.currentIndex.value,
-                          index: 2,
-                        ),
-                        StepperComponent(
-                          title: 'حفظ الفاتورة',
-                          currentIndex:
-                              orderScreenController.currentIndex.value,
-                          index: 3,
-                          isLast: true,
-                          icon: const Icon(
-                            Icons.check,
-                            size: 28,
-                            color: UIColors.mainIcon,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 spacerHeight(),

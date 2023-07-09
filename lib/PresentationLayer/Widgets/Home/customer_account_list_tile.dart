@@ -5,6 +5,7 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
+// ignore: must_be_immutable
 class CustomerAccountListTile extends StatelessWidget {
   CustomerAccountListTile({
     super.key,
@@ -12,68 +13,73 @@ class CustomerAccountListTile extends StatelessWidget {
     required this.customerImage,
     required this.customerStatus,
     required this.customerBalance,
+    required this.onTap,
   });
 
-  String customerName;
-  String customerImage;
-  String customerStatus;
-  String customerBalance;
+  final String customerName;
+  final String customerImage;
+  final String customerStatus;
+  final String customerBalance;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 22,
-                      backgroundImage: AssetImage(customerImage),
-                    ),
-                    spacerWidth(),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            customerName,
-                            softWrap: true,
-                            //overflow: TextOverflow.ellipsis,
-                            style: UITextStyle.boldBody,
-                          ),
-                          spacerHeight(),
-                          Text(
-                            customerStatus,
-                            softWrap: true,
-                            //overflow: TextOverflow.ellipsis,
-                            style: UITextStyle.normalSmall,
-                          ),
-                        ],
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 22,
+                        backgroundImage: AssetImage(customerImage),
                       ),
-                    ),
-                  ],
+                      spacerWidth(),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              customerName,
+                              softWrap: true,
+                              //overflow: TextOverflow.ellipsis,
+                              style: UITextStyle.boldBody,
+                            ),
+                            spacerHeight(),
+                            Text(
+                              customerStatus,
+                              softWrap: true,
+                              //overflow: TextOverflow.ellipsis,
+                              style: UITextStyle.normalSmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              spacerWidth(),
-              Text(
-                customerBalance,
-                style: UITextStyle.boldMeduim,
-              ),
-            ],
+                spacerWidth(),
+                Text(
+                  customerBalance,
+                  style: UITextStyle.boldMeduim,
+                ),
+              ],
+            ),
           ),
-        ),
-        spacerWidth(width: 20),
-        const Icon(
-          FontAwesomeIcons.arrowLeft,
-          color: UIColors.normalIcon,
-        )
-      ],
+          spacerWidth(width: 20),
+          const Icon(
+            FontAwesomeIcons.arrowLeft,
+            color: UIColors.normalIcon,
+          )
+        ],
+      ),
     );
   }
 }

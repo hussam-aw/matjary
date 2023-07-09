@@ -11,6 +11,5 @@ class StatementsController extends GetxController {
     isLoading.value = true;
     statements = await statementRepo.getStatements();
     isLoading.value = false;
-    print(statements);
   }
 }

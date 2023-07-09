@@ -12,8 +12,8 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_amount_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/order_info_item.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -21,6 +21,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
+// ignore: must_be_immutable
 class OrderScreen extends StatelessWidget {
   OrderScreen({super.key});
 
@@ -104,7 +105,7 @@ class OrderScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SectionTitle(
+                              const SectionTitle(
                                 title: 'معلومات الفاتورة',
                                 titleColor: UIColors.white,
                               ),
@@ -192,17 +193,17 @@ class OrderScreen extends StatelessWidget {
                           ),
                         ),
                         spacerHeight(height: 22),
-                        ElevatedButton(
+                        CustomButton(
                           onPressed: () {
                             Get.toNamed(AppRoutes.orderDetailsScreen,
                                 arguments: order);
                           },
-                          style: acceptButtonStyle,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                          backgroundColor: UIColors.primary,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text(
                                   'تفاصيل الفاتورة (البنود)',
                                   style: UITextStyle.normalBody,

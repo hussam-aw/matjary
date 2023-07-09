@@ -10,6 +10,7 @@ class BankAccount extends Account {
     required super.userId,
   });
 
+  @override
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,

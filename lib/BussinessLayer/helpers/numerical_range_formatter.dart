@@ -14,7 +14,7 @@ class NumericalRangeFormatter extends TextInputFormatter {
     if (newValue.text == '') {
       return newValue;
     } else if (num.parse(newValue.text) < min) {
-      return TextEditingValue().copyWith(text: min.toStringAsFixed(2));
+      return const TextEditingValue().copyWith(text: min.toStringAsFixed(2));
     } else {
       return num.parse(newValue.text) > max ? oldValue : newValue;
     }

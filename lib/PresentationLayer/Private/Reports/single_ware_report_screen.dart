@@ -3,13 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/reports_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/ware_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/table_details_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/table_titles.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -17,6 +15,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class SingleWareReportScreen extends StatelessWidget {
   SingleWareReportScreen({super.key});
 
@@ -41,7 +40,7 @@ class SingleWareReportScreen extends StatelessWidget {
               children: [
                 PageTitle(title: 'جرد المستودع : ${ware.name}'),
                 spacerHeight(height: 22),
-                TableTitles(
+                const TableTitles(
                   isDecorated: true,
                   firstColumnTitle: 'المنتج',
                   secondColumnTitle: '',
@@ -87,7 +86,6 @@ class SingleWareReportScreen extends StatelessWidget {
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
-                  backgroundColor: UIColors.primary,
                   onPressed: () {},
                 ),
               ],

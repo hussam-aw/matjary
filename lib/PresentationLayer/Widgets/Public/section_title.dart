@@ -3,7 +3,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
 class SectionTitle extends StatelessWidget {
-  SectionTitle({
+  const SectionTitle({
     super.key,
     required this.title,
     this.titleColor = UIColors.normalText,

@@ -4,25 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/product_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/DataAccesslayer/Clients/categories_client.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -51,7 +48,37 @@ class CreateEditProductScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إنشاء | تعديل منتج'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: const PageTitle(title: 'إنشاء | تعديل منتج'),
+                    ),
+                    if (product != null)
+                      InkWell(
+                        onTap: () {
+                          Get.dialog(
+                            CustomDialog(
+                              title: 'هل تريد حذف المنتج؟',
+                              buttonText: 'حذف',
+                              confirmOnPressed: () async {
+                                await productController
+                                    .deleteProduct(product!.id);
+                                Get.until((route) =>
+                                    route.settings.name ==
+                                    AppRoutes.chooseProductScreen);
+                              },
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          size: 30,
+                          color: UIColors.primary,
+                        ),
+                      ),
+                  ],
+                ),
                 Expanded(
                   flex: 5,
                   child: SingleChildScrollView(
@@ -61,7 +88,7 @@ class CreateEditProductScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SectionTitle(title: 'المعلومات الأساسية'),
+                            const SectionTitle(title: 'المعلومات الأساسية'),
                             spacerHeight(),
                             CustomTextFormField(
                               controller: productController.nameController,
@@ -115,7 +142,7 @@ class CreateEditProductScreen extends StatelessWidget {
                               hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
                             ),
                             spacerHeight(height: 20),
-                            SectionTitle(title: 'يتأثر بتغيرات الصرف'),
+                            const SectionTitle(title: 'يتأثر بتغيرات الصرف'),
                             spacerHeight(),
                             GetBuilder(
                                 init: productScreenController,
@@ -130,6 +157,8 @@ class CreateEditProductScreen extends StatelessWidget {
                                           text: 'يتأثر',
                                           isSelected:
                                               productScreenController.affected,
+                                          selectionColor: UIColors.white,
+                                          selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
                                             productController
                                                     .affectedExchangeState =
@@ -142,6 +171,8 @@ class CreateEditProductScreen extends StatelessWidget {
                                           text: 'لا يتأثر',
                                           isSelected: productScreenController
                                               .notAffected,
+                                          selectionColor: UIColors.white,
+                                          selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
                                             productController
                                                     .affectedExchangeState =
@@ -154,7 +185,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                   );
                                 }),
                             spacerHeight(height: 20),
-                            SectionTitle(title: 'أسعار البيع'),
+                            const SectionTitle(title: 'أسعار البيع'),
                             spacerHeight(),
                             Row(
                               children: [

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/auth_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/main.dart';
@@ -36,11 +35,13 @@ class CustomDrawer extends StatelessWidget {
                     Text(MyApp.appUser != null ? MyApp.appUser!.email : ""),
               ),
               if (MyApp.appUser != null)
-                const DrawerListTile(
+                DrawerListTile(
                   title: "الحساب الشخصي",
                   subtitle: "التعديل على بيانات الملف الشخصي",
                   iconData: Icons.people,
-                  onTap: null,
+                  onTap: () {
+                    Get.toNamed(AppRoutes.profileScreen);
+                  },
                 ),
               if (MyApp.appUser == null)
                 const DrawerListTile(

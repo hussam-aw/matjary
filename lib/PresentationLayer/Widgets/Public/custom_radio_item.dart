@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -11,9 +10,10 @@ class RadioButtonItem extends StatelessWidget {
     this.width = 120,
     this.style = UITextStyle.normalMeduim,
     this.isSelected = false,
-    this.selectionColor = UIColors.white,
+    this.selectionColor = UIColors.containerBackground,
     this.unselectionColor = UIColors.containerBackground,
-    this.selectedTextColor = UIColors.menuTitle,
+    this.selectedTextColor = UIColors.white,
+    this.borderExist = false,
     required this.onTap,
   });
 
@@ -24,6 +24,7 @@ class RadioButtonItem extends StatelessWidget {
   final Color selectionColor;
   final Color unselectionColor;
   final Color selectedTextColor;
+  final bool borderExist;
   final Function() onTap;
 
   @override
@@ -34,6 +35,12 @@ class RadioButtonItem extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           color: isSelected ? selectionColor : unselectionColor,
+          border: isSelected && borderExist
+              ? Border.all(
+                  color: UIColors.primary,
+                  width: 2,
+                )
+              : null,
           borderRadius: raduis15,
         ),
         padding: const EdgeInsets.all(4),

@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class AppRoutes {
   static const splashScreen = "/";
   static const introScreen = "/intro";
@@ -38,4 +36,8 @@ class AppRoutes {
       '/home/productReportScreen/waresReportScreen';
   static const productQtyReportScreen =
       '/home/productReportScreen/chooseProductScreen/productQtyReportScreen';
+  static const profileScreen = '/home/profileScreen';
+  static const accountStatementTypeScreen = '/home/accountStatementTypeScreen';
+  static const accountStatementScreen =
+      '/accountStatementTypeScreen/accountStatementScreen';
 }

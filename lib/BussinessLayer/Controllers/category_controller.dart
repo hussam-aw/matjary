@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Repositories/categories_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -18,7 +17,8 @@ class CategoryController extends GetxController {
   void setCategoryDetails(Category? category) {
     if (category != null) {
       setCategoryName(category.name);
-      setParentCategory(category.parentId);
+      setParentCategory(
+          categoriesController.getCategoryFromId(category.parentId));
     }
   }
 
@@ -26,9 +26,9 @@ class CategoryController extends GetxController {
     nameController.value = TextEditingValue(text: categoryName);
   }
 
-  void setParentCategory(categoryId) {
-    if (categoryId != null) {
-      parentId = categoryId;
+  void setParentCategory(category) {
+    if (category != null) {
+      parentId = category.id;
       parentCategoryController.value = TextEditingValue(
           text: categoriesController.getCategoryName(parentId));
     }
@@ -71,11 +71,5 @@ class CategoryController extends GetxController {
     } else {
       SnackBars.showError('فشل الحذف');
     }
-  }
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
   }
 }

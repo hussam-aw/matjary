@@ -14,6 +14,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class ProductQtyReportScreen extends StatelessWidget {
   ProductQtyReportScreen({super.key});
 
@@ -37,7 +38,7 @@ class ProductQtyReportScreen extends StatelessWidget {
               children: [
                 PageTitle(title: 'جرد: ${product.name}'),
                 spacerHeight(height: 22),
-                TableTitles(
+                const TableTitles(
                   isDecorated: true,
                   firstColumnTitle: 'المستودع',
                   secondColumnTitle: '',
@@ -82,7 +83,6 @@ class ProductQtyReportScreen extends StatelessWidget {
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
-                  backgroundColor: UIColors.primary,
                   onPressed: () {},
                 ),
               ],

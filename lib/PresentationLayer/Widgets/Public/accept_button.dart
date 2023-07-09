@@ -10,7 +10,7 @@ class AcceptButton extends StatelessWidget {
       {super.key,
       required this.text,
       this.style = acceptButtonStyle,
-      this.backgroundColor = UIColors.primary,
+      this.backgroundColor = UIColors.continueButtonBackgroud,
       this.textStyle = UITextStyle.boldMeduim,
       required this.onPressed,
       this.isLoading = false});

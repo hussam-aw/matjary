@@ -8,7 +8,7 @@ class AccetpIconButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.icon,
-    this.backgroundColor = UIColors.buttonBackground,
+    this.backgroundColor = UIColors.continueButtonBackgroud,
     this.center = false,
     required this.onPressed,
   });

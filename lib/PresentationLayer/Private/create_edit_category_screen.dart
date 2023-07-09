@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/category_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
@@ -36,7 +36,37 @@ class CreateEditCategoryScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           child: Column(
             children: [
-              const PageTitle(title: 'إنشاء | تعديل تصنيف بضاعة'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: const PageTitle(title: 'إنشاء | تعديل تصنيف بضاعة'),
+                  ),
+                  if (category != null)
+                    InkWell(
+                      onTap: () {
+                        Get.dialog(
+                          CustomDialog(
+                            title: 'هل تريد حذف التصنيف؟',
+                            buttonText: 'حذف',
+                            confirmOnPressed: () async {
+                              await categoryController
+                                  .deleteCategory(category!.id);
+                              Get.until((route) =>
+                                  route.settings.name ==
+                                  AppRoutes.chooseCategoryScreen);
+                            },
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.delete,
+                        size: 30,
+                        color: UIColors.primary,
+                      ),
+                    ),
+                ],
+              ),
               Expanded(
                 flex: 5,
                 child: Padding(
@@ -45,7 +75,7 @@ class CreateEditCategoryScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SectionTitle(title: 'المعلومات الأساسية'),
+                        const SectionTitle(title: 'المعلومات الأساسية'),
                         spacerHeight(),
                         CustomTextFormField(
                           controller: categoryController.nameController,
@@ -73,8 +103,7 @@ class CreateEditCategoryScreen extends StatelessWidget {
                                   AppRoutes.chooseCategoryScreen,
                                   arguments: 'selection',
                                 );
-                                categoryController
-                                    .setParentCategory(category.id);
+                                categoryController.setParentCategory(category);
                               },
                             ),
                           ],

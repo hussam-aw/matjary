@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/statement_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
@@ -21,12 +15,12 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class ChooseAccountScreen extends StatelessWidget {
   ChooseAccountScreen({super.key});
 
   final AccountsController accountsController = Get.find<AccountsController>();
-  final SearchController searchController = Get.put(SearchController());
-  late var controller;
+  final ListSearchController searchController = Get.put(ListSearchController());
 
   String? screenMode = Get.arguments['mode'];
   String? accountStyle = Get.arguments['style'];
@@ -47,14 +41,9 @@ class ChooseAccountScreen extends StatelessWidget {
               return screenMode == null
                   ? CustomBox(
                       title: accountList[index].name,
-                      editOnPressed: () {
+                      onTap: () {
                         Get.toNamed(AppRoutes.createEditAccountScreen,
                             arguments: accountList[index]);
-                      },
-                      deleteDialogTitle: 'هل تريد بالتأكيد حذف الحساب؟',
-                      deleteOnPressed: () {
-                        controller.deleteAccount(accountList[index].id);
-                        Get.back();
                       },
                     )
                   : NormalBox(
@@ -74,9 +63,7 @@ class ChooseAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchController.list = accounts;
-    if (screenMode == null) {
-      controller = Get.put(AccountController());
-    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(

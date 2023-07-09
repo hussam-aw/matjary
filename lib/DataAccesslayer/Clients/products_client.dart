@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:get/get_connect/http/src/multipart/form_data.dart';
-import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
-import 'package:matjary/DataAccesslayer/Repositories/user_repo.dart';
 import 'package:matjary/main.dart';
 
 class ProductsClient {
@@ -53,7 +48,6 @@ class ProductsClient {
     if (response.statusCode == 201) {
       return await response.stream.bytesToString();
     } else {
-      print(response.statusCode);
       return null;
     }
   }
@@ -93,7 +87,6 @@ class ProductsClient {
     if (response.statusCode == 201) {
       return await response.stream.bytesToString();
     } else {
-      print(response.statusCode);
       return null;
     }
   }
@@ -101,7 +94,6 @@ class ProductsClient {
   Future<dynamic> deleteProduct(id) async {
     var response = await http.delete(Uri.parse('$baseUrl$productLink/$id'));
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {

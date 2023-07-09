@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_screen_controller.dart';
@@ -22,6 +21,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
+// ignore: must_be_immutable
 class CreateEditPaymentScreen extends StatelessWidget {
   CreateEditPaymentScreen({super.key});
 
@@ -59,6 +59,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                             builder: (context) {
                               return CustomRadioGroup(
                                 height: 100,
+                                childAspectRatio: 1.8,
                                 items: [
                                   IconRadioItem(
                                     icon: FontAwesomeIcons.solidCircleDown,
@@ -102,7 +103,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                               );
                             }),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'إختر الصندوق'),
+                        const SectionTitle(title: 'إختر الصندوق'),
                         spacerHeight(),
                         Row(
                           children: [
@@ -134,7 +135,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           ],
                         ),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'الطرف المقابل'),
+                        const SectionTitle(title: 'الطرف المقابل'),
                         spacerHeight(),
                         Row(
                           children: [
@@ -168,7 +169,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           ],
                         ),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'مبلغ الدفعة'),
+                        const SectionTitle(title: 'مبلغ الدفعة'),
                         spacerHeight(),
                         CustomTextFormField(
                           controller: paymentController.amountController,
@@ -184,7 +185,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           },
                         ),
                         spacerHeight(height: 30),
-                        SectionTitle(title: 'تاريخ الدفعة'),
+                        const SectionTitle(title: 'تاريخ الدفعة'),
                         spacerHeight(),
                         TextFormField(
                           readOnly: true,
@@ -210,7 +211,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           )),
                         ),
                         spacerHeight(height: 20),
-                        SectionTitle(title: 'ملاحظات'),
+                        const SectionTitle(title: 'ملاحظات'),
                         spacerHeight(),
                         CustomTextFormField(
                           controller: paymentController.notesController,

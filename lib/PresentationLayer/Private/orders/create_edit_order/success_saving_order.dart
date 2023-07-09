@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
-import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -42,7 +41,7 @@ class SuccessSavingOrder extends StatelessWidget {
                       ),
                     ),
                     spacerHeight(),
-                    Text(
+                    const Text(
                       'تم الحفظ بنجاح',
                       style: UITextStyle.boldHeading,
                     ),
@@ -57,13 +56,14 @@ class SuccessSavingOrder extends StatelessWidget {
             child: Column(
               children: [
                 AcceptButton(
-                  text: 'إنشاء فاتورة جديدة',
                   onPressed: () {
                     orderController.resetOrder();
                     orderController.setDefaultFields();
                     orderScreenController.resetOrderScreen();
                     orderScreenController.goToInitialPage();
                   },
+                  backgroundColor: UIColors.primary,
+                  text: 'إنشاء فاتورة جديدة',
                 ),
                 spacerHeight(),
                 AcceptButton(

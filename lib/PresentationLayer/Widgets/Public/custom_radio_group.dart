@@ -1,43 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class CustomRadioGroup extends StatelessWidget {
-  CustomRadioGroup({
+  const CustomRadioGroup({
     super.key,
     required this.items,
     this.height = 45,
-    this.scrollDirection = Axis.horizontal,
+    this.scrollDirection = Axis.vertical,
+    this.displayInGrid = false,
+    this.childAspectRatio = 4,
+    this.crossAxisSpacing = 30.0,
   });
 
   final List<Widget> items;
   final double height;
   final Axis scrollDirection;
+  final bool displayInGrid;
+  final double crossAxisSpacing;
+  final double childAspectRatio;
 
   @override
   Widget build(BuildContext context) {
-    return items.length <= 2
-        ? Container(
+    return items.length <= 2 || displayInGrid
+        ? SizedBox(
             height: height,
-            child: scrollDirection == Axis.horizontal
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(child: items[0]),
-                        spacerWidth(width: 60),
-                        Expanded(child: items[1]),
-                      ],
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: items,
-                    ),
-                  ),
+            child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: crossAxisSpacing,
+              mainAxisSpacing: 30.0,
+              childAspectRatio: childAspectRatio,
+              scrollDirection: scrollDirection,
+              shrinkWrap: true,
+              children: items,
+            ),
           )
         : SizedBox(
             height: 45,

@@ -33,9 +33,9 @@ class WaresReportScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PageTitle(title: 'جرد البضاعة الشامل'),
+                const PageTitle(title: 'جرد البضاعة الشامل'),
                 spacerHeight(height: 22),
-                TableTitles(
+                const TableTitles(
                   isDecorated: true,
                   firstColumnTitle: 'المنتج',
                   secondColumnTitle: '',
@@ -67,7 +67,7 @@ class WaresReportScreen extends StatelessWidget {
                                         .toString(),
                                     fourthColumnItem: InkWell(
                                       onTap: () {},
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.info,
                                         size: 30,
                                         color: UIColors.white,
@@ -87,7 +87,6 @@ class WaresReportScreen extends StatelessWidget {
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
-                  backgroundColor: UIColors.primary,
                   onPressed: () {},
                 ),
               ],

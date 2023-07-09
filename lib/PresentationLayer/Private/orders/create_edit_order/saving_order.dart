@@ -72,7 +72,7 @@ class SavingOrder extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SectionTitle(title: 'نسبة المسوق ( البائع )'),
+                    const SectionTitle(title: 'نسبة المسوق ( البائع )'),
                     spacerHeight(),
                     Obx(() {
                       return orderScreenController
@@ -160,9 +160,11 @@ class SavingOrder extends StatelessWidget {
       hintText: hintText,
       suffix: Container(
         height: 50,
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 12, top: 6, bottom: 4),
         child: CustomRadioGroup(
-          scrollDirection: Axis.vertical,
+          scrollDirection: Axis.horizontal,
+          crossAxisSpacing: 6,
+          childAspectRatio: .2,
           items: orderScreenController.discountOrderTypes.keys
               .map((discountType) => RadioButtonItem(
                     text: discountType,

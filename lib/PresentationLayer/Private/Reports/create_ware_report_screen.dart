@@ -19,7 +19,7 @@ class CreateWareReportScreen extends StatelessWidget {
   CreateWareReportScreen({super.key});
 
   final WaresController waresController = Get.find<WaresController>();
-  final SearchController searchController = Get.put(SearchController());
+  final ListSearchController searchController = Get.put(ListSearchController());
 
   Widget buildWareList(wareList) {
     return wareList.isEmpty
@@ -65,16 +65,17 @@ class CreateWareReportScreen extends StatelessWidget {
               children: [
                 const PageTitle(title: 'تقرير جرد مستودعات'),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'إنشاء جرد لكل المستودعات'),
+                const SectionTitle(title: 'إنشاء جرد لكل المستودعات'),
                 spacerHeight(),
                 AcceptButton(
-                  text: 'جرد شامل',
                   onPressed: () {
                     Get.toNamed(AppRoutes.waresReportScreen);
                   },
+                  backgroundColor: UIColors.primary,
+                  text: 'جرد شامل',
                 ),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'أو إختر المستودع'),
+                const SectionTitle(title: 'أو إختر المستودع'),
                 spacerHeight(),
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم المستودع  أو إختر من القائمة',

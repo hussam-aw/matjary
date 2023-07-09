@@ -1,5 +1,3 @@
-import 'product.dart';
-
 class ProductWithQuantity {
   int productId;
   int quantity;

@@ -138,7 +138,6 @@ class OrdersRepo {
 
   Future<Order?> deleteOrder(id) async {
     var deletedOrder = await client.deleteOrder(id);
-    print(deletedOrder);
     if (deletedOrder != null) {
       return Order.fromMap(jsonDecode(deletedOrder));
     }

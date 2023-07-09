@@ -64,7 +64,6 @@ class AccountsClient {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -85,7 +84,6 @@ class AccountsClient {
           'Content-Type': 'application/json; charset=UTF-8',
         });
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -96,7 +94,6 @@ class AccountsClient {
   Future<dynamic> deleteAccount(id) async {
     var response = await http.delete(Uri.parse('$baseUrl$accountLink/$id'));
 
-    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {

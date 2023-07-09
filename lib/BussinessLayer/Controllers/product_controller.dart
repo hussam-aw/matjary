@@ -1,14 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
-import 'package:matjary/BussinessLayer/helpers/image_picker_helper.dart';
-import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Repositories/products_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -39,7 +32,7 @@ class ProductController extends GetxController {
           text: categoriesController.getCategoryName(categoryId));
     } else {
       categoryId = null;
-      categoryNameController.value = TextEditingValue(text: 'غير مصنف');
+      categoryNameController.value = const TextEditingValue(text: 'غير مصنف');
     }
   }
 
@@ -175,7 +168,6 @@ class ProductController extends GetxController {
     categoryId = null;
     affectedExchangeState = "يتأثر";
     selectedImages.clear();
-    print(selectedImages.length);
     super.onInit();
   }
 }

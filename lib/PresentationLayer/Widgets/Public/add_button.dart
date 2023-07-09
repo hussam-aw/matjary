@@ -23,12 +23,12 @@ class AddButton extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: raduis15,
       ),
+      onPressed: onPressed,
       child: Icon(
         size: 45,
         FontAwesomeIcons.plus,
         color: iconColor,
       ),
-      onPressed: onPressed,
     );
   }
 }

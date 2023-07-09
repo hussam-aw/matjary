@@ -29,11 +29,12 @@ class DeliveryDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SectionTitle(title: 'نوع البيع'),
+                const SectionTitle(title: 'نوع البيع'),
                 spacerHeight(),
                 Obx(
                   () {
                     return CustomRadioGroup(
+                      scrollDirection: Axis.horizontal,
                       items: orderScreenController.buyingTypes.keys
                           .map((buyingType) => RadioButtonItem(
                                 text: buyingType,
@@ -60,7 +61,7 @@ class DeliveryDetails extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          SectionTitle(title: 'مصاريف الفاتورة'),
+                          const SectionTitle(title: 'مصاريف الفاتورة'),
                           spacerHeight(),
                           CustomTextFormField(
                             controller: orderController.expensesController,
@@ -83,7 +84,7 @@ class DeliveryDetails extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: [
-                          SectionTitle(title: 'الحسم على الفاتورة'),
+                          const SectionTitle(title: 'الحسم على الفاتورة'),
                           spacerHeight(),
                           Obx(() {
                             return orderScreenController
@@ -116,11 +117,12 @@ class DeliveryDetails extends StatelessWidget {
                   ],
                 ),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'حالة الطلب'),
+                const SectionTitle(title: 'حالة الطلب'),
                 spacerHeight(),
                 Obx(
                   () {
                     return CustomRadioGroup(
+                      scrollDirection: Axis.horizontal,
                       items: orderScreenController.orderStatus.keys
                           .map((orderStatus) => RadioButtonItem(
                                 text: orderStatus,
@@ -141,7 +143,7 @@ class DeliveryDetails extends StatelessWidget {
                   },
                 ),
                 spacerHeight(height: 22),
-                SectionTitle(title: 'ملاحظات'),
+                const SectionTitle(title: 'ملاحظات'),
                 spacerHeight(),
                 CustomTextFormField(
                   controller: orderController.notesController,
@@ -165,9 +167,11 @@ class DeliveryDetails extends StatelessWidget {
       hintText: hintText,
       suffix: Container(
         height: 50,
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 12, top: 5, bottom: 4),
         child: CustomRadioGroup(
-          scrollDirection: Axis.vertical,
+          scrollDirection: Axis.horizontal,
+          crossAxisSpacing: 6,
+          childAspectRatio: .25,
           items: orderScreenController.discountOrderTypes.keys
               .map((discountType) => RadioButtonItem(
                     text: discountType,

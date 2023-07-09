@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class UITextStyle {
+  static const boldHuge = TextStyle(
+    color: Colors.white,
+    fontFamily: 'Montserrat',
+    height: 1,
+    fontWeight: FontWeight.bold,
+    fontSize: 37.0,
+  );
+
   static const boldLarge = TextStyle(
     color: Colors.white,
     fontFamily: 'Montserrat',

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/product_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
@@ -19,13 +15,12 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class ChooseProductScreen extends StatelessWidget {
   ChooseProductScreen({super.key});
 
   final ProductsController productsController = Get.find<ProductsController>();
-  final ProductController productController = Get.put(ProductController());
-  final SearchController searchController = Get.put(SearchController());
-  late var controller;
+  final ListSearchController searchController = Get.put(ListSearchController());
 
   String? screenMode = Get.arguments;
 
@@ -44,14 +39,9 @@ class ChooseProductScreen extends StatelessWidget {
               return screenMode == null
                   ? CustomBox(
                       title: productsList[index].name,
-                      editOnPressed: () {
+                      onTap: () {
                         Get.toNamed(AppRoutes.createEditProductScreen,
                             arguments: productsList[index]);
-                      },
-                      deleteDialogTitle: 'هل تريد بالتأكيد حذف المنتج؟',
-                      deleteOnPressed: () {
-                        controller.deleteProduct(productsList[index].id);
-                        Get.back();
                       },
                     )
                   : NormalBox(
@@ -74,9 +64,7 @@ class ChooseProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchController.list = productsController.products;
-    if (screenMode == null) {
-      controller = Get.put(ProductController());
-    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(

@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:matjary/DataAccesslayer/Clients/statement_client.dart';
-import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/DataAccesslayer/Models/statement.dart';
 import 'package:matjary/main.dart';
 
@@ -32,7 +30,6 @@ class StatementRepo {
       type, accountId, bankId, statement, amount, date) async {
     var createdPayment = await client.createPayment(
         type, accountId, bankId, statement, amount, date);
-    print(createdPayment);
     if (createdPayment != null) {
       return true;
     }

@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
@@ -13,7 +11,6 @@ import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
-import 'package:matjary/main.dart';
 
 class OrderController extends GetxController {
   OrdersRepo orderRepo = OrdersRepo();
@@ -210,7 +207,6 @@ class OrderController extends GetxController {
   }
 
   void setDate(String date) {
-    print(date);
     if (date.isEmpty) {
       date =
           "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}";
@@ -494,11 +490,5 @@ class OrderController extends GetxController {
     // accountsController.getCustomersAccounts();
     // accountsController.getMarketerAccounts();
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -109,7 +108,7 @@ class AccountController extends GetxController {
       type = convertAccountTypeToString(account.type);
       style = convertAccountStyleToString(account.style);
       emailController = TextEditingController(text: account.email);
-      print(emailController.text);
+
       mobilePhoneController = TextEditingController(text: account.mobileNumber);
       addressController = TextEditingController(text: account.address);
     }
@@ -140,10 +139,5 @@ class AccountController extends GetxController {
     } else {
       SnackBars.showError('فشل الحذف');
     }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
   }
 }
