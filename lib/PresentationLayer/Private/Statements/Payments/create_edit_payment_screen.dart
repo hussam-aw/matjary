@@ -59,6 +59,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                             builder: (context) {
                               return CustomRadioGroup(
                                 height: 100,
+                                childAspectRatio: 1.8,
                                 items: [
                                   IconRadioItem(
                                     icon: FontAwesomeIcons.solidCircleDown,
