@@ -108,6 +108,8 @@ class CreateEditAccountScreen extends StatelessWidget {
                                           text: 'مدين',
                                           isSelected:
                                               accountScreenController.debtor,
+                                          selectionColor: UIColors.white,
+                                          selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
                                             accountController.type = 'مدين';
                                             accountScreenController
@@ -117,6 +119,8 @@ class CreateEditAccountScreen extends StatelessWidget {
                                           text: 'دائن',
                                           isSelected:
                                               accountScreenController.creditor,
+                                          selectionColor: UIColors.white,
+                                          selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
                                             accountController.type = 'دائن';
                                             accountScreenController
