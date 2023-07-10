@@ -4,7 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart'
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/circle_text_button.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/update_order_product_bottomsheet.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Order/update_order_product_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class SelectionOrderProductBox extends StatelessWidget {

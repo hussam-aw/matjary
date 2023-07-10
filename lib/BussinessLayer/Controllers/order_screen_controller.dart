@@ -14,7 +14,7 @@ import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/order_details.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/saving_order.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/success_saving_order.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/update_order_product_bottomsheet.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Order/update_order_product_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class OrderScreenController extends GetxController {

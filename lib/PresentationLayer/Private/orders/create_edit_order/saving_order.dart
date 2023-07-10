@@ -6,7 +6,7 @@ import 'package:matjary/BussinessLayer/Controllers/order_screen_controller.dart'
 import 'package:matjary/BussinessLayer/helpers/numerical_range_formatter.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/order_amount_container.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_amount_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
