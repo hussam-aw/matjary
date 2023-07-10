@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class OrderBox extends StatelessWidget {
@@ -18,7 +15,6 @@ class OrderBox extends StatelessWidget {
   });
 
   final Order order;
-  final orderController = Get.put(OrderController());
   final accountsController = Get.find<AccountsController>();
 
   @override
@@ -88,52 +84,52 @@ class OrderBox extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            height: 40,
-            width: 90,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            decoration: const BoxDecoration(
-                borderRadius: raduis15,
-                color: UIColors.iconButtonGroupBackground),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Get.dialog(
-                      CustomDialog(
-                        title: 'هل تريد حذف الفاتورة؟',
-                        buttonText: 'حذف',
-                        confirmOnPressed: () async {
-                          await orderController.deleteOrder(order.id);
-                          Get.until((route) =>
-                              route.settings.name == AppRoutes.ordersScreen);
-                        },
-                      ),
-                    );
-                  },
-                  child: const Icon(
-                    Icons.delete,
-                    size: 27,
-                    color: UIColors.primary,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.toNamed(
-                      AppRoutes.createEditOrderScreen,
-                      arguments: order,
-                    );
-                  },
-                  child: const Icon(
-                    FontAwesomeIcons.penToSquare,
-                    color: UIColors.primary,
-                    size: 22,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   height: 40,
+          //   width: 90,
+          //   padding: const EdgeInsets.symmetric(horizontal: 14),
+          //   decoration: const BoxDecoration(
+          //       borderRadius: raduis15,
+          //       color: UIColors.iconButtonGroupBackground),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       InkWell(
+          //         onTap: () {
+          //           Get.dialog(
+          //             CustomDialog(
+          //               title: 'هل تريد حذف الفاتورة؟',
+          //               buttonText: 'حذف',
+          //               confirmOnPressed: () async {
+          //                 await orderController.deleteOrder(order.id);
+          //                 Get.until((route) =>
+          //                     route.settings.name == AppRoutes.ordersScreen);
+          //               },
+          //             ),
+          //           );
+          //         },
+          //         child: const Icon(
+          //           Icons.delete,
+          //           size: 27,
+          //           color: UIColors.primary,
+          //         ),
+          //       ),
+          //       InkWell(
+          //         onTap: () {
+          //           Get.toNamed(
+          //             AppRoutes.createEditOrderScreen,
+          //             arguments: order,
+          //           );
+          //         },
+          //         child: const Icon(
+          //           FontAwesomeIcons.penToSquare,
+          //           color: UIColors.primary,
+          //           size: 22,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
