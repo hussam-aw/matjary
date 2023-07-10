@@ -3,11 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/account_statement_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/Statements/account_movement_box.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/Statements/account_statement_header.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_movement_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_statement_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -21,6 +22,7 @@ class AccountStatementScreen extends StatelessWidget {
   AccountStatementScreen({super.key});
 
   final accountController = Get.find<AccountController>();
+  final accountStatement = Get.find<AccountStatementController>();
   Account? account = Get.arguments;
 
   Widget buildStatementList(statementList) {
@@ -57,12 +59,12 @@ class AccountStatementScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
+                const PageTitle(title: 'كشف حساب'),
+                spacerHeight(height: 22),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const PageTitle(title: 'كشف حساب'),
-                      spacerHeight(height: 22),
                       AccountStatementHeader(
                         accountName: account!.name,
                         accountType: accountController
@@ -73,7 +75,7 @@ class AccountStatementScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          '150000',
+                          '150.000',
                           style: UITextStyle.boldHuge.copyWith(
                             color: UIColors.primary,
                           ),

@@ -15,6 +15,9 @@ class UIColors {
   static const normalIcon = Color(0xffC5C5C5);
   static const mainIcon = Color(0xff1C1D40);
   static const titleNoteIcon = Color.fromRGBO(255, 255, 255, 0.5);
+  // Buttons
+  static const successButton = Color(0xff6C34F1);
+  static const deleteButton = Color(0xffFF5A6B);
   // Border Colors
   static const circleAvatarBorder = Color(0xff707070);
   static const containerBorder = Color(0xff707070);

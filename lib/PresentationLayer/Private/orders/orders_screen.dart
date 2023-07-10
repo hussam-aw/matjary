@@ -91,6 +91,7 @@ class OrdersScreen extends StatelessWidget {
                 Obx(
                   () {
                     return CustomRadioGroup(
+                      scrollDirection: Axis.horizontal,
                       items: ordersController.orderFilterTypes
                           .map((orderFilterType) => RadioButtonItem(
                                 text: orderFilterType,

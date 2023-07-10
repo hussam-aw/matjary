@@ -6,20 +6,22 @@ class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
     super.key,
     required this.icon,
+    this.backgroundColor = UIColors.white,
+    this.borderRadius = raduis15,
     required this.onPressed,
-    this.heroTag = "",
   });
 
   final Icon icon;
-  final Object? heroTag;
+  final Color backgroundColor;
+  final BorderRadius borderRadius;
   final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: UIColors.white,
-        borderRadius: raduis15,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: borderRadius,
       ),
       child: IconButton(onPressed: onPressed, icon: icon),
     );

@@ -7,7 +7,6 @@ import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_screen_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -187,14 +186,13 @@ class CreateEditPaymentScreen extends StatelessWidget {
                         spacerHeight(height: 30),
                         const SectionTitle(title: 'تاريخ الدفعة'),
                         spacerHeight(),
-                        TextFormField(
+                        CustomTextFormField(
                           readOnly: true,
                           controller: paymentController.dateController,
                           keyboardType: TextInputType.datetime,
                           style: UITextStyle.normalBody,
-                          decoration: textFieldStyle.copyWith(
-                              suffixIcon: IconButton(
-                            onPressed: () async {
+                          suffix: InkWell(
+                            onTap: () async {
                               paymentScreenController.selectDate(
                                   await showDatePicker(
                                       context: context,
@@ -204,11 +202,11 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                       firstDate: DateTime(1900),
                                       lastDate: DateTime(2100)));
                             },
-                            icon: const Icon(
+                            child: const Icon(
                               Icons.date_range,
                               color: UIColors.white,
                             ),
-                          )),
+                          ),
                         ),
                         spacerHeight(height: 20),
                         const SectionTitle(title: 'ملاحظات'),

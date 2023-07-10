@@ -106,6 +106,13 @@ class CreateBottomSheet extends StatelessWidget {
                     icon: 'assets/icons/D_ware_icon.png',
                     title: 'تصنيف بضاعة',
                   ),
+                  CreateMenuItem(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEarnExpenseScreen);
+                    },
+                    icon: 'assets/icons/D_calc_icon.png',
+                    title: 'إيراد أو مصروف',
+                  ),
                 ],
               ),
             ),
