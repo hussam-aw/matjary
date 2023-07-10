@@ -145,6 +145,16 @@ class CustomDrawer extends StatelessWidget {
                   );
                 },
               ),
+              DrawerListTile(
+                title: "الإيرادات والمصاريف",
+                subtitle: "تصفح و تعديل الإيرادات والمصاريف",
+                iconData: FontAwesomeIcons.fileInvoiceDollar,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.earnsExpensesScreen,
+                  );
+                },
+              ),
               const DrawerListTile(
                 title: "التسعير الشامل",
                 subtitle: "تعديل كل الأسعار من نافذة واحدة",
