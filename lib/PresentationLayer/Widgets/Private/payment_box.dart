@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_screen_controller.dart';
@@ -61,7 +60,7 @@ class PaymentBox extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 5,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Column(
@@ -92,45 +91,45 @@ class PaymentBox extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            height: 40,
-            width: 90,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            decoration: const BoxDecoration(
-                borderRadius: raduis15,
-                color: UIColors.iconButtonGroupBackground),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    // Get.toNamed(
-                    //   AppRoutes.orderScreen,
-                    //   arguments: order,
-                    // );
-                  },
-                  child: const Icon(
-                    FontAwesomeIcons.penToSquare,
-                    color: UIColors.primary,
-                    size: 22,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    // Get.toNamed(
-                    //   AppRoutes.createEditOrderScreen,
-                    //   arguments: order,
-                    // );
-                  },
-                  child: const Icon(
-                    Icons.delete,
-                    color: UIColors.primary,
-                    size: 27,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   height: 40,
+          //   width: 90,
+          //   padding: const EdgeInsets.symmetric(horizontal: 14),
+          //   decoration: const BoxDecoration(
+          //       borderRadius: raduis15,
+          //       color: UIColors.iconButtonGroupBackground),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       InkWell(
+          //         onTap: () {
+          //           // Get.toNamed(
+          //           //   AppRoutes.orderScreen,
+          //           //   arguments: order,
+          //           // );
+          //         },
+          //         child: const Icon(
+          //           FontAwesomeIcons.penToSquare,
+          //           color: UIColors.primary,
+          //           size: 22,
+          //         ),
+          //       ),
+          //       InkWell(
+          //         onTap: () {
+          //           // Get.toNamed(
+          //           //   AppRoutes.createEditOrderScreen,
+          //           //   arguments: order,
+          //           // );
+          //         },
+          //         child: const Icon(
+          //           Icons.delete,
+          //           color: UIColors.primary,
+          //           size: 27,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
