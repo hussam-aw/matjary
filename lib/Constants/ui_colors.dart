@@ -15,13 +15,15 @@ class UIColors {
   static const normalIcon = Color(0xffC5C5C5);
   static const mainIcon = Color(0xff1C1D40);
   static const titleNoteIcon = Color.fromRGBO(255, 255, 255, 0.5);
+  // Buttons
+  static const successButton = Color(0xff6C34F1);
+  static const deleteButton = Color(0xffFF5A6B);
   // Border Colors
   static const circleAvatarBorder = Color(0xff707070);
   static const containerBorder = Color(0xff707070);
   // Background Colors
   static const mainBackground = Color.fromARGB(255, 38, 39, 82);
   static const textFieldBackground = Color(0xff3D3E65);
-  static const buttonBackground = Color(0xff6C34F1);
   static const continueButtonBackgroud = Color(0xff41E356);
   static const containerBackground = Color(0xff3D3E65);
   static const circleAvatarBackground = Color(0xff707070);
