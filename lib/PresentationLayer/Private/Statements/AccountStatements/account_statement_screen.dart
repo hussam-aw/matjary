@@ -57,12 +57,12 @@ class AccountStatementScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
+                const PageTitle(title: 'كشف حساب'),
+                spacerHeight(height: 22),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const PageTitle(title: 'كشف حساب'),
-                      spacerHeight(height: 22),
                       AccountStatementHeader(
                         accountName: account!.name,
                         accountType: accountController
