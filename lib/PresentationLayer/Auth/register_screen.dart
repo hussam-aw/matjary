@@ -67,7 +67,7 @@ class RegisterScreen extends StatelessWidget {
                           AccetpIconButton(
                             onPressed: () {},
                             center: true,
-                            backgroundColor: UIColors.buttonBackground,
+                            backgroundColor: UIColors.successButton,
                             icon: const Icon(FontAwesomeIcons.squareFacebook),
                             text: Text(
                               'متابعة باستخدام الفيسبوك',
