@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/account_movement.dart';
 
 class AccountMovementBox extends StatelessWidget {
-  const AccountMovementBox({super.key});
+  const AccountMovementBox({super.key, required this.accountMovement});
+
+  final AccountMovement accountMovement;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class AccountMovementBox extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              'بيع بضاعة , تم تسديد كامل الحساب',
+              accountMovement.statement,
               softWrap: true,
               style: UITextStyle.normalBody.copyWith(
                 color: UIColors.lightNormalText,
@@ -33,14 +37,14 @@ class AccountMovementBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '21/06/2023',
+                  DateFormatter.getDateString(accountMovement.date),
                   softWrap: true,
                   style: UITextStyle.normalBody.copyWith(
                     color: UIColors.lightNormalText,
                   ),
                 ),
                 Text(
-                  '150.000',
+                  accountMovement.amount.toString(),
                   softWrap: true,
                   style: UITextStyle.boldHeading.copyWith(
                     color: UIColors.lightNormalText,
