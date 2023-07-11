@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:matjary/Constants/ui_colors.dart';
-import 'package:matjary/Constants/ui_styles.dart';
-import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
+import 'package:matjary/BussinessLayer/Controllers/account_statement_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_statement_dates_bottom_sheet.dart';
 
 class AccountStatementScreenController extends GetxController {
   String currentAccountStatementFilterType = 'عن كامل المدة';
+  final accountStatementController = Get.put(AccountStatementController());
 
   List<String> accountStatementFilterTypes = [
     'عن كامل المدة',
@@ -40,78 +37,30 @@ class AccountStatementScreenController extends GetxController {
     };
   }
 
+  void selectFromDate(date) async {
+    print(date);
+    if (date != null) {
+      accountStatementController.setFromDate(DateFormatter.getFormated(date));
+    } else {
+      accountStatementController.setFromDate('');
+    }
+  }
+
+  void selectToDate(date) async {
+    print(date);
+    if (date != null) {
+      accountStatementController.setToDate(DateFormatter.getFormated(date));
+    } else {
+      accountStatementController.setToDate('');
+    }
+  }
+
   void setAccountStatementType(type) {
     resetAccountStatementFilterTypes();
     currentAccountStatementFilterType = type;
     accountStatementFilterTypesSelection[type] = true;
     if (type == 'بين تاريخين') {
-      Get.bottomSheet(
-        Container(
-          height: Get.width * .6,
-          decoration: const BoxDecoration(
-            borderRadius: raduis32top,
-            color: UIColors.white,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 40),
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              'من:',
-                              style: UITextStyle.normalMeduim
-                                  .copyWith(color: UIColors.darkText),
-                            ),
-                            spacerHeight(height: 10),
-                            TextFormField(
-                              textAlign: TextAlign.center,
-                              controller: TextEditingController(),
-                              keyboardType: TextInputType.number,
-                              decoration: normalTextFieldStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      spacerWidth(width: 20),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              'الى:',
-                              style: UITextStyle.normalMeduim
-                                  .copyWith(color: UIColors.darkText),
-                            ),
-                            spacerHeight(height: 10),
-                            TextFormField(
-                              textAlign: TextAlign.center,
-                              controller: TextEditingController(),
-                              keyboardType: TextInputType.number,
-                              decoration: normalTextFieldStyle,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                spacerHeight(height: 20),
-                Expanded(
-                  child: AcceptButton(
-                    text: 'تأكيد',
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+      Get.bottomSheet(AccountStatementDatesBottomSheet());
     }
   }
 }
