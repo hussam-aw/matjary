@@ -22,11 +22,11 @@ class AccountStatementScreen extends StatelessWidget {
   AccountStatementScreen({super.key});
 
   final accountController = Get.find<AccountController>();
-  final accountStatement = Get.find<AccountStatementController>();
+  final accountStatementController = Get.find<AccountStatementController>();
   Account? account = Get.arguments;
 
-  Widget buildStatementList(statementList) {
-    return statementList.isEmpty
+  Widget buildStatementList() {
+    return accountStatementController.accountStatement!.statements.isEmpty
         ? Center(
             child: Text(
               'لا يوجد قيود',
@@ -37,12 +37,16 @@ class AccountStatementScreen extends StatelessWidget {
           )
         : ListView.separated(
             itemBuilder: (context, index) {
-              return AccountMovementBox();
+              return AccountMovementBox(
+                accountMovement: accountStatementController
+                    .accountStatement!.statements[index],
+              );
             },
             separatorBuilder: (context, index) {
               return spacerHeight();
             },
-            itemCount: 30,
+            itemCount:
+                accountStatementController.accountStatement!.statements.length,
           );
   }
 
@@ -75,7 +79,8 @@ class AccountStatementScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          '150.000',
+                          accountStatementController.accountStatement!.total
+                              .toString(),
                           style: UITextStyle.boldHuge.copyWith(
                             color: UIColors.primary,
                           ),
@@ -87,9 +92,7 @@ class AccountStatementScreen extends StatelessWidget {
                       const SectionTitle(title: 'حركة الحساب'),
                       spacerHeight(),
                       Expanded(
-                        child: buildStatementList(
-                          [''],
-                        ),
+                        child: buildStatementList(),
                       ),
                     ],
                   ),
