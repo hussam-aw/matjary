@@ -95,13 +95,6 @@ class CreateEditProductScreen extends StatelessWidget {
                               hintText: 'اسم المنتج',
                             ),
                             spacerHeight(),
-                            CustomTextFormField(
-                              controller:
-                                  productController.modelNumberController,
-                              keyboardType: TextInputType.number,
-                              hintText: 'رقم الموديل',
-                            ),
-                            spacerHeight(),
                             Row(
                               children: [
                                 Expanded(
@@ -133,13 +126,14 @@ class CreateEditProductScreen extends StatelessWidget {
                               controller:
                                   productController.initialPriceController,
                               keyboardType: TextInputType.number,
-                              hintText: 'المبلغ الابتدائي',
+                              hintText: 'مبلغ الكلفة الحالي (الافتراضي 0)',
                             ),
                             spacerHeight(height: 20),
                             CustomTextFormField(
                               controller: productController.quantityController,
                               keyboardType: TextInputType.number,
-                              hintText: 'الكمية الإبتدائية ( الجرد الأولي )',
+                              hintText:
+                                  'الكمية الابتدائية (الجرد الأولي) (الكمية الابتدائية 0)',
                             ),
                             spacerHeight(height: 20),
                             const SectionTitle(title: 'يتأثر بتغيرات الصرف'),
@@ -196,7 +190,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                     keyboardType: TextInputType.number,
                                     style: UITextStyle.normalBody,
                                     decoration: subTextFieldStyle.copyWith(
-                                      hintText: 'الجملة',
+                                      hintText: 'الجملة 0',
                                     ),
                                   ),
                                 ),
@@ -208,7 +202,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                     keyboardType: TextInputType.number,
                                     style: UITextStyle.normalBody,
                                     decoration: subTextFieldStyle.copyWith(
-                                      hintText: 'الموزع',
+                                      hintText: 'الموزع 0',
                                     ),
                                   ),
                                 ),
@@ -220,7 +214,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                     keyboardType: TextInputType.number,
                                     style: UITextStyle.normalBody,
                                     decoration: subTextFieldStyle.copyWith(
-                                      hintText: 'المفرق',
+                                      hintText: 'المفرق 0',
                                     ),
                                   ),
                                 ),
