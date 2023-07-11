@@ -9,15 +9,20 @@ import 'package:matjary/main.dart';
 
 class ProductController extends GetxController {
   TextEditingController nameController = TextEditingController();
-  TextEditingController modelNumberController = TextEditingController();
+
   TextEditingController initialPriceController = TextEditingController();
+
   TextEditingController categoryNameController = TextEditingController();
   int? categoryId;
   TextEditingController quantityController = TextEditingController();
+
   String? affectedExchangeState;
   TextEditingController retailPriceController = TextEditingController();
+
   TextEditingController supplierPriceController = TextEditingController();
+
   TextEditingController wholesalePriceController = TextEditingController();
+
   List<String> imagePaths = [];
   List<String> selectedImages = [];
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
@@ -50,6 +55,36 @@ class ProductController extends GetxController {
     return "1";
   }
 
+  num getInitialPrice() {
+    return initialPriceController.text.isEmpty
+        ? 0
+        : num.parse(initialPriceController.text);
+  }
+
+  int getQuantity() {
+    return quantityController.text.isEmpty
+        ? 0
+        : int.parse(quantityController.text);
+  }
+
+  num getWholesalePrice() {
+    return wholesalePriceController.text.isEmpty
+        ? 0
+        : num.parse(wholesalePriceController.text);
+  }
+
+  num getRetailPrice() {
+    return retailPriceController.text.isEmpty
+        ? 0
+        : num.parse(retailPriceController.text);
+  }
+
+  num getSupplierPrice() {
+    return supplierPriceController.text.isEmpty
+        ? 0
+        : num.parse(supplierPriceController.text);
+  }
+
   void setImages(images) {
     selectedImages = images;
   }
@@ -57,8 +92,7 @@ class ProductController extends GetxController {
   void setProductDetails(Product? product) {
     if (product != null) {
       nameController = TextEditingController(text: product.name);
-      modelNumberController =
-          TextEditingController(text: product.specialNumber);
+
       initialPriceController =
           TextEditingController(text: product.initialPrice.toString());
       setCategory(categoriesController.getCategoryFromId(product.categoryId));
@@ -78,31 +112,23 @@ class ProductController extends GetxController {
 
   Future<void> createProduct() async {
     String name = nameController.text;
-    String specialNumber = modelNumberController.text;
-    String initialPrice = initialPriceController.text;
-    String quantity = quantityController.text;
-    String wholesalePrice = wholesalePriceController.text;
-    String supplierPrice = supplierPriceController.text;
-    String retailPrice = retailPriceController.text;
-    if (name.isNotEmpty &&
-        specialNumber.isNotEmpty &&
-        initialPrice.isNotEmpty &&
-        quantity.isNotEmpty &&
-        wholesalePrice.isNotEmpty &&
-        supplierPrice.isNotEmpty &&
-        retailPrice.isNotEmpty) {
+    num initialPrice = getInitialPrice();
+    int quantity = getQuantity();
+    num wholesalePrice = getWholesalePrice();
+    num supplierPrice = getSupplierPrice();
+    num retailPrice = getRetailPrice();
+    if (name.isNotEmpty) {
       loading.value = true;
 
       var product = await prdouctsRepo.createProduct(
         name,
         categoryId,
-        specialNumber,
-        num.parse(wholesalePrice),
-        num.parse(retailPrice),
-        num.parse(supplierPrice),
-        int.parse(quantity),
+        wholesalePrice,
+        retailPrice,
+        supplierPrice,
+        quantity,
         convertAffectedExchangeStateToInt(affectedExchangeState!),
-        num.parse(initialPrice),
+        initialPrice,
         MyApp.appUser!.id,
         selectedImages.isEmpty ? [] : selectedImages,
       );
@@ -120,25 +146,23 @@ class ProductController extends GetxController {
 
   Future<void> updateProduct(int id) async {
     String name = nameController.text;
-    String specialNumber = modelNumberController.text;
-    String initialPrice = initialPriceController.text;
-    String quantity = quantityController.text;
-    String wholesalePrice = wholesalePriceController.text;
-    String supplierPrice = supplierPriceController.text;
-    String retailPrice = retailPriceController.text;
+    num initialPrice = getInitialPrice();
+    int quantity = getQuantity();
+    num wholesalePrice = getWholesalePrice();
+    num supplierPrice = getSupplierPrice();
+    num retailPrice = getRetailPrice();
 
     loading.value = true;
     var product = await prdouctsRepo.updateProduct(
       id,
       name,
       categoryId,
-      specialNumber,
-      num.parse(wholesalePrice),
-      num.parse(retailPrice),
-      num.parse(supplierPrice),
-      int.parse(quantity),
+      wholesalePrice,
+      retailPrice,
+      supplierPrice,
+      quantity,
       convertAffectedExchangeStateToInt(affectedExchangeState!),
-      num.parse(initialPrice),
+      initialPrice,
       MyApp.appUser!.id,
       selectedImages.isEmpty ? [] : selectedImages,
     );
