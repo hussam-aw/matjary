@@ -10,4 +10,8 @@ class DateFormatter {
   static String getDateString(DateTime date) {
     return "${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day}";
   }
+
+  static String getCurrentDateString() {
+    return "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}";
+  }
 }
