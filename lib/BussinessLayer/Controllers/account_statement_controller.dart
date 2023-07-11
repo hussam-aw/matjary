@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Models/account_statement.dart';
 import 'package:matjary/DataAccesslayer/Repositories/account_statement_repo.dart';
 
@@ -22,7 +23,7 @@ class AccountStatementController extends GetxController {
 
   String getDateString(date) {
     if (date.isEmpty) {
-      return "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}";
+      return DateFormatter.getCurrentDateString();
     }
     return date;
   }
