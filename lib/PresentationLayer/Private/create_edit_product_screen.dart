@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
@@ -127,6 +128,10 @@ class CreateEditProductScreen extends StatelessWidget {
                                   productController.initialPriceController,
                               keyboardType: TextInputType.number,
                               hintText: 'مبلغ الكلفة الحالي (الافتراضي 0)',
+                              formatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'))
+                              ],
                             ),
                             spacerHeight(height: 20),
                             CustomTextFormField(
@@ -134,6 +139,10 @@ class CreateEditProductScreen extends StatelessWidget {
                               keyboardType: TextInputType.number,
                               hintText:
                                   'الكمية الابتدائية (الجرد الأولي) (الكمية الابتدائية 0)',
+                              formatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'))
+                              ],
                             ),
                             spacerHeight(height: 20),
                             const SectionTitle(title: 'يتأثر بتغيرات الصرف'),
@@ -184,38 +193,47 @@ class CreateEditProductScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: TextFormField(
+                                  child: CustomTextFormField(
                                     controller: productController
                                         .wholesalePriceController,
                                     keyboardType: TextInputType.number,
                                     style: UITextStyle.normalBody,
-                                    decoration: subTextFieldStyle.copyWith(
-                                      hintText: 'الجملة 0',
-                                    ),
+                                    decoration: subTextFieldStyle,
+                                    hintText: 'الجملة 0',
+                                    formatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d+\.?\d{0,2}'))
+                                    ],
                                   ),
                                 ),
                                 spacerWidth(),
                                 Expanded(
-                                  child: TextFormField(
+                                  child: CustomTextFormField(
                                     controller: productController
                                         .supplierPriceController,
                                     keyboardType: TextInputType.number,
                                     style: UITextStyle.normalBody,
-                                    decoration: subTextFieldStyle.copyWith(
-                                      hintText: 'الموزع 0',
-                                    ),
+                                    decoration: subTextFieldStyle,
+                                    hintText: 'الموزع 0',
+                                    formatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d+\.?\d{0,2}'))
+                                    ],
                                   ),
                                 ),
                                 spacerWidth(),
                                 Expanded(
-                                  child: TextFormField(
+                                  child: CustomTextFormField(
                                     controller:
                                         productController.retailPriceController,
                                     keyboardType: TextInputType.number,
                                     style: UITextStyle.normalBody,
-                                    decoration: subTextFieldStyle.copyWith(
-                                      hintText: 'المفرق 0',
-                                    ),
+                                    decoration: subTextFieldStyle,
+                                    hintText: 'المفرق 0',
+                                    formatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d+\.?\d{0,2}'))
+                                    ],
                                   ),
                                 ),
                               ],

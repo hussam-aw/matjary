@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_screen_controller.dart';
@@ -93,6 +94,10 @@ class CreateEditAccountScreen extends StatelessWidget {
                                 controller: accountController.balanceController,
                                 keyboardType: TextInputType.number,
                                 hintText: 'مبلغ الكلفة الحالي (الافتراضي 0)',
+                                formatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'))
+                                ],
                               ),
                               spacerHeight(height: 20),
                               const SectionTitle(title: 'نمط الحساب'),
@@ -159,6 +164,10 @@ class CreateEditAccountScreen extends StatelessWidget {
                                     accountController.mobilePhoneController,
                                 keyboardType: TextInputType.number,
                                 hintText: 'الرقم',
+                                formatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'))
+                                ],
                               ),
                               spacerHeight(),
                               CustomTextFormField(
