@@ -23,7 +23,7 @@ class AccountStatementTypeScreen extends StatelessWidget {
   final accountController = Get.find<AccountController>();
   final accountStatementScreenController =
       Get.put(AccountStatementScreenController());
-  final accountStatementController = Get.put(AccountStatementController());
+  final accountStatementController = Get.find<AccountStatementController>();
   Account? account = Get.arguments;
 
   @override
