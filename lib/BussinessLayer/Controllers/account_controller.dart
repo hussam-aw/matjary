@@ -18,6 +18,12 @@ class AccountController extends GetxController {
   var loading = false.obs;
   AccountsController accountsController = Get.find<AccountsController>();
 
+  num getBalance() {
+    return balanceController.text.isEmpty
+        ? 0
+        : num.parse(balanceController.text);
+  }
+
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
       return 0;
@@ -70,19 +76,16 @@ class AccountController extends GetxController {
 
   Future<void> createAccount() async {
     String name = nameController.text;
-    String balance = balanceController.text;
+    num balance = getBalance();
     String email = emailController.text;
     String mobileNumber = mobilePhoneController.text;
     String address = addressController.text;
-    if (name.isNotEmpty &&
-        balance.isNotEmpty &&
-        type!.isNotEmpty &&
-        style!.isNotEmpty) {
+    if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
       loading.value = true;
       var account = await accountsRepo.createAccount(
           MyApp.appUser!.id,
           name,
-          int.parse(balance),
+          balance,
           convertAccountTypeToNumber(type),
           convertAccountStyleToNumber(style),
           email,
@@ -116,7 +119,7 @@ class AccountController extends GetxController {
 
   Future<void> updateAccount(int id) async {
     String name = nameController.text;
-    int balance = int.parse(balanceController.text);
+    num balance = getBalance();
     loading.value = true;
     var account = await accountsRepo.updateAccount(id, name, balance,
         convertAccountTypeToNumber(type), convertAccountStyleToNumber(style));
