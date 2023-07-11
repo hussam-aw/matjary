@@ -1,25 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class PaymentController extends GetxController {
-  String paymentType = 'income';
+  String? paymentType;
   TextEditingController bankController = TextEditingController();
   Account? bankAccount;
   TextEditingController counterPartyController = TextEditingController();
   Account? counterPartyAccount;
-  TextEditingController amountController = TextEditingController(text: '0');
-  String? amount;
-  TextEditingController dateController = TextEditingController(
-      text:
-          "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}");
-  String? date;
+  TextEditingController amountController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
   TextEditingController notesController = TextEditingController();
-  String? notes;
   StatementRepo statementRepo = StatementRepo();
   AccountsController accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
@@ -50,16 +46,19 @@ class PaymentController extends GetxController {
     }
   }
 
-  void setAmount(paymentAmount) {
-    amount = paymentAmount;
+  num getAmount() {
+    return amountController.text.isEmpty ? 0 : num.parse(amountController.text);
+  }
+
+  String getDateString(date) {
+    if (date.isEmpty) {
+      return DateFormatter.getCurrentDateString();
+    }
+    return date;
   }
 
   void setDate(date) {
-    if (date.isEmpty) {
-      date =
-          "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}";
-    }
-    dateController.value = TextEditingValue(text: date);
+    dateController.value = TextEditingValue(text: getDateString(date));
   }
 
   void setNotes(notes) {
@@ -69,20 +68,17 @@ class PaymentController extends GetxController {
   Future<void> createPayment() async {
     String bankId = bankAccount!.id.toString();
     String counterPartyId = counterPartyAccount!.id.toString();
-    String amount = amountController.value.text;
+    num amount = getAmount();
     String date = dateController.text;
     String notes = notesController.text;
-    if (bankId.isNotEmpty &&
-        counterPartyId.isNotEmpty &&
-        amount.toString().isNotEmpty &&
-        date.isNotEmpty) {
+    if (bankId.isNotEmpty && counterPartyId.isNotEmpty && date.isNotEmpty) {
       loading.value = true;
       var payment = await statementRepo.createPayment(
         paymentType,
         counterPartyAccount!.id,
         bankAccount!.id,
         notes,
-        num.parse(amount),
+        amount,
         date,
       );
       loading.value = false;
@@ -118,9 +114,15 @@ class PaymentController extends GetxController {
     setBankAccount(bank);
   }
 
+  void setDefaultFields() {
+    setPaymentType('مقبوضات');
+    setDefaultAccounts();
+    setDate('');
+  }
+
   @override
   void onInit() {
-    setDefaultAccounts();
+    setDefaultFields();
     super.onInit();
   }
 }
