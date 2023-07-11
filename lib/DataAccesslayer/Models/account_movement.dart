@@ -25,7 +25,7 @@ class AccountMovement {
       type: '',
       statement: map['statement'] ?? '',
       amount: map['amount'],
-      date: DateTime.parse(map['date']),
+      date: DateTime.parse(map['created_at']),
     );
   }
 }
