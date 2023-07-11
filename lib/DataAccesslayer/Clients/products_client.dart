@@ -17,7 +17,6 @@ class ProductsClient {
   Future<dynamic> createProduct(
       name,
       categoryId,
-      specialNumber,
       wholesalePrice,
       retailPrice,
       supplierPrice,
@@ -31,7 +30,6 @@ class ProductsClient {
     request.fields.addAll({
       'name': name.toString(),
       'category_id': categoryId.toString(),
-      'special_number': specialNumber.toString(),
       'wholesale_price': wholesalePrice.toString(),
       'retail_price': retailPrice.toString(),
       'supplier_price': supplierPrice.toString(),
@@ -56,7 +54,6 @@ class ProductsClient {
       id,
       name,
       categoryId,
-      specialNumber,
       wholesalePrice,
       retailPrice,
       supplierPrice,
@@ -70,7 +67,6 @@ class ProductsClient {
     request.fields.addAll({
       'name': name.toString(),
       'category_id': categoryId.toString(),
-      'special_number': specialNumber.toString(),
       'wholesale_price': wholesalePrice.toString(),
       'retail_price': retailPrice.toString(),
       'supplier_price': supplierPrice.toString(),

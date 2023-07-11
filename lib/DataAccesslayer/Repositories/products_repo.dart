@@ -17,7 +17,6 @@ class PrdouctsRepo {
   Future<Product?> createProduct(
       name,
       categoryId,
-      specialNumber,
       wholesalePrice,
       retailPrice,
       supplierPrice,
@@ -29,7 +28,6 @@ class PrdouctsRepo {
     var updatedProduct = await client.createProduct(
         name,
         categoryId,
-        specialNumber,
         wholesalePrice,
         retailPrice,
         supplierPrice,
@@ -48,7 +46,6 @@ class PrdouctsRepo {
       id,
       name,
       categoryId,
-      specialNumber,
       wholesalePrice,
       retailPrice,
       supplierPrice,
@@ -61,7 +58,6 @@ class PrdouctsRepo {
         id,
         name,
         categoryId,
-        specialNumber,
         wholesalePrice,
         retailPrice,
         supplierPrice,
