@@ -174,14 +174,11 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           controller: paymentController.amountController,
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true, signed: false),
-                          hintText: 'أدخل المبلغ',
+                          hintText: 'المبلغ الابتدائي 0',
                           formatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,2}'))
                           ],
-                          onChanged: (amount) {
-                            paymentController.setAmount(amount);
-                          },
                         ),
                         spacerHeight(height: 30),
                         const SectionTitle(title: 'تاريخ الدفعة'),
@@ -214,7 +211,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                         CustomTextFormField(
                           controller: paymentController.notesController,
                           maxLines: 5,
-                          hintText: 'شب التوصيل: حسام',
+                          hintText: 'شب التوصيل',
                         ),
                       ],
                     ),
