@@ -1,7 +1,6 @@
 class Product {
   final int id;
   final String name;
-  final String specialNumber;
   final String wholesalePrice;
   final String retailPrice;
   final String supplierPrice;
@@ -14,7 +13,6 @@ class Product {
   Product({
     required this.id,
     required this.name,
-    required this.specialNumber,
     required this.wholesalePrice,
     required this.retailPrice,
     required this.supplierPrice,
@@ -29,7 +27,6 @@ class Product {
     return <String, dynamic>{
       "id": id,
       "name": name,
-      "special_number": specialNumber,
       "wholesale_price": wholesalePrice,
       "retail_price": retailPrice,
       "supplier_price\t": supplierPrice,
@@ -45,7 +42,6 @@ class Product {
     return Product(
       id: map['id'] ?? 0,
       name: map['name'] ?? "",
-      specialNumber: map['special_number'].toString(),
       wholesalePrice: map['wholesale_price'].toString(),
       retailPrice: map['retail_price'].toString(),
       supplierPrice: map['supplier_price\t'].toString(),
