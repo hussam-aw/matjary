@@ -100,7 +100,7 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                   spacerWidth(width: 6),
                                   Text(
-                                    DateFormatter.getDateString(
+                                    DateFormatter.getFormated(
                                         MyApp.appUser!.expiryDate),
                                     softWrap: true,
                                     style: UITextStyle.normalSmall.copyWith(

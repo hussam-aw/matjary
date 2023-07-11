@@ -199,11 +199,11 @@ class OrderScreen extends StatelessWidget {
                                 arguments: order);
                           },
                           backgroundColor: UIColors.primary,
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
+                              children: const [
                                 Text(
                                   'تفاصيل الفاتورة (البنود)',
                                   style: UITextStyle.normalBody,
