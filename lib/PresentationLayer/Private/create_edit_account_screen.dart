@@ -92,7 +92,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                               CustomTextFormField(
                                 controller: accountController.balanceController,
                                 keyboardType: TextInputType.number,
-                                hintText: 'المبلغ الإبتدائي ( الجرد الأولي )',
+                                hintText: 'مبلغ الكلفة الحالي (الافتراضي 0)',
                               ),
                               spacerHeight(height: 20),
                               const SectionTitle(title: 'نمط الحساب'),
