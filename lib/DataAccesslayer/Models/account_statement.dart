@@ -19,9 +19,15 @@ class AccountStatement {
   factory AccountStatement.fromMap(Map<String, dynamic> map) {
     return AccountStatement(
       total: map['total'],
-      statements: map['accountStatement']
-          .map((statement) => AccountMovement.fromMap(statement))
-          .toList(),
+      statements: getStatements(map['accountStatement']),
     );
+  }
+
+  static List<AccountMovement> getStatements(List<dynamic> statements) {
+    List<AccountMovement> result = [];
+    for (var statement in statements) {
+      result.add(AccountMovement.fromMap(statement));
+    }
+    return result;
   }
 }
