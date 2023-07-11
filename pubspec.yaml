@@ -33,7 +33,8 @@ dependencies:
   dio: ^5.1.1
   flutter:
     sdk: flutter
-  flutter_launcher_icons: ^0.11.0
+  
+  change_app_package_name: ^1.1.0
   flutter_pin_code_fields: ^1.2.0
   font_awesome_flutter: ^10.4.0
   get: ^4.6.5
@@ -50,10 +51,30 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_logo.jpg"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/app_logo.jpg"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/images/app_logo.jpg"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/app_logo.jpg"
+  change_app_package_name: ^1.1.0
+
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
