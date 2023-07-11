@@ -4,8 +4,8 @@ import 'package:matjary/main.dart';
 
 class ProductsClient {
   Future<dynamic> getProducts() async {
-    var response =
-        await http.get(Uri.parse("$baseUrl$productsLink/${MyApp.appUser!.id}"));
+    var response = await http
+        .get(Uri.parse("$baseUrl$productsLink/${MyApp.appUser!.companyId}"));
 
     if (response.statusCode == 200) {
       return response.body;
@@ -37,6 +37,7 @@ class ProductsClient {
       'affected_exchange': affectedExchange.toString(),
       'initial_price': initialPrice.toString(),
       'user_id': MyApp.appUser!.id.toString(),
+      'company_id': MyApp.appUser!.companyId.toString(),
     });
     for (String path in images) {
       request.files.add(await http.MultipartFile.fromPath('images[]', path));
@@ -74,6 +75,7 @@ class ProductsClient {
       'affected_exchange': affectedExchange.toString(),
       'initial_price': initialPrice.toString(),
       'user_id': MyApp.appUser!.id.toString(),
+      'company_id': MyApp.appUser!.companyId.toString(),
     });
     for (String path in images) {
       request.files.add(await http.MultipartFile.fromPath('images[]', path));
