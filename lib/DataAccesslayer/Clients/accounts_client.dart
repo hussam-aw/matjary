@@ -5,8 +5,8 @@ import 'package:matjary/Constants/api_links.dart';
 
 class AccountsClient {
   Future<dynamic> getAccounts() async {
-    var response =
-        await http.get(Uri.parse("$baseUrl$accountsLink/${MyApp.appUser!.id}"));
+    var response = await http
+        .get(Uri.parse("$baseUrl$accountsLink/${MyApp.appUser!.companyId}"));
 
     if (response.statusCode == 200) {
       return response.body;
@@ -59,6 +59,7 @@ class AccountsClient {
           "address": address,
           "phone": mobileNumber,
           "user_id": MyApp.appUser!.id,
+          'company_id': MyApp.appUser!.companyId,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -75,6 +76,7 @@ class AccountsClient {
     var response = await http.post(Uri.parse('$baseUrl$accountLink/$id'),
         body: jsonEncode(<String, dynamic>{
           "user_id": MyApp.appUser!.id,
+          'company_id': MyApp.appUser!.companyId,
           "name": name,
           "balance": balance,
           "type": type,
