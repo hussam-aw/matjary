@@ -1,4 +1,4 @@
-package com.example.matjary
+package brain.matjary.user
 
 import io.flutter.embedding.android.FlutterActivity
 
