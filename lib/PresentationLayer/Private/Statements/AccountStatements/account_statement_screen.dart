@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/account_statement_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_movement_box.dart';
+import 'package:matjary/DataAccesslayer/Models/account_statement.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_movement_list.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_statement_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -22,33 +22,8 @@ class AccountStatementScreen extends StatelessWidget {
   AccountStatementScreen({super.key});
 
   final accountController = Get.find<AccountController>();
-  final accountStatementController = Get.find<AccountStatementController>();
-  Account? account = Get.arguments;
-
-  Widget buildStatementList() {
-    return accountStatementController.accountStatement!.statements.isEmpty
-        ? Center(
-            child: Text(
-              'لا يوجد قيود',
-              style: UITextStyle.normalBody.copyWith(
-                color: UIColors.normalText,
-              ),
-            ),
-          )
-        : ListView.separated(
-            itemBuilder: (context, index) {
-              return AccountMovementBox(
-                accountMovement: accountStatementController
-                    .accountStatement!.statements[index],
-              );
-            },
-            separatorBuilder: (context, index) {
-              return spacerHeight();
-            },
-            itemCount:
-                accountStatementController.accountStatement!.statements.length,
-          );
-  }
+  Account account = Get.arguments['account'];
+  AccountStatement accountStatement = Get.arguments['accountStatement'];
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +45,16 @@ class AccountStatementScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AccountStatementHeader(
-                        accountName: account!.name,
+                        accountName: account.name,
                         accountType: accountController
-                            .convertAccountTypeToString(account!.type),
+                            .convertAccountTypeToString(account.type),
                         accountImage: 'assets/images/user.png',
                       ),
                       spacerHeight(height: 22),
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          accountStatementController.accountStatement!.total
-                              .toString(),
+                          accountStatement.total.toString(),
                           style: UITextStyle.boldHuge.copyWith(
                             color: UIColors.primary,
                           ),
@@ -92,7 +66,8 @@ class AccountStatementScreen extends StatelessWidget {
                       const SectionTitle(title: 'حركة الحساب'),
                       spacerHeight(),
                       Expanded(
-                        child: buildStatementList(),
+                        child: AccountMovementList(
+                            statements: accountStatement.statements),
                       ),
                     ],
                   ),
@@ -102,7 +77,15 @@ class AccountStatementScreen extends StatelessWidget {
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(
+                      AppRoutes.accountStatementPrintScreen,
+                      arguments: {
+                        'account': account,
+                        'accountStatement': accountStatement,
+                      },
+                    );
+                  },
                 ),
               ],
             ),
