@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 
 PreferredSize customAppBar(
-    {Widget? leading,
+    {bool showDrawer = true,
     bool showingAppIcon = true,
     List<Widget> actions = const []}) {
   return PreferredSize(
@@ -22,20 +22,22 @@ PreferredSize customAppBar(
               ),
             )
           : Container(),
-      leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            padding: const EdgeInsets.only(top: 15, right: 40),
-            icon: const Icon(
-              Icons.menu,
-              size: 35,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          );
-        },
-      ),
+      leading: showDrawer
+          ? Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  padding: const EdgeInsets.only(top: 15, right: 40),
+                  icon: const Icon(
+                    Icons.menu,
+                    size: 35,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
+            )
+          : null,
       actions: actions,
     ),
   );
