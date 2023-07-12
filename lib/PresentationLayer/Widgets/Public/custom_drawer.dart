@@ -167,11 +167,13 @@ class CustomDrawer extends StatelessWidget {
                 iconData: Ionicons.analytics,
                 onTap: null,
               ),
-              const DrawerListTile(
+              DrawerListTile(
                 title: "الإعدادات",
                 subtitle: "التعديل في إعدادات التطبيق",
                 iconData: Icons.settings,
-                onTap: null,
+                onTap: () {
+                  Get.toNamed(AppRoutes.settingsScreen);
+                },
               ),
               if (MyApp.appUser != null)
                 DrawerListTile(
