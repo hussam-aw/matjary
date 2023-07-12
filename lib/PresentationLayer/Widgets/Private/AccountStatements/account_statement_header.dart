@@ -10,11 +10,13 @@ class AccountStatementHeader extends StatelessWidget {
     required this.accountName,
     required this.accountType,
     required this.accountImage,
+    this.textColor = UIColors.lightNormalText,
   });
 
   final String accountName;
   final String accountType;
   final String accountImage;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class AccountStatementHeader extends StatelessWidget {
                 accountName,
                 softWrap: true,
                 style: UITextStyle.normalMeduim.copyWith(
-                  color: UIColors.lightNormalText,
+                  color: textColor,
                 ),
               ),
               spacerHeight(),
@@ -41,7 +43,7 @@ class AccountStatementHeader extends StatelessWidget {
                 accountType,
                 softWrap: true,
                 style: UITextStyle.normalBody.copyWith(
-                  color: UIColors.lightNormalText,
+                  color: textColor,
                 ),
               ),
             ],
