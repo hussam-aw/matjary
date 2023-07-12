@@ -6,10 +6,12 @@ class SectionTitle extends StatelessWidget {
   const SectionTitle({
     super.key,
     required this.title,
+    this.textStyle = UITextStyle.normalBody,
     this.titleColor = UIColors.normalText,
   });
 
   final String title;
+  final TextStyle textStyle;
   final Color titleColor;
 
   @override
@@ -19,7 +21,7 @@ class SectionTitle extends StatelessWidget {
       child: Text(
         title,
         softWrap: true,
-        style: UITextStyle.normalBody.copyWith(
+        style: textStyle.copyWith(
           color: titleColor,
         ),
       ),
