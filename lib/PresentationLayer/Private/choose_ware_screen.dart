@@ -5,7 +5,6 @@ import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -36,25 +35,20 @@ class ChooseWareScreen extends StatelessWidget {
           )
         : ListView.separated(
             itemBuilder: (context, index) {
-              return screenMode == null
-                  ? CustomBox(
-                      title: wareList[index].name,
-                      onTap: () {
-                        Get.toNamed(AppRoutes.createEditWareScreen,
-                            arguments: wareList[index]);
-                      },
-                    )
-                  : NormalBox(
-                      title: wareList[index].name,
-                      onTap: () {
-                        if (screenMode == 'reportSelection') {
-                          Get.toNamed(AppRoutes.singleWareReportScreen,
-                              arguments: wareList[index]);
-                        } else {
-                          Get.back(result: wareList[index]);
-                        }
-                      },
-                    );
+              return NormalBox(
+                title: wareList[index].name,
+                onTap: () {
+                  if (screenMode == 'reportSelection') {
+                    Get.toNamed(AppRoutes.singleWareReportScreen,
+                        arguments: wareList[index]);
+                  } else if (screenMode == null) {
+                    Get.toNamed(AppRoutes.createEditWareScreen,
+                        arguments: wareList[index]);
+                  } else {
+                    Get.back(result: wareList[index]);
+                  }
+                },
+              );
             },
             separatorBuilder: (context, index) {
               return spacerHeight();

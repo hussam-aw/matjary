@@ -5,7 +5,6 @@ import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -36,23 +35,20 @@ class ChooseProductScreen extends StatelessWidget {
           )
         : ListView.separated(
             itemBuilder: (context, index) {
-              return screenMode == null
-                  ? CustomBox(
-                      title: productsList[index].name,
-                      onTap: () {
-                        Get.toNamed(AppRoutes.createEditProductScreen,
-                            arguments: productsList[index]);
-                      },
-                    )
-                  : NormalBox(
-                      title: productsList[index].name,
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.productQtyReportScreen,
-                          arguments: productsList[index],
-                        );
-                      },
+              return NormalBox(
+                title: productsList[index].name,
+                onTap: () {
+                  if (screenMode == null) {
+                    Get.toNamed(AppRoutes.createEditProductScreen,
+                        arguments: productsList[index]);
+                  } else {
+                    Get.toNamed(
+                      AppRoutes.productQtyReportScreen,
+                      arguments: productsList[index],
                     );
+                  }
+                },
+              );
             },
             separatorBuilder: (context, index) {
               return spacerHeight();

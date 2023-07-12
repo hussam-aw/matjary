@@ -5,7 +5,6 @@ import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -25,26 +24,21 @@ class ChooseCategoryScreen extends StatelessWidget {
   String? screenMode = Get.arguments;
 
   Widget buildCategoriesList(cateoriesList) {
-    List<dynamic> categoriesWidgetList = screenMode == null
-        ? cateoriesList
-            .map((category) => CustomBox(
-                  title: category.name,
-                  onTap: () {
-                    Get.toNamed(AppRoutes.createEditCategoryScreen,
-                        arguments: category);
-                  },
-                ))
-            .toList()
-        : cateoriesList
-            .map((category) => NormalBox(
-                  title: category.name,
-                  onTap: () {
-                    Get.back(
-                      result: category,
-                    );
-                  },
-                ))
-            .toList();
+    List<dynamic> categoriesWidgetList = cateoriesList
+        .map((category) => NormalBox(
+              title: category.name,
+              onTap: () {
+                if (screenMode == null) {
+                  Get.toNamed(AppRoutes.createEditCategoryScreen,
+                      arguments: category);
+                } else {
+                  Get.back(
+                    result: category,
+                  );
+                }
+              },
+            ))
+        .toList();
     if (screenMode != null) {
       categoriesWidgetList.insert(
           0,
@@ -54,7 +48,6 @@ class ChooseCategoryScreen extends StatelessWidget {
                 Get.back(result: null);
               }));
     }
-
     return cateoriesList.isEmpty
         ? Center(
             child: Text(
