@@ -40,6 +40,10 @@ class AppRoutes {
   static const accountStatementTypeScreen = '/home/accountStatementTypeScreen';
   static const accountStatementScreen =
       '/accountStatementTypeScreen/accountStatementScreen';
+  static const accountStatementPrintScreen =
+      '/accountStatementScreen/accountStatementPrintScreen';
   static const createEarnExpenseScreen = '/home/createEarnExpenseScreen';
   static const earnsExpensesScreen = '/home/earnsExpensesScreen';
+  static const createEditUserScreen = '/home/createEditUserScreen';
+  static const settingsScreen = '/home/settingsScreen';
 }
