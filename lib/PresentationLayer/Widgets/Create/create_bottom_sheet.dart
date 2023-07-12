@@ -113,6 +113,13 @@ class CreateBottomSheet extends StatelessWidget {
                     icon: 'assets/icons/D_calc_icon.png',
                     title: 'إيراد أو مصروف',
                   ),
+                  CreateMenuItem(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.createEditUserScreen);
+                    },
+                    icon: 'assets/icons/D_calc_icon.png',
+                    title: 'حساب',
+                  ),
                 ],
               ),
             ),
