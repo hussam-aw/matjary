@@ -11,6 +11,7 @@ class UIColors {
   static const menuTitle = Color(0xff3D3E65);
   static const smallText = Color(0xff1c1d40);
   static const titleNoteText = Color.fromRGBO(255, 255, 255, 0.5);
+  static const printText = Color(0xff3D3E65);
   // Icon Colors
   static const normalIcon = Color(0xffC5C5C5);
   static const mainIcon = Color(0xff1C1D40);
