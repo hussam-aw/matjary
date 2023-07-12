@@ -93,7 +93,11 @@ class AccountStatementTypeScreen extends StatelessWidget {
                           .getAccountStatementBasedOnType();
                       Get.toNamed(
                         AppRoutes.accountStatementScreen,
-                        arguments: account,
+                        arguments: {
+                          'account': account,
+                          'accountStatement':
+                              accountStatementController.accountStatement,
+                        },
                       );
                     },
                     isLoading: accountStatementController
