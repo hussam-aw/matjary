@@ -6,9 +6,14 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account_movement.dart';
 
 class AccountMovementBox extends StatelessWidget {
-  const AccountMovementBox({super.key, required this.accountMovement});
+  const AccountMovementBox({
+    super.key,
+    required this.accountMovement,
+    this.screenMode,
+  });
 
   final AccountMovement accountMovement;
+  final String? screenMode;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,9 @@ class AccountMovementBox extends StatelessWidget {
       height: 100,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
-        color: UIColors.containerBackground,
+        color: screenMode == 'print'
+            ? UIColors.white
+            : UIColors.containerBackground,
         borderRadius: raduis15,
         border: Border.all(color: UIColors.containerBorder),
       ),
@@ -28,7 +35,9 @@ class AccountMovementBox extends StatelessWidget {
               accountMovement.statement,
               softWrap: true,
               style: UITextStyle.normalBody.copyWith(
-                color: UIColors.lightNormalText,
+                color: screenMode == 'print'
+                    ? UIColors.printText
+                    : UIColors.lightNormalText,
               ),
             ),
           ),
@@ -40,14 +49,18 @@ class AccountMovementBox extends StatelessWidget {
                   DateFormatter.getDateString(accountMovement.date),
                   softWrap: true,
                   style: UITextStyle.normalBody.copyWith(
-                    color: UIColors.lightNormalText,
+                    color: screenMode == 'print'
+                        ? UIColors.printText
+                        : UIColors.lightNormalText,
                   ),
                 ),
                 Text(
                   accountMovement.amount.toString(),
                   softWrap: true,
                   style: UITextStyle.boldHeading.copyWith(
-                    color: UIColors.lightNormalText,
+                    color: screenMode == 'print'
+                        ? UIColors.printText
+                        : UIColors.lightNormalText,
                   ),
                 ),
               ],
