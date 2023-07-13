@@ -7,6 +7,7 @@ import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
+import 'package:matjary/DataAccesslayer/Models/order_product.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/delivery_details.dart';
@@ -223,14 +224,12 @@ class OrderScreenController extends GetxController {
         curve: Curves.decelerate, duration: const Duration(milliseconds: 300));
   }
 
-  void getProductsQuantitiesAndPrices(
-      List<Map<String, dynamic>> orderProducts) {
-    for (Map<String, dynamic> product in orderProducts) {
+  void getProductsQuantitiesAndPrices(List<OrderProduct> orderProducts) {
+    for (OrderProduct product in orderProducts) {
       selectedProducts.add(productsController.products
-          .firstWhere((p) => p.id == product["product_id"]));
-      selectedProductsQuantities.value[product["product_id"]] =
-          product["quantity"];
-      selectedProductPrices.value[product["product_id"]] = product["price"];
+          .firstWhere((p) => p.id == product.productId));
+      selectedProductsQuantities.value[product.productId] = product.quantity;
+      selectedProductPrices.value[product.productId] = product.price;
     }
   }
 
