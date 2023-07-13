@@ -4,7 +4,7 @@ class Account {
   final String? email;
   final String? address;
   final String? mobileNumber;
-  final int balance;
+  final num balance;
   final int type;
   final int style;
   final int? userId;
