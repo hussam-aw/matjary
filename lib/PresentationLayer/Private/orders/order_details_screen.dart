@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/table_details_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/table_titles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -48,14 +51,13 @@ class OrderDetailsScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return TableDetailsItem(
                         firstColumnItem: productsController
-                            .getProductName(order.details[index]['product_id'])
+                            .getProductName(order.details[index].productId)
                             .toString(),
                         secondColumnItem:
-                            order.details[index]['quantity'].toString(),
-                        thirdColumnItem:
-                            order.details[index]['price'].toString(),
+                            order.details[index].quantity.toString(),
+                        thirdColumnItem: order.details[index].price.toString(),
                         fourthColumnItem:
-                            order.details[index]['total_price'].toString(),
+                            order.details[index].totalPrice.toString(),
                       );
                     },
                     separatorBuilder: (context, index) =>
@@ -73,7 +75,18 @@ class OrderDetailsScreen extends StatelessWidget {
                   thirdColumnTitle: '',
                   fourthColumnTitle: order.total.toString(),
                 ),
-                spacerHeight(height: 60),
+                spacerHeight(height: 30),
+                AccetpIconButton(
+                  text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
+                  icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
+                  center: true,
+                  onPressed: () {
+                    Get.toNamed(
+                      AppRoutes.orderPrintScreen,
+                      arguments: order,
+                    );
+                  },
+                ),
               ],
             ),
           ),
