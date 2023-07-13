@@ -27,7 +27,7 @@ class OrderScreen extends StatelessWidget {
 
   final ordersController = Get.find<OrdersController>();
   final accountsController = Get.find<AccountsController>();
-  final orderController = Get.find<OrderController>();
+  final orderController = Get.put(OrderController());
   final waresController = Get.find<WaresController>();
   Order order = Get.arguments;
 
