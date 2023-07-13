@@ -6,8 +6,9 @@ import 'package:matjary/main.dart';
 
 class OrdersClient {
   Future<dynamic> getOrders() async {
-    var response =
-        await http.get(Uri.parse("$baseUrl$ordersLink/${MyApp.appUser!.id}"));
+    var response = await http
+        .get(Uri.parse("$baseUrl$ordersLink/${MyApp.appUser!.companyId}"));
+
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -67,6 +68,7 @@ class OrdersClient {
           "total": total,
           "customer_id": customerId,
           "user_id": MyApp.appUser!.id,
+          "company_id": MyApp.appUser!.companyId,
           "notes": notes,
           "type": type,
           "paid_up": paidUp,
@@ -122,6 +124,7 @@ class OrdersClient {
           "total": total,
           "customer_id": customerId,
           "user_id": MyApp.appUser!.id,
+          "company_id": MyApp.appUser!.companyId,
           "notes": notes,
           "type": type,
           "paid_up": paidUp,
