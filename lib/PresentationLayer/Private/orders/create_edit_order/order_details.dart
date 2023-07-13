@@ -40,21 +40,35 @@ class OrderDetails extends StatelessWidget {
                 return ListView.separated(
                   itemBuilder: (context, index) {
                     return Obx(() {
-                      var price = orderScreenController.selectedProductPrices[
-                          orderScreenController.selectedProducts[index].id];
-                      var quantity =
-                          orderScreenController.selectedProductsQuantities[
-                              orderScreenController.selectedProducts[index].id];
-                      return OrderProductBox(
-                        product: orderScreenController.selectedProducts[index],
-                        quantity: quantity,
-                        price: price,
-                        totalPrice:
-                            orderScreenController.calculateTotalProdcutPrice(
-                          price,
-                          quantity,
-                        ),
-                      );
+                      var product =
+                          orderScreenController.selectedProducts[index];
+                      var price = orderScreenController
+                          .selectedProductPrices[product.id];
+                      var quantity = orderScreenController
+                          .selectedProductsQuantities[product.id];
+                      return GetBuilder(
+                          init: orderScreenController,
+                          builder: (context) {
+                            return InkWell(
+                              onLongPress: () {
+                                orderScreenController
+                                    .openUpdateProductBottomSheet(product);
+                              },
+                              child: OrderProductBox(
+                                productName: product.name,
+                                quantity: quantity,
+                                price: price,
+                                totalPrice: orderScreenController
+                                    .calculateTotalProdcutPrice(
+                                        price, quantity),
+                                backgroundColor: orderScreenController
+                                        .checkIfProductSelectedForUpdate(
+                                            product)
+                                    ? UIColors.primary
+                                    : UIColors.containerBackground,
+                              ),
+                            );
+                          });
                     });
                   },
                   separatorBuilder: (context, index) => spacerHeight(),
