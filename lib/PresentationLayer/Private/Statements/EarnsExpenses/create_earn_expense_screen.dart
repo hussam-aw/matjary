@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/earn_expense_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
@@ -20,6 +21,7 @@ class CreateEarnExpenseScreen extends StatelessWidget {
   CreateEarnExpenseScreen({super.key});
 
   final accountsController = Get.find<AccountsController>();
+  final earnExpaenseScreenController = Get.put(EarnExapenseScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +43,56 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomRadioGroup(
-                          height: 100,
-                          childAspectRatio: 1.8,
-                          items: [
-                            IconRadioItem(
-                              icon: FontAwesomeIcons.solidCircleDown,
-                              text: 'إيرادات',
-                              isSelected: true,
-                              onTap: () {},
-                            ),
-                            IconRadioItem(
-                              icon: FontAwesomeIcons.solidCircleUp,
-                              text: 'مصاريف',
-                              isSelected: false,
-                              onTap: () {},
-                            ),
-                          ],
-                        ),
+                        GetBuilder(
+                            init: earnExpaenseScreenController,
+                            builder: (context) {
+                              return CustomRadioGroup(
+                                height: 100,
+                                childAspectRatio: 1.8,
+                                items: [
+                                  IconRadioItem(
+                                    icon: FontAwesomeIcons.solidCircleDown,
+                                    text: earnExpaenseScreenController
+                                        .transactionTypes[0]
+                                        .toString(),
+                                    isSelected: earnExpaenseScreenController
+                                            .transactionTypeSelection[
+                                        earnExpaenseScreenController
+                                            .transactionTypes[0]]!,
+                                    onTap: () {
+                                      earnExpaenseScreenController
+                                          .changeTransactionType(
+                                              earnExpaenseScreenController
+                                                  .transactionTypes[0]);
+
+                                      // paymentController.setPaymentType(
+                                      //     paymentScreenController
+                                      //         .paymentTypes[0]);
+                                    },
+                                  ),
+                                  IconRadioItem(
+                                    icon: FontAwesomeIcons.solidCircleUp,
+                                    text: earnExpaenseScreenController
+                                        .transactionTypes[1]
+                                        .toString(),
+                                    isSelected: earnExpaenseScreenController
+                                            .transactionTypeSelection[
+                                        earnExpaenseScreenController
+                                            .transactionTypes[1]]!,
+                                    onTap: () {
+                                      earnExpaenseScreenController
+                                          .changeTransactionType(
+                                              earnExpaenseScreenController
+                                                  .transactionTypes[1]);
+
+                                      // paymentController.setPaymentType(
+                                      //     paymentScreenController
+                                      //         .paymentTypes[1]);
+                                    },
+                                  ),
+                                ],
+                              );
+                            }),
                         spacerHeight(height: 22),
                         const SectionTitle(title: 'البيان'),
                         spacerHeight(),
