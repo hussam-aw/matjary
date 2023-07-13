@@ -7,7 +7,7 @@ import 'package:matjary/main.dart';
 class CategoriesClient {
   Future<dynamic> getCategories() async {
     var response = await http
-        .get(Uri.parse("$baseUrl$categoriesLink/${MyApp.appUser!.id}"));
+        .get(Uri.parse("$baseUrl$categoriesLink/${MyApp.appUser!.companyId}"));
 
     if (response.statusCode == 200) {
       return response.body;
