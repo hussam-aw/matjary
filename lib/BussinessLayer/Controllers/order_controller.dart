@@ -7,6 +7,7 @@ import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
+import 'package:matjary/DataAccesslayer/Models/order_product.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
@@ -58,8 +59,8 @@ class OrderController extends GetxController {
 
   int getOrderProductsQuantitiesCount(details) {
     int count = 0;
-    for (var product in details) {
-      count += product['quantity'] as int;
+    for (OrderProduct product in details) {
+      count += product.quantity;
     }
     return count;
   }
@@ -180,6 +181,8 @@ class OrderController extends GetxController {
   }
 
   void refreshOrderCalculations() {
+    setPaidAmount(0);
+    calculateRemainingAmount('0');
     calculateTotalProductsPrice();
     calculateDiscountBasedOnType();
     calculateTotalOrderAmount();
@@ -481,7 +484,7 @@ class OrderController extends GetxController {
       setMarketerDiscountBasedOnType(order.marketerFee);
       calculateTotalOrderAmount();
       setPaidAmount(order.paidUp);
-      setRemainingAmount(order.restOfTheBill);
+      calculateRemainingAmount(order.paidUp.toString());
     }
   }
 
