@@ -1,3 +1,5 @@
+import 'order_product.dart';
+
 class Order {
   final int id;
   final num total;
@@ -18,7 +20,7 @@ class Order {
   final int marketerId;
   final String marketerFeeType;
   final num? marketerFee;
-  final List<Map<String, dynamic>> details;
+  final List<OrderProduct> details;
   final DateTime creationDate;
   final DateTime updationDate;
   Order({
@@ -93,11 +95,11 @@ class Order {
     );
   }
 
-  static List<Map<String, dynamic>> getDetailsList(details) {
-    List<Map<String, dynamic>> result = [];
+  static List<OrderProduct> getDetailsList(details) {
+    List<OrderProduct> result = [];
     if (details != null) {
       for (int i = 0; i < details.length; i++) {
-        result.add(details[i] as Map<String, dynamic>);
+        result.add(OrderProduct.fromJson(details[i]));
       }
     }
     return result;
