@@ -1,57 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/earn_expense_controller.dart';
+import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
 
 class EarnExapenseScreenController extends GetxController {
-  List<String> transactionTypes = [
+  final earnExpenseController = Get.put(EarnExpenseController());
+  List<String> statementTypes = [
     'إيرادات',
     'مصاريف',
   ];
 
-  List<String> counterTransactionType = [
+  List<String> counterStatementType = [
     'revenues',
     'expenses',
   ];
 
-  Map<String, bool> transactionTypeSelection = {
+  Map<String, bool> statementTypeSelection = {
     'إيرادات': true,
     'مصاريف': false,
   };
 
-  void resetTransactionType() {
-    transactionTypeSelection = {
+  void resetStatementType() {
+    statementTypeSelection = {
       'إيرادات': false,
       'مصاريف': false,
     };
   }
 
-  void setTransactionType(type) {
+  void setStatementType(type) {
     if (type != null) {
-      resetTransactionType();
-      transactionTypeSelection[type] = true;
+      resetStatementType();
+      statementTypeSelection[type] = true;
     }
   }
 
-  void changeTransactionType(type) {
-    setTransactionType(type);
+  void changeStatementType(type) {
+    setStatementType(type);
     update();
   }
 
-  String getTransactionType(type) {
+  String getStatementType(type) {
     return type == 'revenues' ? 'إيرادات' : 'مصاريف';
   }
 
-  IconData getTransactionTypeIcon(type) {
+  IconData getStatementTypeIcon(type) {
     return type == 'revenues'
         ? FontAwesomeIcons.solidCircleDown
         : FontAwesomeIcons.solidCircleUp;
   }
 
-  // void selectDate(date) async {
-  //   if (date != null) {
-  //     paymentController.setDate(DateFormatter.getFormated(date));
-  //   } else {
-  //     paymentController.setDate('');
-  //   }
-  // }
+  void selectDate(date) async {
+    if (date != null) {
+      earnExpenseController.setDate(DateFormatter.getFormated(date));
+    } else {
+      earnExpenseController.setDate('');
+    }
+  }
 }
