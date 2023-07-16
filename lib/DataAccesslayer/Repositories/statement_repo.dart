@@ -25,14 +25,4 @@ class StatementRepo {
     }
     return null;
   }
-
-  Future<bool?> createPayment(
-      type, accountId, bankId, statement, amount, date) async {
-    var createdPayment = await client.createPayment(
-        type, accountId, bankId, statement, amount, date);
-    if (createdPayment != null) {
-      return true;
-    }
-    return null;
-  }
 }
