@@ -91,6 +91,7 @@ class CreateEditUserScreen extends StatelessWidget {
                         CustomTextFormField(
                           keyboardType: TextInputType.number,
                           controller: userController.passwordController,
+                          obsecureText: true,
                           hintText: 'أدخل كلمة المرور',
                         ),
                         spacerHeight(height: 22),
