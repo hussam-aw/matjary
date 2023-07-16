@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_statement_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_statement_dates_bottom_sheet.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Statements/AccountStatements/account_statement_dates_bottom_sheet.dart';
 
 class AccountStatementScreenController extends GetxController {
   String currentAccountStatementFilterType = 'عن كامل المدة';

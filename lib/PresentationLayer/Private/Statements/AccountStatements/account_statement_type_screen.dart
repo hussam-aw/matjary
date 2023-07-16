@@ -7,7 +7,7 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_statement_header.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Statements/AccountStatements/account_statement_header.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';

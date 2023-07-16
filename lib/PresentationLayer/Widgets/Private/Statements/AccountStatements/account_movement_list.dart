@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account_movement.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/AccountStatements/account_movement_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Statements/AccountStatements/account_movement_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class AccountMovementList extends StatelessWidget {
