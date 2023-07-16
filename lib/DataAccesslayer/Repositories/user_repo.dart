@@ -12,4 +12,14 @@ class UserRepo {
     }
     return null;
   }
+
+  Future<bool?> createUser(
+      type, userName, mobilePhone, password, notifiable) async {
+    var createdUser = await client.createUser(
+        type, userName, mobilePhone, password, notifiable);
+    if (createdUser != null) {
+      return true;
+    }
+    return null;
+  }
 }

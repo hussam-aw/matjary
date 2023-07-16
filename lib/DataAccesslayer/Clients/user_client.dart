@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:matjary/main.dart';
 import '../../Constants/api_links.dart';
 
 class UserClient {
@@ -12,6 +13,28 @@ class UserClient {
         });
     if (response.statusCode == 200) {
       return response.body;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> createUser(
+      type, userName, mobilePhone, password, notifiable) async {
+    var response = await http.post(Uri.parse('$baseUrl$userLink'),
+        body: jsonEncode(<String, dynamic>{
+          "app_role": type,
+          "name": userName,
+          "phone": mobilePhone,
+          "password": password,
+          "notifiable": notifiable,
+          "company_id": MyApp.appUser!.companyId,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    print(response.body);
+    if (response.statusCode == 201) {
+      return true;
     } else {
       return null;
     }
