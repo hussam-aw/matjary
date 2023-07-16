@@ -211,7 +211,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                         CustomTextFormField(
                           controller: paymentController.notesController,
                           maxLines: 5,
-                          hintText: 'شب التوصيل',
+                          hintText: 'أدخل الملاحظات (اختياري)',
                         ),
                       ],
                     ),

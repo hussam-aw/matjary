@@ -24,7 +24,7 @@ class CreateEarnExpenseScreen extends StatelessWidget {
 
   final accountsController = Get.find<AccountsController>();
   final earnExpenseScreenController = Get.put(EarnExapenseScreenController());
-  final earnExpenseController = Get.put(EarnExpenseController());
+  final earnExpenseController = Get.find<EarnExpenseController>();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                           controller:
                               earnExpenseController.statementTextController,
                           keyboardType: TextInputType.text,
-                          hintText: 'نثريات - شراء شاي',
+                          hintText: 'أدخل بيان القيد (اختياري)',
                         ),
                         spacerHeight(height: 22),
                         const SectionTitle(title: 'المبلغ'),
@@ -111,7 +111,7 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                         CustomTextFormField(
                           controller: earnExpenseController.amountController,
                           keyboardType: TextInputType.number,
-                          hintText: '1500',
+                          hintText: 'المبلغ الابتدائي 0',
                         ),
                         spacerHeight(height: 32),
                         const SectionTitle(title: 'إختر الصندوق'),
