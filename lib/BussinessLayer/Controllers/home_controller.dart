@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/earns_expenses_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
@@ -37,6 +38,8 @@ class HomeController extends GetxController {
   WaresController waresController = Get.put(WaresController());
   ProductsController productsController = Get.put(ProductsController());
   PaymentsController paymentsController = Get.put(PaymentsController());
+  EarnsExpensesController earnsExpensesController =
+      Get.put(EarnsExpensesController());
   // Future<void> getAccounts() async {
   //   isLoadingAccounts.value = true;
   //   accounts = await accountsRepo.getAccounts();
@@ -104,6 +107,7 @@ class HomeController extends GetxController {
     categoriesController.getCategories();
     paymentsController.getPayments();
     waresController.getWares();
+    earnsExpensesController.getStatements();
     //isLoading.value = false;
   }
 
