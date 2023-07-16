@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
-import 'package:matjary/main.dart';
 
 class StatementController extends GetxController {
   TextEditingController fromAccountController = TextEditingController();
@@ -14,13 +14,9 @@ class StatementController extends GetxController {
   TextEditingController toAccountController = TextEditingController();
   Account? toAccount;
   RxString toAccountName = ''.obs;
-  Rx<TextEditingController> amountController =
-      TextEditingController(text: "0").obs;
+  TextEditingController amountController = TextEditingController();
   RxString statementAmount = ''.obs;
-  TextEditingController dateController = TextEditingController(
-    text:
-        "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
-  );
+  TextEditingController dateController = TextEditingController();
   TextEditingController statementTextController = TextEditingController();
   StatementRepo statementRepo = StatementRepo();
   var accountController = Get.find<AccountsController>();
@@ -48,8 +44,19 @@ class StatementController extends GetxController {
     statementAmount.value = amount;
   }
 
+  num getAmount() {
+    return amountController.text.isEmpty ? 0 : num.parse(amountController.text);
+  }
+
+  String getDateString(date) {
+    if (date.isEmpty) {
+      return DateFormatter.getCurrentDateString();
+    }
+    return date;
+  }
+
   void setDate(date) {
-    dateController.value = TextEditingValue(text: date);
+    dateController.value = TextEditingValue(text: getDateString(date));
   }
 
   void setStatementText(accountName) {
@@ -80,21 +87,19 @@ class StatementController extends GetxController {
   Future<void> createStatement() async {
     String fromId = fromAccount!.id.toString();
     String toId = toAccount!.id.toString();
-    String amount = amountController.value.text;
+    num amount = getAmount();
     String date = dateController.text;
     String statementText = statementTextController.text;
     if (fromId.isNotEmpty &&
         toId.isNotEmpty &&
-        amount.toString().isNotEmpty &&
         date.isNotEmpty &&
         statementText.isNotEmpty) {
       loading.value = true;
       var statement = await statementRepo.createStatement(
         fromAccount!.id,
         toAccount!.id,
-        MyApp.appUser!.id,
         statementText,
-        num.parse(amount),
+        amount,
         date,
       );
       loading.value = false;
@@ -111,9 +116,15 @@ class StatementController extends GetxController {
     }
   }
 
+  void setDefaultFields() {
+    setDefaultAccounts();
+    //setAmount('0');
+    setDate('');
+  }
+
   @override
   void onInit() {
-    setDefaultAccounts();
+    setDefaultFields();
     super.onInit();
   }
 }
