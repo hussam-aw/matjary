@@ -16,7 +16,7 @@ class StatementClinet {
   }
 
   Future<dynamic> createStatement(
-      firstSideId, secondSideId, userId, statement, amount, date) async {
+      firstSideId, secondSideId, statement, amount, date) async {
     var response = await http.post(Uri.parse('$baseUrl$statementLink'),
         body: jsonEncode(<String, dynamic>{
           "first_side_id": firstSideId,

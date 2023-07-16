@@ -17,9 +17,9 @@ class StatementRepo {
   }
 
   Future<Statement?> createStatement(
-      firstSideId, secondSideId, userId, statement, amount, date) async {
+      firstSideId, secondSideId, statement, amount, date) async {
     var createdStatement = await client.createStatement(
-        firstSideId, secondSideId, userId, statement, amount, date);
+        firstSideId, secondSideId, statement, amount, date);
     if (createdStatement != null) {
       return Statement.fromMap(jsonDecode(createdStatement));
     }
