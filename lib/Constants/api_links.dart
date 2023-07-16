@@ -23,3 +23,5 @@ const productReportLink = "/productInsidWaresById";
 const allproductsReportLink = "/productsInsidWares";
 const cashAmountLink = "/cashByUserId";
 const accountStatementByDateLink = "/AccountStatementByDate";
+const earnExpenseLink = "/expensesAndRevenuesAccounts";
+const earnsExpensesLink = "/expensesAndRevenuesAccounts";
