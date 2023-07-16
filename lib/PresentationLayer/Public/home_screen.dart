@@ -89,8 +89,13 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CreateMenuItem(
-                              onTap: () {
-                                //Get.toNamed(AppRoutes.createEditCategoryScreen);
+                              onTap: () async {
+                                var account = await accountsController
+                                    .selectAccount(accountsController.accounts);
+                                Get.toNamed(
+                                  AppRoutes.accountStatementTypeScreen,
+                                  arguments: account,
+                                );
                               },
                               icon: 'assets/icons/D_ORDERS_icon.png',
                               title: 'كشف حساب',
@@ -341,7 +346,7 @@ class HomeScreen extends StatelessWidget {
         bottomNavigationBar: const CustomBottomNavigationBar(),
         floatingActionButton: AddButton(
           onPressed: () {
-            Get.bottomSheet(const CreateBottomSheet());
+            Get.bottomSheet(CreateBottomSheet());
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

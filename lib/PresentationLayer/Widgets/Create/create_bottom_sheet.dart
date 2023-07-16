@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
@@ -8,7 +9,9 @@ import 'package:matjary/PresentationLayer/Widgets/Create/create_menu_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class CreateBottomSheet extends StatelessWidget {
-  const CreateBottomSheet({super.key});
+  CreateBottomSheet({super.key});
+
+  final accountsController = Get.find<AccountsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +68,13 @@ class CreateBottomSheet extends StatelessWidget {
                     title: 'قيد محاسبي',
                   ),
                   CreateMenuItem(
-                    onTap: () {
-                      //Get.toNamed(AppRoutes.createEditCategoryScreen);
+                    onTap: () async {
+                      var account = await accountsController
+                          .selectAccount(accountsController.accounts);
+                      Get.toNamed(
+                        AppRoutes.accountStatementTypeScreen,
+                        arguments: account,
+                      );
                     },
                     icon: 'assets/icons/D_ORDERS_icon.png',
                     title: 'كشف حساب',
