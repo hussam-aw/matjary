@@ -13,6 +13,7 @@ import 'package:matjary/PresentationLayer/Private/Statements/AccountStatements/a
 import 'package:matjary/PresentationLayer/Private/Statements/EarnsExpenses/create_earn_expense_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Statements/EarnsExpenses/earns_expenses_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Statements/Payments/create_edit_payment_screen.dart';
+import 'package:matjary/PresentationLayer/Private/create_edit_user_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_category_screen.dart';
@@ -111,5 +112,7 @@ List<GetPage<dynamic>> getPages = [
       page: () => CreateEarnExpenseScreen()),
   GetPage(
       name: AppRoutes.earnsExpensesScreen, page: () => EarnsExpensesScreen()),
+  GetPage(
+      name: AppRoutes.createEditUserScreen, page: () => CreateEditUserScreen()),
   GetPage(name: AppRoutes.settingsScreen, page: () => SettingsScreen()),
 ];
