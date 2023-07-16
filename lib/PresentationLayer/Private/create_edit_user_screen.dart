@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/user_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/user_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
@@ -13,7 +16,10 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class CreateEditUserScreen extends StatelessWidget {
-  const CreateEditUserScreen({super.key});
+  CreateEditUserScreen({super.key});
+
+  final userScreenController = Get.put(UserScreenController());
+  final userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,27 +42,29 @@ class CreateEditUserScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomRadioGroup(
-                          items: [
-                            RadioButtonItem(
-                              text: 'مسؤول',
-                              isSelected: true,
-                              borderExist: true,
-                              onTap: () {},
-                            ),
-                            RadioButtonItem(
-                              text: 'محرر',
-                              isSelected: false,
-                              borderExist: false,
-                              onTap: () {},
-                            )
-                          ],
-                        ),
+                        Obx(() {
+                          return CustomRadioGroup(
+                            items: userScreenController.userTypes
+                                .map(
+                                  (type) => RadioButtonItem(
+                                    text: type,
+                                    isSelected: userScreenController
+                                        .userTypesSelection[type]!,
+                                    borderExist: true,
+                                    onTap: () {
+                                      userScreenController.setUserType(type);
+                                      userController.setUserType(type);
+                                    },
+                                  ),
+                                )
+                                .toList(),
+                          );
+                        }),
                         spacerHeight(height: 22),
                         const SectionTitle(title: 'اسم المستخدم'),
                         spacerHeight(),
                         CustomTextFormField(
-                          controller: TextEditingController(),
+                          controller: userController.userNameController,
                           hintText: 'أدخل اسم المستخدم',
                         ),
                         spacerHeight(height: 22),
@@ -70,7 +78,7 @@ class CreateEditUserScreen extends StatelessWidget {
                         spacerHeight(),
                         CustomTextFormField(
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(),
+                          controller: userController.mobileNumberController,
                           hintText: 'أدخل رقم الموبايل',
                           formatters: [
                             FilteringTextInputFormatter.allow(
@@ -82,28 +90,29 @@ class CreateEditUserScreen extends StatelessWidget {
                         spacerHeight(),
                         CustomTextFormField(
                           keyboardType: TextInputType.number,
-                          controller: TextEditingController(),
+                          controller: userController.passwordController,
                           hintText: 'أدخل كلمة المرور',
                         ),
                         spacerHeight(height: 22),
                         const SectionTitle(title: 'تتبع الحركة'),
                         spacerHeight(),
-                        CustomRadioGroup(
-                          items: [
-                            RadioButtonItem(
-                              text: 'استلام اشعارات',
-                              isSelected: true,
-                              borderExist: true,
-                              onTap: () {},
-                            ),
-                            RadioButtonItem(
-                              text: 'بدون اشعارات',
-                              isSelected: false,
-                              borderExist: false,
-                              onTap: () {},
-                            )
-                          ],
-                        ),
+                        Obx(() {
+                          return CustomRadioGroup(
+                              items: userScreenController.notifiableTypes
+                                  .map((type) => RadioButtonItem(
+                                        text: type,
+                                        isSelected: userScreenController
+                                            .notifiableTypesSelection[type]!,
+                                        borderExist: true,
+                                        onTap: () {
+                                          userScreenController
+                                              .setNotifiableType(type);
+                                          userController
+                                              .setNotifiableType(type);
+                                        },
+                                      ))
+                                  .toList());
+                        }),
                         spacerHeight(),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -119,9 +128,16 @@ class CreateEditUserScreen extends StatelessWidget {
                   ),
                 ),
                 //spacerHeight(height: 22),
-                AcceptButton(
-                  text: 'حفظ',
-                  onPressed: () {},
+                Obx(
+                  () {
+                    return AcceptButton(
+                      text: 'حفظ',
+                      onPressed: () {
+                        userController.createUser();
+                      },
+                      isLoading: userController.isLoading.value,
+                    );
+                  },
                 ),
               ],
             ),
