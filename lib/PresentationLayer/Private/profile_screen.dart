@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/profile_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
@@ -15,7 +18,9 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 import 'package:matjary/main.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+
+  final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +47,8 @@ class ProfileScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 100,
-                                width: 100,
+                                height: 120,
+                                width: 120,
                                 child: Stack(
                                   clipBehavior: Clip.none,
                                   fit: StackFit.expand,
@@ -57,11 +62,10 @@ class ProfileScreen extends StatelessWidget {
                                       bottom: -10,
                                       left: 0,
                                       right: -65,
-                                      child: RawMaterialButton(
+                                      child: CustomIconButton(
                                         onPressed: () {},
-                                        fillColor: UIColors.white,
-                                        shape: const CircleBorder(),
-                                        child: const Icon(
+                                        circleShape: true,
+                                        icon: const Icon(
                                           FontAwesomeIcons.solidPenToSquare,
                                           color: UIColors.primary,
                                           size: 18,
@@ -118,25 +122,28 @@ class ProfileScreen extends StatelessWidget {
                             const SectionTitle(title: 'الاسم'),
                             spacerHeight(),
                             CustomTextFormField(
-                              readOnly: true,
-                              controller: TextEditingController(),
+                              controller: profileController.userNameController,
                               hintText: 'أدخل اسم المستخدم',
                             ),
                             spacerHeight(height: 22),
                             const SectionTitle(title: 'رقم الموبايل'),
                             spacerHeight(),
                             CustomTextFormField(
-                              readOnly: true,
                               keyboardType: TextInputType.number,
-                              controller: TextEditingController(),
+                              controller:
+                                  profileController.mobileNumberController,
                               hintText: 'أدخل رقم الموبايل',
+                              formatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'))
+                              ],
                             ),
                             spacerHeight(height: 22),
                             const SectionTitle(title: 'كلمة المرور'),
                             spacerHeight(),
                             CustomTextFormField(
-                              readOnly: true,
-                              controller: TextEditingController(),
+                              controller: profileController.passwordController,
+                              obsecureText: true,
                               hintText: 'أدخل كلمة المرور',
                             ),
                             spacerHeight(height: 8),
@@ -156,10 +163,15 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                AcceptButton(
-                  text: 'تعديل بيانات الملف الشخصي',
-                  onPressed: () {},
-                ),
+                Obx(() {
+                  return AcceptButton(
+                    text: 'تعديل بيانات الملف الشخصي',
+                    onPressed: () {
+                      profileController.updateProfile();
+                    },
+                    isLoading: profileController.isLoading.value,
+                  );
+                }),
               ],
             ),
           ),
