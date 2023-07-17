@@ -22,4 +22,14 @@ class UserRepo {
     }
     return null;
   }
+
+  Future<User?> updateUserInfo(userName, mobilePhone, password, avatar) async {
+    var response =
+        await client.updateUserInfo(userName, mobilePhone, password, avatar);
+    if (response != null) {
+      final parsed = json.decode(response);
+      return User.fromMap(parsed);
+    }
+    return null;
+  }
 }

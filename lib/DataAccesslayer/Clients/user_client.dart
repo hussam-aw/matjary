@@ -39,4 +39,25 @@ class UserClient {
       return null;
     }
   }
+
+  Future<dynamic> updateUserInfo(
+      userName, mobilePhone, password, avatar) async {
+    var response = await http.post(Uri.parse('$baseUrl$userLink'),
+        body: jsonEncode(<String, dynamic>{
+          "name": userName,
+          "phone": mobilePhone,
+          "password": password,
+          "avatar": avatar,
+          "user_id": MyApp.appUser!.id,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    print(response.body);
+    if (response.statusCode == 201) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
 }
