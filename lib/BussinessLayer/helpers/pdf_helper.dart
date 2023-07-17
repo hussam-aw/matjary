@@ -1,26 +1,28 @@
 import 'dart:io';
+import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart';
+import 'package:pdf/widgets.dart' as p;
 
 class PdfHelper {
-  final pdf = Document();
+  final pdf = p.Document();
 
   void createPdf() async {
     pdf.addPage(
-      Page(
+      p.Page(
         pageFormat: PdfPageFormat.a4,
-        build: (Context context) {
-          print('ali');
-          return Center(
-            child: Text('ali'),
+        build: (p.Context context) {
+          return p.Center(
+            child: p.Text("Hello World"),
           );
         },
       ),
     );
-    final output = await getApplicationDocumentsDirectory();
-    print(output.path);
-    final file = File("${output.path}/example.pdf");
+    final output = await getExternalStorageDirectory();
+    final file = File(
+      "${output!.path}/example.pdf",
+    );
+    print(file.path);
     await file.writeAsBytes(await pdf.save());
   }
 }
