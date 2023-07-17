@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/profile_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -34,6 +35,7 @@ class HomeScreen extends StatelessWidget {
   final accountsController = Get.find<AccountsController>();
   final accountController = Get.put(AccountController());
   final ordersController = Get.find<OrdersController>();
+  final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +53,16 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(20),
                   width: Get.width,
-                  child: Text(
-                    "مرحباً بك : ${MyApp.appUser!.name}",
-                    softWrap: true,
-                    style: UITextStyle.boldBody,
-                    textAlign: TextAlign.right,
-                  ),
+                  child: GetBuilder(
+                      init: profileController,
+                      builder: (context) {
+                        return Text(
+                          "مرحباً بك : ${MyApp.appUser!.name}",
+                          softWrap: true,
+                          style: UITextStyle.boldBody,
+                          textAlign: TextAlign.right,
+                        );
+                      }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -20,7 +20,7 @@ import 'package:matjary/main.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
-  final profileController = Get.put(ProfileController());
+  final profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,81 +41,90 @@ class ProfileScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        Container(
-                          width: Get.width,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 120,
-                                width: 120,
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  fit: StackFit.expand,
+                        GetBuilder(
+                            init: profileController,
+                            builder: (context) {
+                              return Container(
+                                width: Get.width,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                child: Column(
                                   children: [
-                                    const CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                        'assets/images/user.png',
+                                    SizedBox(
+                                      height: 120,
+                                      width: 120,
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        fit: StackFit.expand,
+                                        children: [
+                                          const CircleAvatar(
+                                            backgroundImage: AssetImage(
+                                              'assets/images/user.png',
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: -10,
+                                            left: 0,
+                                            right: -65,
+                                            child: CustomIconButton(
+                                              onPressed: () {},
+                                              circleShape: true,
+                                              icon: const Icon(
+                                                FontAwesomeIcons
+                                                    .solidPenToSquare,
+                                                color: UIColors.primary,
+                                                size: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Positioned(
-                                      bottom: -10,
-                                      left: 0,
-                                      right: -65,
-                                      child: CustomIconButton(
-                                        onPressed: () {},
-                                        circleShape: true,
-                                        icon: const Icon(
-                                          FontAwesomeIcons.solidPenToSquare,
-                                          color: UIColors.primary,
-                                          size: 18,
-                                        ),
+                                    spacerHeight(height: 22),
+                                    Text(
+                                      MyApp.appUser!.name,
+                                      softWrap: true,
+                                      style: UITextStyle.normalHeading.copyWith(
+                                        color: UIColors.lightNormalText,
                                       ),
+                                    ),
+                                    spacerHeight(height: 22),
+                                    Text(
+                                      'الباقة الاقتصادية',
+                                      softWrap: true,
+                                      style: UITextStyle.normalBody.copyWith(
+                                        color: UIColors.lightNormalText,
+                                      ),
+                                    ),
+                                    spacerHeight(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'صلاحية الاشتراك:',
+                                          softWrap: true,
+                                          style:
+                                              UITextStyle.normalSmall.copyWith(
+                                            color: UIColors.lightNormalText,
+                                          ),
+                                        ),
+                                        spacerWidth(width: 6),
+                                        Text(
+                                          DateFormatter.getFormated(
+                                              MyApp.appUser!.expiryDate),
+                                          softWrap: true,
+                                          style:
+                                              UITextStyle.normalSmall.copyWith(
+                                            color: UIColors.lightNormalText,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ),
-                              spacerHeight(height: 22),
-                              Text(
-                                MyApp.appUser!.name,
-                                softWrap: true,
-                                style: UITextStyle.normalHeading.copyWith(
-                                  color: UIColors.lightNormalText,
-                                ),
-                              ),
-                              spacerHeight(height: 22),
-                              Text(
-                                'الباقة الاقتصادية',
-                                softWrap: true,
-                                style: UITextStyle.normalBody.copyWith(
-                                  color: UIColors.lightNormalText,
-                                ),
-                              ),
-                              spacerHeight(),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'صلاحية الاشتراك:',
-                                    softWrap: true,
-                                    style: UITextStyle.normalSmall.copyWith(
-                                      color: UIColors.lightNormalText,
-                                    ),
-                                  ),
-                                  spacerWidth(width: 6),
-                                  Text(
-                                    DateFormatter.getFormated(
-                                        MyApp.appUser!.expiryDate),
-                                    softWrap: true,
-                                    style: UITextStyle.normalSmall.copyWith(
-                                      color: UIColors.lightNormalText,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                              );
+                            }),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

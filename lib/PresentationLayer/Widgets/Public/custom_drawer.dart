@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/auth_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/profile_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/main.dart';
@@ -14,6 +15,8 @@ class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key});
   final AuthController authController = Get.put(AuthController());
   final AccountsController accountsController = Get.find<AccountsController>();
+  final profileController = Get.find<ProfileController>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,17 +26,22 @@ class CustomDrawer extends StatelessWidget {
           color: UIColors.containerBackground,
           child: ListView(
             children: [
-              UserAccountsDrawerHeader(
-                decoration: const BoxDecoration(color: UIColors.primary),
-                currentAccountPicture: const CircleAvatar(
-                  backgroundColor: UIColors.containerBackground,
-                  backgroundImage: AssetImage("assets/images/logo.png"),
-                ),
-                accountName: Text(
-                    MyApp.appUser != null ? MyApp.appUser!.name : "App User"),
-                accountEmail:
-                    Text(MyApp.appUser != null ? MyApp.appUser!.email : ""),
-              ),
+              GetBuilder(
+                  init: profileController,
+                  builder: (context) {
+                    return UserAccountsDrawerHeader(
+                      decoration: const BoxDecoration(color: UIColors.primary),
+                      currentAccountPicture: const CircleAvatar(
+                        backgroundColor: UIColors.containerBackground,
+                        backgroundImage: AssetImage("assets/images/logo.png"),
+                      ),
+                      accountName: Text(MyApp.appUser != null
+                          ? MyApp.appUser!.name
+                          : "App User"),
+                      accountEmail: Text(
+                          MyApp.appUser != null ? MyApp.appUser!.email : ""),
+                    );
+                  }),
               if (MyApp.appUser != null)
                 DrawerListTile(
                   title: "الحساب الشخصي",
