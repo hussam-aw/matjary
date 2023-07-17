@@ -6,6 +6,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/payment.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Statements/statement_type_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class PaymentBox extends StatelessWidget {
@@ -27,37 +28,10 @@ class PaymentBox extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              //height: 70,
-              decoration: const BoxDecoration(
-                color: UIColors.primary,
-                borderRadius: raduis10,
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Column(
-                    children: [
-                      Icon(
-                        paymentScreenController
-                            .getPaymenetTypeIcon(payment.type),
-                        size: 35,
-                        color: UIColors.white,
-                      ),
-                      spacerHeight(),
-                      Text(
-                        paymentScreenController.getPaymentType(payment.type),
-                        softWrap: true,
-                        //overflow: TextOverflow.ellipsis,
-                        style: UITextStyle.normalMeduim,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+          StatementTypeBox(
+            statementTypeIcon:
+                paymentScreenController.getPaymenetTypeIcon(payment.type),
+            statementType: paymentScreenController.getPaymentType(payment.type),
           ),
           Expanded(
             flex: 5,

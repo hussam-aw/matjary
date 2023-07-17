@@ -89,10 +89,15 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CreateMenuItem(
-                              onTap: () {
-                                //Get.toNamed(AppRoutes.createEditCategoryScreen);
+                              onTap: () async {
+                                var account = await accountsController
+                                    .selectAccount(accountsController.accounts);
+                                Get.toNamed(
+                                  AppRoutes.accountStatementTypeScreen,
+                                  arguments: account,
+                                );
                               },
-                              icon: 'assets/icons/D_ORDERS_icon.png',
+                              icon: 'assets/new_icons/account2-ph.png',
                               title: 'كشف حساب',
                               textColor: Colors.white54,
                             ),
@@ -100,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                               onTap: () {
                                 Get.toNamed(AppRoutes.createEditPaymentScreen);
                               },
-                              icon: 'assets/icons/DExpense.png',
+                              icon: 'assets/new_icons/account_ph.png',
                               title: 'دفعة نقدية',
                               textColor: Colors.white54,
                             ),
@@ -108,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                               onTap: () {
                                 Get.toNamed(AppRoutes.createStatementScreen);
                               },
-                              icon: 'assets/icons/D_calc_icon.png',
+                              icon: 'assets/new_icons/qeed.png',
                               title: 'قيد محاسبي',
                               textColor: Colors.white54,
                             ),
@@ -116,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                               onTap: () {
                                 Get.toNamed(AppRoutes.productReportScreen);
                               },
-                              icon: 'assets/icons/D_ware_icon.png',
+                              icon: 'assets/new_icons/ware_ph.png',
                               title: 'جرد بضاعة',
                               textColor: Colors.white54,
                             ),
@@ -128,137 +133,155 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 300,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            width: width,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 4),
-                            decoration: const BoxDecoration(
-                              color: UIColors.containerBackground,
-                              borderRadius: radius19,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        FontAwesomeIcons.moneyCheckDollar,
-                                        color: UIColors.primary,
-                                        size: 50,
-                                      ),
-                                      spacerWidth(),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text(
-                                              'السيولة النقدية',
-                                              overflow: TextOverflow.ellipsis,
-                                              softWrap: true,
-                                              style: UITextStyle.normalSmall,
-                                            ),
-                                            spacerHeight(height: 10),
-                                            Obx(
-                                              () => accountsController
-                                                      .isLoadingAccounts.value
-                                                  ? const AmountShimmer()
-                                                  : Text(
-                                                      accountsController
-                                                          .cashAmount.value
-                                                          .toString(),
-                                                      softWrap: true,
-                                                      // overflow:
-                                                      //     TextOverflow.ellipsis,
-                                                      style: UITextStyle
-                                                          .boldHeading,
-                                                    ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                width: width,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 4),
+                                decoration: const BoxDecoration(
+                                  color: UIColors.containerBackground,
+                                  borderRadius: radius19,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    OrderIconButton(
-                                      onTap: () {
-                                        Get.toNamed(
-                                          AppRoutes.createEditPaymentScreen,
-                                          arguments: 'مقبوضات',
-                                        );
-                                      },
-                                      title: 'استلام',
-                                      icon: FontAwesomeIcons.solidCircleDown,
+                                    Expanded(
+                                      flex: 2,
+                                      child: Row(
+                                        children: [
+                                          spacerWidth(
+                                            width: 120,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  'السيولة النقدية',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  softWrap: true,
+                                                  style:
+                                                      UITextStyle.normalSmall,
+                                                ),
+                                                spacerHeight(height: 10),
+                                                Obx(
+                                                  () => accountsController
+                                                          .isLoadingAccounts
+                                                          .value
+                                                      ? const AmountShimmer()
+                                                      : Text(
+                                                          accountsController
+                                                              .cashAmount.value
+                                                              .toString(),
+                                                          softWrap: true,
+                                                          // overflow:
+                                                          //     TextOverflow.ellipsis,
+                                                          style: UITextStyle
+                                                              .boldHeading,
+                                                        ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    spacerWidth(width: 10),
-                                    OrderIconButton(
-                                      onTap: () {
-                                        Get.toNamed(
-                                          AppRoutes.createEditPaymentScreen,
-                                          arguments: 'مدفوعات',
-                                        );
-                                      },
-                                      title: 'ارسال',
-                                      icon: FontAwesomeIcons.solidCircleUp,
-                                    )
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        OrderIconButton(
+                                          onTap: () {
+                                            Get.toNamed(
+                                              AppRoutes.createEditPaymentScreen,
+                                              arguments: 'مقبوضات',
+                                            );
+                                          },
+                                          title: 'استلام',
+                                          icon:
+                                              FontAwesomeIcons.solidCircleDown,
+                                        ),
+                                        spacerWidth(width: 10),
+                                        OrderIconButton(
+                                          onTap: () {
+                                            Get.toNamed(
+                                              AppRoutes.createEditPaymentScreen,
+                                              arguments: 'مدفوعات',
+                                            );
+                                          },
+                                          title: 'ارسال',
+                                          icon: FontAwesomeIcons.solidCircleUp,
+                                        )
+                                      ],
+                                    ),
                                   ],
                                 ),
+                              ),
+                            ),
+                            spacerHeight(height: 20),
+                            Row(
+                              children: [
+                                InovoiceContainer(
+                                  invoiceType: 'فواتير المشتريات',
+                                  invoiceCountWidget: Obx(() {
+                                    return ordersController
+                                            .isLoadingOrders.value
+                                        ? const OrderCountShimmer()
+                                        : Text(
+                                            ordersController
+                                                .purchasesOrders.length
+                                                .toString(),
+                                            softWrap: true,
+                                            //overflow: TextOverflow.ellipsis,
+                                            style: UITextStyle.boldHeading
+                                                .apply(fontSizeFactor: 1.2),
+                                          );
+                                  }),
+                                ),
+                                spacerWidth(width: 40),
+                                InovoiceContainer(
+                                  invoiceType: 'فواتير المبيعات',
+                                  invoiceCountWidget: Obx(() {
+                                    return ordersController
+                                            .isLoadingOrders.value
+                                        ? const OrderCountShimmer()
+                                        : Text(
+                                            ordersController.salesOrders.length
+                                                .toString(),
+                                            softWrap: true,
+                                            // overflow: TextOverflow.ellipsis,
+                                            style: UITextStyle.boldHeading
+                                                .apply(fontSizeFactor: 1.2),
+                                          );
+                                  }),
+                                  backgroundColor: UIColors.primary,
+                                )
                               ],
                             ),
-                          ),
-                        ),
-                        spacerHeight(height: 20),
-                        Row(
-                          children: [
-                            InovoiceContainer(
-                              invoiceType: 'فواتير المشتريات',
-                              invoiceCountWidget: Obx(() {
-                                return ordersController.isLoadingOrders.value
-                                    ? const OrderCountShimmer()
-                                    : Text(
-                                        ordersController.purchasesOrders.length
-                                            .toString(),
-                                        softWrap: true,
-                                        //overflow: TextOverflow.ellipsis,
-                                        style: UITextStyle.boldHeading
-                                            .apply(fontSizeFactor: 1.2),
-                                      );
-                              }),
-                            ),
-                            spacerWidth(width: 40),
-                            InovoiceContainer(
-                              invoiceType: 'فواتير المبيعات',
-                              invoiceCountWidget: Obx(() {
-                                return ordersController.isLoadingOrders.value
-                                    ? const OrderCountShimmer()
-                                    : Text(
-                                        ordersController.salesOrders.length
-                                            .toString(),
-                                        softWrap: true,
-                                        // overflow: TextOverflow.ellipsis,
-                                        style: UITextStyle.boldHeading
-                                            .apply(fontSizeFactor: 1.2),
-                                      );
-                              }),
-                              backgroundColor: UIColors.primary,
-                            )
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        top: 15,
+                        right: 20,
+                        child: Image.asset(
+                          "assets/new_icons/bank_ph.png",
+                          width: 120,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -279,7 +302,7 @@ class HomeScreen extends StatelessWidget {
                           softWrap: true,
                           style: UITextStyle.boldBody,
                         ),
-                        spacerHeight(height: 10),
+                        spacerHeight(height: 20),
                         Expanded(
                           child: Obx(() {
                             return accountsController.isLoadingAccounts.value
@@ -304,7 +327,8 @@ class HomeScreen extends StatelessWidget {
                                         },
                                         customerName: accountsController
                                             .customersAccounts[index].name,
-                                        customerImage: 'assets/images/user.png',
+                                        customerImage:
+                                            'assets/new_icons/client_ph.png',
                                         customerStatus: accountController
                                             .convertAccountStyleToString(
                                                 accountsController
@@ -341,7 +365,7 @@ class HomeScreen extends StatelessWidget {
         bottomNavigationBar: const CustomBottomNavigationBar(),
         floatingActionButton: AddButton(
           onPressed: () {
-            Get.bottomSheet(const CreateBottomSheet());
+            Get.bottomSheet(CreateBottomSheet());
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

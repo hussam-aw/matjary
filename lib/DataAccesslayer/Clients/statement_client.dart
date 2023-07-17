@@ -16,7 +16,7 @@ class StatementClinet {
   }
 
   Future<dynamic> createStatement(
-      firstSideId, secondSideId, userId, statement, amount, date) async {
+      firstSideId, secondSideId, statement, amount, date) async {
     var response = await http.post(Uri.parse('$baseUrl$statementLink'),
         body: jsonEncode(<String, dynamic>{
           "first_side_id": firstSideId,
@@ -33,29 +33,6 @@ class StatementClinet {
 
     if (response.statusCode == 201) {
       return response.body;
-    } else {
-      return null;
-    }
-  }
-
-  Future<dynamic> createPayment(
-      type, accountId, bankId, statement, amount, date) async {
-    var response = await http.post(Uri.parse('$baseUrl$statementLink'),
-        body: jsonEncode(<String, dynamic>{
-          "type": type,
-          "account_id": accountId,
-          "bank_id": bankId,
-          "amount": amount,
-          "statement": statement,
-          "date": date,
-          "user_id": MyApp.appUser!.id,
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        });
-
-    if (response.statusCode == 201) {
-      return true;
     } else {
       return null;
     }

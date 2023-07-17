@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/earn_expense_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/earn_expense_screen_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
@@ -21,7 +23,8 @@ class CreateEarnExpenseScreen extends StatelessWidget {
   CreateEarnExpenseScreen({super.key});
 
   final accountsController = Get.find<AccountsController>();
-  final earnExpaenseScreenController = Get.put(EarnExapenseScreenController());
+  final earnExpenseScreenController = Get.put(EarnExapenseScreenController());
+  final earnExpenseController = Get.find<EarnExpenseController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GetBuilder(
-                            init: earnExpaenseScreenController,
+                            init: earnExpenseScreenController,
                             builder: (context) {
                               return CustomRadioGroup(
                                 height: 100,
@@ -52,42 +55,42 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                                 items: [
                                   IconRadioItem(
                                     icon: FontAwesomeIcons.solidCircleDown,
-                                    text: earnExpaenseScreenController
-                                        .transactionTypes[0]
+                                    text: earnExpenseScreenController
+                                        .statementTypes[0]
                                         .toString(),
-                                    isSelected: earnExpaenseScreenController
-                                            .transactionTypeSelection[
-                                        earnExpaenseScreenController
-                                            .transactionTypes[0]]!,
+                                    isSelected: earnExpenseScreenController
+                                            .statementTypeSelection[
+                                        earnExpenseScreenController
+                                            .statementTypes[0]]!,
                                     onTap: () {
-                                      earnExpaenseScreenController
-                                          .changeTransactionType(
-                                              earnExpaenseScreenController
-                                                  .transactionTypes[0]);
+                                      earnExpenseScreenController
+                                          .changeStatementType(
+                                              earnExpenseScreenController
+                                                  .statementTypes[0]);
 
-                                      // paymentController.setPaymentType(
-                                      //     paymentScreenController
-                                      //         .paymentTypes[0]);
+                                      earnExpenseController.setStatementType(
+                                          earnExpenseScreenController
+                                              .statementTypes[0]);
                                     },
                                   ),
                                   IconRadioItem(
                                     icon: FontAwesomeIcons.solidCircleUp,
-                                    text: earnExpaenseScreenController
-                                        .transactionTypes[1]
+                                    text: earnExpenseScreenController
+                                        .statementTypes[1]
                                         .toString(),
-                                    isSelected: earnExpaenseScreenController
-                                            .transactionTypeSelection[
-                                        earnExpaenseScreenController
-                                            .transactionTypes[1]]!,
+                                    isSelected: earnExpenseScreenController
+                                            .statementTypeSelection[
+                                        earnExpenseScreenController
+                                            .statementTypes[1]]!,
                                     onTap: () {
-                                      earnExpaenseScreenController
-                                          .changeTransactionType(
-                                              earnExpaenseScreenController
-                                                  .transactionTypes[1]);
+                                      earnExpenseScreenController
+                                          .changeStatementType(
+                                              earnExpenseScreenController
+                                                  .statementTypes[1]);
 
-                                      // paymentController.setPaymentType(
-                                      //     paymentScreenController
-                                      //         .paymentTypes[1]);
+                                      earnExpenseController.setStatementType(
+                                          earnExpenseScreenController
+                                              .statementTypes[1]);
                                     },
                                   ),
                                 ],
@@ -97,17 +100,18 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                         const SectionTitle(title: 'البيان'),
                         spacerHeight(),
                         CustomTextFormField(
-                          controller: TextEditingController(),
+                          controller:
+                              earnExpenseController.statementTextController,
                           keyboardType: TextInputType.text,
-                          hintText: 'نثريات - شراء شاي',
+                          hintText: 'أدخل بيان القيد (اختياري)',
                         ),
                         spacerHeight(height: 22),
                         const SectionTitle(title: 'المبلغ'),
                         spacerHeight(),
                         CustomTextFormField(
-                          controller: TextEditingController(),
+                          controller: earnExpenseController.amountController,
                           keyboardType: TextInputType.number,
-                          hintText: '1500',
+                          hintText: 'المبلغ الابتدائي 0',
                         ),
                         spacerHeight(height: 32),
                         const SectionTitle(title: 'إختر الصندوق'),
@@ -117,7 +121,8 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                             Expanded(
                               child: CustomTextFormField(
                                 readOnly: true,
-                                controller: TextEditingController(),
+                                controller:
+                                    earnExpenseController.bankController,
                                 hintText: 'الصندوق',
                               ),
                             ),
@@ -128,14 +133,15 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                                 color: UIColors.mainIcon,
                               ),
                               onPressed: () async {
-                                // var account = await Get.toNamed(
-                                //     AppRoutes.chooseAccountScreen,
-                                //     arguments: {
-                                //       'mode': 'selection',
-                                //       'style': 'bank',
-                                //       'accounts': accountsController.bankAccounts
-                                //     });
-                                //paymentController.setBankAccount(account);
+                                var account = await Get.toNamed(
+                                    AppRoutes.chooseAccountScreen,
+                                    arguments: {
+                                      'mode': 'selection',
+                                      'style': 'bank',
+                                      'accounts':
+                                          accountsController.bankAccounts
+                                    });
+                                earnExpenseController.setBankAccount(account);
                               },
                             ),
                           ],
@@ -145,19 +151,19 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                         spacerHeight(),
                         CustomTextFormField(
                           readOnly: true,
-                          controller: TextEditingController(),
+                          controller: earnExpenseController.dateController,
                           keyboardType: TextInputType.datetime,
                           style: UITextStyle.normalBody,
                           suffix: InkWell(
                             onTap: () async {
-                              // paymentScreenController.selectDate(
-                              //     await showDatePicker(
-                              //         context: context,
-                              //         initialDate: DateTime.parse(
-                              //             paymentController
-                              //                 .dateController.text),
-                              //         firstDate: DateTime(1900),
-                              //         lastDate: DateTime(2100)));
+                              earnExpenseScreenController.selectDate(
+                                  await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.parse(
+                                          earnExpenseController
+                                              .dateController.text),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2100)));
                             },
                             child: const Icon(
                               Icons.date_range,
@@ -165,14 +171,20 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        spacerHeight(),
                       ],
                     ),
                   ),
                 ),
-                AcceptButton(
-                  text: 'حفظ',
-                  onPressed: () {},
-                ),
+                Obx(() {
+                  return AcceptButton(
+                    text: 'حفظ',
+                    onPressed: () {
+                      earnExpenseController.createStatementBasesOnType();
+                    },
+                    isLoading: earnExpenseController.loading.value,
+                  );
+                }),
                 spacerHeight(),
                 AcceptButton(
                   text: 'حذف',

@@ -156,10 +156,9 @@ class CreateStatementScreen extends StatelessWidget {
                           const SectionTitle(title: 'مبلغ القيد'),
                           spacerHeight(),
                           CustomTextFormField(
-                            controller:
-                                statementController.amountController.value,
+                            controller: statementController.amountController,
                             keyboardType: TextInputType.number,
-                            hintText: 'أدخل المبلغ',
+                            hintText: 'المبلغ الابتدائي 0',
                             formatters: [
                               FilteringTextInputFormatter.digitsOnly
                             ],

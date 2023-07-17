@@ -1,12 +1,13 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
 import 'package:matjary/main.dart';
 
-class PaymentsClient {
-  Future<dynamic> getPayments() async {
-    var response =
-        await http.get(Uri.parse("$baseUrl$paymentsLink/${MyApp.appUser!.id}"));
+class EarnsExpensesClient {
+  Future<dynamic> getStatements() async {
+    var response = await http.get(
+        Uri.parse("$baseUrl$earnsExpensesLink/${MyApp.appUser!.companyId}"));
 
     if (response.statusCode == 200) {
       return response.body;
@@ -15,17 +16,16 @@ class PaymentsClient {
     }
   }
 
-  Future<dynamic> createPayment(
-      type, accountId, bankId, statement, amount, date) async {
-    var response = await http.post(Uri.parse('$baseUrl$statementLink'),
+  Future<dynamic> createStatementBasedOnType(
+      type, statement, amount, bankId, date) async {
+    var response = await http.post(Uri.parse('$baseUrl$earnExpenseLink'),
         body: jsonEncode(<String, dynamic>{
           "type": type,
-          "account_id": accountId,
-          "bank_id": bankId,
-          "amount": amount,
           "statement": statement,
+          "amount": amount,
+          "bank_id": bankId,
           "date": date,
-          "user_id": MyApp.appUser!.id,
+          "company_id": MyApp.appUser!.companyId,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

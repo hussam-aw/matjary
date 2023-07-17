@@ -4,7 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/DataAccesslayer/Repositories/statement_repo.dart';
+import 'package:matjary/DataAccesslayer/Repositories/payments_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class PaymentController extends GetxController {
@@ -16,7 +16,7 @@ class PaymentController extends GetxController {
   TextEditingController amountController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController notesController = TextEditingController();
-  StatementRepo statementRepo = StatementRepo();
+  PaymentsRepo paymentsRepo = PaymentsRepo();
   AccountsController accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
@@ -73,7 +73,7 @@ class PaymentController extends GetxController {
     String notes = notesController.text;
     if (bankId.isNotEmpty && counterPartyId.isNotEmpty && date.isNotEmpty) {
       loading.value = true;
-      var payment = await statementRepo.createPayment(
+      var payment = await paymentsRepo.createPayment(
         paymentType,
         counterPartyAccount!.id,
         bankAccount!.id,

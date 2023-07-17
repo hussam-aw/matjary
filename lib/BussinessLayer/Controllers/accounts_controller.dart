@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 
@@ -116,4 +117,13 @@ class AccountsController extends GetxController {
     cashAmount.value = await accountsRepo.getCashAmount();
   }
 
+  Future<Account> selectAccount(accountList) async {
+    return await Get.toNamed(
+      AppRoutes.chooseAccountScreen,
+      arguments: {
+        'mode': 'selection',
+        'accounts': accountList,
+      },
+    );
+  }
 }

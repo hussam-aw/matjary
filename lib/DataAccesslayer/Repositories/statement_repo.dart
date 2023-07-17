@@ -17,21 +17,11 @@ class StatementRepo {
   }
 
   Future<Statement?> createStatement(
-      firstSideId, secondSideId, userId, statement, amount, date) async {
+      firstSideId, secondSideId, statement, amount, date) async {
     var createdStatement = await client.createStatement(
-        firstSideId, secondSideId, userId, statement, amount, date);
+        firstSideId, secondSideId, statement, amount, date);
     if (createdStatement != null) {
       return Statement.fromMap(jsonDecode(createdStatement));
-    }
-    return null;
-  }
-
-  Future<bool?> createPayment(
-      type, accountId, bankId, statement, amount, date) async {
-    var createdPayment = await client.createPayment(
-        type, accountId, bankId, statement, amount, date);
-    if (createdPayment != null) {
-      return true;
     }
     return null;
   }

@@ -5,7 +5,7 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/payment.dart';
-import 'package:matjary/PresentationLayer/Widgets/Private/payment_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Statements/Payments/payment_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
