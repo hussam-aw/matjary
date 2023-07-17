@@ -8,21 +8,28 @@ class CustomIconButton extends StatelessWidget {
     required this.icon,
     this.backgroundColor = UIColors.white,
     this.borderRadius = raduis15,
+    this.circleShape = false,
     required this.onPressed,
   });
 
   final Icon icon;
   final Color backgroundColor;
   final BorderRadius borderRadius;
+  final bool circleShape;
   final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: borderRadius,
-      ),
+      decoration: circleShape
+          ? ShapeDecoration(
+              color: backgroundColor,
+              shape: CircleBorder(),
+            )
+          : BoxDecoration(
+              color: backgroundColor,
+              borderRadius: borderRadius,
+            ),
       child: IconButton(onPressed: onPressed, icon: icon),
     );
   }
