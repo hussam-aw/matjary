@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -36,7 +38,9 @@ class SettingsScreen extends StatelessWidget {
                             backgroundImage:
                                 AssetImage('assets/images/user.png'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(AppRoutes.profileScreen);
+                          },
                         ),
                         spacerHeight(),
                         CustomBox(
