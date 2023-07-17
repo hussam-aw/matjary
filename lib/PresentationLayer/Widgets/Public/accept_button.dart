@@ -29,27 +29,22 @@ class AcceptButton extends StatelessWidget {
         style: style.copyWith(
           backgroundColor: MaterialStatePropertyAll<Color>(backgroundColor),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (isLoading)
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: loadingItem(isWhite: true),
-                ),
-              ),
-            Expanded(
-              child: Text(
+        child: Align(
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (isLoading) loadingItem(isWhite: true),
+              Text(
                 text,
                 textAlign: isLoading ? TextAlign.right : TextAlign.center,
                 softWrap: true,
                 //overflow: TextOverflow.ellipsis,
                 style: textStyle,
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }
