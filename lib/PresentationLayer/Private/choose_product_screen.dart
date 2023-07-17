@@ -37,6 +37,7 @@ class ChooseProductScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return NormalBox(
                 title: productsList[index].name,
+                image: "assets/new_icons/product_ph.png",
                 onTap: () {
                   if (screenMode == null) {
                     Get.toNamed(AppRoutes.createEditProductScreen,

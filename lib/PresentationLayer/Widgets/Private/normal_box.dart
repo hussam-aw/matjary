@@ -3,15 +3,12 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 
 class NormalBox extends StatelessWidget {
-  const NormalBox({
-    super.key,
-    required this.title,
-    required this.onTap,
-  });
+  const NormalBox(
+      {super.key, required this.title, required this.onTap, this.image = ""});
 
   final String title;
   final Function() onTap;
-
+  final String image;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -22,14 +19,26 @@ class NormalBox extends StatelessWidget {
         decoration: const BoxDecoration(
           color: UIColors.containerBackground,
         ),
-        child: Text(
-          title,
-          textAlign: TextAlign.right,
-          softWrap: true,
-          //overflow: TextOverflow.ellipsis,
-          style: UITextStyle.normalMeduim.copyWith(
-            color: UIColors.lightNormalText,
-          ),
+        child: Row(
+          children: [
+            if (image != "")
+              Image.asset(
+                image,
+                width: 50,
+                height: 50,
+              ),
+            Expanded(
+              child: Text(
+                title,
+                textAlign: TextAlign.right,
+                softWrap: true,
+                //overflow: TextOverflow.ellipsis,
+                style: UITextStyle.normalMeduim.copyWith(
+                  color: UIColors.lightNormalText,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

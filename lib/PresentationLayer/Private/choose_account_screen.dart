@@ -39,6 +39,7 @@ class ChooseAccountScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return NormalBox(
                 title: accountList[index].name,
+                image: "assets/new_icons/account2-ph.png",
                 onTap: () {
                   if (screenMode == null) {
                     Get.toNamed(AppRoutes.createEditAccountScreen,

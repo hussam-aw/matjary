@@ -22,7 +22,11 @@ class CreateMenuItem extends StatelessWidget {
       splashColor: UIColors.containerBackground,
       child: Column(
         children: [
-          Image.asset(icon),
+          Image.asset(
+            icon,
+            width: 50,
+            height: 50,
+          ),
           spacerHeight(),
           Expanded(
             child: Text(

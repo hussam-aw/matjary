@@ -7,7 +7,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 // ignore: must_be_immutable
 class CustomerAccountListTile extends StatelessWidget {
-  CustomerAccountListTile({
+  const CustomerAccountListTile({
     super.key,
     required this.customerName,
     required this.customerImage,
@@ -39,6 +39,7 @@ class CustomerAccountListTile extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 22,
+                        backgroundColor: UIColors.menuTitle,
                         backgroundImage: AssetImage(customerImage),
                       ),
                       spacerWidth(),

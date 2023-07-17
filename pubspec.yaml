@@ -47,13 +47,13 @@ dependencies:
   intl: ^0.18.1
   shimmer: ^3.0.0
   path_provider: ^2.0.15
-  pdf: ^3.10.3
+  pdf: ^3.10.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.0
+  #flutter_launcher_icons: ^0.13.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -89,7 +89,7 @@ flutter:
     - assets/images/intro/
     - assets/images/calculator.json
     - assets/icons/
-
+    - assets/new_icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
