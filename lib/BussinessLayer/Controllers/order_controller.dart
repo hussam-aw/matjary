@@ -4,6 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/pdf_helper.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
@@ -56,6 +57,7 @@ class OrderController extends GetxController {
   OrdersController ordersController = Get.find<OrdersController>();
   WaresController waresController = Get.find<WaresController>();
   BoxClient boxClient = BoxClient();
+  PdfHelper pdfHelper = PdfHelper();
 
   int getOrderProductsQuantitiesCount(details) {
     int count = 0;
@@ -371,17 +373,15 @@ class OrderController extends GetxController {
     }
   }
 
-  // Future<void> deleteOrder(id) async {
-  //   loading.value = true;
-  //   var order = await orderRepo.deleteOrder(id);
-  //   loading.value = false;
-  //   if (order != null) {
-  //     homeController.getOrders();
-  //     SnackBars.showSuccess('تم الحذف بنجاح');
-  //   } else {
-  //     SnackBars.showError('فشل الحذف');
-  //   }
-  // }
+  Future<void> saveOrderToPdf(widget) async {
+    await PdfHelper.getPrintFont();
+    bool successSaving = await pdfHelper.createPdf(widget);
+    if (successSaving) {
+      SnackBars.showSuccess('تم الحفظ بنجاح');
+    } else {
+      SnackBars.showError('فشل الحفظ');
+    }
+  }
 
   void saveSelectedAccountsInStorage() {
     boxClient.setCounterPartyAccount(counterPartyAccount!.id);
