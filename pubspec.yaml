@@ -103,14 +103,15 @@ flutter:
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo.ttf
-    #         style: italic
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat.ttf
-  #         weight: 700
     - family: Red Hat Display
       fonts:
         - asset: assets/fonts/RedHatDisplay.ttf
-  #
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
