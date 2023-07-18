@@ -1,28 +1,41 @@
 import 'dart:io';
-import 'package:http/http.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as p;
 
 class PdfHelper {
-  final pdf = p.Document();
+  static p.Font? font;
 
-  void createPdf() async {
+  Future<bool> createPdf(p.Widget widget) async {
+    final pdf = p.Document();
+
     pdf.addPage(
-      p.Page(
+      p.MultiPage(
         pageFormat: PdfPageFormat.a4,
         build: (p.Context context) {
-          return p.Center(
-            child: p.Text("Hello World"),
-          );
+          return [
+            p.Container(
+              child: widget,
+            )
+          ];
         },
       ),
     );
-    final output = await getExternalStorageDirectory();
-    final file = File(
-      "${output!.path}/example.pdf",
-    );
-    print(file.path);
-    await file.writeAsBytes(await pdf.save());
+    try {
+      final output = await getExternalStorageDirectory();
+      final file = File(
+        "${output!.path}/example.pdf",
+      );
+      await file.writeAsBytes(await pdf.save());
+    } catch (err) {
+      return false;
+    }
+    return true;
+  }
+
+  static Future<void> getPrintFont() async {
+    font =
+        p.Font.ttf(await rootBundle.load('assets/fonts/NotoNaskhArabic.ttf'));
   }
 }
