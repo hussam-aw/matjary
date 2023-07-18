@@ -7,6 +7,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_print_details_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_print_widget.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_product_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -42,45 +43,6 @@ class OrderPrintScreen extends StatelessWidget {
                         titleColor: UIColors.printText,
                       ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     InkWell(
-                    //       onTap: () {
-                    //         Get.toNamed(
-                    //           AppRoutes.createEditOrderScreen,
-                    //           arguments: order,
-                    //         );
-                    //       },
-                    //       child: const Icon(
-                    //         FontAwesomeIcons.penToSquare,
-                    //         size: 27,
-                    //         color: UIColors.primary,
-                    //       ),
-                    //     ),
-                    //     spacerWidth(width: 22),
-                    //     InkWell(
-                    //       onTap: () {
-                    //         Get.dialog(
-                    //           CustomDialog(
-                    //             title: 'هل تريد حذف الفاتورة؟',
-                    //             buttonText: 'حذف',
-                    //             confirmOnPressed: () async {
-                    //               await orderController.deleteOrder(order.id);
-                    //               Get.until((route) =>
-                    //                   route.settings.name ==
-                    //                   AppRoutes.ordersScreen);
-                    //             },
-                    //           ),
-                    //         );
-                    //       },
-                    //       child: const Icon(
-                    //         Icons.delete,
-                    //         size: 30,
-                    //         color: UIColors.primary,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
                 spacerHeight(height: 22),
@@ -107,7 +69,10 @@ class OrderPrintScreen extends StatelessWidget {
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
-                  onPressed: () {},
+                  onPressed: () async {
+                    orderController
+                        .saveOrderToPdf(buildOrderPrintWidget(order));
+                  },
                 ),
               ],
             ),
