@@ -11,14 +11,10 @@ class PdfHelper {
     final pdf = p.Document();
 
     pdf.addPage(
-      p.MultiPage(
+      p.Page(
         pageFormat: PdfPageFormat.a4,
         build: (p.Context context) {
-          return [
-            p.Container(
-              child: widget,
-            )
-          ];
+          return widget;
         },
       ),
     );
