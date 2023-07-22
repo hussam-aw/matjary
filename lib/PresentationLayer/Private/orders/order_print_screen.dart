@@ -70,8 +70,11 @@ class OrderPrintScreen extends StatelessWidget {
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
                   onPressed: () async {
-                    orderController
-                        .saveOrderToPdf(buildOrderPrintWidget(order));
+                    await orderController.initializePdfSettings();
+                    await orderController.saveOrderToPdf(
+                      fileName: order.id,
+                      orderWidget: buildOrderPrintWidget(order),
+                    );
                   },
                 ),
               ],
