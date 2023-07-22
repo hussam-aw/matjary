@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/pdf_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/account_statement.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_print_widget.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/Statements/AccountStatements/account_movement_list.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/Statements/AccountStatements/account_statement_header.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/Statements/AccountStatements/account_statement_print_widget.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/divider.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -19,6 +22,7 @@ class AccountStatementPrintScreen extends StatelessWidget {
   AccountStatementPrintScreen({super.key});
 
   final accountController = Get.find<AccountController>();
+  final pdfController = Get.put(PdfController());
   Account account = Get.arguments['account'];
   AccountStatement? accountStatement = Get.arguments['accountStatement'];
 
@@ -82,7 +86,14 @@ class AccountStatementPrintScreen extends StatelessWidget {
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
-                  onPressed: () {},
+                  onPressed: () async {
+                    await pdfController.saveToPdfFile(
+                      fileName:
+                          'كشف حساب ${accountsController.getAccountName(account.id)}',
+                      widgetList: await buildAccountStatementPrintWidget(
+                          account, accountStatement!),
+                    );
+                  },
                 ),
               ],
             ),
