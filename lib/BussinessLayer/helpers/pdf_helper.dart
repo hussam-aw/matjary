@@ -35,4 +35,9 @@ class PdfHelper {
     font =
         p.Font.ttf(await rootBundle.load('assets/fonts/NotoNaskhArabic.ttf'));
   }
+
+  static Future<Uint8List> getAssetBytes(asset) async {
+    ByteData bytes = await rootBundle.load(asset);
+    return bytes.buffer.asUint8List();
+  }
 }
