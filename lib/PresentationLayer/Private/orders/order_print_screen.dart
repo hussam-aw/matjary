@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:matjary/BussinessLayer/Controllers/order_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/pdf_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -17,7 +17,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 class OrderPrintScreen extends StatelessWidget {
   OrderPrintScreen({super.key});
 
-  final orderController = Get.put(OrderController());
+  final pdfController = Get.put(PdfController());
   final productsController = Get.find<ProductsController>();
 
   Order order = Get.arguments;
@@ -70,10 +70,9 @@ class OrderPrintScreen extends StatelessWidget {
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
                   onPressed: () async {
-                    await orderController.initializePdfSettings();
-                    await orderController.saveOrderToPdf(
-                      fileName: order.id,
-                      orderWidget: buildOrderPrintWidget(order),
+                    await pdfController.saveToPdfFile(
+                      fileName: 'فاتورة رقم  ${order.id}#',
+                      widgetList: buildOrderPrintWidget(order),
                     );
                   },
                 ),
