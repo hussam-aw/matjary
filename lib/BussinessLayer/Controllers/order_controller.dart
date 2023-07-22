@@ -373,19 +373,6 @@ class OrderController extends GetxController {
     }
   }
 
-  Future<void> initializePdfSettings() async {
-    await PdfHelper.getPrintFont();
-  }
-
-  Future<void> saveOrderToPdf({fileName, orderWidget}) async {
-    bool successSaving = await pdfHelper.createPdf(fileName, orderWidget);
-    if (successSaving) {
-      SnackBars.showSuccess('تم الحفظ بنجاح');
-    } else {
-      SnackBars.showError('فشل الحفظ');
-    }
-  }
-
   void saveSelectedAccountsInStorage() {
     boxClient.setCounterPartyAccount(counterPartyAccount!.id);
     boxClient.setBankAccount(bankAccount!.id);
