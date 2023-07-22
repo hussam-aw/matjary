@@ -373,9 +373,12 @@ class OrderController extends GetxController {
     }
   }
 
-  Future<void> saveOrderToPdf(widget) async {
+  Future<void> initializePdfSettings() async {
     await PdfHelper.getPrintFont();
-    bool successSaving = await pdfHelper.createPdf(widget);
+  }
+
+  Future<void> saveOrderToPdf({fileName, orderWidget}) async {
+    bool successSaving = await pdfHelper.createPdf(fileName, orderWidget);
     if (successSaving) {
       SnackBars.showSuccess('تم الحفظ بنجاح');
     } else {
