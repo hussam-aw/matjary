@@ -186,11 +186,6 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                   );
                 }),
                 spacerHeight(),
-                AcceptButton(
-                  text: 'حذف',
-                  backgroundColor: UIColors.deleteButton,
-                  onPressed: () {},
-                ),
               ],
             ),
           ),
