@@ -7,21 +7,22 @@ import 'package:pdf/widgets.dart' as p;
 class PdfHelper {
   static p.Font? font;
 
-  Future<bool> createPdf(p.Widget widget) async {
+  Future<bool> createPdf(fileName, List<p.Widget> w) async {
     final pdf = p.Document();
 
     pdf.addPage(
-      p.Page(
+      p.MultiPage(
+        maxPages: 200,
         pageFormat: PdfPageFormat.a4,
         build: (p.Context context) {
-          return widget;
+          return w;
         },
       ),
     );
     try {
       final output = await getExternalStorageDirectory();
       final file = File(
-        "${output!.path}/example.pdf",
+        "${output!.path}/$fileName.pdf",
       );
       await file.writeAsBytes(await pdf.save());
     } catch (err) {
