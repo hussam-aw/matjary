@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_screen_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
@@ -17,6 +18,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class CreateEditAccountScreen extends StatelessWidget {
   CreateEditAccountScreen({super.key});
@@ -24,6 +26,7 @@ class CreateEditAccountScreen extends StatelessWidget {
   final AccountController accountController = Get.put(AccountController());
   final AccountScreenController accountScreenController =
       Get.put(AccountScreenController());
+  final homeController = Get.find<HomeController>();
   final Account? account = Get.arguments;
 
   @override
@@ -47,27 +50,43 @@ class CreateEditAccountScreen extends StatelessWidget {
                       child: const PageTitle(title: 'إنشاء | تعديل حساب'),
                     ),
                     if (account != null)
-                      InkWell(
-                        onTap: () {
-                          Get.dialog(
-                            CustomDialog(
-                              title: 'هل تريد حذف الحساب؟',
-                              buttonText: 'حذف',
-                              confirmOnPressed: () async {
-                                await accountController
-                                    .deleteAccount(account!.id);
-                                Get.until((route) =>
-                                    route.settings.name ==
-                                    AppRoutes.chooseAccountScreen);
-                              },
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              homeController
+                                  .pinAccountToHomeScreen(account!.id);
+                            },
+                            child: const Icon(
+                              Icons.check,
+                              size: 30,
+                              color: UIColors.primary,
                             ),
-                          );
-                        },
-                        child: const Icon(
-                          Icons.delete,
-                          size: 30,
-                          color: UIColors.primary,
-                        ),
+                          ),
+                          spacerWidth(),
+                          InkWell(
+                            onTap: () {
+                              Get.dialog(
+                                CustomDialog(
+                                  title: 'هل تريد حذف الحساب؟',
+                                  buttonText: 'حذف',
+                                  confirmOnPressed: () async {
+                                    await accountController
+                                        .deleteAccount(account!.id);
+                                    Get.until((route) =>
+                                        route.settings.name ==
+                                        AppRoutes.chooseAccountScreen);
+                                  },
+                                ),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.delete,
+                              size: 30,
+                              color: UIColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
                   ],
                 ),

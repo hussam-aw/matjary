@@ -311,7 +311,7 @@ class HomeScreen extends StatelessWidget {
                         spacerHeight(height: 20),
                         Expanded(
                           child: Obx(() {
-                            return accountsController.isLoadingAccounts.value
+                            return homeController.isLoading.value
                                 ? ListView.separated(
                                     itemBuilder: (context, index) {
                                       return const CustomerListTileShimmer();
@@ -327,35 +327,34 @@ class HomeScreen extends StatelessWidget {
                                           Get.toNamed(
                                             AppRoutes
                                                 .accountStatementTypeScreen,
-                                            arguments: accountsController
-                                                .customersAccounts[index],
+                                            arguments: homeController
+                                                .pinnedAccounts[index],
                                           );
                                         },
-                                        customerName: accountsController
-                                            .customersAccounts[index].name,
+                                        customerName: homeController
+                                            .pinnedAccounts[index].name,
                                         customerImage:
                                             'assets/new_icons/client_ph.png',
                                         customerStatus: accountController
                                             .convertAccountStyleToString(
-                                                accountsController
-                                                    .customersAccounts[index]
+                                                homeController
+                                                    .pinnedAccounts[index]
                                                     .style),
-                                        customerBalance: accountsController
-                                            .customersAccounts[index].balance
+                                        customerBalance: homeController
+                                            .pinnedAccounts[index].balance
                                             .toString(),
                                       );
                                     },
                                     separatorBuilder: (context, index) {
                                       return spacerHeight(height: 25);
                                     },
-                                    itemCount: accountsController
-                                            .customersAccounts.isEmpty
+                                    itemCount: homeController
+                                            .pinnedAccounts.isEmpty
                                         ? 0
-                                        : accountsController
-                                                    .customersAccounts.length <
+                                        : homeController.pinnedAccounts.length <
                                                 5
-                                            ? accountsController
-                                                .customersAccounts.length
+                                            ? homeController
+                                                .pinnedAccounts.length
                                             : 5,
                                   );
                           }),
