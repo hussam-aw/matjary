@@ -6,7 +6,10 @@ import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
+import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/payments_repo.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class HomeController extends GetxController {
   //AccountsRepo accountsRepo = AccountsRepo();
@@ -40,6 +43,9 @@ class HomeController extends GetxController {
   PaymentsController paymentsController = Get.put(PaymentsController());
   EarnsExpensesController earnsExpensesController =
       Get.put(EarnsExpensesController());
+  BoxClient boxClient = BoxClient();
+  List<Account> pinnedAccounts = [];
+  var isLoading = true.obs;
   // Future<void> getAccounts() async {
   //   isLoadingAccounts.value = true;
   //   accounts = await accountsRepo.getAccounts();
@@ -99,10 +105,30 @@ class HomeController extends GetxController {
   //   isLoadingCategories.value = false;
   // }
 
+  Future<void> pinAccountToHomeScreen(accountId) async {
+    await boxClient.setAccountToPinnedAccountList(accountId);
+    await getPinnedAccounts();
+    SnackBars.showSuccess('تم تثبيت الحساب في الشاشة الرئيسية');
+  }
+
+  Future<void> getPinnedAccounts() async {
+    isLoading.value = true;
+    var accountIds = await boxClient.getPinnedAccountsList();
+    if (accountIds != null) {
+      pinnedAccounts = accountIds
+          .map((id) => accountsController.getAccountFromId(id)!)
+          .toList();
+    } else {
+      pinnedAccounts = accountsController.customersAccounts;
+    }
+    isLoading.value = false;
+  }
+
   void fetchData() async {
     //isLoading.value = true;
     ordersController.getOrders();
     await accountsController.getAccounts();
+    await getPinnedAccounts();
     productsController.getProducts();
     categoriesController.getCategories();
     paymentsController.getPayments();
