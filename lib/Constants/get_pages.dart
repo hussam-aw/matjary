@@ -18,7 +18,6 @@ import 'package:matjary/PresentationLayer/Private/create_edit_user_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_category_screen.dart';
-import 'package:matjary/PresentationLayer/Private/choose_order_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_product_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_ware_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_account_screen.dart';
@@ -68,7 +67,6 @@ List<GetPage<dynamic>> getPages = [
   GetPage(
       name: AppRoutes.chooseAccountScreen, page: () => ChooseAccountScreen()),
   GetPage(name: AppRoutes.chooseWareScreen, page: () => ChooseWareScreen()),
-  GetPage(name: AppRoutes.chooseOrderScreen, page: () => ChooseOrderScreen()),
   GetPage(
       name: AppRoutes.chooseProductScreen, page: () => ChooseProductScreen()),
   GetPage(

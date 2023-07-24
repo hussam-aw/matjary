@@ -128,8 +128,11 @@ class HomeController extends GetxController {
 
   void fetchData() async {
     //isLoading.value = true;
-    ordersController.getOrders();
     await accountsController.getAccounts();
+    await accountsController.getCachAmount();
+    await ordersController.getOrders();
+    ordersController.getPurchasesOrders();
+    ordersController.getSalesOrders();
     await getPinnedAccounts();
     productsController.getProducts();
     categoriesController.getCategories();

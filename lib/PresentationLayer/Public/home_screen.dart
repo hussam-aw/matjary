@@ -75,9 +75,7 @@ class HomeScreen extends StatelessWidget {
                         textStyle: UITextStyle.boldBody,
                         text: "أنشئ فاتورة جديدة",
                       ),
-                      spacerHeight(
-                        height: 5,
-                      ),
+                      spacerHeight(height: 5),
                       Container(
                         padding: const EdgeInsets.all(20),
                         width: Get.width,
@@ -165,9 +163,7 @@ class HomeScreen extends StatelessWidget {
                                       flex: 2,
                                       child: Row(
                                         children: [
-                                          spacerWidth(
-                                            width: 120,
-                                          ),
+                                          spacerWidth(width: 120),
                                           Expanded(
                                             child: Column(
                                               mainAxisAlignment:
@@ -186,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                                                 spacerHeight(height: 10),
                                                 Obx(
                                                   () => accountsController
-                                                          .isLoadingAccounts
+                                                          .isLoadingCashAmount
                                                           .value
                                                       ? const AmountShimmer()
                                                       : Text(
@@ -242,10 +238,14 @@ class HomeScreen extends StatelessWidget {
                             Row(
                               children: [
                                 InovoiceContainer(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ordersScreen,
+                                        arguments: 'مشتريات');
+                                  },
                                   invoiceType: 'فواتير المشتريات',
                                   invoiceCountWidget: Obx(() {
                                     return ordersController
-                                            .isLoadingOrders.value
+                                            .isLoadingPurchaseOrder.value
                                         ? const OrderCountShimmer()
                                         : Text(
                                             ordersController
@@ -260,10 +260,14 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 spacerWidth(width: 40),
                                 InovoiceContainer(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ordersScreen,
+                                        arguments: 'بيع للزبائن');
+                                  },
                                   invoiceType: 'فواتير المبيعات',
                                   invoiceCountWidget: Obx(() {
                                     return ordersController
-                                            .isLoadingOrders.value
+                                            .isLoadingSaleOrders.value
                                         ? const OrderCountShimmer()
                                         : Text(
                                             ordersController.salesOrders.length

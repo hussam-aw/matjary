@@ -5,7 +5,9 @@ import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
 
 class OrdersController extends GetxController {
   OrdersRepo ordersRepo = OrdersRepo();
-  var isLoadingOrders = false.obs;
+  var isLoadingOrders = true.obs;
+  var isLoadingPurchaseOrder = true.obs;
+  var isLoadingSaleOrders = true.obs;
   var isLoadingOrdersByType = false.obs;
   List<Order> orders = [];
   List<Order> purchasesOrders = [];
@@ -59,22 +61,24 @@ class OrdersController extends GetxController {
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
     orders = await ordersRepo.getOrders();
-    await getPurchasesOrders();
-    await getSalesOrders();
     isLoadingOrders.value = false;
     filteredOrders = orders;
   }
 
-  Future<void> getPurchasesOrders() async {
+  void getPurchasesOrders() {
+    isLoadingPurchaseOrder.value = true;
     purchasesOrders =
         orders.where((order) => order.type == "purchases").toList();
+    isLoadingPurchaseOrder.value = false;
   }
 
-  Future<void> getSalesOrders() async {
+  void getSalesOrders() {
+    isLoadingSaleOrders.value = true;
     salesOrders = orders
         .where((order) =>
             order.type == "sell_to_customers" || order.type == "retail_sale")
         .toList();
+    isLoadingSaleOrders.value = false;
   }
 
   void resetOrderFilterTypes() {
@@ -152,5 +156,20 @@ class OrdersController extends GetxController {
     }
     isLoadingOrders.value = false;
     Get.back();
+  }
+
+  void setDefaultOrders(filterType) {
+    if (filterType != null) {
+      setOrderFilterType(filterType);
+      getOrdersByType(filterType);
+    } else {
+      setOrderFilterType('الكل');
+      getOrdersByType('الكل');
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
   }
 }

@@ -17,7 +17,7 @@ class AccountsController extends GetxController {
   List<Account> marketerAccounts = [];
   var isLoadingMarketerAccounts = false.obs;
   List<Account> customersAccounts = [];
-  //var isLoadingCashAmount = false.obs;
+  var isLoadingCashAmount = true.obs;
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
 
@@ -38,7 +38,6 @@ class AccountsController extends GetxController {
     getSupplierAccounts();
     getMarketerAccounts();
     getCustomersAccounts();
-    await getCachAmount();
     isLoadingAccounts.value = false;
   }
 
@@ -122,7 +121,9 @@ class AccountsController extends GetxController {
   }
 
   Future<void> getCachAmount() async {
+    isLoadingCashAmount.value = true;
     cashAmount.value = await accountsRepo.getCashAmount();
+    isLoadingCashAmount.value = false;
   }
 
   Future<dynamic> selectAccount(accountList) async {
