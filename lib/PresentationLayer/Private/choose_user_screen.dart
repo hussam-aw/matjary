@@ -59,7 +59,7 @@ class ChooseUserScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إختيار مستخدم'),
+                const PageTitle(title: 'المستخدمين'),
                 spacerHeight(),
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم المستخدم أو اختر من القائمة',

@@ -73,7 +73,7 @@ class ChooseProductScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إختيار منتج'),
+                const PageTitle(title: 'البضاعة'),
                 spacerHeight(),
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم المنتج أو اختر من القائمة',

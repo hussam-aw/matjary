@@ -21,6 +21,15 @@ class AccountsController extends GetxController {
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
 
+  Map<String, String> counterAccountStyle = {
+    'bank': 'الصناديق النقدية',
+    'client': 'الزبائن',
+    'supplier': 'المزودين',
+    'marketer': 'المسوقين',
+    'customers': 'العملاء',
+    'employers': 'جهات العمل'
+  };
+
   Future<void> getAccounts() async {
     isLoadingAccounts.value = true;
     accounts = await accountsRepo.getAccounts();
@@ -89,7 +98,6 @@ class AccountsController extends GetxController {
         return bankAccounts;
       case 'client':
         return clientAccounts;
-
       case 'marketer':
         return marketerAccounts;
       case 'customers':

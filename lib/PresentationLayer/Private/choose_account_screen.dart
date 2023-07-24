@@ -77,7 +77,10 @@ class ChooseAccountScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
               child: Column(
                 children: [
-                  const PageTitle(title: 'إختيار حساب'),
+                  PageTitle(
+                      title: accountsController
+                              .counterAccountStyle[accountStyle] ??
+                          'الحسابات'),
                   spacerHeight(),
                   SearchTextField(
                     hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
