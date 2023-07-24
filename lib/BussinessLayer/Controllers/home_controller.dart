@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/earns_expenses_controller.dar
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/users_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
@@ -43,6 +44,7 @@ class HomeController extends GetxController {
   PaymentsController paymentsController = Get.put(PaymentsController());
   EarnsExpensesController earnsExpensesController =
       Get.put(EarnsExpensesController());
+  UsersController usersController = Get.put(UsersController());
   BoxClient boxClient = BoxClient();
   List<Account> pinnedAccounts = [];
   var isLoading = true.obs;
@@ -134,6 +136,7 @@ class HomeController extends GetxController {
     paymentsController.getPayments();
     waresController.getWares();
     earnsExpensesController.getStatements();
+    usersController.getUsers();
     //isLoading.value = false;
   }
 

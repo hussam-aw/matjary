@@ -176,6 +176,14 @@ class CustomDrawer extends StatelessWidget {
                 onTap: null,
               ),
               DrawerListTile(
+                title: "المستخدمين",
+                subtitle: "تصفح و تعديل المستخدمين",
+                iconData: FontAwesomeIcons.user,
+                onTap: () {
+                  Get.toNamed(AppRoutes.chooseUserScreen);
+                },
+              ),
+              DrawerListTile(
                 title: "الإعدادات",
                 subtitle: "التعديل في إعدادات التطبيق",
                 iconData: Icons.settings,

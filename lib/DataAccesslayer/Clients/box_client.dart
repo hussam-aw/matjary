@@ -12,7 +12,7 @@ class BoxClient {
   }
 
   Future<User> getAuthedUser() async {
-    return User.fromBoxMap(await box.read('matjary_userdata'));
+    return User.fromMap(await box.read('matjary_userdata'));
   }
 
   Future<void> setAuthedUser(User user) async {
@@ -120,5 +120,15 @@ class BoxClient {
       return accounts;
     }
     return null;
+  }
+
+  Future<void> clearStorage() async {
+    await removeUserData();
+    await box.remove('first_side_account');
+    await box.remove('counter_party');
+    await box.remove('bank_account');
+    await box.remove('ware_account');
+    await box.remove('marketer_account');
+    await box.remove('pinned_accounts');
   }
 }

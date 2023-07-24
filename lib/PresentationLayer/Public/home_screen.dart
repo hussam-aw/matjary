@@ -98,10 +98,12 @@ class HomeScreen extends StatelessWidget {
                               onTap: () async {
                                 var account = await accountsController
                                     .selectAccount(accountsController.accounts);
-                                Get.toNamed(
-                                  AppRoutes.accountStatementTypeScreen,
-                                  arguments: account,
-                                );
+                                if (account != null) {
+                                  Get.toNamed(
+                                    AppRoutes.accountStatementTypeScreen,
+                                    arguments: account,
+                                  );
+                                }
                               },
                               icon: 'assets/new_icons/account2-ph.png',
                               title: 'كشف حساب',

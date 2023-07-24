@@ -8,7 +8,7 @@ class UserRepo {
   Future<User?> login(email, password) async {
     var data = await client.login(email, password);
     if (data != null) {
-      return User.fromMap(jsonDecode(data));
+      return User.fromMapWithToken(jsonDecode(data));
     }
     return null;
   }
@@ -31,5 +31,14 @@ class UserRepo {
       return User.fromMap(parsed);
     }
     return null;
+  }
+
+  Future<List<User>> getUsers() async {
+    var response = await client.getUsers();
+    if (response != "") {
+      final parsed = json.decode(response).cast<Map<String, dynamic>>();
+      return parsed.map<User>((json) => User.fromMap(json)).toList();
+    }
+    return [];
   }
 }

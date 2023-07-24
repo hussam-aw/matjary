@@ -117,7 +117,7 @@ class AccountsController extends GetxController {
     cashAmount.value = await accountsRepo.getCashAmount();
   }
 
-  Future<Account> selectAccount(accountList) async {
+  Future<dynamic> selectAccount(accountList) async {
     return await Get.toNamed(
       AppRoutes.chooseAccountScreen,
       arguments: {
