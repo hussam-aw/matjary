@@ -5,17 +5,20 @@ import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/auth_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/profile_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/store_settings_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
+import 'package:matjary/PresentationLayer/Widgets/shimmers/icon_shimmer.dart';
 import 'package:matjary/main.dart';
 
 import '../Home/drawer_list_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key});
-  final AuthController authController = Get.put(AuthController());
-  final AccountsController accountsController = Get.find<AccountsController>();
+  final authController = Get.put(AuthController());
+  final accountsController = Get.find<AccountsController>();
   final profileController = Get.find<ProfileController>();
+  final storeSettingsController = Get.find<StoreSettingsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +34,15 @@ class CustomDrawer extends StatelessWidget {
                   builder: (context) {
                     return UserAccountsDrawerHeader(
                       decoration: const BoxDecoration(color: UIColors.primary),
-                      currentAccountPicture: const CircleAvatar(
-                        backgroundColor: UIColors.containerBackground,
-                        backgroundImage: AssetImage("assets/images/logo.png"),
-                      ),
+                      currentAccountPicture: Obx(() {
+                        return storeSettingsController.isLoading.value
+                            ? const IconShimmer()
+                            : CircleAvatar(
+                                backgroundColor: UIColors.containerBackground,
+                                backgroundImage:
+                                    NetworkImage(MyApp.storeSettings!.icon),
+                              );
+                      }),
                       accountName: Text(MyApp.appUser != null
                           ? MyApp.appUser!.name
                           : "App User"),

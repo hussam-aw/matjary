@@ -5,11 +5,11 @@ import 'package:matjary/BussinessLayer/Controllers/earns_expenses_controller.dar
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/store_settings_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/users_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/DataAccesslayer/Repositories/payments_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class HomeController extends GetxController {
@@ -35,7 +35,6 @@ class HomeController extends GetxController {
   // var isLoadingProducts = false.obs;
   // List<Category> categories = [];
   // var isLoadingCategories = false.obs;
-  PaymentsRepo paymentsRepo = PaymentsRepo();
   AccountsController accountsController = Get.put(AccountsController());
   CategoriesController categoriesController = Get.put(CategoriesController());
   OrdersController ordersController = Get.put(OrdersController());
@@ -45,6 +44,8 @@ class HomeController extends GetxController {
   EarnsExpensesController earnsExpensesController =
       Get.put(EarnsExpensesController());
   UsersController usersController = Get.put(UsersController());
+  StoreSettingsController storeSettingsController =
+      Get.put(StoreSettingsController());
   BoxClient boxClient = BoxClient();
   List<Account> pinnedAccounts = [];
   var isLoading = true.obs;
@@ -140,6 +141,7 @@ class HomeController extends GetxController {
     waresController.getWares();
     earnsExpensesController.getStatements();
     usersController.getUsers();
+    storeSettingsController.getStoreSettings();
     //isLoading.value = false;
   }
 
