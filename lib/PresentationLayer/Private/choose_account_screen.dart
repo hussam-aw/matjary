@@ -5,9 +5,11 @@ import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/account_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_bottom_sheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -41,12 +43,14 @@ class ChooseAccountScreen extends StatelessWidget {
                 title: accountList[index].name,
                 image: "assets/new_icons/account2-ph.png",
                 onTap: () {
-                  if (screenMode == null) {
-                    Get.toNamed(AppRoutes.createEditAccountScreen,
-                        arguments: accountList[index]);
-                  } else {
+                  if (screenMode != null) {
                     Get.back(result: accountList[index]);
                   }
+                },
+                onLongTap: () {
+                  buildCustomBottomSheet(
+                    AccountOptionsMenu(account: accountList[index]),
+                  );
                 },
               );
             },

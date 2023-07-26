@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/account.dart';
 
-class OrdersFilterOptionsMenu extends StatelessWidget {
-  OrdersFilterOptionsMenu({super.key});
+import '../../../Constants/get_routes.dart';
 
-  final ordersController = Get.find<OrdersController>();
+class AccountOptionsMenu extends StatelessWidget {
+  AccountOptionsMenu({super.key, required this.account});
+
+  final homeController = Get.find<HomeController>();
+  final Account account;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +19,10 @@ class OrdersFilterOptionsMenu extends StatelessWidget {
       children: [
         Expanded(
           child: InkWell(
-            onTap: () async =>
-                await ordersController.getFilteredOrders('last_day'),
+            onTap: () => Get.toNamed(AppRoutes.createEditAccountScreen,
+                arguments: account),
             child: Text(
-              'فواتير اليوم',
+              'تعديل',
               style: UITextStyle.normalHeading.copyWith(
                 color: UIColors.menuTitle,
               ),
@@ -27,10 +31,12 @@ class OrdersFilterOptionsMenu extends StatelessWidget {
         ),
         Expanded(
           child: InkWell(
-            onTap: () async =>
-                await ordersController.getFilteredOrders('last_week'),
+            onTap: () => Get.toNamed(
+              AppRoutes.accountStatementTypeScreen,
+              arguments: account,
+            ),
             child: Text(
-              'فواتير الأسبوع',
+              'كشف حساب',
               style: UITextStyle.normalHeading.copyWith(
                 color: UIColors.menuTitle,
               ),
@@ -39,10 +45,9 @@ class OrdersFilterOptionsMenu extends StatelessWidget {
         ),
         Expanded(
           child: InkWell(
-            onTap: () async =>
-                await ordersController.getFilteredOrders('last_month'),
+            onTap: () => homeController.pinAccountToHomeScreen(account.id),
             child: Text(
-              'فواتير آخر شهر',
+              'تثبيت في الشاشة الرئيسية',
               style: UITextStyle.normalHeading.copyWith(
                 color: UIColors.menuTitle,
               ),

@@ -11,6 +11,7 @@ import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/Order/orders_filter_bottomsheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_bottom_sheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
@@ -71,7 +72,7 @@ class OrdersScreen extends StatelessWidget {
                     const PageTitle(title: 'الفواتير'),
                     InkWell(
                       onTap: () {
-                        Get.bottomSheet(OrdersFilterBottomSheet());
+                        buildCustomBottomSheet(OrdersFilterOptionsMenu());
                       },
                       child: Row(
                         children: [
