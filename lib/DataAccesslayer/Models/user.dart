@@ -7,7 +7,7 @@ class User {
   final String mobileNumber;
   final String email;
   final String address;
-  final DateTime expiryDate;
+  final DateTime? expiryDate;
   final String avatar;
   final String token;
   User({
@@ -36,7 +36,7 @@ class User {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
+  factory User.fromMapWithToken(Map<String, dynamic> map) {
     return User(
       id: map['user']['id']?.toInt() ?? 0,
       companyId: map['user']['company_id'] ?? 0,
@@ -44,12 +44,13 @@ class User {
       name: map['user']['name'] ?? '',
       email: map['user']['email'] ?? '',
       address: map['user']['address'] ?? '',
-      expiryDate: DateTime.parse(map['user']['expiry_date']),
+      expiryDate: getExpiryDate(map['user']['expiry_date']),
       avatar: map['user']['avatar'] ?? '',
       token: map['token'] ?? '',
     );
   }
-  factory User.fromBoxMap(Map<String, dynamic> map) {
+
+  factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id']?.toInt() ?? 0,
       companyId: map['company_id'],
@@ -57,7 +58,7 @@ class User {
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       address: map['address'] ?? '',
-      expiryDate: DateTime.parse(map['expiry_date']),
+      expiryDate: getExpiryDate(map['expiry_date']),
       avatar: map['avatar'] ?? '',
       token: map['token'] ?? '',
     );
@@ -66,6 +67,10 @@ class User {
   String toJson() => json.encode(toMap());
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  static DateTime? getExpiryDate(date) {
+    return date.isNotEmpty ? DateTime.parse(date) : null;
+  }
 
   String getDateString(DateTime date) {
     return "${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day}";

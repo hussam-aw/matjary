@@ -4,7 +4,6 @@ import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
-import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 class OrdersFilterBottomSheet extends StatelessWidget {
   OrdersFilterBottomSheet({super.key});
@@ -14,7 +13,7 @@ class OrdersFilterBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.width * .35,
+      height: Get.width * .5,
       padding: const EdgeInsets.all(25),
       decoration: const BoxDecoration(
         borderRadius: raduis32top,
@@ -22,35 +21,39 @@ class OrdersFilterBottomSheet extends StatelessWidget {
       ),
       child: Column(
         children: [
-          InkWell(
-            onTap: () async =>
-                await ordersController.getFilteredOrders('last_day'),
-            child: Text(
-              'فواتير اليوم',
-              style: UITextStyle.normalHeading.copyWith(
-                color: UIColors.menuTitle,
+          Expanded(
+            child: InkWell(
+              onTap: () async =>
+                  await ordersController.getFilteredOrders('last_day'),
+              child: Text(
+                'فواتير اليوم',
+                style: UITextStyle.normalHeading.copyWith(
+                  color: UIColors.menuTitle,
+                ),
               ),
             ),
           ),
-          spacerHeight(height: 22),
-          InkWell(
-            onTap: () async =>
-                await ordersController.getFilteredOrders('last_week'),
-            child: Text(
-              'فواتير الأسبوع',
-              style: UITextStyle.normalHeading.copyWith(
-                color: UIColors.menuTitle,
+          Expanded(
+            child: InkWell(
+              onTap: () async =>
+                  await ordersController.getFilteredOrders('last_week'),
+              child: Text(
+                'فواتير الأسبوع',
+                style: UITextStyle.normalHeading.copyWith(
+                  color: UIColors.menuTitle,
+                ),
               ),
             ),
           ),
-          spacerHeight(height: 22),
-          InkWell(
-            onTap: () async =>
-                await ordersController.getFilteredOrders('last_month'),
-            child: Text(
-              'فواتير آخر شهر',
-              style: UITextStyle.normalHeading.copyWith(
-                color: UIColors.menuTitle,
+          Expanded(
+            child: InkWell(
+              onTap: () async =>
+                  await ordersController.getFilteredOrders('last_month'),
+              child: Text(
+                'فواتير آخر شهر',
+                style: UITextStyle.normalHeading.copyWith(
+                  color: UIColors.menuTitle,
+                ),
               ),
             ),
           ),

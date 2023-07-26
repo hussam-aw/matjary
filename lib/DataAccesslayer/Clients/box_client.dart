@@ -12,7 +12,7 @@ class BoxClient {
   }
 
   Future<User> getAuthedUser() async {
-    return User.fromBoxMap(await box.read('matjary_userdata'));
+    return User.fromMap(await box.read('matjary_userdata'));
   }
 
   Future<void> setAuthedUser(User user) async {
@@ -101,5 +101,34 @@ class BoxClient {
       return marketer;
     }
     return null;
+  }
+
+  Future<void> setAccountToPinnedAccountList(int accountId) async {
+    var accounts = await getPinnedAccountsList();
+    if (accounts != null) {
+      accounts.add(accountId);
+    } else {
+      accounts = [accountId];
+    }
+    await box.remove('pinned_accounts');
+    await box.write('pinned_accounts', accounts);
+  }
+
+  Future<List<dynamic>?> getPinnedAccountsList() async {
+    var accounts = await box.read('pinned_accounts');
+    if (accounts != null) {
+      return accounts;
+    }
+    return null;
+  }
+
+  Future<void> clearStorage() async {
+    await removeUserData();
+    await box.remove('first_side_account');
+    await box.remove('counter_party');
+    await box.remove('bank_account');
+    await box.remove('ware_account');
+    await box.remove('marketer_account');
+    await box.remove('pinned_accounts');
   }
 }

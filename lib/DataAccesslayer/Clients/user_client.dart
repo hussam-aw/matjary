@@ -61,4 +61,15 @@ class UserClient {
       return null;
     }
   }
+
+  Future<dynamic> getUsers() async {
+    var response = await http
+        .get(Uri.parse("$baseUrl$usersLink/${MyApp.appUser!.companyId}"));
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return "";
+    }
+  }
 }

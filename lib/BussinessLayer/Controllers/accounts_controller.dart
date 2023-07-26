@@ -17,9 +17,18 @@ class AccountsController extends GetxController {
   List<Account> marketerAccounts = [];
   var isLoadingMarketerAccounts = false.obs;
   List<Account> customersAccounts = [];
-  //var isLoadingCashAmount = false.obs;
+  var isLoadingCashAmount = true.obs;
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
+
+  Map<String, String> counterAccountStyle = {
+    'bank': 'الصناديق النقدية',
+    'client': 'الزبائن',
+    'supplier': 'المزودين',
+    'marketer': 'المسوقين',
+    'customers': 'العملاء',
+    'employers': 'جهات العمل'
+  };
 
   Future<void> getAccounts() async {
     isLoadingAccounts.value = true;
@@ -29,7 +38,6 @@ class AccountsController extends GetxController {
     getSupplierAccounts();
     getMarketerAccounts();
     getCustomersAccounts();
-    await getCachAmount();
     isLoadingAccounts.value = false;
   }
 
@@ -89,7 +97,6 @@ class AccountsController extends GetxController {
         return bankAccounts;
       case 'client':
         return clientAccounts;
-
       case 'marketer':
         return marketerAccounts;
       case 'customers':
@@ -114,10 +121,12 @@ class AccountsController extends GetxController {
   }
 
   Future<void> getCachAmount() async {
+    isLoadingCashAmount.value = true;
     cashAmount.value = await accountsRepo.getCashAmount();
+    isLoadingCashAmount.value = false;
   }
 
-  Future<Account> selectAccount(accountList) async {
+  Future<dynamic> selectAccount(accountList) async {
     return await Get.toNamed(
       AppRoutes.chooseAccountScreen,
       arguments: {

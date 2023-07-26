@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
-import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/users_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -15,19 +15,17 @@ import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart'
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 // ignore: must_be_immutable
-class ChooseWareScreen extends StatelessWidget {
-  ChooseWareScreen({super.key});
+class ChooseUserScreen extends StatelessWidget {
+  ChooseUserScreen({super.key});
 
-  final WaresController waresController = Get.find<WaresController>();
+  final UsersController usersController = Get.find<UsersController>();
   final ListSearchController searchController = Get.put(ListSearchController());
 
-  String? screenMode = Get.arguments['mode'];
-
-  Widget buildWareList(wareList) {
-    return wareList.isEmpty
+  Widget buildUserList(userList) {
+    return userList.isEmpty
         ? Center(
             child: Text(
-              'لا يوجد مستودعات',
+              'لا يوجد مستخدمين',
               style: UITextStyle.normalBody.copyWith(
                 color: UIColors.normalText,
               ),
@@ -36,30 +34,20 @@ class ChooseWareScreen extends StatelessWidget {
         : ListView.separated(
             itemBuilder: (context, index) {
               return NormalBox(
-                title: wareList[index].name,
-                onTap: () {
-                  if (screenMode == 'reportSelection') {
-                    Get.toNamed(AppRoutes.singleWareReportScreen,
-                        arguments: wareList[index]);
-                  } else if (screenMode == null) {
-                    Get.toNamed(AppRoutes.createEditWareScreen,
-                        arguments: wareList[index]);
-                  } else {
-                    Get.back(result: wareList[index]);
-                  }
-                },
+                title: userList[index].name,
+                onTap: () {},
               );
             },
             separatorBuilder: (context, index) {
               return spacerHeight();
             },
-            itemCount: wareList.length,
+            itemCount: userList.length,
           );
   }
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = waresController.wares;
+    searchController.list = usersController.users;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -67,14 +55,14 @@ class ChooseWareScreen extends StatelessWidget {
         appBar: customAppBar(showingAppIcon: false),
         drawer: CustomDrawer(),
         body: SafeArea(
-          child: Container(
+          child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'المستودعات'),
+                const PageTitle(title: 'المستخدمين'),
                 spacerHeight(),
                 SearchTextField(
-                  hintText: 'قم بالبحث عن اسم المستودع أو اختر من القائمة',
+                  hintText: 'قم بالبحث عن اسم المستخدم أو اختر من القائمة',
                   onChanged: (value) {
                     searchController.searchText = value;
                     searchController.search();
@@ -83,18 +71,18 @@ class ChooseWareScreen extends StatelessWidget {
                 spacerHeight(height: 20),
                 Expanded(
                   child: Obx(
-                    () => waresController.isLoadingWares.value
+                    () => usersController.isLoadingUsers.value
                         ? Center(
                             child: loadingItem(width: 100, isWhite: true),
                           )
                         : RefreshIndicator(
                             onRefresh: () async =>
-                                await waresController.getWares(),
+                                await usersController.getUsers(),
                             child: GetBuilder(
                               init: searchController,
                               builder: (context) {
                                 return searchController.searchText.isEmpty
-                                    ? buildWareList(waresController.wares)
+                                    ? buildUserList(usersController.users)
                                     : Obx(
                                         () {
                                           return searchController
@@ -104,7 +92,7 @@ class ChooseWareScreen extends StatelessWidget {
                                                       width: 100,
                                                       isWhite: true),
                                                 )
-                                              : buildWareList(searchController
+                                              : buildUserList(searchController
                                                   .filteredList);
                                         },
                                       );
@@ -121,7 +109,7 @@ class ChooseWareScreen extends StatelessWidget {
           backgroundColor: UIColors.primary,
           iconColor: UIColors.white,
           onPressed: () {
-            Get.toNamed(AppRoutes.createEditWareScreen);
+            Get.toNamed(AppRoutes.createEditUserScreen);
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

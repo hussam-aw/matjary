@@ -83,10 +83,10 @@ class ChooseCategoryScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إختيار فئة'),
+                const PageTitle(title: 'تصنيفات البضاعة'),
                 spacerHeight(),
                 SearchTextField(
-                  hintText: 'قم بالبحث عن الفئة أو اختر من القائمة',
+                  hintText: 'قم بالبحث عن التصنيف أو اختر من القائمة',
                   onChanged: (value) {
                     searchController.searchText = value;
                     searchController.search();

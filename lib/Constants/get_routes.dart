@@ -44,5 +44,7 @@ class AppRoutes {
   static const createEarnExpenseScreen = '/home/createEarnExpenseScreen';
   static const earnsExpensesScreen = '/home/earnsExpensesScreen';
   static const createEditUserScreen = '/home/createEditUserScreen';
+  static const chooseUserScreen = '/home/chooseUserScreen';
   static const settingsScreen = '/home/settingsScreen';
+  static const storeIconScreen = '/settingsScreen/storeIconScreen';
 }

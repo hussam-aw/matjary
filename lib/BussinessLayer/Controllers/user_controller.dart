@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:matjary/BussinessLayer/Controllers/users_controller.dart';
 import 'package:matjary/DataAccesslayer/Repositories/user_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
@@ -10,6 +11,7 @@ class UserController extends GetxController {
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   int? notifiable = 1;
+  final usersController = Get.find<UsersController>();
   UserRepo userRepo = UserRepo();
   var isLoading = false.obs;
 
@@ -46,6 +48,7 @@ class UserController extends GetxController {
       );
       isLoading.value = false;
       if (user != null) {
+        usersController.getUsers();
         SnackBars.showSuccess('تم انشاء المستخدم');
       } else {
         SnackBars.showError('فشل انشاء المستخدم');

@@ -26,4 +26,6 @@ const accountStatementByDateLink = "/AccountStatementByDate";
 const earnExpenseLink = "/expensesAndRevenuesAccounts";
 const earnsExpensesLink = "/expensesAndRevenuesAccounts";
 const userLink = "/user";
+const usersLink = "/users";
 const updateProfileLink = "/updateProfile";
+const settingsLink = "/storSettings";

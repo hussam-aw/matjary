@@ -19,12 +19,15 @@ import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/search_text_field.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
+// ignore: must_be_immutable
 class OrdersScreen extends StatelessWidget {
   OrdersScreen({super.key});
 
   final ordersController = Get.find<OrdersController>();
   final searchController = Get.put(ListSearchController());
   final accountsController = Get.find<AccountsController>();
+
+  String? orderFilterType = Get.arguments;
 
   Widget buildOrdersList(List<Order> orders) {
     return orders.isEmpty
@@ -50,7 +53,7 @@ class OrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchController.list = accountsController.accounts;
-    ordersController.currentOrders = ordersController.orders;
+    ordersController.setDefaultOrders(orderFilterType);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(

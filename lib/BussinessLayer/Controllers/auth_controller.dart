@@ -37,7 +37,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    await boxClient.removeUserData();
+    await boxClient.clearStorage();
     MyApp.appUser = null;
     Get.offAllNamed(AppRoutes.loginScreen);
   }

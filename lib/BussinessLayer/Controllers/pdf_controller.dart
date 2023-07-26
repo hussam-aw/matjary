@@ -1,16 +1,21 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/helpers/pdf_helper.dart';
+import 'package:matjary/BussinessLayer/helpers/share_helper.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class PdfController extends GetxController {
   PdfHelper pdfHelper = PdfHelper();
+  ShareHelper shareHelper = ShareHelper();
 
   Future<void> saveToPdfFile({fileName, widgetList}) async {
-    bool successSaving = await pdfHelper.createPdf(fileName, widgetList);
-    if (successSaving) {
+    File? savedFile = await pdfHelper.createPdf(fileName, widgetList);
+    if (savedFile != null) {
       SnackBars.showSuccess('تم الحفظ بنجاح');
+      await shareHelper.shareFile(savedFile.path);
     } else {
-      SnackBars.showError('فشل الحفظ');
+      SnackBars.showWarning('لم يتم حفظ الملف');
     }
   }
 

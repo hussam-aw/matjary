@@ -75,9 +75,7 @@ class HomeScreen extends StatelessWidget {
                         textStyle: UITextStyle.boldBody,
                         text: "أنشئ فاتورة جديدة",
                       ),
-                      spacerHeight(
-                        height: 5,
-                      ),
+                      spacerHeight(height: 5),
                       Container(
                         padding: const EdgeInsets.all(20),
                         width: Get.width,
@@ -98,10 +96,12 @@ class HomeScreen extends StatelessWidget {
                               onTap: () async {
                                 var account = await accountsController
                                     .selectAccount(accountsController.accounts);
-                                Get.toNamed(
-                                  AppRoutes.accountStatementTypeScreen,
-                                  arguments: account,
-                                );
+                                if (account != null) {
+                                  Get.toNamed(
+                                    AppRoutes.accountStatementTypeScreen,
+                                    arguments: account,
+                                  );
+                                }
                               },
                               icon: 'assets/new_icons/account2-ph.png',
                               title: 'كشف حساب',
@@ -163,9 +163,7 @@ class HomeScreen extends StatelessWidget {
                                       flex: 2,
                                       child: Row(
                                         children: [
-                                          spacerWidth(
-                                            width: 120,
-                                          ),
+                                          spacerWidth(width: 120),
                                           Expanded(
                                             child: Column(
                                               mainAxisAlignment:
@@ -184,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                                                 spacerHeight(height: 10),
                                                 Obx(
                                                   () => accountsController
-                                                          .isLoadingAccounts
+                                                          .isLoadingCashAmount
                                                           .value
                                                       ? const AmountShimmer()
                                                       : Text(
@@ -240,10 +238,14 @@ class HomeScreen extends StatelessWidget {
                             Row(
                               children: [
                                 InovoiceContainer(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ordersScreen,
+                                        arguments: 'مشتريات');
+                                  },
                                   invoiceType: 'فواتير المشتريات',
                                   invoiceCountWidget: Obx(() {
                                     return ordersController
-                                            .isLoadingOrders.value
+                                            .isLoadingPurchaseOrder.value
                                         ? const OrderCountShimmer()
                                         : Text(
                                             ordersController
@@ -258,10 +260,14 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 spacerWidth(width: 40),
                                 InovoiceContainer(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ordersScreen,
+                                        arguments: 'بيع للزبائن');
+                                  },
                                   invoiceType: 'فواتير المبيعات',
                                   invoiceCountWidget: Obx(() {
                                     return ordersController
-                                            .isLoadingOrders.value
+                                            .isLoadingSaleOrders.value
                                         ? const OrderCountShimmer()
                                         : Text(
                                             ordersController.salesOrders.length
@@ -311,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                         spacerHeight(height: 20),
                         Expanded(
                           child: Obx(() {
-                            return accountsController.isLoadingAccounts.value
+                            return homeController.isLoading.value
                                 ? ListView.separated(
                                     itemBuilder: (context, index) {
                                       return const CustomerListTileShimmer();
@@ -327,35 +333,34 @@ class HomeScreen extends StatelessWidget {
                                           Get.toNamed(
                                             AppRoutes
                                                 .accountStatementTypeScreen,
-                                            arguments: accountsController
-                                                .customersAccounts[index],
+                                            arguments: homeController
+                                                .pinnedAccounts[index],
                                           );
                                         },
-                                        customerName: accountsController
-                                            .customersAccounts[index].name,
+                                        customerName: homeController
+                                            .pinnedAccounts[index].name,
                                         customerImage:
                                             'assets/new_icons/client_ph.png',
                                         customerStatus: accountController
                                             .convertAccountStyleToString(
-                                                accountsController
-                                                    .customersAccounts[index]
+                                                homeController
+                                                    .pinnedAccounts[index]
                                                     .style),
-                                        customerBalance: accountsController
-                                            .customersAccounts[index].balance
+                                        customerBalance: homeController
+                                            .pinnedAccounts[index].balance
                                             .toString(),
                                       );
                                     },
                                     separatorBuilder: (context, index) {
                                       return spacerHeight(height: 25);
                                     },
-                                    itemCount: accountsController
-                                            .customersAccounts.isEmpty
+                                    itemCount: homeController
+                                            .pinnedAccounts.isEmpty
                                         ? 0
-                                        : accountsController
-                                                    .customersAccounts.length <
+                                        : homeController.pinnedAccounts.length <
                                                 5
-                                            ? accountsController
-                                                .customersAccounts.length
+                                            ? homeController
+                                                .pinnedAccounts.length
                                             : 5,
                                   );
                           }),
