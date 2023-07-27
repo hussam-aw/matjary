@@ -36,6 +36,16 @@ class PaymentController extends GetxController {
     bankAccount = account;
     if (account != null) {
       bankController.value = TextEditingValue(text: account.name);
+    } else {
+      bankController.clear();
+    }
+  }
+
+  int? getBankAccountId() {
+    if (bankAccount != null) {
+      return bankAccount!.id;
+    } else {
+      return null;
     }
   }
 
@@ -43,6 +53,24 @@ class PaymentController extends GetxController {
     counterPartyAccount = account;
     if (account != null) {
       counterPartyController.value = TextEditingValue(text: account.name);
+    } else {
+      counterPartyController.clear();
+    }
+  }
+
+  int? getCounterPartyAccountId() {
+    if (counterPartyAccount != null) {
+      return counterPartyAccount!.id;
+    } else {
+      return null;
+    }
+  }
+
+  void setAmount(amount) {
+    if (amount.isNotEmpty) {
+      amountController.value = TextEditingValue(text: amount);
+    } else {
+      amountController.clear();
     }
   }
 
@@ -50,41 +78,84 @@ class PaymentController extends GetxController {
     return amountController.text.isEmpty ? 0 : num.parse(amountController.text);
   }
 
-  String getDateString(date) {
-    if (date.isEmpty) {
-      return DateFormatter.getCurrentDateString();
+  void setDate(date) {
+    if (date.isNotEmpty) {
+      dateController.value = TextEditingValue(text: date);
+    } else {
+      dateController.value =
+          TextEditingValue(text: DateFormatter.getCurrentDateString());
     }
-    return date;
   }
 
-  void setDate(date) {
-    dateController.value = TextEditingValue(text: getDateString(date));
+  String getDate() {
+    return dateController.text;
   }
 
   void setNotes(notes) {
-    notesController.value = TextEditingValue(text: notes);
+    if (notes.isNotEmpty) {
+      notesController.value = TextEditingValue(text: notes);
+    } else {
+      notesController.clear();
+    }
+  }
+
+  String getNotes() {
+    return notesController.text;
+  }
+
+  void setDefaultAccounts(bool clear) async {
+    if (!clear) {
+      Account? bank, counterParty;
+      int? bankId, counterPartyId;
+      counterPartyId = await boxClient.getCounterPartyAccount();
+      bankId = await boxClient.getBankAccount();
+      counterParty = accountsController.getAccountFromId(counterPartyId);
+      bank = accountsController.getAccountFromId(bankId);
+      if (counterParty == null && bank == null) {
+        counterParty = accountsController.accounts.isNotEmpty
+            ? accountsController.accounts[0]
+            : null;
+        bankAccount = accountsController.accounts.isNotEmpty
+            ? accountsController.bankAccounts[0]
+            : null;
+      }
+      setCounterPartyAccount(counterParty);
+      setBankAccount(bank);
+    } else {
+      setCounterPartyAccount(null);
+      setBankAccount(null);
+    }
+  }
+
+  void setDefaultFields({bool clear = false}) {
+    setPaymentType('مقبوضات');
+    setDefaultAccounts(clear);
+    setAmount('');
+    setDate('');
+    setNotes('');
   }
 
   Future<void> createPayment() async {
-    String bankId = bankAccount!.id.toString();
-    String counterPartyId = counterPartyAccount!.id.toString();
+    int? bankId = getBankAccountId();
+    int? counterPartyId = getCounterPartyAccountId();
     num amount = getAmount();
-    String date = dateController.text;
-    String notes = notesController.text;
-    if (bankId.isNotEmpty && counterPartyId.isNotEmpty && date.isNotEmpty) {
+    String date = getDate();
+    String notes = getNotes();
+    if (bankId != null && counterPartyId != null && date.isNotEmpty) {
+      setDefaultFields(clear: true);
       loading.value = true;
       var payment = await paymentsRepo.createPayment(
         paymentType,
-        counterPartyAccount!.id,
-        bankAccount!.id,
+        counterPartyId,
+        bankId,
         notes,
         amount,
         date,
       );
       loading.value = false;
       if (payment != null) {
-        boxClient.setCounterPartyAccount(counterPartyAccount!.id);
-        boxClient.setBankAccount(bankAccount!.id);
+        boxClient.setCounterPartyAccount(counterPartyId);
+        boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();
         SnackBars.showSuccess('تم انشاء القيد الدفعة');
       } else {
@@ -93,31 +164,6 @@ class PaymentController extends GetxController {
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
-  }
-
-  void setDefaultAccounts() async {
-    Account? bank, counterParty;
-    int? bankId, counterPartyId;
-    counterPartyId = await boxClient.getCounterPartyAccount();
-    bankId = await boxClient.getBankAccount();
-    counterParty = accountsController.getAccountFromId(counterPartyId);
-    bank = accountsController.getAccountFromId(bankId);
-    if (counterParty == null && bank == null) {
-      counterParty = accountsController.accounts.isNotEmpty
-          ? accountsController.accounts[0]
-          : null;
-      bankAccount = accountsController.accounts.isNotEmpty
-          ? accountsController.bankAccounts[0]
-          : null;
-    }
-    setCounterPartyAccount(counterParty);
-    setBankAccount(bank);
-  }
-
-  void setDefaultFields() {
-    setPaymentType('مقبوضات');
-    setDefaultAccounts();
-    setDate('');
   }
 
   @override

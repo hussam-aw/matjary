@@ -1,21 +1,33 @@
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class AccountScreenController extends GetxController {
-  bool creditor = false;
-  bool debtor = true;
+  List<String> accountTypes = [
+    'مدين',
+    'دائن',
+  ];
 
-  void setAccountType(type) {
-    if (type == 'مدين') {
-      creditor = false;
-      debtor = true;
-    } else {
-      creditor = true;
-      debtor = false;
-    }
+  Map<int, String> counterAccountTypes = {
+    0: 'مدين',
+    1: 'دائن',
+  };
+
+  RxMap<String, bool> accountTypesSelection = {
+    'مدين': true,
+    'دائن': false,
+  }.obs;
+
+  void resetAccountTypes() {
+    accountTypesSelection.value = {
+      'مدين': false,
+      'دائن': false,
+    };
   }
 
-  void changeAccountType(type) {
-    setAccountType(type);
-    update();
+  void setAccountType(type) {
+    if (type != null) {
+      resetAccountTypes();
+      accountTypesSelection[type] = true;
+    }
   }
 }

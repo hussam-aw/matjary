@@ -15,8 +15,8 @@ class WareRepo {
     return [];
   }
 
-  Future<Ware?> postWare(name, userId) async {
-    var data = await client.postWare(name, userId);
+  Future<Ware?> craeteWare(name) async {
+    var data = await client.craeteWare(name);
 
     if (data != null) {
       final parsed = json.decode(data);

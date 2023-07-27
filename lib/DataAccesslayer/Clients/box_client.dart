@@ -110,13 +110,25 @@ class BoxClient {
     } else {
       accounts = [accountId];
     }
+    await setPinnedAccountList(accounts);
+  }
+
+  Future<void> removeFromPinnedAccountList(int accountId) async {
+    var accounts = await getPinnedAccountsList();
+    if (accounts != null) {
+      accounts.remove(accountId);
+    }
+    await setPinnedAccountList(accounts);
+  }
+
+  Future<void> setPinnedAccountList(accountIdList) async {
     await box.remove('pinned_accounts');
-    await box.write('pinned_accounts', accounts);
+    await box.write('pinned_accounts', accountIdList);
   }
 
   Future<List<dynamic>?> getPinnedAccountsList() async {
     var accounts = await box.read('pinned_accounts');
-    if (accounts != null) {
+    if (accounts != null && accounts.isNotEmpty) {
       return accounts;
     }
     return null;

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:matjary/Constants/get_routes.dart';
+import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 
@@ -17,9 +18,12 @@ class AccountsController extends GetxController {
   List<Account> marketerAccounts = [];
   var isLoadingMarketerAccounts = false.obs;
   List<Account> customersAccounts = [];
+  var isLoadingPinnedAccounts = true.obs;
+  List<Account> pinnedAccounts = [];
   var isLoadingCashAmount = true.obs;
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
+  BoxClient boxClient = BoxClient();
 
   Map<String, String> counterAccountStyle = {
     'bank': 'الصناديق النقدية',
@@ -67,6 +71,17 @@ class AccountsController extends GetxController {
         .toList();
   }
 
+  Future<void> getPinnedAccounts() async {
+    isLoadingPinnedAccounts.value = true;
+    var accountIds = await boxClient.getPinnedAccountsList();
+    if (accountIds != null) {
+      pinnedAccounts = accountIds.map((id) => getAccountFromId(id)!).toList();
+    } else {
+      pinnedAccounts = customersAccounts;
+    }
+    isLoadingPinnedAccounts.value = false;
+  }
+
   void getAccountsBasedOnStyle(style) async {
     switch (style) {
       case 'bank':
@@ -107,6 +122,12 @@ class AccountsController extends GetxController {
     return accounts;
   }
 
+  Future<void> getCachAmount() async {
+    isLoadingCashAmount.value = true;
+    cashAmount.value = await accountsRepo.getCashAmount();
+    isLoadingCashAmount.value = false;
+  }
+
   Account? getAccountFromId(accountId) {
     var account =
         accounts.firstWhereOrNull((account) => account.id == accountId);
@@ -120,12 +141,6 @@ class AccountsController extends GetxController {
     return getAccountFromId(id) != null ? getAccountFromId(id)!.name : '';
   }
 
-  Future<void> getCachAmount() async {
-    isLoadingCashAmount.value = true;
-    cashAmount.value = await accountsRepo.getCashAmount();
-    isLoadingCashAmount.value = false;
-  }
-
   Future<dynamic> selectAccount(accountList) async {
     return await Get.toNamed(
       AppRoutes.chooseAccountScreen,
@@ -134,5 +149,9 @@ class AccountsController extends GetxController {
         'accounts': accountList,
       },
     );
+  }
+
+  bool checkIfAccountInAccountList(List<Account> accounts, int accountId) {
+    return accounts.map((account) => account.id).contains(accountId);
   }
 }

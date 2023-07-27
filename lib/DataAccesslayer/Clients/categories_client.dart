@@ -8,7 +8,7 @@ class CategoriesClient {
   Future<dynamic> getCategories() async {
     var response = await http
         .get(Uri.parse("$baseUrl$categoriesLink/${MyApp.appUser!.companyId}"));
-
+    print(response.body);
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -16,16 +16,17 @@ class CategoriesClient {
     }
   }
 
-  Future<dynamic> createCategory(name, userId, parentId) async {
+  Future<dynamic> createCategory(name, parentId) async {
     var response = await http.post(Uri.parse("$baseUrl$categoryLink"),
         body: jsonEncode(<String, dynamic>{
           "name": name,
-          "user_id": MyApp.appUser!.id,
           "parent_id": parentId,
+          "user_id": MyApp.appUser!.id,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
+    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -37,8 +38,9 @@ class CategoriesClient {
     var response = await http.post(Uri.parse('$baseUrl$categoryLink/$id'),
         body: jsonEncode(<String, dynamic>{
           "name": name,
-          "user_id": MyApp.appUser!.id,
           "parent_id": parentId,
+          "user_id": MyApp.appUser!.id,
+          "company_id": MyApp.appUser!.companyId,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

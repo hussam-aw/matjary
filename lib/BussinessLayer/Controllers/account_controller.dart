@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -9,20 +10,15 @@ import 'package:matjary/main.dart';
 class AccountController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController balanceController = TextEditingController();
-  String? type = 'مدين';
-  String? style = 'حساب عادي';
+  String? type;
+  String? style;
   TextEditingController emailController = TextEditingController();
   TextEditingController mobilePhoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   AccountsRepo accountsRepo = AccountsRepo();
   var loading = false.obs;
   AccountsController accountsController = Get.find<AccountsController>();
-
-  num getBalance() {
-    return balanceController.text.isEmpty
-        ? 0
-        : num.parse(balanceController.text);
-  }
+  BoxClient boxClient = BoxClient();
 
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
@@ -74,23 +70,117 @@ class AccountController extends GetxController {
     return '';
   }
 
+  void setAccountName(name) {
+    if (name.isNotEmpty) {
+      nameController.value = TextEditingValue(text: name);
+    } else {
+      nameController.clear();
+    }
+  }
+
+  String getAccountName() {
+    return nameController.text;
+  }
+
+  void setAccountBalance(balance) {
+    if (balance.isNotEmpty) {
+      balanceController = TextEditingController(text: balance);
+    } else {
+      balanceController.clear();
+    }
+  }
+
+  num getAccountBalance() {
+    return balanceController.text.isEmpty
+        ? 0
+        : num.parse(balanceController.text);
+  }
+
+  void setAccountType(accountType) {
+    type = accountType;
+  }
+
+  int getAccountType() {
+    return convertAccountTypeToNumber(type);
+  }
+
+  void setAccountStyle(accountStyle) {
+    style = accountStyle;
+  }
+
+  int getAccountStyle() {
+    return convertAccountStyleToNumber(style);
+  }
+
+  void setAccountEmail(email) {
+    if (email.isNotEmpty) {
+      emailController.value = TextEditingValue(text: email);
+    } else {
+      emailController.clear();
+    }
+  }
+
+  String getAccountEmail() {
+    return emailController.text;
+  }
+
+  void setAccountMobilePhone(mobilePhone) {
+    if (mobilePhone.isNotEmpty) {
+      mobilePhoneController.value = TextEditingValue(text: mobilePhone);
+    } else {
+      mobilePhoneController.clear();
+    }
+  }
+
+  String getAccountMobilePhone() {
+    return mobilePhoneController.text;
+  }
+
+  void setAccountAddress(address) {
+    if (address.isNotEmpty) {
+      addressController.value = TextEditingValue(text: address);
+    } else {
+      addressController.clear();
+    }
+  }
+
+  String getAccountAddress() {
+    return addressController.text;
+  }
+
+  void setAcountDetails(Account? account) {
+    if (account != null) {
+      setAccountName(account.name);
+      setAccountBalance(account.balance.toString());
+      setAccountType(convertAccountTypeToString(account.type));
+      setAccountStyle(convertAccountStyleToString(account.style));
+      setAccountEmail(account.email);
+      setAccountMobilePhone(account.mobileNumber);
+      setAccountAddress(account.address);
+    } else {
+      setAccountName('');
+      setAccountBalance('');
+      setAccountType('مدين');
+      setAccountStyle('حساب عادي');
+      setAccountEmail('');
+      setAccountMobilePhone('');
+      setAccountAddress('');
+    }
+  }
+
   Future<void> createAccount() async {
-    String name = nameController.text;
-    num balance = getBalance();
-    String email = emailController.text;
-    String mobileNumber = mobilePhoneController.text;
-    String address = addressController.text;
+    String name = getAccountName();
+    num balance = getAccountBalance();
+    int accounttype = getAccountType();
+    int accountStyle = getAccountStyle();
+    String email = getAccountEmail();
+    String mobileNumber = getAccountMobilePhone();
+    String address = getAccountAddress();
     if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+      setAcountDetails(null);
       loading.value = true;
-      var account = await accountsRepo.createAccount(
-          MyApp.appUser!.id,
-          name,
-          balance,
-          convertAccountTypeToNumber(type),
-          convertAccountStyleToNumber(style),
-          email,
-          address,
-          mobileNumber);
+      var account = await accountsRepo.createAccount(MyApp.appUser!.id, name,
+          balance, accounttype, accountStyle, email, address, mobileNumber);
       loading.value = false;
       if (account != null) {
         await accountsController.getAccounts();
@@ -103,32 +193,26 @@ class AccountController extends GetxController {
     }
   }
 
-  void setAcountDetails(Account? account) {
-    if (account != null) {
-      nameController = TextEditingController(text: account.name);
-      balanceController =
-          TextEditingController(text: account.balance.toString());
-      type = convertAccountTypeToString(account.type);
-      style = convertAccountStyleToString(account.style);
-      emailController = TextEditingController(text: account.email);
-
-      mobilePhoneController = TextEditingController(text: account.mobileNumber);
-      addressController = TextEditingController(text: account.address);
-    }
-  }
-
   Future<void> updateAccount(int id) async {
-    String name = nameController.text;
-    num balance = getBalance();
-    loading.value = true;
-    var account = await accountsRepo.updateAccount(id, name, balance,
-        convertAccountTypeToNumber(type), convertAccountStyleToNumber(style));
-    loading.value = false;
-    if (account != null) {
-      await accountsController.getAccounts();
-      SnackBars.showSuccess('تم التعديل بنجاح');
+    String name = getAccountName();
+    print(name);
+    num balance = getAccountBalance();
+    int accounttype = getAccountType();
+    print(convertAccountTypeToString(accounttype));
+    int accountStyle = getAccountStyle();
+    if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+      loading.value = true;
+      var account = await accountsRepo.updateAccount(
+          id, name, balance, accounttype, accountStyle);
+      loading.value = false;
+      if (account != null) {
+        await accountsController.getAccounts();
+        SnackBars.showSuccess('تم التعديل بنجاح');
+      } else {
+        SnackBars.showError('فشل التعديل');
+      }
     } else {
-      SnackBars.showError('فشل التعديل');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
@@ -138,9 +222,25 @@ class AccountController extends GetxController {
     loading.value = false;
     if (account != null) {
       await accountsController.getAccounts();
+      if (accountsController.checkIfAccountInAccountList(
+          accountsController.pinnedAccounts, account.id)) {
+        boxClient.removeFromPinnedAccountList(account.id);
+        await accountsController.getPinnedAccounts();
+      }
       SnackBars.showSuccess('تم الحذف بنجاح');
     } else {
       SnackBars.showError('فشل الحذف');
+    }
+  }
+
+  Future<void> pinAccountToHomeScreen(accountId) async {
+    if (!accountsController.checkIfAccountInAccountList(
+        accountsController.pinnedAccounts, accountId)) {
+      await boxClient.setAccountToPinnedAccountList(accountId);
+      await accountsController.getPinnedAccounts();
+      SnackBars.showSuccess('تم تثبيت الحساب في الشاشة الرئيسية');
+    } else {
+      SnackBars.showSuccess('الحساب مثبت بالفعل');
     }
   }
 }

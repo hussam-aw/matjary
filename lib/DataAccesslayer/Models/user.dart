@@ -26,7 +26,7 @@ class User {
     return <String, dynamic>{
       'id': id,
       'company_id': companyId,
-      'mobile_number': mobileNumber,
+      'phone': mobileNumber,
       'name': name,
       'email': email,
       'address': address,
@@ -40,7 +40,7 @@ class User {
     return User(
       id: map['user']['id']?.toInt() ?? 0,
       companyId: map['user']['company_id'] ?? 0,
-      mobileNumber: map['user']['mobile_number'] ?? '',
+      mobileNumber: map['user']['phone'] ?? '',
       name: map['user']['name'] ?? '',
       email: map['user']['email'] ?? '',
       address: map['user']['address'] ?? '',
@@ -54,7 +54,7 @@ class User {
     return User(
       id: map['id']?.toInt() ?? 0,
       companyId: map['company_id'],
-      mobileNumber: map['mobile_number'] ?? '',
+      mobileNumber: map['phone'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       address: map['address'] ?? '',

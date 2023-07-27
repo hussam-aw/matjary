@@ -64,7 +64,7 @@ class AccountsClient {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
+    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {
@@ -85,7 +85,7 @@ class AccountsClient {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
+    print(response.body);
     if (response.statusCode == 201) {
       return response.body;
     } else {

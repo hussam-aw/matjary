@@ -1,50 +1,70 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
-
 import '../../DataAccesslayer/Models/ware.dart';
 import '../../DataAccesslayer/Repositories/ware_repo.dart';
 import '../../PresentationLayer/Widgets/snackbars.dart';
-import '../../main.dart';
 
 class WareController extends GetxController {
-  TextEditingController nameOfWareController = TextEditingController();
+  TextEditingController wareNameController = TextEditingController();
   WareRepo wareRepo = WareRepo();
   List<Ware> wares = [];
   var loading = false.obs;
-  HomeController homeController = Get.find<HomeController>();
   WaresController waresController = Get.find<WaresController>();
 
-  void setWareDetails(Ware? ware) {
-    if (ware != null) {
-      nameOfWareController = TextEditingController(text: ware.name);
+  void setWareName(name) {
+    if (name.isNotEmpty) {
+      wareNameController.value = TextEditingValue(text: name);
+    } else {
+      wareNameController.clear();
     }
   }
 
-  Future<void> addWare() async {
-    loading.value = true;
-    Ware? ware = await wareRepo.postWare(
-        nameOfWareController.value.text, MyApp.appUser!.id);
-    loading.value = false;
+  String getWareName() {
+    return wareNameController.value.text;
+  }
 
-    if (ware == null) {
-      SnackBars.showSuccess('حدث خطأ أثناء الإضافة');
+  void setWareDetails(Ware? ware) {
+    if (ware != null) {
+      setWareName(ware.name);
     } else {
-      waresController.getWares();
-      SnackBars.showSuccess('تمت إضافة مستودع جديد');
+      setWareName('');
+    }
+  }
+
+  Future<void> craeteWare() async {
+    String wareName = getWareName();
+    if (wareName.isNotEmpty) {
+      setWareDetails(null);
+      loading.value = true;
+      Ware? ware = await wareRepo.craeteWare(wareName);
+      loading.value = false;
+      if (ware != null) {
+        waresController.getWares();
+        SnackBars.showSuccess('تمت إضافة مستودع جديد');
+      } else {
+        SnackBars.showError('حدث خطأ أثناء الإضافة');
+      }
+    } else {
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
   Future<void> updateWare(int id) async {
-    loading.value = true;
-    var account = await wareRepo.updateWare(id, nameOfWareController.text);
-    loading.value = false;
-    if (account != null) {
-      waresController.getWares();
-      SnackBars.showSuccess('تم التعديل بنجاح');
+    String wareName = getWareName();
+    if (wareName.isNotEmpty) {
+      setWareDetails(null);
+      loading.value = true;
+      var account = await wareRepo.updateWare(id, wareName);
+      loading.value = false;
+      if (account != null) {
+        waresController.getWares();
+        SnackBars.showSuccess('تم التعديل بنجاح');
+      } else {
+        SnackBars.showError('فشل التعديل');
+      }
     } else {
-      SnackBars.showError('فشل التعديل');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 

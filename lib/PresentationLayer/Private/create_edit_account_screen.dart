@@ -31,6 +31,10 @@ class CreateEditAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (account != null) {
+      accountScreenController.setAccountType(
+          accountController.convertAccountTypeToString(account!.type));
+    }
     accountController.setAcountDetails(account);
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -54,7 +58,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
-                              homeController
+                              accountController
                                   .pinAccountToHomeScreen(account!.id);
                             },
                             child: const Icon(
@@ -69,14 +73,21 @@ class CreateEditAccountScreen extends StatelessWidget {
                               Get.dialog(
                                 CustomDialog(
                                   title: 'هل تريد حذف الحساب؟',
-                                  buttonText: 'حذف',
-                                  confirmOnPressed: () async {
-                                    await accountController
-                                        .deleteAccount(account!.id);
-                                    Get.until((route) =>
-                                        route.settings.name ==
-                                        AppRoutes.chooseAccountScreen);
-                                  },
+                                  acceptButton: Obx(() {
+                                    return AcceptButton(
+                                      text: 'حذف',
+                                      backgroundColor: UIColors.red,
+                                      onPressed: () async {
+                                        await accountController
+                                            .deleteAccount(account!.id);
+                                        Get.until((route) =>
+                                            route.settings.name ==
+                                            AppRoutes.chooseAccountScreen);
+                                      },
+                                      isLoading:
+                                          accountController.loading.value,
+                                    );
+                                  }),
                                 ),
                               );
                             },
@@ -121,35 +132,46 @@ class CreateEditAccountScreen extends StatelessWidget {
                               spacerHeight(height: 20),
                               const SectionTitle(title: 'نمط الحساب'),
                               spacerHeight(),
-                              GetBuilder(
-                                init: accountScreenController,
-                                builder: (context) {
-                                  accountScreenController
-                                      .setAccountType(accountController.type);
+                              Obx(
+                                () {
                                   return CustomRadioGroup(
                                     items: [
                                       RadioButtonItem(
-                                          text: 'مدين',
-                                          isSelected:
-                                              accountScreenController.debtor,
+                                          text: accountScreenController
+                                              .accountTypes[0],
+                                          isSelected: accountScreenController
+                                                  .accountTypesSelection[
+                                              accountScreenController
+                                                  .accountTypes[0]]!,
                                           selectionColor: UIColors.white,
                                           selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
-                                            accountController.type = 'مدين';
                                             accountScreenController
-                                                .changeAccountType('مدين');
+                                                .setAccountType(
+                                                    accountScreenController
+                                                        .accountTypes[0]);
+                                            accountController.setAccountType(
+                                                accountScreenController
+                                                    .accountTypes[0]);
                                           }),
                                       RadioButtonItem(
-                                          text: 'دائن',
-                                          isSelected:
-                                              accountScreenController.creditor,
+                                          text: accountScreenController
+                                              .accountTypes[1],
+                                          isSelected: accountScreenController
+                                                  .accountTypesSelection[
+                                              accountScreenController
+                                                  .accountTypes[1]]!,
                                           selectionColor: UIColors.white,
                                           selectedTextColor: UIColors.menuTitle,
                                           onTap: () {
-                                            accountController.type = 'دائن';
                                             accountScreenController
-                                                .changeAccountType('دائن');
-                                          })
+                                                .setAccountType(
+                                                    accountScreenController
+                                                        .accountTypes[1]);
+                                            accountController.setAccountType(
+                                                accountScreenController
+                                                    .accountTypes[1]);
+                                          }),
                                     ],
                                   );
                                 },

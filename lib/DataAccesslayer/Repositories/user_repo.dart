@@ -28,7 +28,7 @@ class UserRepo {
         await client.updateUserInfo(userName, mobilePhone, password, avatar);
     if (response != null) {
       final parsed = json.decode(response);
-      return User.fromMap(parsed);
+      return User.fromMapWithToken(parsed);
     }
     return null;
   }

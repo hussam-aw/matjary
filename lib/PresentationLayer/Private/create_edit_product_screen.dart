@@ -61,14 +61,19 @@ class CreateEditProductScreen extends StatelessWidget {
                           Get.dialog(
                             CustomDialog(
                               title: 'هل تريد حذف المنتج؟',
-                              buttonText: 'حذف',
-                              confirmOnPressed: () async {
-                                await productController
-                                    .deleteProduct(product!.id);
-                                Get.until((route) =>
-                                    route.settings.name ==
-                                    AppRoutes.chooseProductScreen);
-                              },
+                              acceptButton: Obx(
+                                () => AcceptButton(
+                                  text: 'حذف',
+                                  onPressed: () async {
+                                    await productController
+                                        .deleteProduct(product!.id);
+                                    Get.until((route) =>
+                                        route.settings.name ==
+                                        AppRoutes.chooseProductScreen);
+                                  },
+                                  isLoading: productController.loading.value,
+                                ),
+                              ),
                             ),
                           );
                         },
@@ -124,8 +129,7 @@ class CreateEditProductScreen extends StatelessWidget {
                             ),
                             spacerHeight(),
                             CustomTextFormField(
-                              controller:
-                                  productController.initialPriceController,
+                              controller: productController.priceController,
                               keyboardType: TextInputType.number,
                               hintText: 'مبلغ الكلفة الحالي (الافتراضي 0)',
                               formatters: [
@@ -345,8 +349,8 @@ class CreateEditProductScreen extends StatelessWidget {
                   () => AcceptButton(
                     text: product != null ? "تعديل" : "إنشاء",
                     onPressed: () {
-                      productController
-                          .setImages(productScreenController.selectedImages);
+                      productController.setProductImages(
+                          productScreenController.selectedImages);
                       if (product != null) {
                         productController.updateProduct(product!.id);
                       } else {

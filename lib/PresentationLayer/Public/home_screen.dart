@@ -317,7 +317,8 @@ class HomeScreen extends StatelessWidget {
                         spacerHeight(height: 20),
                         Expanded(
                           child: Obx(() {
-                            return homeController.isLoading.value
+                            return accountsController
+                                    .isLoadingPinnedAccounts.value
                                 ? ListView.separated(
                                     itemBuilder: (context, index) {
                                       return const CustomerListTileShimmer();
@@ -333,20 +334,20 @@ class HomeScreen extends StatelessWidget {
                                           Get.toNamed(
                                             AppRoutes
                                                 .accountStatementTypeScreen,
-                                            arguments: homeController
+                                            arguments: accountsController
                                                 .pinnedAccounts[index],
                                           );
                                         },
-                                        customerName: homeController
+                                        customerName: accountsController
                                             .pinnedAccounts[index].name,
                                         customerImage:
                                             'assets/new_icons/client_ph.png',
                                         customerStatus: accountController
                                             .convertAccountStyleToString(
-                                                homeController
+                                                accountsController
                                                     .pinnedAccounts[index]
                                                     .style),
-                                        customerBalance: homeController
+                                        customerBalance: accountsController
                                             .pinnedAccounts[index].balance
                                             .toString(),
                                       );
@@ -354,12 +355,13 @@ class HomeScreen extends StatelessWidget {
                                     separatorBuilder: (context, index) {
                                       return spacerHeight(height: 25);
                                     },
-                                    itemCount: homeController
+                                    itemCount: accountsController
                                             .pinnedAccounts.isEmpty
                                         ? 0
-                                        : homeController.pinnedAccounts.length <
+                                        : accountsController
+                                                    .pinnedAccounts.length <
                                                 5
-                                            ? homeController
+                                            ? accountsController
                                                 .pinnedAccounts.length
                                             : 5,
                                   );

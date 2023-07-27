@@ -4,7 +4,6 @@ import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Repositories/categories_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
-import 'package:matjary/main.dart';
 
 class CategoryController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -14,16 +13,16 @@ class CategoryController extends GetxController {
   CategoriesController categoriesController = Get.find<CategoriesController>();
   var loading = false.obs;
 
-  void setCategoryDetails(Category? category) {
-    if (category != null) {
-      setCategoryName(category.name);
-      setParentCategory(
-          categoriesController.getCategoryFromId(category.parentId));
+  void setCategoryName(categoryName) {
+    if (categoryName.isNotEmpty) {
+      nameController.value = TextEditingValue(text: categoryName);
+    } else {
+      nameController.clear();
     }
   }
 
-  void setCategoryName(categoryName) {
-    nameController.value = TextEditingValue(text: categoryName);
+  String getCategoryName() {
+    return nameController.text;
   }
 
   void setParentCategory(category) {
@@ -31,33 +30,58 @@ class CategoryController extends GetxController {
       parentId = category.id;
       parentCategoryController.value = TextEditingValue(
           text: categoriesController.getCategoryName(parentId));
+    } else {
+      parentId = null;
+      parentCategoryController.clear();
+    }
+  }
+
+  void setCategoryDetails(Category? category) {
+    if (category != null) {
+      setCategoryName(category.name);
+      setParentCategory(
+          categoriesController.getCategoryFromId(category.parentId));
+    } else {
+      setCategoryName('');
+      setParentCategory(null);
     }
   }
 
   Future<void> createCategory() async {
-    loading.value = true;
-    var category = await categoriesRepo.createCategory(
-        nameController.text, MyApp.appUser!.id, parentId);
-    loading.value = false;
+    String categoryName = getCategoryName();
+    if (categoryName.isNotEmpty) {
+      setCategoryDetails(null);
+      loading.value = true;
+      var category =
+          await categoriesRepo.createCategory(categoryName, parentId);
+      loading.value = false;
 
-    if (category == null) {
-      SnackBars.showWarning('حدث خطأ أثناء الإضافة');
+      if (category == null) {
+        SnackBars.showWarning('حدث خطأ أثناء الإضافة');
+      } else {
+        categoriesController.getCategories();
+        SnackBars.showSuccess('تمت إضافة فئة جديدة');
+      }
     } else {
-      categoriesController.getCategories();
-      SnackBars.showSuccess('تمت إضافة فئة جديدة');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
   Future<void> updateCategory(int id) async {
-    loading.value = true;
-    var category =
-        await categoriesRepo.updateCategory(id, nameController.text, parentId);
-    loading.value = false;
-    if (category != null) {
-      categoriesController.getCategories();
-      SnackBars.showSuccess('تم التعديل بنجاح');
+    String categoryName = getCategoryName();
+    if (categoryName.isNotEmpty) {
+      loading.value = true;
+      var category =
+          await categoriesRepo.updateCategory(id, categoryName, parentId);
+      loading.value = false;
+      if (category != null) {
+        categoriesController.getCategories();
+        SnackBars.showSuccess('تم التعديل بنجاح');
+      } else {
+        SnackBars.showError('فشل التعديل');
+      }
     } else {
-      SnackBars.showError('فشل التعديل');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 

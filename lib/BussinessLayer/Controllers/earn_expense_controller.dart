@@ -31,7 +31,23 @@ class EarnExpenseController extends GetxController {
   }
 
   void setStatementText(statementText) {
-    statementTextController.value = TextEditingValue(text: statementText);
+    if (statementText.isNotEmpty) {
+      statementTextController.value = TextEditingValue(text: statementText);
+    } else {
+      statementTextController.clear();
+    }
+  }
+
+  String getStatementText() {
+    return statementTextController.text;
+  }
+
+  void setAmount(amount) {
+    if (amount.isNotEmpty) {
+      amountController.value = TextEditingValue(text: amount);
+    } else {
+      amountController.clear();
+    }
   }
 
   num getAmount() {
@@ -42,6 +58,16 @@ class EarnExpenseController extends GetxController {
     bankAccount = account;
     if (account != null) {
       bankController.value = TextEditingValue(text: account.name);
+    } else {
+      bankController.clear();
+    }
+  }
+
+  int? getBankAccountId() {
+    if (bankAccount != null) {
+      return bankAccount!.id;
+    } else {
+      return null;
     }
   }
 
@@ -53,26 +79,61 @@ class EarnExpenseController extends GetxController {
   }
 
   void setDate(date) {
-    dateController.value = TextEditingValue(text: getDateString(date));
+    if (date.isNotEmpty) {
+      dateController.value = TextEditingValue(text: date);
+    } else {
+      dateController.value =
+          TextEditingValue(text: DateFormatter.getCurrentDateString());
+    }
   }
 
-  Future<void> createStatementBasesOnType() async {
-    String statementText = statementTextController.text;
+  String getDate() {
+    return dateController.text;
+  }
+
+  void setDefaultAccounts(clear) async {
+    if (!clear) {
+      Account? bank;
+      int? bankId;
+      bankId = await boxClient.getBankAccount();
+      bank = accountsController.getAccountFromId(bankId);
+      if (bank == null) {
+        bankAccount = accountsController.accounts.isNotEmpty
+            ? accountsController.bankAccounts[0]
+            : null;
+      }
+      setBankAccount(bank);
+    } else {
+      setBankAccount(null);
+    }
+  }
+
+  void setDefaultFields({bool clear = false}) {
+    setStatementType('إيرادات');
+    setStatementText('');
+    setAmount('');
+    setDefaultAccounts(clear);
+    setDate('');
+  }
+
+  Future<void> createStatementBasedOnType() async {
+    String statementText = getStatementText();
     num amount = getAmount();
-    String bankId = bankAccount!.id.toString();
-    String date = dateController.text;
-    if (bankId.isNotEmpty && date.isNotEmpty) {
+    int? bankId = getBankAccountId();
+    String date = getDate();
+    if (bankId != null && date.isNotEmpty) {
+      setDefaultFields(clear: true);
       loading.value = true;
       var statement = await earnsExpensesRepo.createStatementBsedOnType(
         statementType,
         statementText,
         amount,
-        bankAccount!.id,
+        bankId,
         date,
       );
       loading.value = false;
       if (statement != null) {
-        boxClient.setBankAccount(bankAccount!.id);
+        boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();
         SnackBars.showSuccess('تم انشاء القيد');
       } else {
@@ -81,25 +142,6 @@ class EarnExpenseController extends GetxController {
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
-  }
-
-  void setDefaultAccounts() async {
-    Account? bank;
-    int? bankId;
-    bankId = await boxClient.getBankAccount();
-    bank = accountsController.getAccountFromId(bankId);
-    if (bank == null) {
-      bankAccount = accountsController.accounts.isNotEmpty
-          ? accountsController.bankAccounts[0]
-          : null;
-    }
-    setBankAccount(bank);
-  }
-
-  void setDefaultFields() {
-    setStatementType('إيرادات');
-    setDefaultAccounts();
-    setDate('');
   }
 
   @override

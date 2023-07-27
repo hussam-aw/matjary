@@ -194,8 +194,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                   await showDatePicker(
                                       context: context,
                                       initialDate: DateTime.parse(
-                                          paymentController
-                                              .dateController.text),
+                                          paymentController.getDate()),
                                       firstDate: DateTime(1900),
                                       lastDate: DateTime(2100)));
                             },

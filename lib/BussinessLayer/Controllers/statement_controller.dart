@@ -29,6 +29,19 @@ class StatementController extends GetxController {
     if (account != null) {
       fromAccountName.value = account.name;
       fromAccountController.value = TextEditingValue(text: account.name);
+      setStatementText(fromAccountName.value);
+    } else {
+      fromAccountName.value = '';
+      fromAccountController.clear();
+      statementTextController.clear();
+    }
+  }
+
+  int? getFromAccountId() {
+    if (fromAccount != null) {
+      return fromAccount!.id;
+    } else {
+      return null;
     }
   }
 
@@ -37,75 +50,114 @@ class StatementController extends GetxController {
     if (account != null) {
       toAccountName.value = account.name;
       toAccountController.value = TextEditingValue(text: account.name);
+    } else {
+      toAccountName.value = '';
+      toAccountController.clear();
+    }
+  }
+
+  int? getToAccountOd() {
+    if (toAccount != null) {
+      return toAccount!.id;
+    } else {
+      return null;
     }
   }
 
   void setAmount(amount) {
-    statementAmount.value = amount;
+    if (amount.isNotEmpty) {
+      statementAmount.value = amount;
+    } else {
+      statementAmount.value = '';
+      amountController.clear();
+    }
   }
 
   num getAmount() {
     return amountController.text.isEmpty ? 0 : num.parse(amountController.text);
   }
 
-  String getDateString(date) {
-    if (date.isEmpty) {
-      return DateFormatter.getCurrentDateString();
+  void setDate(date) {
+    if (date.isNotEmpty) {
+      dateController.value = TextEditingValue(text: date);
+    } else {
+      dateController.value =
+          TextEditingValue(text: DateFormatter.getCurrentDateString());
     }
-    return date;
   }
 
-  void setDate(date) {
-    dateController.value = TextEditingValue(text: getDateString(date));
+  String getDate() {
+    return dateController.text;
   }
 
   void setStatementText(accountName) {
-    statementTextController.value =
-        TextEditingValue(text: 'تسجيل دفعة نقدية من الزبون $accountName');
+    if (accountName.isNotEmpty) {
+      statementTextController.value =
+          TextEditingValue(text: 'تسجيل دفعة نقدية من الزبون $accountName');
+    } else {
+      statementTextController.clear();
+    }
   }
 
-  void setDefaultAccounts() async {
-    Account? from, to;
-    int? fromId, toId;
-    fromId = await boxClient.getFirstSideAccount();
-    toId = await boxClient.getSecondSideAccount();
-    from = accountController.getAccountFromId(fromId);
-    to = accountController.getAccountFromId(toId);
-    if (from == null && to == null) {
-      from = accountController.accounts.isNotEmpty
-          ? accountController.accounts[0]
-          : null;
-      to = accountController.accounts.isNotEmpty
-          ? accountController.accounts[1]
-          : null;
+  String getStatementText() {
+    return statementTextController.text;
+  }
+
+  void setDefaultAccounts(clear) async {
+    if (!clear) {
+      Account? from, to;
+      int? fromId, toId;
+      fromId = await boxClient.getFirstSideAccount();
+      toId = await boxClient.getSecondSideAccount();
+      from = accountController.getAccountFromId(fromId);
+      to = accountController.getAccountFromId(toId);
+      if (from == null && to == null) {
+        from = accountController.accounts.isNotEmpty
+            ? accountController.accounts[0]
+            : null;
+        to = accountController.accounts.isNotEmpty
+            ? accountController.accounts[1]
+            : null;
+      }
+      setFromAccount(from);
+      setToAccount(to);
+      if (from != null) setStatementText(from.name);
+    } else {
+      setFromAccount(null);
+      setToAccount(null);
     }
-    setFromAccount(from);
-    setToAccount(to);
-    if (from != null) setStatementText(from.name);
+  }
+
+  void setDefaultFields({bool clear = false}) {
+    setDefaultAccounts(clear);
+    setAmount('');
+    setDate('');
+    setStatementText('');
   }
 
   Future<void> createStatement() async {
-    String fromId = fromAccount!.id.toString();
-    String toId = toAccount!.id.toString();
+    int? fromId = getFromAccountId();
+    int? toId = getToAccountOd();
     num amount = getAmount();
-    String date = dateController.text;
-    String statementText = statementTextController.text;
-    if (fromId.isNotEmpty &&
-        toId.isNotEmpty &&
+    String date = getDate();
+    String statementText = getStatementText();
+    if (fromId != null &&
+        toId != null &&
         date.isNotEmpty &&
         statementText.isNotEmpty) {
+      setDefaultFields(clear: true);
       loading.value = true;
       var statement = await statementRepo.createStatement(
-        fromAccount!.id,
-        toAccount!.id,
+        fromId,
+        toId,
         statementText,
         amount,
         date,
       );
       loading.value = false;
       if (statement != null) {
-        boxClient.setFirstSideAccount(fromAccount!.id);
-        boxClient.setSecondSideAccount(toAccount!.id);
+        boxClient.setFirstSideAccount(fromId);
+        boxClient.setSecondSideAccount(toId);
         await accountsController.getAccounts();
         SnackBars.showSuccess('تم انشاء القيد المحاسبي');
       } else {
@@ -114,12 +166,6 @@ class StatementController extends GetxController {
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
-  }
-
-  void setDefaultFields() {
-    setDefaultAccounts();
-    //setAmount('0');
-    setDate('');
   }
 
   @override
