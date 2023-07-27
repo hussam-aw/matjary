@@ -15,7 +15,7 @@ class PdfController extends GetxController {
       SnackBars.showSuccess('تم الحفظ بنجاح');
       await shareHelper.shareFile(savedFile.path);
     } else {
-      SnackBars.showWarning('لم يتم حفظ الملف');
+      SnackBars.showWarning('لم يتم حفظ الملف ,يرجى منح صلاحية الكتابة');
     }
   }
 
