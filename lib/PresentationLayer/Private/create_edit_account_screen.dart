@@ -7,6 +7,7 @@ import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
@@ -36,6 +37,7 @@ class CreateEditAccountScreen extends StatelessWidget {
           accountController.convertAccountTypeToString(account!.type));
     }
     accountController.setAcountDetails(account);
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -50,8 +52,8 @@ class CreateEditAccountScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: const PageTitle(title: 'إنشاء | تعديل حساب'),
+                    const Expanded(
+                      child: PageTitle(title: 'إنشاء | تعديل حساب'),
                     ),
                     if (account != null)
                       Row(
@@ -227,11 +229,18 @@ class CreateEditAccountScreen extends StatelessWidget {
                 Obx(
                   () => AcceptButton(
                     text: account != null ? "تعديل" : "إنشاء",
-                    onPressed: () {
+                    onPressed: () async {
                       if (account != null) {
-                        accountController.updateAccount(account!.id);
+                        await accountController.updateAccount(account!.id);
                       } else {
-                        accountController.createAccount();
+                        await accountController.createAccount();
+                        if (accountController.savingState) {
+                          Get.dialog(
+                            const SuccessSavingOptionsMenu(
+                              createButtonText: 'إنشاء حساب جديد',
+                            ),
+                          );
+                        }
                       }
                     },
                     isLoading: accountController.loading.value,

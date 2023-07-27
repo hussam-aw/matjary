@@ -16,9 +16,10 @@ class AccountController extends GetxController {
   TextEditingController mobilePhoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   AccountsRepo accountsRepo = AccountsRepo();
-  var loading = false.obs;
   AccountsController accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
+  var loading = false.obs;
+  var savingState = false;
 
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
@@ -169,6 +170,7 @@ class AccountController extends GetxController {
   }
 
   Future<void> createAccount() async {
+    savingState = false;
     String name = getAccountName();
     num balance = getAccountBalance();
     int accounttype = getAccountType();
@@ -184,6 +186,7 @@ class AccountController extends GetxController {
       loading.value = false;
       if (account != null) {
         await accountsController.getAccounts();
+        savingState = true;
         SnackBars.showSuccess('تم انشاء الحساب');
       } else {
         SnackBars.showError('فشل انشاء الحساب');

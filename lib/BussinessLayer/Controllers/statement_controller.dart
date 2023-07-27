@@ -23,6 +23,7 @@ class StatementController extends GetxController {
   var accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
+  var savingState = false;
 
   void setFromAccount(Account? account) {
     fromAccount = account;
@@ -136,6 +137,7 @@ class StatementController extends GetxController {
   }
 
   Future<void> createStatement() async {
+    savingState = false;
     int? fromId = getFromAccountId();
     int? toId = getToAccountOd();
     num amount = getAmount();
@@ -159,6 +161,7 @@ class StatementController extends GetxController {
         boxClient.setFirstSideAccount(fromId);
         boxClient.setSecondSideAccount(toId);
         await accountsController.getAccounts();
+        savingState = true;
         SnackBars.showSuccess('تم انشاء القيد المحاسبي');
       } else {
         SnackBars.showError('فشل انشاء القيد المحاسبي');

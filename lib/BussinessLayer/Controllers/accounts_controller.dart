@@ -141,11 +141,12 @@ class AccountsController extends GetxController {
     return getAccountFromId(id) != null ? getAccountFromId(id)!.name : '';
   }
 
-  Future<dynamic> selectAccount(accountList) async {
+  Future<dynamic> selectAccount(accountList, style) async {
     return await Get.toNamed(
       AppRoutes.chooseAccountScreen,
       arguments: {
         'mode': 'selection',
+        'style': style,
         'accounts': accountList,
       },
     );

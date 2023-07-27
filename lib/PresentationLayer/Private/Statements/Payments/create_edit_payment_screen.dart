@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_screen_controller.dart';
-import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -120,14 +120,11 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                 color: UIColors.mainIcon,
                               ),
                               onPressed: () async {
-                                var account = await Get.toNamed(
-                                    AppRoutes.chooseAccountScreen,
-                                    arguments: {
-                                      'mode': 'selection',
-                                      'style': 'bank',
-                                      'accounts':
-                                          accountsController.bankAccounts
-                                    });
+                                var account =
+                                    await accountsController.selectAccount(
+                                  accountsController.bankAccounts,
+                                  'bank',
+                                );
                                 paymentController.setBankAccount(account);
                               },
                             ),
@@ -153,14 +150,12 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                 color: UIColors.mainIcon,
                               ),
                               onPressed: () async {
-                                var account = await Get.toNamed(
-                                    AppRoutes.chooseAccountScreen,
-                                    arguments: {
-                                      'mode': 'selection',
-                                      'style': 'customers',
-                                      'accounts':
-                                          accountsController.customersAccounts
-                                    });
+                                var account =
+                                    await accountsController.selectAccount(
+                                  accountsController.customersAccounts,
+                                  'customers',
+                                );
+
                                 paymentController
                                     .setCounterPartyAccount(account);
                               },
@@ -220,8 +215,15 @@ class CreateEditPaymentScreen extends StatelessWidget {
                 Obx(() {
                   return AcceptButton(
                     text: 'حفظ',
-                    onPressed: () {
-                      paymentController.createPayment();
+                    onPressed: () async {
+                      await paymentController.createPayment();
+                      if (paymentController.savingState) {
+                        Get.dialog(
+                          const SuccessSavingOptionsMenu(
+                            createButtonText: 'إنشاء دفعة جديدة',
+                          ),
+                        );
+                      }
                     },
                     isLoading: paymentController.loading.value,
                   );

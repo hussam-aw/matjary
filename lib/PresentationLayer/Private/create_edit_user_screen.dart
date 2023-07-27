@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/user_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/user_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -133,8 +134,14 @@ class CreateEditUserScreen extends StatelessWidget {
                   () {
                     return AcceptButton(
                       text: 'حفظ',
-                      onPressed: () {
-                        userController.createUser();
+                      onPressed: () async {
+                        await userController.createUser();
+                        if (userController.savingState) {
+                          Get.dialog(
+                            const SuccessSavingOptionsMenu(
+                                createButtonText: 'إنشاء مستخدم جديد'),
+                          );
+                        }
                       },
                       isLoading: userController.isLoading.value,
                     );

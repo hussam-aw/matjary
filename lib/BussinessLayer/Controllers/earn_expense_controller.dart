@@ -18,6 +18,7 @@ class EarnExpenseController extends GetxController {
   EarnsExpensesRepo earnsExpensesRepo = EarnsExpensesRepo();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
+  var savingState = false;
 
   Map<String, String> counterStatementTypes = {
     'إيرادات': 'revenues',
@@ -117,6 +118,7 @@ class EarnExpenseController extends GetxController {
   }
 
   Future<void> createStatementBasedOnType() async {
+    savingState = false;
     String statementText = getStatementText();
     num amount = getAmount();
     int? bankId = getBankAccountId();
@@ -135,6 +137,7 @@ class EarnExpenseController extends GetxController {
       if (statement != null) {
         boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();
+        savingState = true;
         SnackBars.showSuccess('تم انشاء القيد');
       } else {
         SnackBars.showError('فشل انشاء الدفعة');

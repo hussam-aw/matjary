@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/earn_expense_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/earn_expense_screen_controller.dart';
-import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -133,14 +133,11 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                                 color: UIColors.mainIcon,
                               ),
                               onPressed: () async {
-                                var account = await Get.toNamed(
-                                    AppRoutes.chooseAccountScreen,
-                                    arguments: {
-                                      'mode': 'selection',
-                                      'style': 'bank',
-                                      'accounts':
-                                          accountsController.bankAccounts
-                                    });
+                                var account =
+                                    await accountsController.selectAccount(
+                                  accountsController.bankAccounts,
+                                  'bank',
+                                );
                                 earnExpenseController.setBankAccount(account);
                               },
                             ),
@@ -179,8 +176,14 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                 Obx(() {
                   return AcceptButton(
                     text: 'حفظ',
-                    onPressed: () {
-                      earnExpenseController.createStatementBasedOnType();
+                    onPressed: () async {
+                      await earnExpenseController.createStatementBasedOnType();
+                      if (earnExpenseController.savingState) {
+                        Get.dialog(
+                          const SuccessSavingOptionsMenu(
+                              createButtonText: 'إنشاء ايراد أو مصروف جديد'),
+                        );
+                      }
                     },
                     isLoading: earnExpenseController.loading.value,
                   );

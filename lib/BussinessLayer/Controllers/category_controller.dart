@@ -12,6 +12,7 @@ class CategoryController extends GetxController {
   CategoriesRepo categoriesRepo = CategoriesRepo();
   CategoriesController categoriesController = Get.find<CategoriesController>();
   var loading = false.obs;
+  var savingState = false;
 
   void setCategoryName(categoryName) {
     if (categoryName.isNotEmpty) {
@@ -48,6 +49,7 @@ class CategoryController extends GetxController {
   }
 
   Future<void> createCategory() async {
+    savingState = false;
     String categoryName = getCategoryName();
     if (categoryName.isNotEmpty) {
       setCategoryDetails(null);
@@ -55,11 +57,11 @@ class CategoryController extends GetxController {
       var category =
           await categoriesRepo.createCategory(categoryName, parentId);
       loading.value = false;
-
       if (category == null) {
         SnackBars.showWarning('حدث خطأ أثناء الإضافة');
       } else {
         categoriesController.getCategories();
+        savingState = true;
         SnackBars.showSuccess('تمت إضافة فئة جديدة');
       }
     } else {

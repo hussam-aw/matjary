@@ -15,6 +15,7 @@ class UserController extends GetxController {
   final usersController = Get.find<UsersController>();
   UserRepo userRepo = UserRepo();
   var isLoading = false.obs;
+  var savingState = false;
 
   Map<String, int> counterUserTypes = {
     'مسؤول': 0,
@@ -83,6 +84,7 @@ class UserController extends GetxController {
   }
 
   Future<void> createUser() async {
+    savingState = false;
     String userName = getUserName();
     String mobilePhone = getMobilePhone();
     String password = getPassword();
@@ -99,6 +101,7 @@ class UserController extends GetxController {
       isLoading.value = false;
       if (user != null) {
         usersController.getUsers();
+        savingState = true;
         SnackBars.showSuccess('تم انشاء المستخدم');
       } else {
         SnackBars.showError('فشل انشاء المستخدم');

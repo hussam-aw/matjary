@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/category_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
@@ -123,11 +124,18 @@ class CreateEditCategoryScreen extends StatelessWidget {
                 () {
                   return AcceptButton(
                     text: category != null ? 'تعديل' : 'إنشاء',
-                    onPressed: () {
+                    onPressed: () async {
                       if (category != null) {
-                        categoryController.updateCategory(category!.id);
+                        await categoryController.updateCategory(category!.id);
                       } else {
-                        categoryController.createCategory();
+                        await categoryController.createCategory();
+                        if (categoryController.savingState) {
+                          Get.dialog(
+                            const SuccessSavingOptionsMenu(
+                              createButtonText: 'إنشاء تصنيف جديد',
+                            ),
+                          );
+                        }
                       }
                     },
                     isLoading: categoryController.loading.value,

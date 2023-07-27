@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
@@ -99,11 +100,17 @@ class CreateEditWareScreen extends StatelessWidget {
                 Obx(() {
                   return AcceptButton(
                     text: ware != null ? "تعديل" : "إنشاء",
-                    onPressed: () {
+                    onPressed: () async {
                       if (ware != null) {
                         wareController.updateWare(ware!.id);
                       } else {
-                        wareController.craeteWare();
+                        await wareController.craeteWare();
+                        if (wareController.savingState) {
+                          Get.dialog(
+                            const SuccessSavingOptionsMenu(
+                                createButtonText: 'إنشاء مستودع جديد'),
+                          );
+                        }
                       }
                     },
                     isLoading: wareController.loading.value,

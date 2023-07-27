@@ -69,8 +69,8 @@ class CreateBottomSheet extends StatelessWidget {
                   ),
                   CreateMenuItem(
                     onTap: () async {
-                      var account = await accountsController
-                          .selectAccount(accountsController.accounts);
+                      var account = await accountsController.selectAccount(
+                          accountsController.accounts, '');
                       Get.toNamed(
                         AppRoutes.accountStatementTypeScreen,
                         arguments: account,

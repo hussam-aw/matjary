@@ -9,8 +9,9 @@ class WareController extends GetxController {
   TextEditingController wareNameController = TextEditingController();
   WareRepo wareRepo = WareRepo();
   List<Ware> wares = [];
-  var loading = false.obs;
   WaresController waresController = Get.find<WaresController>();
+  var loading = false.obs;
+  var savingState = false;
 
   void setWareName(name) {
     if (name.isNotEmpty) {
@@ -33,6 +34,7 @@ class WareController extends GetxController {
   }
 
   Future<void> craeteWare() async {
+    savingState = false;
     String wareName = getWareName();
     if (wareName.isNotEmpty) {
       setWareDetails(null);
@@ -41,6 +43,7 @@ class WareController extends GetxController {
       loading.value = false;
       if (ware != null) {
         waresController.getWares();
+        savingState = true;
         SnackBars.showSuccess('تمت إضافة مستودع جديد');
       } else {
         SnackBars.showError('حدث خطأ أثناء الإضافة');

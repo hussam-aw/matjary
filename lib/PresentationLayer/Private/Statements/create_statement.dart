@@ -6,9 +6,9 @@ import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/statement_screen_controller.dart';
-import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -101,16 +101,9 @@ class CreateStatementScreen extends StatelessWidget {
                                   color: UIColors.mainIcon,
                                 ),
                                 onPressed: () async {
-                                  // Get.dialog(
-                                  //   productSelectionDialog("from"),
-                                  // );
-                                  var account = await Get.toNamed(
-                                      AppRoutes.chooseAccountScreen,
-                                      arguments: {
-                                        'mode': 'selection',
-                                        'accounts': accountsController.accounts
-                                      });
-
+                                  var account =
+                                      await accountsController.selectAccount(
+                                          accountsController.accounts, '');
                                   statementController.setFromAccount(account);
                                 },
                               ),
@@ -136,15 +129,9 @@ class CreateStatementScreen extends StatelessWidget {
                                   color: UIColors.mainIcon,
                                 ),
                                 onPressed: () async {
-                                  // Get.dialog(
-                                  //   productSelectionDialog("to"),
-                                  // );
-                                  var account = await Get.toNamed(
-                                      AppRoutes.chooseAccountScreen,
-                                      arguments: {
-                                        'mode': 'selection',
-                                        'accounts': accountsController.accounts
-                                      });
+                                  var account =
+                                      await accountsController.selectAccount(
+                                          accountsController.accounts, '');
                                   statementController.setToAccount(account);
                                 },
                               ),
@@ -238,8 +225,14 @@ class CreateStatementScreen extends StatelessWidget {
                 Obx(() {
                   return AcceptButton(
                     text: 'إنشاء',
-                    onPressed: () {
-                      statementController.createStatement();
+                    onPressed: () async {
+                      await statementController.createStatement();
+                      if (statementController.savingState) {
+                        Get.dialog(
+                          const SuccessSavingOptionsMenu(
+                              createButtonText: 'إنشاء قيد جديد'),
+                        );
+                      }
                     },
                     isLoading: statementController.loading.value,
                   );

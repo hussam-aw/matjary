@@ -23,6 +23,7 @@ class ProductController extends GetxController {
   var categoriesController = Get.find<CategoriesController>();
   ProductsController productsController = Get.find<ProductsController>();
   var loading = false.obs;
+  var savingState = false;
 
   String convertToCounterAffectedExchangeState(String state) {
     if (state == "0") {
@@ -175,6 +176,7 @@ class ProductController extends GetxController {
   }
 
   Future<void> createProduct() async {
+    savingState = false;
     String name = getProductName();
     int? categoryId = getCategoryId();
     num price = getProductPrice();
@@ -202,6 +204,7 @@ class ProductController extends GetxController {
       loading.value = false;
       if (product != null) {
         productsController.getProducts();
+        savingState = true;
         SnackBars.showSuccess('تم انشاء المنتج');
       } else {
         SnackBars.showError('فشل انشاء المنتج');

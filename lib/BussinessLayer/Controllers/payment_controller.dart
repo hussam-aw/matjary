@@ -20,6 +20,7 @@ class PaymentController extends GetxController {
   AccountsController accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
+  var savingState = false;
 
   Map<String, String> counterPaymentTypes = {
     'مقبوضات': 'income',
@@ -136,6 +137,7 @@ class PaymentController extends GetxController {
   }
 
   Future<void> createPayment() async {
+    savingState = false;
     int? bankId = getBankAccountId();
     int? counterPartyId = getCounterPartyAccountId();
     num amount = getAmount();
@@ -157,6 +159,7 @@ class PaymentController extends GetxController {
         boxClient.setCounterPartyAccount(counterPartyId);
         boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();
+        savingState = true;
         SnackBars.showSuccess('تم انشاء القيد الدفعة');
       } else {
         SnackBars.showError('فشل انشاء الدفعة');

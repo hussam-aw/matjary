@@ -94,8 +94,9 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             CreateMenuItem(
                               onTap: () async {
-                                var account = await accountsController
-                                    .selectAccount(accountsController.accounts);
+                                var account =
+                                    await accountsController.selectAccount(
+                                        accountsController.accounts, '');
                                 if (account != null) {
                                   Get.toNamed(
                                     AppRoutes.accountStatementTypeScreen,

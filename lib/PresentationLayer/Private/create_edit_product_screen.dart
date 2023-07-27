@@ -12,6 +12,7 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -348,13 +349,19 @@ class CreateEditProductScreen extends StatelessWidget {
                 Obx(
                   () => AcceptButton(
                     text: product != null ? "تعديل" : "إنشاء",
-                    onPressed: () {
+                    onPressed: () async {
                       productController.setProductImages(
                           productScreenController.selectedImages);
                       if (product != null) {
-                        productController.updateProduct(product!.id);
+                        await productController.updateProduct(product!.id);
                       } else {
-                        productController.createProduct();
+                        await productController.createProduct();
+                        if (productController.savingState) {
+                          Get.dialog(
+                            const SuccessSavingOptionsMenu(
+                                createButtonText: 'إنشاء منتج جديد'),
+                          );
+                        }
                       }
                     },
                     isLoading: productController.loading.value,
