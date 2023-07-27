@@ -8,9 +8,6 @@ import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/store_settings_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/users_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
-import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
-import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class HomeController extends GetxController {
   //AccountsRepo accountsRepo = AccountsRepo();
@@ -46,9 +43,8 @@ class HomeController extends GetxController {
   UsersController usersController = Get.put(UsersController());
   StoreSettingsController storeSettingsController =
       Get.put(StoreSettingsController());
-  BoxClient boxClient = BoxClient();
-  List<Account> pinnedAccounts = [];
-  var isLoading = true.obs;
+
+  // var isLoading = true.obs;
   // Future<void> getAccounts() async {
   //   isLoadingAccounts.value = true;
   //   accounts = await accountsRepo.getAccounts();
@@ -108,25 +104,6 @@ class HomeController extends GetxController {
   //   isLoadingCategories.value = false;
   // }
 
-  Future<void> pinAccountToHomeScreen(accountId) async {
-    await boxClient.setAccountToPinnedAccountList(accountId);
-    await getPinnedAccounts();
-    SnackBars.showSuccess('تم تثبيت الحساب في الشاشة الرئيسية');
-  }
-
-  Future<void> getPinnedAccounts() async {
-    isLoading.value = true;
-    var accountIds = await boxClient.getPinnedAccountsList();
-    if (accountIds != null) {
-      pinnedAccounts = accountIds
-          .map((id) => accountsController.getAccountFromId(id)!)
-          .toList();
-    } else {
-      pinnedAccounts = accountsController.customersAccounts;
-    }
-    isLoading.value = false;
-  }
-
   void fetchData() async {
     //isLoading.value = true;
     await accountsController.getAccounts();
@@ -134,7 +111,7 @@ class HomeController extends GetxController {
     await ordersController.getOrders();
     ordersController.getPurchasesOrders();
     ordersController.getSalesOrders();
-    await getPinnedAccounts();
+    await accountsController.getPinnedAccounts();
     productsController.getProducts();
     categoriesController.getCategories();
     paymentsController.getPayments();

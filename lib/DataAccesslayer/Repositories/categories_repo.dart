@@ -14,8 +14,8 @@ class CategoriesRepo {
     return [];
   }
 
-  Future<Category?> createCategory(name, userId, parentId) async {
-    var data = await client.createCategory(name, userId, parentId);
+  Future<Category?> createCategory(name, parentId) async {
+    var data = await client.createCategory(name, parentId);
     if (data != null) {
       final parsed = json.decode(data);
       return Category.fromMap(parsed);

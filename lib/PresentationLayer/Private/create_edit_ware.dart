@@ -11,7 +11,6 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
-
 import '../../BussinessLayer/Controllers/ware_controller.dart';
 
 class CreateEditWareScreen extends StatelessWidget {
@@ -35,8 +34,8 @@ class CreateEditWareScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: const PageTitle(title: 'إنشاء | تعديل مستودع'),
+                    const Expanded(
+                      child: PageTitle(title: 'إنشاء | تعديل مستودع'),
                     ),
                     if (ware != null)
                       InkWell(
@@ -44,13 +43,19 @@ class CreateEditWareScreen extends StatelessWidget {
                           Get.dialog(
                             CustomDialog(
                               title: 'هل تريد حذف المستودع؟',
-                              buttonText: 'حذف',
-                              confirmOnPressed: () async {
-                                await wareController.deleteWare(ware!.id);
-                                Get.until((route) =>
-                                    route.settings.name ==
-                                    AppRoutes.chooseWareScreen);
-                              },
+                              acceptButton: Obx(() {
+                                return AcceptButton(
+                                  text: 'حذف',
+                                  backgroundColor: UIColors.red,
+                                  onPressed: () async {
+                                    await wareController.deleteWare(ware!.id);
+                                    Get.until((route) =>
+                                        route.settings.name ==
+                                        AppRoutes.chooseWareScreen);
+                                  },
+                                  isLoading: wareController.loading.value,
+                                );
+                              }),
                             ),
                           );
                         },
@@ -73,7 +78,7 @@ class CreateEditWareScreen extends StatelessWidget {
                           const SectionTitle(title: 'المعلومات الأساسية'),
                           spacerHeight(),
                           CustomTextFormField(
-                            controller: wareController.nameOfWareController,
+                            controller: wareController.wareNameController,
                             hintText: 'اسم المستودع',
                           ),
                           spacerHeight(),
@@ -98,7 +103,7 @@ class CreateEditWareScreen extends StatelessWidget {
                       if (ware != null) {
                         wareController.updateWare(ware!.id);
                       } else {
-                        wareController.addWare();
+                        wareController.craeteWare();
                       }
                     },
                     isLoading: wareController.loading.value,

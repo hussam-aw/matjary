@@ -48,14 +48,19 @@ class CreateEditCategoryScreen extends StatelessWidget {
                         Get.dialog(
                           CustomDialog(
                             title: 'هل تريد حذف التصنيف؟',
-                            buttonText: 'حذف',
-                            confirmOnPressed: () async {
-                              await categoryController
-                                  .deleteCategory(category!.id);
-                              Get.until((route) =>
-                                  route.settings.name ==
-                                  AppRoutes.chooseCategoryScreen);
-                            },
+                            acceptButton: Obx(
+                              () => AcceptButton(
+                                text: 'حذف',
+                                onPressed: () async {
+                                  await categoryController
+                                      .deleteCategory(category!.id);
+                                  Get.until((route) =>
+                                      route.settings.name ==
+                                      AppRoutes.chooseCategoryScreen);
+                                },
+                                isLoading: categoryController.loading.value,
+                              ),
+                            ),
                           ),
                         );
                       },

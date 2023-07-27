@@ -180,7 +180,7 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                   return AcceptButton(
                     text: 'حفظ',
                     onPressed: () {
-                      earnExpenseController.createStatementBasesOnType();
+                      earnExpenseController.createStatementBasedOnType();
                     },
                     isLoading: earnExpenseController.loading.value,
                   );

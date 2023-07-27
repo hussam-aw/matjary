@@ -111,8 +111,7 @@ class CreateStatementScreen extends StatelessWidget {
                                         'accounts': accountsController.accounts
                                       });
 
-                                  statementScreenController
-                                      .setAccountBasedOnType(account, 'from');
+                                  statementController.setFromAccount(account);
                                 },
                               ),
                             ],
@@ -146,8 +145,7 @@ class CreateStatementScreen extends StatelessWidget {
                                         'mode': 'selection',
                                         'accounts': accountsController.accounts
                                       });
-                                  statementScreenController
-                                      .setAccountBasedOnType(account, 'to');
+                                  statementController.setToAccount(account);
                                 },
                               ),
                             ],

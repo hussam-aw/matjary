@@ -6,26 +6,27 @@ import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 
 // ignore: must_be_immutable
 class AcceptButton extends StatelessWidget {
-  AcceptButton(
-      {super.key,
-      required this.text,
-      this.style = acceptButtonStyle,
-      this.backgroundColor = UIColors.continueButtonBackgroud,
-      this.textStyle = UITextStyle.boldMeduim,
-      required this.onPressed,
-      this.isLoading = false});
+  AcceptButton({
+    super.key,
+    required this.text,
+    this.style = acceptButtonStyle,
+    this.backgroundColor = UIColors.continueButtonBackgroud,
+    this.textStyle = UITextStyle.boldMeduim,
+    required this.onPressed,
+    this.isLoading = false,
+  });
 
   final String text;
   final ButtonStyle style;
   final Color backgroundColor;
   final TextStyle textStyle;
-  final Function() onPressed;
+  final Function()? onPressed;
   bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? () {} : onPressed,
         style: style.copyWith(
           backgroundColor: MaterialStatePropertyAll<Color>(backgroundColor),
         ),

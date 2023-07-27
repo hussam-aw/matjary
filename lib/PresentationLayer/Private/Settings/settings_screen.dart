@@ -8,6 +8,7 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/custom_box.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_bottom_sheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -61,7 +62,7 @@ class SettingsScreen extends StatelessWidget {
                           subTitle:
                               'تعيين اسم المتجر لاستخدماه في التقارير ( طباعة الفواتير - كشوفات الحسابات )',
                           onTap: () {
-                            buildBottomSheet(
+                            buildCustomBottomSheet(
                               Column(
                                 children: [
                                   Expanded(
@@ -143,19 +144,4 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void buildBottomSheet(Widget w) {
-  Get.bottomSheet(Directionality(
-    textDirection: TextDirection.rtl,
-    child: Container(
-      height: Get.width * .5,
-      padding: const EdgeInsets.all(25),
-      decoration: const BoxDecoration(
-        borderRadius: raduis32top,
-        color: UIColors.white,
-      ),
-      child: w,
-    ),
-  ));
 }

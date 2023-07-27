@@ -5,8 +5,8 @@ import '../../Constants/api_links.dart';
 
 class WareClient {
   Future<dynamic> getWares() async {
-    var response =
-        await http.get(Uri.parse("$baseUrl$waresLink/${MyApp.appUser!.id}"));
+    var response = await http
+        .get(Uri.parse("$baseUrl$waresLink/${MyApp.appUser!.companyId}"));
 
     if (response.statusCode == 200) {
       return response.body;
@@ -15,12 +15,13 @@ class WareClient {
     }
   }
 
-  Future<dynamic> postWare(name, userId) async {
+  Future<dynamic> craeteWare(name) async {
     var response = await http.post(Uri.parse("$baseUrl$wareLink"),
         //var response = await http.post(Uri.parse("http://matjary2.brain.sy/api/v1/ware"),
         body: jsonEncode(<String, dynamic>{
           "name": name,
           "user_id": MyApp.appUser!.id,
+          "company_id": MyApp.appUser!.companyId,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -37,6 +38,7 @@ class WareClient {
         body: jsonEncode(<String, dynamic>{
           "name": name,
           "user_id": MyApp.appUser!.id,
+          "company_id": MyApp.appUser!.companyId,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

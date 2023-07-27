@@ -24,6 +24,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    profileController.setUserDetails(MyApp.appUser);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(

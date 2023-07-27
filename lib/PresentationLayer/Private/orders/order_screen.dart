@@ -12,6 +12,7 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_amount_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/Order/order_info_item.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
@@ -70,13 +71,19 @@ class OrderScreen extends StatelessWidget {
                             Get.dialog(
                               CustomDialog(
                                 title: 'هل تريد حذف الفاتورة؟',
-                                buttonText: 'حذف',
-                                confirmOnPressed: () async {
-                                  await orderController.deleteOrder(order.id);
-                                  Get.until((route) =>
-                                      route.settings.name ==
-                                      AppRoutes.ordersScreen);
-                                },
+                                acceptButton: Obx(
+                                  () => AcceptButton(
+                                    text: 'حذف',
+                                    onPressed: () async {
+                                      await orderController
+                                          .deleteOrder(order.id);
+                                      Get.until((route) =>
+                                          route.settings.name ==
+                                          AppRoutes.ordersScreen);
+                                    },
+                                    isLoading: orderController.loading.value,
+                                  ),
+                                ),
                               ),
                             );
                           },
