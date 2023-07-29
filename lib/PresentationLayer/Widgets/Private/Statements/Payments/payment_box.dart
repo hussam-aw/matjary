@@ -53,6 +53,15 @@ class PaymentBox extends StatelessWidget {
                     softWrap: true,
                     //overflow: TextOverflow.ellipsis,
                   ),
+                  spacerHeight(height: 12),
+                  Text(
+                    payment.statement.isNotEmpty
+                        ? payment.statement
+                        : "لا يوجد بيان",
+                    style: UITextStyle.normalSmall,
+                    softWrap: true,
+                    //overflow: TextOverflow.ellipsis,
+                  ),
                   spacerHeight(height: 8),
                   Text(
                     payment.getDateString(payment.date),

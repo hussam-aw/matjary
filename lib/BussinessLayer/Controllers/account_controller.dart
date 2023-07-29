@@ -20,7 +20,7 @@ class AccountController extends GetxController {
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
   var savingState = false;
-
+  bool accountStyleForInformation = false;
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
       return 0;
@@ -44,7 +44,7 @@ class AccountController extends GetxController {
       return 1;
     } else if (style == 'زبون') {
       return 2;
-    } else if (style == 'مزود') {
+    } else if (style == 'مورد') {
       return 3;
     } else if (style == 'جهة عمل') {
       return 4;
@@ -52,6 +52,23 @@ class AccountController extends GetxController {
       return 10;
     }
     return 5;
+  }
+
+  bool checkAccountStyleForInformation(style) {
+    switch (style) {
+      case 'حساب عادي':
+        return false;
+      case 'صندوق':
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  void changeAccountStyle(style) {
+    style = style;
+    accountStyleForInformation = checkAccountStyleForInformation(style);
+    update();
   }
 
   String convertAccountStyleToString(int style) {
@@ -62,7 +79,7 @@ class AccountController extends GetxController {
     } else if (style == 2) {
       return 'زبون';
     } else if (style == 3) {
-      return 'مزود';
+      return 'مورد';
     } else if (style == 4) {
       return 'جهة عمل';
     } else if (style == 10) {
@@ -179,7 +196,6 @@ class AccountController extends GetxController {
     String mobileNumber = getAccountMobilePhone();
     String address = getAccountAddress();
     if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
-      setAcountDetails(null);
       loading.value = true;
       var account = await accountsRepo.createAccount(MyApp.appUser!.id, name,
           balance, accounttype, accountStyle, email, address, mobileNumber);
@@ -187,6 +203,7 @@ class AccountController extends GetxController {
       if (account != null) {
         await accountsController.getAccounts();
         savingState = true;
+        setAcountDetails(null);
         SnackBars.showSuccess('تم انشاء الحساب');
       } else {
         SnackBars.showError('فشل انشاء الحساب');
@@ -243,7 +260,14 @@ class AccountController extends GetxController {
       await accountsController.getPinnedAccounts();
       SnackBars.showSuccess('تم تثبيت الحساب في الشاشة الرئيسية');
     } else {
-      SnackBars.showSuccess('الحساب مثبت بالفعل');
+      await boxClient.removeFromPinnedAccountList(accountId);
+      await accountsController.getPinnedAccounts();
+      SnackBars.showSuccess('تم إلغاءالتثبيت');
     }
+  }
+
+  bool checkAccountIsPinned(accountId) {
+    return accountsController.checkIfAccountInAccountList(
+        accountsController.pinnedAccounts, accountId);
   }
 }

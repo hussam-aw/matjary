@@ -34,8 +34,12 @@ final textFieldStyle = InputDecoration(
   fillColor: UIColors.textFieldBackground,
   //contentPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
   border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(15),
-  ),
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(color: UIColors.white)),
+  focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: const BorderSide(color: UIColors.white)),
+
   errorBorder: OutlineInputBorder(
     borderSide: const BorderSide(
       width: 1,

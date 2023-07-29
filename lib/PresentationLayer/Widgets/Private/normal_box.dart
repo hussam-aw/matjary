@@ -21,6 +21,7 @@ class NormalBox extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       onLongPress: onLongTap,
+      
       child: Container(
         //height: 55,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),

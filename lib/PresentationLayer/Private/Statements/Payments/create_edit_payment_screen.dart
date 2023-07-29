@@ -101,7 +101,28 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                 ],
                               );
                             }),
-                        spacerHeight(height: 30),
+                        const SectionTitle(title: 'البيان'),
+                        spacerHeight(),
+                        CustomTextFormField(
+                          controller: paymentController.notesController,
+                          maxLines: 5,
+                          hintText:
+                              'ملاحظة عن الدفعة (مثال : دفعة على الحساب الجاري)',
+                        ),
+                        spacerHeight(),
+                        const SectionTitle(title: 'مبلغ الدفعة'),
+                        spacerHeight(),
+                        CustomTextFormField(
+                          controller: paymentController.amountController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
+                          hintText: 'المبلغ ',
+                          formatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d{0,2}'))
+                          ],
+                        ),
+                        spacerHeight(),
                         const SectionTitle(title: 'إختر الصندوق'),
                         spacerHeight(),
                         Row(
@@ -130,7 +151,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        spacerHeight(height: 30),
+                        spacerHeight(),
                         const SectionTitle(title: 'الطرف المقابل'),
                         spacerHeight(),
                         Row(
@@ -162,20 +183,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        spacerHeight(height: 30),
-                        const SectionTitle(title: 'مبلغ الدفعة'),
                         spacerHeight(),
-                        CustomTextFormField(
-                          controller: paymentController.amountController,
-                          keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true, signed: false),
-                          hintText: 'المبلغ الابتدائي 0',
-                          formatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d{0,2}'))
-                          ],
-                        ),
-                        spacerHeight(height: 30),
                         const SectionTitle(title: 'تاريخ الدفعة'),
                         spacerHeight(),
                         CustomTextFormField(
@@ -200,13 +208,6 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           ),
                         ),
                         spacerHeight(height: 20),
-                        const SectionTitle(title: 'ملاحظات'),
-                        spacerHeight(),
-                        CustomTextFormField(
-                          controller: paymentController.notesController,
-                          maxLines: 5,
-                          hintText: 'أدخل الملاحظات (اختياري)',
-                        ),
                       ],
                     ),
                   ),

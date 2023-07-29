@@ -143,8 +143,10 @@ class PaymentController extends GetxController {
     num amount = getAmount();
     String date = getDate();
     String notes = getNotes();
-    if (bankId != null && counterPartyId != null && date.isNotEmpty) {
-      setDefaultFields(clear: true);
+    if (bankId != null &&
+        counterPartyId != null &&
+        date.isNotEmpty &&
+        notes.isNotEmpty) {
       loading.value = true;
       var payment = await paymentsRepo.createPayment(
         paymentType,
@@ -156,6 +158,7 @@ class PaymentController extends GetxController {
       );
       loading.value = false;
       if (payment != null) {
+        setDefaultFields(clear: true);
         boxClient.setCounterPartyAccount(counterPartyId);
         boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();

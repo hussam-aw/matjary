@@ -4,6 +4,7 @@ import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+
 import '../../../Constants/get_routes.dart';
 
 class AccountOptionsMenu extends StatelessWidget {
@@ -13,7 +14,8 @@ class AccountOptionsMenu extends StatelessWidget {
   final Account account;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
+    
     return Column(
       children: [
         Expanded(
@@ -46,7 +48,9 @@ class AccountOptionsMenu extends StatelessWidget {
           child: InkWell(
             onTap: () => accountController.pinAccountToHomeScreen(account.id),
             child: Text(
-              'تثبيت في الشاشة الرئيسية',
+              accountController.checkAccountIsPinned(account.id)
+                  ? 'إلغاء التثبيت في الشاشة الرئيسية'
+                  : 'تثبيت في الشاشة الرئيسية',
               style: UITextStyle.normalHeading.copyWith(
                 color: UIColors.menuTitle,
               ),

@@ -35,6 +35,8 @@ class CreateEditAccountScreen extends StatelessWidget {
     if (account != null) {
       accountScreenController.setAccountType(
           accountController.convertAccountTypeToString(account!.type));
+    } else {
+      accountController.changeAccountStyle("حساب عادي");
     }
     accountController.setAcountDetails(account);
 
@@ -125,7 +127,8 @@ class CreateEditAccountScreen extends StatelessWidget {
                               CustomTextFormField(
                                 controller: accountController.balanceController,
                                 keyboardType: TextInputType.number,
-                                hintText: 'مبلغ الكلفة الحالي (الافتراضي 0)',
+                                hintText:
+                                    'رصيد الحساب الإبتدائي ( الافتراضي 0 ) ',
                                 formatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'^\d+\.?\d{0,2}'))
@@ -187,37 +190,44 @@ class CreateEditAccountScreen extends StatelessWidget {
                                   'حساب عادي',
                                   'صندوق',
                                   'زبون',
-                                  'مزود',
+                                  'مورد',
                                   'جهة عمل',
                                   'مسوق'
                                 ],
                                 onChanged: (value) {
-                                  accountController.style = value;
+                                  accountController.changeAccountStyle(value);
                                 },
                               ),
                               spacerHeight(),
-                              CustomTextFormField(
-                                controller: accountController.emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                hintText: 'البريد الالكتروني',
-                              ),
-                              spacerHeight(),
-                              CustomTextFormField(
-                                controller:
-                                    accountController.mobilePhoneController,
-                                keyboardType: TextInputType.number,
-                                hintText: 'الرقم',
-                                formatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'^\d+\.?\d{0,2}'))
-                                ],
-                              ),
-                              spacerHeight(),
-                              CustomTextFormField(
-                                controller: accountController.addressController,
-                                keyboardType: TextInputType.streetAddress,
-                                hintText: 'العنوان',
-                              ),
+                              if (accountController.accountStyleForInformation)
+                                Column(
+                                  children: [
+                                    CustomTextFormField(
+                                      controller:
+                                          accountController.emailController,
+                                      keyboardType: TextInputType.emailAddress,
+                                      hintText: 'البريد الالكتروني',
+                                    ),
+                                    spacerHeight(),
+                                    CustomTextFormField(
+                                      controller: accountController
+                                          .mobilePhoneController,
+                                      keyboardType: TextInputType.number,
+                                      hintText: 'الرقم',
+                                      formatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d+\.?\d{0,2}'))
+                                      ],
+                                    ),
+                                    spacerHeight(),
+                                    CustomTextFormField(
+                                      controller:
+                                          accountController.addressController,
+                                      keyboardType: TextInputType.streetAddress,
+                                      hintText: 'العنوان',
+                                    ),
+                                  ],
+                                )
                             ],
                           ),
                         ),
