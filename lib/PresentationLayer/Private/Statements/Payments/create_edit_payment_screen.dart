@@ -101,6 +101,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                 ],
                               );
                             }),
+                        spacerHeight(),
                         const SectionTitle(title: 'البيان'),
                         spacerHeight(),
                         CustomTextFormField(
@@ -116,7 +117,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                           controller: paymentController.amountController,
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true, signed: false),
-                          hintText: 'المبلغ ',
+                          hintText: 'المبلغ (الافتراضي 0)',
                           formatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,2}'))
