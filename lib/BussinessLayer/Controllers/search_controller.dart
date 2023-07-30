@@ -6,12 +6,16 @@ class ListSearchController extends GetxController {
   String searchText = "";
   var searchLoading = false.obs;
 
-  void search() async {
-    if (searchText.isNotEmpty) {
+  void setSearchList(searchList) {
+    list = searchList;
+  }
+
+  void search(text) async {
+    searchText = text;
+    if (text.isNotEmpty) {
       searchLoading.value = true;
       filteredList = list
-          .where((item) =>
-              item.name.toLowerCase().contains(searchText.toLowerCase()))
+          .where((item) => item.name.toLowerCase().contains(text.toLowerCase()))
           .toList();
 
       searchLoading.value = false;
@@ -20,7 +24,6 @@ class ListSearchController extends GetxController {
     }
     update();
   }
-
 
   @override
   void onClose() {
