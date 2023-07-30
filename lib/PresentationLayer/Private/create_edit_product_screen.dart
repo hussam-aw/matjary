@@ -53,8 +53,8 @@ class CreateEditProductScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: const PageTitle(title: 'إنشاء | تعديل منتج'),
+                    const Expanded(
+                      child: PageTitle(title: 'إنشاء | تعديل منتج'),
                     ),
                     if (product != null)
                       InkWell(

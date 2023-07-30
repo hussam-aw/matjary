@@ -168,7 +168,7 @@ class OrderScreen extends StatelessWidget {
                                         itemTitle: 'مرتبطة بالمسوق',
                                         itemText: order.marketerId != null
                                             ? accountsController.getAccountName(
-                                                order.marketerId)
+                                                order.marketerId!)
                                             : '---------',
                                       ),
                                     ],
@@ -206,11 +206,11 @@ class OrderScreen extends StatelessWidget {
                                 arguments: order);
                           },
                           backgroundColor: UIColors.primary,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text(
                                   'تفاصيل الفاتورة (البنود)',
                                   style: UITextStyle.normalBody,

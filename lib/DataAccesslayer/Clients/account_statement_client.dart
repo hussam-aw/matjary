@@ -17,7 +17,7 @@ class AccountStatementClient {
             headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-    print(response.body);
+
     if (response.statusCode == 200) {
       return response.body;
     } else {

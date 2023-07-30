@@ -159,6 +159,7 @@ class OrderController extends GetxController {
   void convertExpensesToDouble(String orderExpenses) {
     expenses.value =
         orderExpenses.isNotEmpty ? double.parse(orderExpenses) : 0.0;
+    print(expenses.value);
   }
 
   void calculateDiscountBasedOnType() {

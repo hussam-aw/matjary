@@ -167,9 +167,4 @@ class OrdersController extends GetxController {
       getOrdersByType('الكل');
     }
   }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 }

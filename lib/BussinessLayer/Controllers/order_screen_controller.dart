@@ -1,3 +1,4 @@
+// ignore_for_file: invalid_use_of_protected_member
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class OrderScreenController extends GetxController {
   TextEditingController productQuantityController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   RxList<Product> selectedProducts = <Product>[].obs;
-  int? selectedProductId = null;
+  int? selectedProductId;
   //HomeController homeController = Get.find<HomeController>();
   ProductsController productsController = Get.find<ProductsController>();
   OrderController orderController = Get.find<OrderController>();
@@ -379,7 +380,6 @@ class OrderScreenController extends GetxController {
   }
 
   void selectDate(date) async {
-    print(date);
     if (date != null) {
       //orderController.setDate(date.toString().substring(0, 10));
       orderController.setDate(DateFormatter.getFormated(date));

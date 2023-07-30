@@ -9,24 +9,25 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
 class UpdateOrderProductBottomSheet extends StatelessWidget {
-  UpdateOrderProductBottomSheet(
-      {super.key,
-      required this.productId,
-      this.currentQuantity,
-      this.currentPrice});
+  UpdateOrderProductBottomSheet({
+    super.key,
+    required this.productId,
+    this.currentQuantity,
+    this.currentPrice,
+  });
 
   final orderScreenController = Get.find<OrderScreenController>();
 
   final int productId;
-  final currentQuantity;
-  final currentPrice;
+  final int? currentQuantity;
+  final num? currentPrice;
 
   @override
   Widget build(BuildContext context) {
     orderScreenController.productQuantityController.text =
         currentQuantity != null ? currentQuantity.toString() : '';
     orderScreenController.productPriceController.text =
-        currentPrice != null ? currentPrice.toStringAsFixed(2) : '';
+        currentPrice != null ? currentPrice!.toStringAsFixed(2) : '';
     return Container(
       height: Get.width * .6,
       decoration: const BoxDecoration(

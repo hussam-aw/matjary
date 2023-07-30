@@ -40,8 +40,8 @@ class CreateEditCategoryScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: const PageTitle(title: 'إنشاء | تعديل تصنيف بضاعة'),
+                  const Expanded(
+                    child: PageTitle(title: 'إنشاء | تعديل تصنيف بضاعة'),
                   ),
                   if (category != null)
                     InkWell(

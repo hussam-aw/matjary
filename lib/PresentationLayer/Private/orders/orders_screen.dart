@@ -1,3 +1,4 @@
+// ignore_for_file: invalid_use_of_protected_member
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
@@ -53,7 +54,7 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = accountsController.accounts;
+    searchController.setSearchList(accountsController.accounts);
     ordersController.setDefaultOrders(orderFilterType);
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -119,8 +120,7 @@ class OrdersScreen extends StatelessWidget {
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
                   onChanged: (value) {
-                    searchController.searchText = value;
-                    searchController.search();
+                    searchController.search(value);
                   },
                 ),
                 spacerHeight(height: 22),

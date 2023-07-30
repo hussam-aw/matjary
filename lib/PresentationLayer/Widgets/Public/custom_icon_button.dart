@@ -24,7 +24,7 @@ class CustomIconButton extends StatelessWidget {
       decoration: circleShape
           ? ShapeDecoration(
               color: backgroundColor,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             )
           : BoxDecoration(
               color: backgroundColor,

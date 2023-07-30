@@ -38,7 +38,6 @@ class AccountStatementScreenController extends GetxController {
   }
 
   void selectFromDate(date) async {
-    print(date);
     if (date != null) {
       accountStatementController.setFromDate(DateFormatter.getFormated(date));
     } else {
@@ -47,7 +46,6 @@ class AccountStatementScreenController extends GetxController {
   }
 
   void selectToDate(date) async {
-    print(date);
     if (date != null) {
       accountStatementController.setToDate(DateFormatter.getFormated(date));
     } else {

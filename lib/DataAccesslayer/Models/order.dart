@@ -17,7 +17,7 @@ class Order {
   final num? expenses;
   final num? discount;
   final String discountType;
-  final int marketerId;
+  final int? marketerId;
   final String marketerFeeType;
   final num? marketerFee;
   final List<OrderProduct> details;

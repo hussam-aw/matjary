@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:matjary/BussinessLayer/Controllers/users_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/user.dart';
 import 'package:matjary/DataAccesslayer/Repositories/user_repo.dart';
@@ -89,7 +88,6 @@ class UserController extends GetxController {
     String mobilePhone = getMobilePhone();
     String password = getPassword();
     if (userName.isNotEmpty && mobilePhone.isNotEmpty && password.isNotEmpty) {
-      setUserDetails(null);
       isLoading.value = true;
       var user = await userRepo.createUser(
         userType,
@@ -102,6 +100,7 @@ class UserController extends GetxController {
       if (user != null) {
         usersController.getUsers();
         savingState = true;
+        setUserDetails(null);
         SnackBars.showSuccess('تم انشاء المستخدم');
       } else {
         SnackBars.showError('فشل انشاء المستخدم');

@@ -8,9 +8,4 @@ class StoreSettingsScreenController extends GetxController {
   void getSelectedStoreImage() async {
     selectedStoreIcon.value = await imagePickerHelper.pickImage();
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

@@ -70,7 +70,6 @@ class AccountsRepo {
 
   Future<Account?> deleteAccount(id) async {
     var deletedAccount = await client.deleteAccount(id);
-    print(deletedAccount);
     if (deletedAccount != null) {
       return Account.fromMap(jsonDecode(deletedAccount));
     }

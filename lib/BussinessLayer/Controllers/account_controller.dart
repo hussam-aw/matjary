@@ -215,10 +215,8 @@ class AccountController extends GetxController {
 
   Future<void> updateAccount(int id) async {
     String name = getAccountName();
-    print(name);
     num balance = getAccountBalance();
     int accounttype = getAccountType();
-    print(convertAccountTypeToString(accounttype));
     int accountStyle = getAccountStyle();
     if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
       loading.value = true;
