@@ -63,8 +63,7 @@ class ChooseAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = accounts;
-
+    searchController.setSearchList(accounts);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: WillPopScope(
@@ -89,8 +88,7 @@ class ChooseAccountScreen extends StatelessWidget {
                   SearchTextField(
                     hintText: 'قم بالبحث عن اسم الحساب أو اختر من القائمة',
                     onChanged: (value) {
-                      searchController.searchText = value;
-                      searchController.search();
+                      searchController.search(value);
                     },
                   ),
                   spacerHeight(height: 20),

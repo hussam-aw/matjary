@@ -59,7 +59,7 @@ class ChooseWareScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = waresController.wares;
+    searchController.setSearchList(waresController.wares);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -76,8 +76,7 @@ class ChooseWareScreen extends StatelessWidget {
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم المستودع أو اختر من القائمة',
                   onChanged: (value) {
-                    searchController.searchText = value;
-                    searchController.search();
+                    searchController.search(value);
                   },
                 ),
                 spacerHeight(height: 20),

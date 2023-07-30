@@ -70,8 +70,7 @@ class ChooseCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = categoriesController.categories;
-
+    searchController.setSearchList(categoriesController.categories);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -88,8 +87,7 @@ class ChooseCategoryScreen extends StatelessWidget {
                 SearchTextField(
                   hintText: 'قم بالبحث عن التصنيف أو اختر من القائمة',
                   onChanged: (value) {
-                    searchController.searchText = value;
-                    searchController.search();
+                    searchController.search(value);
                   },
                 ),
                 spacerHeight(height: 20),

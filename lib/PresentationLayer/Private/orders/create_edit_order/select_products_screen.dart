@@ -59,8 +59,7 @@ class SelectProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = productsController.products;
-
+    searchController.setSearchList(productsController.products);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -80,8 +79,7 @@ class SelectProductsScreen extends StatelessWidget {
                   hintText: 'اكتب اسم المنتج أو جزء منه للفلترة',
                 ),
                 onChanged: (value) {
-                  searchController.searchText = value;
-                  searchController.search();
+                  searchController.search(value);
                 },
               ),
               spacerHeight(height: 25),

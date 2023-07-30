@@ -47,7 +47,7 @@ class ChooseUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    searchController.list = usersController.users;
+    searchController.setSearchList(usersController.users);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -64,8 +64,7 @@ class ChooseUserScreen extends StatelessWidget {
                 SearchTextField(
                   hintText: 'قم بالبحث عن اسم المستخدم أو اختر من القائمة',
                   onChanged: (value) {
-                    searchController.searchText = value;
-                    searchController.search();
+                    searchController.search(value);
                   },
                 ),
                 spacerHeight(height: 20),
