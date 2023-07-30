@@ -187,7 +187,6 @@ class ProductController extends GetxController {
     num retailPrice = getRetailPrice();
     List<String> images = getProductImages();
     if (name.isNotEmpty) {
-      setProductDetails(null);
       loading.value = true;
       var product = await prdouctsRepo.createProduct(
         name,
@@ -205,6 +204,7 @@ class ProductController extends GetxController {
       if (product != null) {
         productsController.getProducts();
         savingState = true;
+        setProductDetails(null);
         SnackBars.showSuccess('تم انشاء المنتج');
       } else {
         SnackBars.showError('فشل انشاء المنتج');
@@ -261,10 +261,5 @@ class ProductController extends GetxController {
     } else {
       SnackBars.showError('فشل الحذف');
     }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
   }
 }

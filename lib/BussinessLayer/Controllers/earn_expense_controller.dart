@@ -124,7 +124,6 @@ class EarnExpenseController extends GetxController {
     int? bankId = getBankAccountId();
     String date = getDate();
     if (bankId != null && date.isNotEmpty) {
-      setDefaultFields(clear: true);
       loading.value = true;
       var statement = await earnsExpensesRepo.createStatementBsedOnType(
         statementType,
@@ -138,6 +137,7 @@ class EarnExpenseController extends GetxController {
         boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();
         savingState = true;
+        setDefaultFields(clear: true);
         SnackBars.showSuccess('تم انشاء القيد');
       } else {
         SnackBars.showError('فشل انشاء الدفعة');

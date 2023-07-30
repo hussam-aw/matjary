@@ -37,13 +37,13 @@ class WareController extends GetxController {
     savingState = false;
     String wareName = getWareName();
     if (wareName.isNotEmpty) {
-      setWareDetails(null);
       loading.value = true;
       Ware? ware = await wareRepo.craeteWare(wareName);
       loading.value = false;
       if (ware != null) {
         waresController.getWares();
         savingState = true;
+        setWareDetails(null);
         SnackBars.showSuccess('تمت إضافة مستودع جديد');
       } else {
         SnackBars.showError('حدث خطأ أثناء الإضافة');

@@ -143,10 +143,7 @@ class PaymentController extends GetxController {
     num amount = getAmount();
     String date = getDate();
     String notes = getNotes();
-    if (bankId != null &&
-        counterPartyId != null &&
-        date.isNotEmpty &&
-        notes.isNotEmpty) {
+    if (bankId != null && counterPartyId != null && date.isNotEmpty) {
       loading.value = true;
       var payment = await paymentsRepo.createPayment(
         paymentType,
@@ -163,6 +160,7 @@ class PaymentController extends GetxController {
         boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();
         savingState = true;
+        setDefaultFields(clear: true);
         SnackBars.showSuccess('تم انشاء القيد الدفعة');
       } else {
         SnackBars.showError('فشل انشاء الدفعة');

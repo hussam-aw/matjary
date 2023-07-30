@@ -52,17 +52,17 @@ class CategoryController extends GetxController {
     savingState = false;
     String categoryName = getCategoryName();
     if (categoryName.isNotEmpty) {
-      setCategoryDetails(null);
       loading.value = true;
       var category =
           await categoriesRepo.createCategory(categoryName, parentId);
       loading.value = false;
-      if (category == null) {
-        SnackBars.showWarning('حدث خطأ أثناء الإضافة');
-      } else {
+      if (category != null) {
         categoriesController.getCategories();
         savingState = true;
+        setCategoryDetails(null);
         SnackBars.showSuccess('تمت إضافة فئة جديدة');
+      } else {
+        SnackBars.showWarning('حدث خطأ أثناء الإضافة');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');

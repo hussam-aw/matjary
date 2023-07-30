@@ -147,7 +147,6 @@ class StatementController extends GetxController {
         toId != null &&
         date.isNotEmpty &&
         statementText.isNotEmpty) {
-      setDefaultFields(clear: true);
       loading.value = true;
       var statement = await statementRepo.createStatement(
         fromId,
@@ -162,6 +161,7 @@ class StatementController extends GetxController {
         boxClient.setSecondSideAccount(toId);
         await accountsController.getAccounts();
         savingState = true;
+        setDefaultFields(clear: true);
         SnackBars.showSuccess('تم انشاء القيد المحاسبي');
       } else {
         SnackBars.showError('فشل انشاء القيد المحاسبي');
