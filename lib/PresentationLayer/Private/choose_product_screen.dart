@@ -6,8 +6,10 @@ import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/normal_box.dart';
+import 'package:matjary/PresentationLayer/Widgets/Private/product_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_bottom_sheet.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/loading_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
@@ -38,16 +40,11 @@ class ChooseProductScreen extends StatelessWidget {
               return NormalBox(
                 title: productsList[index].name,
                 image: "assets/new_icons/product_ph.png",
-                onTap: () {
-                  if (screenMode == null) {
-                    Get.toNamed(AppRoutes.createEditProductScreen,
-                        arguments: productsList[index]);
-                  } else {
-                    Get.toNamed(
-                      AppRoutes.productQtyReportScreen,
-                      arguments: productsList[index],
-                    );
-                  }
+                onTap: () {},
+                onLongTap: () {
+                  buildCustomBottomSheet(
+                    ProductOptionsMenu(product: productsList[index]),
+                  );
                 },
               );
             },
