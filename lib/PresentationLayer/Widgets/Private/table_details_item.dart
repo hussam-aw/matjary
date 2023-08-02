@@ -37,26 +37,27 @@ class TableDetailsItem extends StatelessWidget {
               ),
             ),
           ),
-          secondColumnItem != null
-              ? Expanded(
-                  child: Center(
-                    child: Text(
-                      secondColumnItem!,
-                      //overflow: TextOverflow.ellipsis,
-                      style: UITextStyle.normalBody,
-                    ),
-                  ),
-                )
-              : Container(),
-          Expanded(
-            child: Center(
-              child: Text(
-                thirdColumnItem!,
-                //overflow: TextOverflow.ellipsis,
-                style: UITextStyle.normalBody,
+          if (secondColumnItem != null)
+            Expanded(
+              flex: thirdColumnItem != null ? 1 : 2,
+              child: Center(
+                child: Text(
+                  secondColumnItem!,
+                  //overflow: TextOverflow.ellipsis,
+                  style: UITextStyle.normalBody,
+                ),
               ),
             ),
-          ),
+          if (thirdColumnItem != null)
+            Expanded(
+              child: Center(
+                child: Text(
+                  thirdColumnItem!,
+                  //overflow: TextOverflow.ellipsis,
+                  style: UITextStyle.normalBody,
+                ),
+              ),
+            ),
           Expanded(
             child: Center(
               child: (fourthColumnItem is String)
