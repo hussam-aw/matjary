@@ -321,7 +321,7 @@ class CreateEditProductScreen extends StatelessWidget {
                                       );
                               },
                             ),
-                            AccetpIconButton(
+                            AcceptIconButton(
                               center: true,
                               text: Text(
                                 'صور المنتج',

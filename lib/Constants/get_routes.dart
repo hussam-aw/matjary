@@ -35,6 +35,7 @@ class AppRoutes {
   static const waresReportScreen = '/productReportScreen/waresReportScreen';
   static const productQtyReportScreen =
       '/chooseProductScreen/productQtyReportScreen';
+  static const productMovementReportScreen = "/productMovementReportScreen";
   static const profileScreen = '/home/profileScreen';
   static const accountStatementTypeScreen = '/home/accountStatementTypeScreen';
   static const accountStatementScreen =

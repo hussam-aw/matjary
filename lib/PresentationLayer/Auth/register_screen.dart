@@ -64,7 +64,7 @@ class RegisterScreen extends StatelessWidget {
                             text: 'إنشاء حساب',
                           ),
                           spacerHeight(),
-                          AccetpIconButton(
+                          AcceptIconButton(
                             onPressed: () {},
                             center: true,
                             backgroundColor: UIColors.successButton,
@@ -76,7 +76,7 @@ class RegisterScreen extends StatelessWidget {
                             ),
                           ),
                           spacerHeight(),
-                          AccetpIconButton(
+                          AcceptIconButton(
                             onPressed: () {},
                             backgroundColor: UIColors.white,
                             center: true,

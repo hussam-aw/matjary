@@ -4,6 +4,7 @@ import 'package:matjary/PresentationLayer/Auth/login_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/pin_code_screen.dart';
 import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/create_ware_report_screen.dart';
+import 'package:matjary/PresentationLayer/Private/Reports/product_movement_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/product_qty_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/single_ware_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/wares_report_screen.dart';
@@ -97,6 +98,9 @@ List<GetPage<dynamic>> getPages = [
   GetPage(
       name: AppRoutes.productQtyReportScreen,
       page: () => ProductQtyReportScreen()),
+  GetPage(
+      name: AppRoutes.productMovementReportScreen,
+      page: () => ProductMovementReportScreen()),
   GetPage(name: AppRoutes.profileScreen, page: () => ProfileScreen()),
   GetPage(
       name: AppRoutes.accountStatementTypeScreen,

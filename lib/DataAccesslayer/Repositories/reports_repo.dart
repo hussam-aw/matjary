@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:matjary/DataAccesslayer/Clients/reports_client.dart';
+import 'package:matjary/DataAccesslayer/Models/product_movement.dart';
 import 'package:matjary/DataAccesslayer/Models/product_report.dart';
 import 'package:matjary/DataAccesslayer/Models/product_with_quantity.dart';
 
@@ -18,8 +19,8 @@ class ReportsRepo {
     return [];
   }
 
-  Future<ProductReport?> getProductReport(productReport) async {
-    var response = await client.getProductReport(productReport);
+  Future<ProductReport?> getProductReport(productId) async {
+    var response = await client.getProductReport(productId);
     if (response != "") {
       final parsed = json.decode(response);
       return ProductReport.fromMap(parsed);
@@ -33,6 +34,17 @@ class ReportsRepo {
       final parsed = json.decode(response).cast<Map<String, dynamic>>();
       return parsed
           .map<ProductReport>((json) => ProductReport.fromMap(json))
+          .toList();
+    }
+    return [];
+  }
+
+  Future<List<ProductMovement>> getProductMovementReport(productId) async {
+    var response = await client.getProductMovementReport(productId);
+    if (response != "") {
+      final parsed = json.decode(response);
+      return parsed
+          .map<ProductMovement>((json) => ProductMovement.fromJson(json))
           .toList();
     }
     return [];

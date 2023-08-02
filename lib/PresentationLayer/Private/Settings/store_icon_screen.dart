@@ -53,7 +53,7 @@ class StoreIconScreen extends StatelessWidget {
                       Obx(() {
                         return storeSettingsScreenController
                                 .selectedStoreIcon.value.isEmpty
-                            ? AccetpIconButton(
+                            ? AcceptIconButton(
                                 center: true,
                                 text: Text(
                                   'اختيار شعار جديد',

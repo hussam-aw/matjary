@@ -82,7 +82,7 @@ class AccountStatementPrintScreen extends StatelessWidget {
                   ),
                 ),
                 spacerHeight(),
-                AccetpIconButton(
+                AcceptIconButton(
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,

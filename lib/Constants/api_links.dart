@@ -21,6 +21,7 @@ const paymentsLink = "/paymentsByUserId";
 const wareContentLink = "/wareContent";
 const productReportLink = "/productInsidWaresById";
 const allproductsReportLink = "/productsInsidWares";
+const productMovementReportLink = "/productMovement";
 const cashAmountLink = "/cashByUserId";
 const accountStatementByDateLink = "/AccountStatementByDate";
 const earnExpenseLink = "/expensesAndRevenuesAccounts";

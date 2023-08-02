@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/reports_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/table_details_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/table_titles.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
@@ -49,7 +51,7 @@ class ProductQtyReportScreen extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Obx(() {
-                    return reportsController.isloading.value
+                    return reportsController.isLoadingProductReport.value
                         ? Center(child: loadingItem(width: 100, isWhite: true))
                         : reportsController.productReport == null
                             ? Center(
@@ -79,7 +81,17 @@ class ProductQtyReportScreen extends StatelessWidget {
                               );
                   }),
                 ),
-                AccetpIconButton(
+                AcceptButton(
+                  text: 'كشف حركة',
+                  onPressed: () {
+                    Get.toNamed(
+                      AppRoutes.productMovementReportScreen,
+                      arguments: product,
+                    );
+                  },
+                ),
+                spacerHeight(),
+                AcceptIconButton(
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,

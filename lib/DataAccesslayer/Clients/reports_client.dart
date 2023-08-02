@@ -35,4 +35,15 @@ class ReportsClient {
       return "";
     }
   }
+
+  Future<dynamic> getProductMovementReport(productId) async {
+    var response = await http
+        .get(Uri.parse("$baseUrl$productMovementReportLink/$productId"));
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return "";
+    }
+  }
 }
