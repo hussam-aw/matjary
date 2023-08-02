@@ -49,6 +49,7 @@ class AccountsClient {
 
   Future<dynamic> createAccount(
       id, name, balance, type, style, email, address, mobileNumber) async {
+    print(style);
     var response = await http.post(Uri.parse('$baseUrl$accountLink'),
         body: jsonEncode(<String, dynamic>{
           "name": name,

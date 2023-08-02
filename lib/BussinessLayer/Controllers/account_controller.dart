@@ -38,6 +38,7 @@ class AccountController extends GetxController {
   }
 
   int convertAccountStyleToNumber(style) {
+    print(style);
     if (style == 'حساب عادي') {
       return 0;
     } else if (style == 'صندوق') {
@@ -65,8 +66,8 @@ class AccountController extends GetxController {
     }
   }
 
-  void changeAccountStyle(style) {
-    style = style;
+  void changeAccountStyle(style1) {
+    style = style1;
     accountStyleForInformation = checkAccountStyleForInformation(style);
     update();
   }

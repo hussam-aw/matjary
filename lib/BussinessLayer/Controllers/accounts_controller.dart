@@ -69,6 +69,8 @@ class AccountsController extends GetxController {
         .where((account) =>
             account.style == 2 || account.style == 3 || account.style == 10)
         .toList();
+    print(customersAccounts);
+    update();
   }
 
   Future<void> getPinnedAccounts() async {
