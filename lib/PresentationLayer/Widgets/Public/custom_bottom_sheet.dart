@@ -7,8 +7,8 @@ void buildCustomBottomSheet(Widget w) {
   Get.bottomSheet(Directionality(
     textDirection: TextDirection.rtl,
     child: Container(
-      height: Get.width * .5,
-      padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+      height: Get.width * .6,
+      padding: const EdgeInsets.only(top: 25, right: 20, left: 20),
       decoration: const BoxDecoration(
         borderRadius: raduis32top,
         color: UIColors.white,
