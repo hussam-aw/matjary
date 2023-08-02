@@ -46,7 +46,7 @@ class WaresReportScreen extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Obx(() {
-                    return reportsController.isloading.value
+                    return reportsController.isLoadingAllProductsReports.value
                         ? Center(child: loadingItem(width: 100, isWhite: true))
                         : reportsController.productsReports.isEmpty
                             ? Center(
@@ -83,7 +83,7 @@ class WaresReportScreen extends StatelessWidget {
                   }),
                 ),
                 spacerHeight(height: 22),
-                AccetpIconButton(
+                AcceptIconButton(
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,

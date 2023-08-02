@@ -51,7 +51,7 @@ class SingleWareReportScreen extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Obx(() {
-                    return reportsController.isloading.value
+                    return reportsController.isLoadingWareReport.value
                         ? Center(child: loadingItem(width: 100, isWhite: true))
                         : reportsController.productsWithQuantity.isEmpty
                             ? Center(
@@ -69,6 +69,7 @@ class SingleWareReportScreen extends StatelessWidget {
                                         .getProductName(reportsController
                                             .productsWithQuantity[index]
                                             .productId),
+                                    secondColumnItem: '',
                                     thirdColumnItem: '',
                                     fourthColumnItem: reportsController
                                         .productsWithQuantity[index].quantity
@@ -82,7 +83,7 @@ class SingleWareReportScreen extends StatelessWidget {
                               );
                   }),
                 ),
-                AccetpIconButton(
+                AcceptIconButton(
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
