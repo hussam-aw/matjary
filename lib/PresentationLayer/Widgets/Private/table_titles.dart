@@ -6,20 +6,32 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 class TableTitles extends StatelessWidget {
   const TableTitles({
     super.key,
-    required this.firstColumnTitle,
-    required this.secondColumnTitle,
-    required this.thirdColumnTitle,
-    required this.fourthColumnTitle,
+    required this.titles,
     this.isDecorated = false,
     this.titleTextStyle = UITextStyle.boldBody,
   });
 
-  final String firstColumnTitle;
-  final String secondColumnTitle;
-  final String thirdColumnTitle;
-  final String fourthColumnTitle;
+  final List<String> titles;
   final bool isDecorated;
   final TextStyle titleTextStyle;
+
+  List<Widget> buildColumns(List<String> list) {
+    List<Widget> columns = [];
+    for (var element in list) {
+      columns.add(
+        Expanded(
+          child: Center(
+            child: Text(
+              element,
+              //overflow: TextOverflow.ellipsis,
+              style: titleTextStyle,
+            ),
+          ),
+        ),
+      );
+    }
+    return columns;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,44 +46,7 @@ class TableTitles extends StatelessWidget {
           : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Center(
-              child: Text(
-                firstColumnTitle,
-                //overflow: TextOverflow.ellipsis,
-                style: titleTextStyle,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                secondColumnTitle,
-                //overflow: TextOverflow.ellipsis,
-                style: titleTextStyle,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                thirdColumnTitle,
-                //overflow: TextOverflow.ellipsis,
-                style: titleTextStyle,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                fourthColumnTitle,
-                //overflow: TextOverflow.ellipsis,
-                style: titleTextStyle,
-              ),
-            ),
-          ),
-        ],
+        children: buildColumns(titles)
       ),
     );
   }

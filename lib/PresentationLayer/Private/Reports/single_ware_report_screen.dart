@@ -42,10 +42,7 @@ class SingleWareReportScreen extends StatelessWidget {
                 spacerHeight(height: 22),
                 const TableTitles(
                   isDecorated: true,
-                  firstColumnTitle: 'المنتج',
-                  secondColumnTitle: '',
-                  thirdColumnTitle: '',
-                  fourthColumnTitle: 'الكمية',
+                  titles: ["المنتج", "الكمية"],
                 ),
                 spacerHeight(height: 22),
                 Expanded(
@@ -65,15 +62,15 @@ class SingleWareReportScreen extends StatelessWidget {
                             : ListView.separated(
                                 itemBuilder: (context, index) {
                                   return TableDetailsItem(
-                                    firstColumnItem: productsController
-                                        .getProductName(reportsController
-                                            .productsWithQuantity[index]
-                                            .productId),
-                                    secondColumnItem: '',
-                                    thirdColumnItem: '',
-                                    fourthColumnItem: reportsController
-                                        .productsWithQuantity[index].quantity
-                                        .toString(),
+                                    rowCells: {
+                                      productsController.getProductName(
+                                          reportsController
+                                              .productsWithQuantity[index]
+                                              .productId): 1,
+                                      reportsController
+                                          .productsWithQuantity[index].quantity
+                                          .toString(): 1
+                                    },
                                   );
                                 },
                                 separatorBuilder: (context, index) =>

@@ -37,10 +37,7 @@ class WaresReportScreen extends StatelessWidget {
                 spacerHeight(height: 22),
                 const TableTitles(
                   isDecorated: true,
-                  firstColumnTitle: 'المنتج',
-                  secondColumnTitle: '',
-                  thirdColumnTitle: 'الكميات',
-                  fourthColumnTitle: 'التفاصيل',
+                  titles: ["المنتج", "", "الكميات", "التفاصيل"],
                 ),
                 spacerHeight(),
                 Expanded(
@@ -60,19 +57,21 @@ class WaresReportScreen extends StatelessWidget {
                             : ListView.separated(
                                 itemBuilder: (context, index) {
                                   return TableDetailsItem(
-                                    firstColumnItem: reportsController
-                                        .productsReports[index].productName,
-                                    thirdColumnItem: reportsController
-                                        .productsReports[index].quantity
-                                        .toString(),
-                                    fourthColumnItem: InkWell(
-                                      onTap: () {},
-                                      child: const Icon(
-                                        Icons.info,
-                                        size: 30,
-                                        color: UIColors.white,
-                                      ),
-                                    ),
+                                    rowCells: {
+                                      reportsController.productsReports[index]
+                                          .productName: 2,
+                                      reportsController
+                                          .productsReports[index].quantity
+                                          .toString(): 1,
+                                      InkWell(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.info,
+                                          size: 30,
+                                          color: UIColors.white,
+                                        ),
+                                      ): 1
+                                    },
                                   );
                                 },
                                 separatorBuilder: (context, index) =>

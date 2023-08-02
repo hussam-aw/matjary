@@ -42,10 +42,7 @@ class ProductQtyReportScreen extends StatelessWidget {
                 spacerHeight(height: 22),
                 const TableTitles(
                   isDecorated: true,
-                  firstColumnTitle: 'المستودع',
-                  secondColumnTitle: '',
-                  thirdColumnTitle: '',
-                  fourthColumnTitle: 'الكمية',
+                  titles: ["المستودع", "الكمية"],
                 ),
                 spacerHeight(height: 22),
                 Expanded(
@@ -65,13 +62,13 @@ class ProductQtyReportScreen extends StatelessWidget {
                             : ListView.separated(
                                 itemBuilder: (context, index) {
                                   return TableDetailsItem(
-                                    firstColumnItem: reportsController
-                                        .productReport!.wares[index]['ware'],
-                                    secondColumnItem: '',
-                                    thirdColumnItem: '',
-                                    fourthColumnItem: reportsController
-                                        .productReport!.wares[index]['quantity']
-                                        .toString(),
+                                    rowCells: {
+                                      reportsController.productReport!
+                                          .wares[index]['ware']: 1,
+                                      reportsController.productReport!
+                                          .wares[index]['quantity']
+                                          .toString(): 1
+                                    },
                                   );
                                 },
                                 separatorBuilder: (context, index) =>

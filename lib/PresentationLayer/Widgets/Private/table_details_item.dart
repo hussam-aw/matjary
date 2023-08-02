@@ -5,16 +5,37 @@ import 'package:matjary/Constants/ui_text_styles.dart';
 class TableDetailsItem extends StatelessWidget {
   const TableDetailsItem({
     super.key,
-    this.firstColumnItem,
-    this.secondColumnItem,
-    this.thirdColumnItem,
-    this.fourthColumnItem,
+    required this.rowCells,
   });
 
-  final String? firstColumnItem;
-  final String? secondColumnItem;
-  final String? thirdColumnItem;
-  final dynamic fourthColumnItem;
+  final Map<dynamic, int> rowCells;
+
+  List<Widget> buildCells() {
+    List<Widget> cells = [];
+    rowCells.forEach((key, value) {
+      if (key != null) {
+        if (key is String) {
+          cells.add(Expanded(
+            flex: value,
+            child: Center(
+              child: Text(
+                key,
+                //overflow: TextOverflow.ellipsis,
+                style: UITextStyle.normalBody,
+              ),
+            ),
+          ));
+        } else if (key is Widget) {
+          cells.add(Expanded(
+            flex: value,
+            child: Center(child: key),
+          ));
+        }
+      }
+    });
+
+    return cells;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,52 +46,7 @@ class TableDetailsItem extends StatelessWidget {
           top: BorderSide(color: UIColors.containerBorder),
         ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: secondColumnItem != null ? 1 : 2,
-            child: Center(
-              child: Text(
-                firstColumnItem!,
-                //overflow: TextOverflow.ellipsis,
-                style: UITextStyle.normalBody,
-              ),
-            ),
-          ),
-          if (secondColumnItem != null)
-            Expanded(
-              flex: thirdColumnItem != null ? 1 : 2,
-              child: Center(
-                child: Text(
-                  secondColumnItem!,
-                  //overflow: TextOverflow.ellipsis,
-                  style: UITextStyle.normalBody,
-                ),
-              ),
-            ),
-          if (thirdColumnItem != null)
-            Expanded(
-              child: Center(
-                child: Text(
-                  thirdColumnItem!,
-                  //overflow: TextOverflow.ellipsis,
-                  style: UITextStyle.normalBody,
-                ),
-              ),
-            ),
-          Expanded(
-            child: Center(
-              child: (fourthColumnItem is String)
-                  ? Text(
-                      fourthColumnItem,
-                      //overflow: TextOverflow.ellipsis,
-                      style: UITextStyle.normalBody,
-                    )
-                  : fourthColumnItem,
-            ),
-          ),
-        ],
-      ),
+      child: Row(children: buildCells()),
     );
   }
 }

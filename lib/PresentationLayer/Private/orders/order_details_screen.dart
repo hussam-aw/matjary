@@ -39,10 +39,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 PageTitle(title: 'فاتورة رقم  ${order.id}#'),
                 spacerHeight(height: 30),
                 const TableTitles(
-                  firstColumnTitle: 'المنتج',
-                  secondColumnTitle: 'الكمية',
-                  thirdColumnTitle: 'الافرادي',
-                  fourthColumnTitle: 'الإجمالي',
+                  titles: ["المنتج", "الكمية", "الافرادي", "الإجمالي"],
                 ),
                 spacerHeight(),
                 Expanded(
@@ -50,14 +47,21 @@ class OrderDetailsScreen extends StatelessWidget {
                   child: ListView.separated(
                     itemBuilder: (context, index) {
                       return TableDetailsItem(
-                        firstColumnItem: productsController
-                            .getProductName(order.details[index].productId)
-                            .toString(),
+                        rowCells: {
+                          productsController
+                              .getProductName(order.details[index].productId)
+                              .toString(): 1,
+                          order.details[index].quantity.toString(): 1,
+                          order.details[index].price.toString(): 1,
+                          order.details[index].totalPrice.toString(): 1
+                        },
+
+                        /*  firstColumnItem: ,
                         secondColumnItem:
                             order.details[index].quantity.toString(),
                         thirdColumnItem: order.details[index].price.toString(),
                         fourthColumnItem:
-                            order.details[index].totalPrice.toString(),
+                            order.details[index].totalPrice.toString(), */
                       );
                     },
                     separatorBuilder: (context, index) =>
@@ -68,12 +72,14 @@ class OrderDetailsScreen extends StatelessWidget {
                 spacerHeight(),
                 TableTitles(
                   titleTextStyle: UITextStyle.boldMeduim,
-                  firstColumnTitle: 'الإجمالي',
-                  secondColumnTitle: orderController
-                      .getOrderProductsQuantitiesCount(order.details)
-                      .toString(),
-                  thirdColumnTitle: '',
-                  fourthColumnTitle: order.total.toString(),
+                  titles: [
+                    "",
+                    orderController
+                        .getOrderProductsQuantitiesCount(order.details)
+                        .toString(),
+                    "",
+                    order.total.toString()
+                  ],
                 ),
                 spacerHeight(height: 30),
                 AcceptIconButton(

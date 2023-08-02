@@ -49,10 +49,7 @@ class ProductMovementReportScreen extends StatelessWidget {
                 spacerHeight(height: 22),
                 const TableTitles(
                   isDecorated: true,
-                  firstColumnTitle: 'الكمية',
-                  secondColumnTitle: 'البيان',
-                  thirdColumnTitle: '',
-                  fourthColumnTitle: 'المستودع',
+                  titles: ["الكمية", "البيان", "", "المستودع"],
                 ),
                 spacerHeight(height: 22),
                 Expanded(
@@ -76,16 +73,57 @@ class ProductMovementReportScreen extends StatelessWidget {
                                     child: ListView.separated(
                                       itemBuilder: (context, index) {
                                         return TableDetailsItem(
-                                          firstColumnItem: reportsController
+                                          rowCells: {
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                reportsController
+                                                            .productMovements[
+                                                                index]
+                                                            .movement ==
+                                                        "outside"
+                                                    ? const Icon(
+                                                        FontAwesomeIcons
+                                                            .arrowDown,
+                                                        color: UIColors.red,
+                                                        size: 10,
+                                                      )
+                                                    : const Icon(
+                                                        FontAwesomeIcons
+                                                            .arrowUp,
+                                                        color: UIColors.success,
+                                                        size: 10,
+                                                      ),
+                                                Text(
+                                                  reportsController
+                                                      .productMovements[index]
+                                                      .quantity
+                                                      .toString(),
+                                                  style: UITextStyle.normalBody,
+                                                )
+                                              ],
+                                            ): 1,
+                                            reportsController
+                                                .productMovements[index]
+                                                .statement
+                                                .toString(): 3,
+                                            reportsController
+                                                .productMovements[index].ware
+                                                .toString(): 1
+                                          },
+                                          /*  firstColumnItem: reportsController
                                               .productMovements[index].quantity
                                               .toString(),
                                           secondColumnItem: reportsController
                                               .productMovements[index].statement
                                               .toString(),
                                           //thirdColumnItem: '',
-                                          fourthColumnItem: reportsController
+                                          fourthColumnItem:reportsController
                                               .productMovements[index].ware
-                                              .toString(),
+                                              .toString() , */
                                         );
                                       },
                                       separatorBuilder: (context, index) =>
