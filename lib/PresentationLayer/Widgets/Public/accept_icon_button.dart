@@ -3,8 +3,8 @@ import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
-class AccetpIconButton extends StatelessWidget {
-  const AccetpIconButton({
+class AcceptIconButton extends StatelessWidget {
+  const AcceptIconButton({
     super.key,
     required this.text,
     required this.icon,

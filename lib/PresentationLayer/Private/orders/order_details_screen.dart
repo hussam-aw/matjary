@@ -76,7 +76,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   fourthColumnTitle: order.total.toString(),
                 ),
                 spacerHeight(height: 30),
-                AccetpIconButton(
+                AcceptIconButton(
                   text: const Text('حفظ pdf', style: UITextStyle.boldMeduim),
                   icon: const Icon(FontAwesomeIcons.solidFloppyDisk),
                   center: true,
