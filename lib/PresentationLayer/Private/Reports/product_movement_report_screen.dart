@@ -22,11 +22,12 @@ class ProductMovementReportScreen extends StatelessWidget {
   ProductMovementReportScreen({super.key});
 
   final reportsController = Get.put(ReportsController());
-  Product product = Get.arguments;
+  Product product = Get.arguments['product'];
+  String? wareName = Get.arguments['wareName'];
 
   @override
   Widget build(BuildContext context) {
-    reportsController.getProductMovementReport(product.id);
+    reportsController.getProductMovementReport(product.id, wareName);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
