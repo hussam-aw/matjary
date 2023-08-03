@@ -39,7 +39,7 @@ class ProductOptionsMenu extends StatelessWidget {
             onTap: () {
               Get.toNamed(
                 AppRoutes.productQtyReportScreen,
-                arguments: product,
+                arguments: {'product': product},
               );
             },
             child: Text(
