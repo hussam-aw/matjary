@@ -33,9 +33,14 @@ class ReportsController extends GetxController {
     isLoadingAllProductsReports.value = false;
   }
 
-  Future<void> getProductMovementReport(productId) async {
+  Future<void> getProductMovementReport(productId, wareName) async {
     isLoadingProductMovementReport.value = true;
     productMovements = await reportsRepo.getProductMovementReport(productId);
+    if (wareName != null) {
+      productMovements = productMovements
+          .where((movement) => movement.ware == wareName)
+          .toList();
+    }
     isLoadingProductMovementReport.value = false;
   }
 }
