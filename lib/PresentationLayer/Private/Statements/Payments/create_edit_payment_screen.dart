@@ -5,12 +5,14 @@ import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_screen_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
@@ -49,7 +51,43 @@ class CreateEditPaymentScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إنشاء | تعديل دفعة'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      child: PageTitle(title: 'إنشاء | تعديل دفعة'),
+                    ),
+                    if (payment != null)
+                      InkWell(
+                        onTap: () {
+                          Get.dialog(
+                            CustomDialog(
+                              title: 'هل تريد حذف الدفعة',
+                              acceptButton: Obx(() {
+                                return AcceptButton(
+                                  text: 'حذف',
+                                  backgroundColor: UIColors.red,
+                                  onPressed: () async {
+                                    await paymentController
+                                        .deletePayment(payment!.id);
+                                    Get.until((route) =>
+                                        route.settings.name ==
+                                        AppRoutes.paymentsScreen);
+                                  },
+                                  isLoading: paymentController.loading.value,
+                                );
+                              }),
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          size: 30,
+                          color: UIColors.primary,
+                        ),
+                      ),
+                  ],
+                ),
                 spacerHeight(height: 22),
                 Expanded(
                   flex: 5,
