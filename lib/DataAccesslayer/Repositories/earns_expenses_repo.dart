@@ -26,4 +26,22 @@ class EarnsExpensesRepo {
     }
     return null;
   }
+
+  Future<bool?> updateStatement(
+      id, type, statement, amount, bankId, date) async {
+    var updatedStatement =
+        await client.updateStatement(id, type, statement, amount, bankId, date);
+    if (updatedStatement != null) {
+      return true;
+    }
+    return null;
+  }
+
+  Future<bool?> deleteStatement(id) async {
+    var deletedStatement = await client.deleteStatement(id);
+    if (deletedStatement != null) {
+      return true;
+    }
+    return null;
+  }
 }

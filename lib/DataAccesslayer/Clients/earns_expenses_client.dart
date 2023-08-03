@@ -37,4 +37,36 @@ class EarnsExpensesClient {
       return null;
     }
   }
+
+  Future<dynamic> updateStatement(
+      id, type, statement, amount, bankId, date) async {
+    var response = await http.post(Uri.parse('$baseUrl$statementLink/$id'),
+        body: jsonEncode(<String, dynamic>{
+          "type": type,
+          "statement": statement,
+          "amount": amount,
+          "bank_id": bankId,
+          "date": date,
+          "user_id": MyApp.appUser!.companyId,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    print(response.body);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return null;
+    }
+  }
+
+  Future<dynamic> deleteStatement(id) async {
+    var response = await http.delete(Uri.parse('$baseUrl$statementLink/$id'));
+
+    if (response.statusCode == 201) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
 }
