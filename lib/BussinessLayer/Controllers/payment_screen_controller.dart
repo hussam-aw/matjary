@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
+import 'package:matjary/DataAccesslayer/Models/payment.dart';
 
 class PaymentScreenController extends GetxController {
   final paymentController = Get.put(PaymentController());
@@ -12,10 +13,10 @@ class PaymentScreenController extends GetxController {
     'مدفوعات',
   ];
 
-  List<String> counterPaymentTypes = [
-    'income',
-    'payment',
-  ];
+  Map<String, String> counterPaymentTypes = {
+    'income': 'مقبوضات',
+    'payment': 'مدفوعات',
+  };
 
   Map<String, bool> paymentTypesSelection = {
     'مقبوضات': true,
@@ -56,6 +57,14 @@ class PaymentScreenController extends GetxController {
       paymentController.setDate(DateFormatter.getFormated(date));
     } else {
       paymentController.setDate('');
+    }
+  }
+
+  void setDefaultFields({String? paymentType = 'مقبوضات', Payment? payment}) {
+    if (payment != null) {
+      setPaymentType(counterPaymentTypes[payment.type]);
+    } else {
+      setPaymentType(paymentType);
     }
   }
 }
