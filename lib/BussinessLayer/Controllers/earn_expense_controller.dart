@@ -1,9 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/earns_expenses_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
+import 'package:matjary/DataAccesslayer/Models/statement_with_type.dart';
 import 'package:matjary/DataAccesslayer/Repositories/earns_expenses_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
@@ -16,6 +18,8 @@ class EarnExpenseController extends GetxController {
   TextEditingController dateController = TextEditingController();
   AccountsController accountsController = Get.find<AccountsController>();
   EarnsExpensesRepo earnsExpensesRepo = EarnsExpensesRepo();
+  EarnsExpensesController earnsExpensesController =
+      Get.find<EarnsExpensesController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
   var savingState = false;
@@ -25,9 +29,15 @@ class EarnExpenseController extends GetxController {
     'مصاريف': 'expenses',
   };
 
-  void setStatementType(type) {
+  void setCounterStatementType(type) {
     if (type != null) {
       statementType = counterStatementTypes[type]!;
+    }
+  }
+
+  void setStatementType(type) {
+    if (type != null) {
+      statementType = type;
     }
   }
 
@@ -44,8 +54,8 @@ class EarnExpenseController extends GetxController {
   }
 
   void setAmount(amount) {
-    if (amount.isNotEmpty) {
-      amountController.value = TextEditingValue(text: amount);
+    if (amount != null) {
+      amountController.value = TextEditingValue(text: amount.toString());
     } else {
       amountController.clear();
     }
@@ -109,12 +119,20 @@ class EarnExpenseController extends GetxController {
     }
   }
 
-  void setDefaultFields({bool clear = false}) {
-    setStatementType('إيرادات');
-    setStatementText('');
-    setAmount('');
-    setDefaultAccounts(clear);
-    setDate('');
+  void setDefaultFields({bool clear = false, StatementWithType? statement}) {
+    if (statement != null) {
+      setStatementType(statement.type);
+      setBankAccount(statement.bank);
+      setAmount(statement.amount);
+      setDate(DateFormatter.getFormated(statement.date));
+      setStatementText(statement.statement);
+    } else {
+      setCounterStatementType('إيرادات');
+      setDefaultAccounts(clear);
+      setAmount(null);
+      setDate('');
+      setStatementText('');
+    }
   }
 
   Future<void> createStatementBasedOnType() async {
@@ -136,20 +154,56 @@ class EarnExpenseController extends GetxController {
       if (statement != null) {
         boxClient.setBankAccount(bankId);
         await accountsController.getAccounts();
+        await earnsExpensesController.getStatements();
         savingState = true;
         setDefaultFields(clear: true);
         SnackBars.showSuccess('تم انشاء القيد');
       } else {
-        SnackBars.showError('فشل انشاء الدفعة');
+        SnackBars.showError('فشل انشاء القيد');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
-  @override
-  void onInit() {
-    setDefaultFields();
-    super.onInit();
+  Future<void> updateStatement(id) async {
+    savingState = false;
+    String statementText = getStatementText();
+    num amount = getAmount();
+    int? bankId = getBankAccountId();
+    String date = getDate();
+    if (bankId != null && date.isNotEmpty) {
+      loading.value = true;
+      var statement = await earnsExpensesRepo.updateStatement(
+        id,
+        statementType,
+        statementText,
+        amount,
+        bankId,
+        date,
+      );
+      loading.value = false;
+      if (statement != null) {
+        await earnsExpensesController.getStatements();
+        savingState = true;
+        SnackBars.showSuccess('تم تعديل القيد');
+      } else {
+        SnackBars.showError('فشل تعديل القيد');
+      }
+    } else {
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+    }
+  }
+
+  Future<void> deleteStatement(id) async {
+    loading.value = true;
+    var statement = await earnsExpensesRepo.deleteStatement(id);
+    loading.value = false;
+    if (statement != null) {
+      earnsExpensesController.getStatements();
+      SnackBars.showSuccess('تم الحذف بنجاح');
+    } else {
+      SnackBars.showError('فشل الحذف');
+    }
   }
 }
