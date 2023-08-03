@@ -83,7 +83,7 @@ class ProductQtyReportScreen extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(
                       AppRoutes.productMovementReportScreen,
-                      arguments: product,
+                      arguments: {'product': product},
                     );
                   },
                 ),

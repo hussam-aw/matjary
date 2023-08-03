@@ -39,7 +39,7 @@ class ProductOptionsMenu extends StatelessWidget {
             onTap: () {
               Get.toNamed(
                 AppRoutes.productQtyReportScreen,
-                arguments: {'product': product},
+                arguments: product,
               );
             },
             child: Text(
@@ -55,7 +55,7 @@ class ProductOptionsMenu extends StatelessWidget {
             onTap: () {
               Get.toNamed(
                 AppRoutes.productMovementReportScreen,
-                arguments: product,
+                arguments: {'product': product},
               );
             },
             child: Text(
