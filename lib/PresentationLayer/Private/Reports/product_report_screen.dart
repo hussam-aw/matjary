@@ -48,11 +48,13 @@ class ProductReportScreen extends StatelessWidget {
                         child: AcceptButton(
                           text: 'جرد منتج',
                           backgroundColor: UIColors.containerBackground,
-                          onPressed: () {
-                            Get.toNamed(
+                          onPressed: () async {
+                            var product = await Get.toNamed(
                               AppRoutes.chooseProductScreen,
                               arguments: 'selection',
                             );
+                            Get.toNamed(AppRoutes.productQtyReportScreen,
+                                arguments: product);
                           },
                         ),
                       ),
