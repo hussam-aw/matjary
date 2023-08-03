@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/earn_expense_screen_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -31,6 +32,12 @@ class StatementWithTypeBox extends StatelessWidget {
                 .getStatementTypeIcon(statement.type),
             statementType:
                 earnExpenseScreenController.getStatementType(statement.type),
+            onTap: () {
+              Get.toNamed(
+                AppRoutes.createEarnExpenseScreen,
+                arguments: statement,
+              );
+            },
           ),
           Expanded(
             flex: 5,
