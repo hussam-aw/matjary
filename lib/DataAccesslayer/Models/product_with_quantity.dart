@@ -1,22 +1,24 @@
+import 'product.dart';
+
 class ProductWithQuantity {
-  int productId;
+  Product product;
   int quantity;
 
   ProductWithQuantity({
-    required this.productId,
+    required this.product,
     required this.quantity,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': productId,
+      'product': product,
       'quantity': quantity,
     };
   }
 
   factory ProductWithQuantity.fromMap(Map<String, dynamic> map) {
     return ProductWithQuantity(
-      productId: map['id'] as int,
+      product: Product.fromMap(map['product']),
       quantity: map['quantity'],
     );
   }
