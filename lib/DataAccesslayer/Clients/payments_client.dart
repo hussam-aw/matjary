@@ -36,4 +36,26 @@ class PaymentsClient {
       return null;
     }
   }
+
+  Future<dynamic> updatePayment(
+      id, type, accountId, bankId, statement, amount, date) async {
+    var response = await http.post(Uri.parse('$baseUrl$statementLink/$id'),
+        body: jsonEncode(<String, dynamic>{
+          "type": type,
+          "account_id": accountId,
+          "bank_id": bankId,
+          "amount": amount,
+          "statement": statement,
+          "date": date,
+          "user_id": MyApp.appUser!.id,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return null;
+    }
+  }
 }

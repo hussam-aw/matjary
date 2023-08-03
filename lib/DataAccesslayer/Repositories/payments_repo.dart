@@ -24,4 +24,14 @@ class PaymentsRepo {
     }
     return null;
   }
+
+  Future<bool?> updatePayment(
+      id, type, accountId, bankId, statement, amount, date) async {
+    var updatedPayment = await client.updatePayment(
+        id, type, accountId, bankId, statement, amount, date);
+    if (updatedPayment != null) {
+      return true;
+    }
+    return null;
+  }
 }
