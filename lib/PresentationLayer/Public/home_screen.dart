@@ -211,7 +211,9 @@ class HomeScreen extends StatelessWidget {
                                           onTap: () {
                                             Get.toNamed(
                                               AppRoutes.createEditPaymentScreen,
-                                              arguments: 'مقبوضات',
+                                              arguments: {
+                                                'paymentType': 'مقبوضات'
+                                              },
                                             );
                                           },
                                           title: 'استلام',
@@ -223,7 +225,9 @@ class HomeScreen extends StatelessWidget {
                                           onTap: () {
                                             Get.toNamed(
                                               AppRoutes.createEditPaymentScreen,
-                                              arguments: 'مدفوعات',
+                                              arguments: {
+                                                'paymentType': 'مدفوعات'
+                                              },
                                             );
                                           },
                                           title: 'ارسال',
