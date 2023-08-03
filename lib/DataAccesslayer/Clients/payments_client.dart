@@ -58,4 +58,14 @@ class PaymentsClient {
       return null;
     }
   }
+
+  Future<dynamic> deletePayment(id) async {
+    var response = await http.delete(Uri.parse('$baseUrl$statementLink/$id'));
+
+    if (response.statusCode == 201) {
+      return response.body;
+    } else {
+      return null;
+    }
+  }
 }

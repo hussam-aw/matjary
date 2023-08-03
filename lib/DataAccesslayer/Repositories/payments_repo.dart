@@ -34,4 +34,12 @@ class PaymentsRepo {
     }
     return null;
   }
+
+  Future<bool?> deletePayment(id) async {
+    var deletedPaymnet = await client.deletePayment(id);
+    if (deletedPaymnet != null) {
+      return true;
+    }
+    return null;
+  }
 }

@@ -220,4 +220,16 @@ class PaymentController extends GetxController {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
+
+  Future<void> deletePayment(id) async {
+    loading.value = true;
+    var payment = await paymentsRepo.deletePayment(id);
+    loading.value = false;
+    if (payment != null) {
+      paymentsController.getPayments();
+      SnackBars.showSuccess('تم الحذف بنجاح');
+    } else {
+      SnackBars.showError('فشل الحذف');
+    }
+  }
 }
