@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/earn_expense_controller.dart';
 import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
+import 'package:matjary/DataAccesslayer/Models/statement_with_type.dart';
 
 class EarnExapenseScreenController extends GetxController {
   final earnExpenseController = Get.put(EarnExpenseController());
@@ -11,10 +12,10 @@ class EarnExapenseScreenController extends GetxController {
     'مصاريف',
   ];
 
-  List<String> counterStatementType = [
-    'revenues',
-    'expenses',
-  ];
+  Map<String, String> counterStatementTypes = {
+    'revenues': 'إيرادات',
+    'expenses': 'مصاريف',
+  };
 
   Map<String, bool> statementTypeSelection = {
     'إيرادات': true,
@@ -55,6 +56,14 @@ class EarnExapenseScreenController extends GetxController {
       earnExpenseController.setDate(DateFormatter.getFormated(date));
     } else {
       earnExpenseController.setDate('');
+    }
+  }
+
+  void setDefaultFields({StatementWithType? statement}) {
+    if (statement != null) {
+      setStatementType(counterStatementTypes[statement.type]);
+    } else {
+      setStatementType('إيرادات');
     }
   }
 }
