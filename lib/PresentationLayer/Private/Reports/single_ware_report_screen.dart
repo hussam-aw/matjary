@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/reports_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/ware.dart';
@@ -61,16 +62,29 @@ class SingleWareReportScreen extends StatelessWidget {
                               )
                             : ListView.separated(
                                 itemBuilder: (context, index) {
-                                  return TableDetailsItem(
-                                    rowCells: {
-                                      productsController.getProductName(
-                                          reportsController
-                                              .productsWithQuantity[index]
-                                              .productId): 1,
-                                      reportsController
-                                          .productsWithQuantity[index].quantity
-                                          .toString(): 1
+                                  return InkWell(
+                                    onTap: () {
+                                      Get.toNamed(
+                                          AppRoutes.productMovementReportScreen,
+                                          arguments: {
+                                            'product': reportsController
+                                                .productsWithQuantity[index]
+                                                .product,
+                                            'wareName': ware.name
+                                          });
                                     },
+                                    child: TableDetailsItem(
+                                      rowCells: {
+                                        reportsController
+                                            .productsWithQuantity[index]
+                                            .product
+                                            .name: 1,
+                                        reportsController
+                                            .productsWithQuantity[index]
+                                            .quantity
+                                            .toString(): 1
+                                      },
+                                    ),
                                   );
                                 },
                                 separatorBuilder: (context, index) =>
