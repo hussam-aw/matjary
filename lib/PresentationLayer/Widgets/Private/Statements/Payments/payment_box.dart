@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_screen_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_styles.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
@@ -32,6 +34,10 @@ class PaymentBox extends StatelessWidget {
             statementTypeIcon:
                 paymentScreenController.getPaymenetTypeIcon(payment.type),
             statementType: paymentScreenController.getPaymentType(payment.type),
+            onTap: () {
+              Get.toNamed(AppRoutes.createEditPaymentScreen,
+                  arguments: {'payment': payment});
+            },
           ),
           Expanded(
             flex: 5,
@@ -64,7 +70,7 @@ class PaymentBox extends StatelessWidget {
                   ),
                   spacerHeight(height: 8),
                   Text(
-                    payment.getDateString(payment.date),
+                    DateFormatter.getDateString(payment.date),
                     softWrap: true,
                     style: UITextStyle.normalSmall.copyWith(
                       color: UIColors.titleNoteText,
