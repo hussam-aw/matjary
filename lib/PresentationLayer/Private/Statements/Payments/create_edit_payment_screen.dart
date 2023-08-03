@@ -7,6 +7,7 @@ import 'package:matjary/BussinessLayer/Controllers/payment_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payment_screen_controller.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/payment.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
@@ -28,12 +29,15 @@ class CreateEditPaymentScreen extends StatelessWidget {
   final paymentScreenController = Get.put(PaymentScreenController());
   final accountsController = Get.find<AccountsController>();
 
-  var paymentType = Get.arguments;
+  var paymentType = Get.arguments['paymentType'];
+  Payment? payment = Get.arguments['payment'];
 
   @override
   Widget build(BuildContext context) {
-    paymentScreenController.setPaymentType(paymentType);
-    paymentController.setPaymentType(paymentType);
+    paymentScreenController.setDefaultFields(
+        payment: payment, paymentType: paymentType);
+    paymentController.setDefaultFields(
+        payment: payment, paymentType: paymentType);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -74,7 +78,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                           paymentScreenController
                                               .paymentTypes[0]);
 
-                                      paymentController.setPaymentType(
+                                      paymentController.setCounterPaymentType(
                                           paymentScreenController
                                               .paymentTypes[0]);
                                     },
@@ -93,7 +97,7 @@ class CreateEditPaymentScreen extends StatelessWidget {
                                           paymentScreenController
                                               .paymentTypes[1]);
 
-                                      paymentController.setPaymentType(
+                                      paymentController.setCounterPaymentType(
                                           paymentScreenController
                                               .paymentTypes[1]);
                                     },
@@ -216,15 +220,19 @@ class CreateEditPaymentScreen extends StatelessWidget {
                 spacerHeight(),
                 Obx(() {
                   return AcceptButton(
-                    text: 'حفظ',
+                    text: payment != null ? 'تعديل' : 'حفظ',
                     onPressed: () async {
-                      await paymentController.createPayment();
-                      if (paymentController.savingState) {
-                        Get.dialog(
-                          const SuccessSavingOptionsMenu(
-                            createButtonText: 'إنشاء دفعة جديدة',
-                          ),
-                        );
+                      if (payment != null) {
+                        await paymentController.updatePayment(payment!.id);
+                      } else {
+                        await paymentController.createPayment();
+                        if (paymentController.savingState) {
+                          Get.dialog(
+                            const SuccessSavingOptionsMenu(
+                              createButtonText: 'إنشاء دفعة جديدة',
+                            ),
+                          );
+                        }
                       }
                     },
                     isLoading: paymentController.loading.value,
