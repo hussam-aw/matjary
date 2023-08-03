@@ -1,6 +1,7 @@
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 
 class Payment {
+  int id;
   String type;
   Account counterParty;
   Account bank;
@@ -9,6 +10,7 @@ class Payment {
   DateTime date;
 
   Payment({
+    required this.id,
     required this.type,
     required this.counterParty,
     required this.bank,
@@ -19,6 +21,7 @@ class Payment {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      "id": id,
       "type": type,
       "account_id": counterParty,
       "bank_id": bank,
@@ -30,6 +33,7 @@ class Payment {
 
   factory Payment.fromMap(Map<String, dynamic> map) {
     return Payment(
+      id: map['id'],
       type: map["type"],
       counterParty: Account.fromMap(map["first_side"]),
       bank: Account.fromMap(map["other_side"]),
@@ -37,9 +41,5 @@ class Payment {
       statement: map["statement"] ?? '',
       date: DateTime.parse(map['date']),
     );
-  }
-
-  String getDateString(DateTime date) {
-    return "${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day}";
   }
 }
