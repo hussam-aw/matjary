@@ -1,14 +1,19 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/earn_expense_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/earn_expense_screen_controller.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
+import 'package:matjary/DataAccesslayer/Models/statement_with_type.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
@@ -26,8 +31,12 @@ class CreateEarnExpenseScreen extends StatelessWidget {
   final earnExpenseScreenController = Get.put(EarnExapenseScreenController());
   final earnExpenseController = Get.find<EarnExpenseController>();
 
+  StatementWithType? statement = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
+    earnExpenseScreenController.setDefaultFields(statement: statement);
+    earnExpenseController.setDefaultFields(statement: statement);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -39,7 +48,44 @@ class CreateEarnExpenseScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
             child: Column(
               children: [
-                const PageTitle(title: 'إيراد | مصروف'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      child: PageTitle(title: 'إيراد | مصروف'),
+                    ),
+                    if (statement != null)
+                      InkWell(
+                        onTap: () {
+                          Get.dialog(
+                            CustomDialog(
+                              title: 'هل تريد حذف القيد؟',
+                              acceptButton: Obx(() {
+                                return AcceptButton(
+                                  text: 'حذف',
+                                  backgroundColor: UIColors.red,
+                                  onPressed: () async {
+                                    await earnExpenseController
+                                        .deleteStatement(statement!.id);
+                                    Get.until((route) =>
+                                        route.settings.name ==
+                                        AppRoutes.earnsExpensesScreen);
+                                  },
+                                  isLoading:
+                                      earnExpenseController.loading.value,
+                                );
+                              }),
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          size: 30,
+                          color: UIColors.primary,
+                        ),
+                      ),
+                  ],
+                ),
                 spacerHeight(height: 22),
                 Expanded(
                   child: SingleChildScrollView(
@@ -68,9 +114,10 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                                               earnExpenseScreenController
                                                   .statementTypes[0]);
 
-                                      earnExpenseController.setStatementType(
-                                          earnExpenseScreenController
-                                              .statementTypes[0]);
+                                      earnExpenseController
+                                          .setCounterStatementType(
+                                              earnExpenseScreenController
+                                                  .statementTypes[0]);
                                     },
                                   ),
                                   IconRadioItem(
@@ -88,9 +135,10 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                                               earnExpenseScreenController
                                                   .statementTypes[1]);
 
-                                      earnExpenseController.setStatementType(
-                                          earnExpenseScreenController
-                                              .statementTypes[1]);
+                                      earnExpenseController
+                                          .setCounterStatementType(
+                                              earnExpenseScreenController
+                                                  .statementTypes[1]);
                                     },
                                   ),
                                 ],
@@ -175,14 +223,20 @@ class CreateEarnExpenseScreen extends StatelessWidget {
                 ),
                 Obx(() {
                   return AcceptButton(
-                    text: 'حفظ',
+                    text: statement != null ? 'تعديل' : 'حفظ',
                     onPressed: () async {
-                      await earnExpenseController.createStatementBasedOnType();
-                      if (earnExpenseController.savingState) {
-                        Get.dialog(
-                          const SuccessSavingOptionsMenu(
-                              createButtonText: 'إنشاء ايراد أو مصروف جديد'),
-                        );
+                      if (statement != null) {
+                        await earnExpenseController
+                            .updateStatement(statement!.id);
+                      } else {
+                        await earnExpenseController
+                            .createStatementBasedOnType();
+                        if (earnExpenseController.savingState) {
+                          Get.dialog(
+                            const SuccessSavingOptionsMenu(
+                                createButtonText: 'إنشاء ايراد أو مصروف جديد'),
+                          );
+                        }
                       }
                     },
                     isLoading: earnExpenseController.loading.value,
