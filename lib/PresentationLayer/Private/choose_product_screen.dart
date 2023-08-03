@@ -40,7 +40,11 @@ class ChooseProductScreen extends StatelessWidget {
               return NormalBox(
                 title: productsList[index].name,
                 image: "assets/new_icons/product_ph.png",
-                onTap: () {},
+                onTap: screenMode != null
+                    ? () {
+                        Get.back(result: productsList[index]);
+                      }
+                    : () {},
                 onLongTap: () {
                   buildCustomBottomSheet(
                     ProductOptionsMenu(product: productsList[index]),
