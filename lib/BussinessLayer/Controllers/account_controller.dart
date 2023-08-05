@@ -5,7 +5,6 @@ import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
-import 'package:matjary/main.dart';
 
 class AccountController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -15,12 +14,13 @@ class AccountController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController mobilePhoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  String accountImage = '';
   AccountsRepo accountsRepo = AccountsRepo();
   AccountsController accountsController = Get.find<AccountsController>();
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
   var savingState = false;
-  bool accountStyleForInformation = false;
+
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
       return 0;
@@ -38,7 +38,6 @@ class AccountController extends GetxController {
   }
 
   int convertAccountStyleToNumber(style) {
-    print(style);
     if (style == 'حساب عادي') {
       return 0;
     } else if (style == 'صندوق') {
@@ -53,23 +52,6 @@ class AccountController extends GetxController {
       return 10;
     }
     return 5;
-  }
-
-  bool checkAccountStyleForInformation(style) {
-    switch (style) {
-      case 'حساب عادي':
-        return false;
-      case 'صندوق':
-        return false;
-      default:
-        return true;
-    }
-  }
-
-  void changeAccountStyle(style1) {
-    style = style1;
-    accountStyleForInformation = checkAccountStyleForInformation(style);
-    update();
   }
 
   String convertAccountStyleToString(int style) {
@@ -167,6 +149,10 @@ class AccountController extends GetxController {
     return addressController.text;
   }
 
+  void setSelectedAccountImage(path) {
+    accountImage = path;
+  }
+
   void setAcountDetails(Account? account) {
     if (account != null) {
       setAccountName(account.name);
@@ -198,8 +184,8 @@ class AccountController extends GetxController {
     String address = getAccountAddress();
     if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
       loading.value = true;
-      var account = await accountsRepo.createAccount(MyApp.appUser!.id, name,
-          balance, accounttype, accountStyle, email, address, mobileNumber);
+      var account = await accountsRepo.createAccount(name, balance, accounttype,
+          accountStyle, email, address, mobileNumber, accountImage);
       loading.value = false;
       if (account != null) {
         await accountsController.getAccounts();
@@ -222,7 +208,7 @@ class AccountController extends GetxController {
     if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
       loading.value = true;
       var account = await accountsRepo.updateAccount(
-          id, name, balance, accounttype, accountStyle);
+          id, name, balance, accounttype, accountStyle, accountImage);
       loading.value = false;
       if (account != null) {
         await accountsController.getAccounts();
