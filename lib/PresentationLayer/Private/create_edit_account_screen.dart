@@ -1,18 +1,23 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_screen_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
+import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/PresentationLayer/Widgets/Private/success_saving_options_menu.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/accept_icon_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dropdown_form_field.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_image_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
@@ -32,12 +37,7 @@ class CreateEditAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (account != null) {
-      accountScreenController.setAccountType(
-          accountController.convertAccountTypeToString(account!.type));
-    } else {
-      accountController.changeAccountStyle("حساب عادي");
-    }
+    accountScreenController.setAcountDetails(account);
     accountController.setAcountDetails(account);
 
     return Directionality(
@@ -195,39 +195,94 @@ class CreateEditAccountScreen extends StatelessWidget {
                                   'مسوق'
                                 ],
                                 onChanged: (value) {
-                                  accountController.changeAccountStyle(value);
+                                  accountScreenController
+                                      .changeAccountStyleForInformation(value);
+                                  accountController.setAccountStyle(value);
                                 },
                               ),
                               spacerHeight(),
-                              if (accountController.accountStyleForInformation)
-                                Column(
-                                  children: [
-                                    CustomTextFormField(
-                                      controller:
-                                          accountController.emailController,
-                                      keyboardType: TextInputType.emailAddress,
-                                      hintText: 'البريد الالكتروني',
-                                    ),
-                                    spacerHeight(),
-                                    CustomTextFormField(
-                                      controller: accountController
-                                          .mobilePhoneController,
-                                      keyboardType: TextInputType.number,
-                                      hintText: 'الرقم',
-                                      formatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d+\.?\d{0,2}'))
-                                      ],
-                                    ),
-                                    spacerHeight(),
-                                    CustomTextFormField(
-                                      controller:
-                                          accountController.addressController,
-                                      keyboardType: TextInputType.streetAddress,
-                                      hintText: 'العنوان',
-                                    ),
-                                  ],
-                                )
+                              GetBuilder(
+                                  init: accountScreenController,
+                                  builder: (context) {
+                                    return accountScreenController
+                                            .accountStyleForInformation
+                                        ? Column(
+                                            children: [
+                                              CustomTextFormField(
+                                                controller: accountController
+                                                    .emailController,
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                hintText: 'البريد الالكتروني',
+                                              ),
+                                              spacerHeight(),
+                                              CustomTextFormField(
+                                                controller: accountController
+                                                    .mobilePhoneController,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                hintText: 'الرقم',
+                                                formatters: [
+                                                  FilteringTextInputFormatter
+                                                      .allow(RegExp(
+                                                          r'^\d+\.?\d{0,2}'))
+                                                ],
+                                              ),
+                                              spacerHeight(),
+                                              CustomTextFormField(
+                                                controller: accountController
+                                                    .addressController,
+                                                keyboardType:
+                                                    TextInputType.streetAddress,
+                                                hintText: 'العنوان',
+                                              ),
+                                              spacerHeight(),
+                                              Obx(() {
+                                                return accountScreenController
+                                                        .selectedAccountImage
+                                                        .value
+                                                        .isEmpty
+                                                    ? account != null &&
+                                                            account!.avatar!
+                                                                .isNotEmpty
+                                                        ? CustomImageContainer(
+                                                            image: NetworkImage(
+                                                                account!.avatar
+                                                                    .toString()),
+                                                          )
+                                                        : Container()
+                                                    : CustomImageContainer(
+                                                        image: FileImage(File(
+                                                            accountScreenController
+                                                                .selectedAccountImage
+                                                                .value)),
+                                                      );
+                                              }),
+                                              spacerHeight(),
+                                              AcceptIconButton(
+                                                center: true,
+                                                text: Text(
+                                                  'صورة الحساب',
+                                                  style: UITextStyle.normalBody
+                                                      .copyWith(
+                                                    color: UIColors.menuTitle,
+                                                  ),
+                                                ),
+                                                icon: const Icon(
+                                                  FontAwesomeIcons.images,
+                                                  size: 20,
+                                                  color: UIColors.mainIcon,
+                                                ),
+                                                backgroundColor: UIColors.white,
+                                                onPressed: () async {
+                                                  accountScreenController
+                                                      .selectAccountImage();
+                                                },
+                                              ),
+                                            ],
+                                          )
+                                        : Container();
+                                  })
                             ],
                           ),
                         ),
@@ -240,6 +295,8 @@ class CreateEditAccountScreen extends StatelessWidget {
                   () => AcceptButton(
                     text: account != null ? "تعديل" : "إنشاء",
                     onPressed: () async {
+                      accountController.setSelectedAccountImage(
+                          accountScreenController.selectedAccountImage.value);
                       if (account != null) {
                         await accountController.updateAccount(account!.id);
                       } else {
