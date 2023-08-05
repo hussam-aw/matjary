@@ -42,6 +42,7 @@ class AccountsController extends GetxController {
     getSupplierAccounts();
     getMarketerAccounts();
     getCustomersAccounts();
+    getPinnedAccounts();
     isLoadingAccounts.value = false;
   }
 
@@ -69,7 +70,6 @@ class AccountsController extends GetxController {
         .where((account) =>
             account.style == 2 || account.style == 3 || account.style == 10)
         .toList();
-    print(customersAccounts);
     update();
   }
 
