@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +41,18 @@ class CreateEditAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    accountScreenController.setAcountDetails(account);
+    if (account != null) {
+      accountScreenController.setAccountType(
+          accountController.convertAccountTypeToString(account!.type));
+    } else {
+      if (accountsController.swapStyle != "" &&
+          accountsController.swapStyle != null) {
+        accountController.changeAccountStyle(accountsController.swapStyle);
+        print('changing  ${accountsController.swapStyle!}');
+      } else {
+        //accountController.changeAccountStyle("حساب عادي");
+      }
+    }
     accountController.setAcountDetails(account);
 
     return Directionality(
@@ -197,6 +209,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                                   'مسوق'
                                 ],
                                 onChanged: (value) {
+                                  
                                   accountScreenController
                                       .changeAccountStyleForInformation(value);
                                   accountController.setAccountStyle(value);
@@ -206,7 +219,7 @@ class CreateEditAccountScreen extends StatelessWidget {
                               GetBuilder(
                                   init: accountScreenController,
                                   builder: (context) {
-                                    return accountScreenController
+                                    return accountController
                                             .accountStyleForInformation
                                         ? Column(
                                             children: [

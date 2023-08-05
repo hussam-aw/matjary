@@ -20,7 +20,7 @@ class AccountController extends GetxController {
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
   var savingState = false;
-
+  bool accountStyleForInformation = false;
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
       return 0;
@@ -71,6 +71,35 @@ class AccountController extends GetxController {
     return '';
   }
 
+  void changeAccountStyle(style1) {
+    if (style1 == 'customers' || style1 == 'employers') {
+      style = 'زبون';
+      accountStyleForInformation = true;
+    } else if (style1 == 'marketer') {
+      style = 'مسوق';
+      accountStyleForInformation = true;
+    } else if (style1 == 'bank') {
+      style = 'صندوق';
+      accountStyleForInformation = false;
+    } else {
+      style = style1;
+      accountStyleForInformation = checkAccountStyleForInformation(style);
+    }
+    print(accountStyleForInformation);
+    update();
+  }
+
+  bool checkAccountStyleForInformation(style) {
+    switch (style) {
+      case 'حساب عادي':
+        return false;
+      case 'صندوق':
+        return false;
+      default:
+        return true;
+    }
+  }
+
   void setAccountName(name) {
     if (name.isNotEmpty) {
       nameController.value = TextEditingValue(text: name);
@@ -108,6 +137,8 @@ class AccountController extends GetxController {
 
   void setAccountStyle(accountStyle) {
     style = accountStyle;
+    accountStyleForInformation = checkAccountStyleForInformation(accountStyle);
+    update();
   }
 
   int getAccountStyle() {
