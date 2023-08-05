@@ -19,6 +19,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/custom_image_container.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
@@ -251,40 +252,22 @@ class CreateEditProductScreen extends StatelessWidget {
                                         .selectedImages.isEmpty
                                     ? product != null &&
                                             product!.images.isNotEmpty
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: 100,
-                                                child: ListView.separated(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Container(
-                                                      width: 100,
-                                                      height: 100,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: raduis15,
-                                                        image: DecorationImage(
-                                                            image: NetworkImage(
-                                                                product!.images[
-                                                                    index]),
-                                                            fit: BoxFit.cover),
-                                                      ),
-                                                    );
-                                                  },
-                                                  separatorBuilder:
-                                                      (context, index) {
-                                                    return spacerWidth();
-                                                  },
-                                                  itemCount:
-                                                      product!.images.length,
-                                                ),
-                                              ),
-                                              spacerHeight(),
-                                            ],
+                                        ? SizedBox(
+                                            height: 100,
+                                            child: ListView.separated(
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index) {
+                                                return CustomImageContainer(
+                                                  image: NetworkImage(
+                                                      product!.images[index]),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (context, index) {
+                                                return spacerWidth();
+                                              },
+                                              itemCount: product!.images.length,
+                                            ),
                                           )
                                         : Container()
                                     : Column(
@@ -294,19 +277,11 @@ class CreateEditProductScreen extends StatelessWidget {
                                             child: ListView.separated(
                                               scrollDirection: Axis.horizontal,
                                               itemBuilder: (context, index) {
-                                                return Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: raduis15,
-                                                    image: DecorationImage(
-                                                        image: FileImage(File(
-                                                            productScreenController
-                                                                    .selectedImages[
-                                                                index])),
-                                                        fit: BoxFit.cover),
-                                                  ),
-                                                );
+                                                return CustomImageContainer(
+                                                    image: FileImage(File(
+                                                        productScreenController
+                                                                .selectedImages[
+                                                            index])));
                                               },
                                               separatorBuilder:
                                                   (context, index) {
@@ -316,11 +291,11 @@ class CreateEditProductScreen extends StatelessWidget {
                                                   .selectedImages.length,
                                             ),
                                           ),
-                                          spacerHeight(),
                                         ],
                                       );
                               },
                             ),
+                            spacerHeight(),
                             AcceptIconButton(
                               center: true,
                               text: Text(
