@@ -48,4 +48,6 @@ class AppRoutes {
   static const chooseUserScreen = '/home/chooseUserScreen';
   static const settingsScreen = '/home/settingsScreen';
   static const storeIconScreen = '/settingsScreen/storeIconScreen';
+  static const notificationsScreen = '/home/notifications';
+  static const reportsScreen = '/home/reports';
 }

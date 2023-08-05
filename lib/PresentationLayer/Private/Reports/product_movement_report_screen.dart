@@ -50,7 +50,7 @@ class ProductMovementReportScreen extends StatelessWidget {
                 spacerHeight(height: 22),
                 const TableTitles(
                   isDecorated: true,
-                  titles: ["الكمية", "البيان", "", "المستودع"],
+                  titles: ["الكمية", "البيان", "", "", "المستودع"],
                 ),
                 spacerHeight(height: 22),
                 Expanded(
@@ -103,14 +103,14 @@ class ProductMovementReportScreen extends StatelessWidget {
                                                       .productMovements[index]
                                                       .quantity
                                                       .toString(),
-                                                  style: UITextStyle.normalBody,
+                                                  style: UITextStyle.boldBody,
                                                 )
                                               ],
                                             ): 1,
                                             reportsController
                                                 .productMovements[index]
                                                 .statement
-                                                .toString(): 3,
+                                                .toString(): 4,
                                             reportsController
                                                 .productMovements[index].ware
                                                 .toString(): 1

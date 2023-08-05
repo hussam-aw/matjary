@@ -6,8 +6,11 @@ import 'package:matjary/PresentationLayer/Auth/register_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/create_ware_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/product_movement_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/product_qty_report_screen.dart';
+import 'package:matjary/PresentationLayer/Private/Reports/product_report_screen.dart';
+import 'package:matjary/PresentationLayer/Private/Reports/reports_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/single_ware_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Reports/wares_report_screen.dart';
+import 'package:matjary/PresentationLayer/Private/Settings/settings_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Settings/store_icon_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Statements/AccountStatements/account_statement_print_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Statements/AccountStatements/account_statement_screen.dart';
@@ -15,27 +18,26 @@ import 'package:matjary/PresentationLayer/Private/Statements/AccountStatements/a
 import 'package:matjary/PresentationLayer/Private/Statements/EarnsExpenses/create_earn_expense_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Statements/EarnsExpenses/earns_expenses_screen.dart';
 import 'package:matjary/PresentationLayer/Private/Statements/Payments/create_edit_payment_screen.dart';
-import 'package:matjary/PresentationLayer/Private/choose_user_screen.dart';
-import 'package:matjary/PresentationLayer/Private/create_edit_user_screen.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
+import 'package:matjary/PresentationLayer/Private/Statements/Payments/payments_screen.dart';
+import 'package:matjary/PresentationLayer/Private/Statements/create_statement.dart';
 import 'package:matjary/PresentationLayer/Private/choose_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_category_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_product_screen.dart';
+import 'package:matjary/PresentationLayer/Private/choose_user_screen.dart';
 import 'package:matjary/PresentationLayer/Private/choose_ware_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_account_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_category_screen.dart';
-import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/create_edit_order_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_product_screen.dart';
+import 'package:matjary/PresentationLayer/Private/create_edit_user_screen.dart';
 import 'package:matjary/PresentationLayer/Private/create_edit_ware.dart';
-import 'package:matjary/PresentationLayer/Private/Statements/create_statement.dart';
+import 'package:matjary/PresentationLayer/Private/notifications_screen.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/create_edit_order_screen.dart';
+import 'package:matjary/PresentationLayer/Private/orders/create_edit_order/select_products_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/order_details_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/order_print_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/order_screen.dart';
 import 'package:matjary/PresentationLayer/Private/orders/orders_screen.dart';
-import 'package:matjary/PresentationLayer/Private/Statements/Payments/payments_screen.dart';
-import 'package:matjary/PresentationLayer/Private/Reports/product_report_screen.dart';
 import 'package:matjary/PresentationLayer/Private/profile_screen.dart';
-import 'package:matjary/PresentationLayer/Private/Settings/settings_screen.dart';
 import 'package:matjary/PresentationLayer/Public/home_screen.dart';
 import 'package:matjary/PresentationLayer/Public/introduction.dart';
 
@@ -121,4 +123,12 @@ List<GetPage<dynamic>> getPages = [
   GetPage(name: AppRoutes.chooseUserScreen, page: () => ChooseUserScreen()),
   GetPage(name: AppRoutes.settingsScreen, page: () => SettingsScreen()),
   GetPage(name: AppRoutes.storeIconScreen, page: () => StoreIconScreen()),
+  GetPage(
+      name: AppRoutes.notificationsScreen,
+      page: () => const NotificationsScreen(),
+      transition: Transition.circularReveal),
+  GetPage(
+      name: AppRoutes.reportsScreen,
+      page: () => const ReportsScreen(),
+      transition: Transition.leftToRightWithFade),
 ];

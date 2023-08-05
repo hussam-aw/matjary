@@ -21,7 +21,8 @@ class TableDetailsItem extends StatelessWidget {
               child: Text(
                 key,
                 //overflow: TextOverflow.ellipsis,
-                style: UITextStyle.normalBody,
+                style: UITextStyle.normalBody
+                    .apply(fontSizeFactor: .8, heightFactor: 1.5),
               ),
             ),
           ));

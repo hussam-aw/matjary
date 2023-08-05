@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -29,10 +31,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
               child: IconButton(
                 icon: const Icon(
                   size: 28,
-                  FontAwesomeIcons.fileInvoice,
+                  FontAwesomeIcons.bell,
                   color: UIColors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoutes.notificationsScreen);
+                },
               ),
             ),
             const Expanded(child: Text('')),
@@ -40,20 +44,24 @@ class CustomBottomNavigationBar extends StatelessWidget {
               child: IconButton(
                 icon: const Icon(
                   size: 28,
-                  Ionicons.person,
+                  Ionicons.analytics,
                   color: UIColors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoutes.reportsScreen);
+                },
               ),
             ),
             Expanded(
               child: IconButton(
                 icon: const Icon(
                   size: 28,
-                  Ionicons.analytics,
+                  Ionicons.person,
                   color: UIColors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoutes.profileScreen);
+                },
               ),
             ),
           ],

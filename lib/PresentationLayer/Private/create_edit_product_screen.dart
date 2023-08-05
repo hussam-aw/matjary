@@ -22,6 +22,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_icon_button.dart
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_group.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_radio_item.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_text_form_field.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/divider.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -96,6 +97,17 @@ class CreateEditProductScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SectionTitle(title: 'المعلومات الأساسية'),
+                            spacerHeight(
+                              height: 30,
+                            ),
+                            Text(
+                              "التسمية والتصنيف",
+                              style: UITextStyle.normalBody
+                                  .apply(color: Colors.white.withOpacity(.2)),
+                            ),
+                            const divider(
+                              thickness: 1,
+                            ),
                             spacerHeight(),
                             CustomTextFormField(
                               controller: productController.nameController,
@@ -129,10 +141,19 @@ class CreateEditProductScreen extends StatelessWidget {
                               ],
                             ),
                             spacerHeight(),
+                            Text(
+                              "محددات رأس المال",
+                              style: UITextStyle.normalBody
+                                  .apply(color: Colors.white.withOpacity(.2)),
+                            ),
+                            const divider(
+                              thickness: 1,
+                            ),
+                            spacerHeight(),
                             CustomTextFormField(
                               controller: productController.priceController,
                               keyboardType: TextInputType.number,
-                              hintText: 'مبلغ الكلفة الحالي (الافتراضي 0)',
+                              hintText: 'مبلغ التكلفة الحالي (الافتراضي 0 )',
                               formatters: [
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'^\d+\.?\d{0,2}'))
@@ -143,13 +164,22 @@ class CreateEditProductScreen extends StatelessWidget {
                               controller: productController.quantityController,
                               keyboardType: TextInputType.number,
                               hintText:
-                                  'الكمية الابتدائية (الجرد الأولي) (الكمية الابتدائية 0)',
+                                  'الكمية الموجودة في المستودع (الجرد الأولي) (افتراضي 0)',
                               formatters: [
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'^\d+\.?\d{0,2}'))
                               ],
                             ),
                             spacerHeight(height: 20),
+                            Text(
+                              "محددات الأسعار",
+                              style: UITextStyle.normalBody
+                                  .apply(color: Colors.white.withOpacity(.2)),
+                            ),
+                            const divider(
+                              thickness: 1,
+                            ),
+                            spacerHeight(),
                             const SectionTitle(title: 'يتأثر بتغيرات الصرف'),
                             spacerHeight(),
                             GetBuilder(
@@ -193,7 +223,9 @@ class CreateEditProductScreen extends StatelessWidget {
                                   );
                                 }),
                             spacerHeight(height: 20),
-                            const SectionTitle(title: 'أسعار البيع'),
+                            const SectionTitle(
+                                title:
+                                    ' أسعار البيع ( التعرف التلقائي أثناء إنشاء الفواتير )'),
                             spacerHeight(),
                             Row(
                               children: [

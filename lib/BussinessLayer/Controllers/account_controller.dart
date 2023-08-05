@@ -67,8 +67,20 @@ class AccountController extends GetxController {
   }
 
   void changeAccountStyle(style1) {
-    style = style1;
-    accountStyleForInformation = checkAccountStyleForInformation(style);
+    if (style1 == 'customers' || style1 == 'employers') {
+      style = 'زبون';
+      accountStyleForInformation = true;
+    } else if (style1 == 'marketer') {
+      style = 'مسوق';
+      accountStyleForInformation = true;
+    } else if (style1 == 'bank') {
+      style = 'صندوق';
+      accountStyleForInformation = false;
+    } else {
+      style = style1;
+      accountStyleForInformation = checkAccountStyleForInformation(style);
+    }
+
     update();
   }
 
@@ -116,6 +128,7 @@ class AccountController extends GetxController {
   }
 
   void setAccountType(accountType) {
+    print(type);
     type = accountType;
   }
 
@@ -180,7 +193,10 @@ class AccountController extends GetxController {
       setAccountName('');
       setAccountBalance('');
       setAccountType('مدين');
-      setAccountStyle('حساب عادي');
+      if (style == null || style == '') {
+        setAccountStyle('حساب عادي');
+      }
+
       setAccountEmail('');
       setAccountMobilePhone('');
       setAccountAddress('');

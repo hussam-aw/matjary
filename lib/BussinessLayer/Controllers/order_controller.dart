@@ -85,6 +85,7 @@ class OrderController extends GetxController {
     counterPartyAccount = account;
     counterPartyController.value =
         TextEditingValue(text: account != null ? account.name : '');
+    update();
   }
 
   void setBankAccount(Account? account) {

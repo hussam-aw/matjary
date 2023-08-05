@@ -45,12 +45,11 @@ class ChooseAccountScreen extends StatelessWidget {
                 onTap: () {
                   if (screenMode != null) {
                     Get.back(result: accountList[index]);
+                  } else {
+                    buildCustomBottomSheet(
+                      AccountOptionsMenu(account: accountList[index]),
+                    );
                   }
-                },
-                onLongTap: () {
-                  buildCustomBottomSheet(
-                    AccountOptionsMenu(account: accountList[index]),
-                  );
                 },
               );
             },
@@ -136,6 +135,7 @@ class ChooseAccountScreen extends StatelessWidget {
             backgroundColor: UIColors.primary,
             iconColor: UIColors.white,
             onPressed: () {
+              accountsController.changeSwapStyle(accountStyle);
               Get.toNamed(AppRoutes.createEditAccountScreen);
             },
           ),

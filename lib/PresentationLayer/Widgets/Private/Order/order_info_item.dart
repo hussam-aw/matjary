@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
@@ -21,14 +22,15 @@ class OrderInfoItem extends StatelessWidget {
             itemTitle,
             softWrap: true,
             //overflow: TextOverflow.ellipsis,
-            style: UITextStyle.normalBody,
+            style: UITextStyle.normalBody.apply(
+                fontSizeFactor: .8, color: UIColors.white.withOpacity(.7)),
           ),
           spacerHeight(),
           Text(
             itemText,
             softWrap: true,
             //overflow: TextOverflow.ellipsis,
-            style: UITextStyle.normalBody,
+            style: UITextStyle.boldBody,
           ),
         ],
       ),

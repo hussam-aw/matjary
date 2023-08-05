@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -21,10 +23,13 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
+import '../../BussinessLayer/Controllers/accounts_controller.dart';
+
 class CreateEditAccountScreen extends StatelessWidget {
   CreateEditAccountScreen({super.key});
 
   final AccountController accountController = Get.put(AccountController());
+  final AccountsController accountsController = Get.find<AccountsController>();
   final AccountScreenController accountScreenController =
       Get.put(AccountScreenController());
   final homeController = Get.find<HomeController>();
@@ -36,7 +41,12 @@ class CreateEditAccountScreen extends StatelessWidget {
       accountScreenController.setAccountType(
           accountController.convertAccountTypeToString(account!.type));
     } else {
-      accountController.changeAccountStyle("حساب عادي");
+      if (accountsController.swapStyle != "" &&
+          accountsController.swapStyle != null) {
+        accountController.changeAccountStyle(accountsController.swapStyle);
+      } else {
+        accountController.changeAccountStyle("حساب عادي");
+      }
     }
     accountController.setAcountDetails(account);
 
@@ -65,11 +75,10 @@ class CreateEditAccountScreen extends StatelessWidget {
                               accountController
                                   .pinAccountToHomeScreen(account!.id);
                             },
-                            child: const Icon(
-                              Icons.check,
-                              size: 30,
-                              color: UIColors.primary,
-                            ),
+                            child: const Icon(Icons.pin_invoke,
+                                size: 30,
+                                color: UIColors.primary,
+                                semanticLabel: "ثتبيت"),
                           ),
                           spacerWidth(),
                           InkWell(
@@ -195,6 +204,23 @@ class CreateEditAccountScreen extends StatelessWidget {
                                   'مسوق'
                                 ],
                                 onChanged: (value) {
+                                  if (value == 'صندوق' ||
+                                      value == 'زبون' ||
+                                      value == 'حساب عادي') {
+                                    accountScreenController.setAccountType(
+                                        accountScreenController
+                                            .accountTypes[0]);
+                                    accountController.setAccountType(
+                                        accountScreenController
+                                            .accountTypes[0]);
+                                  } else {
+                                    accountScreenController.setAccountType(
+                                        accountScreenController
+                                            .accountTypes[1]);
+                                    accountController.setAccountType(
+                                        accountScreenController
+                                            .accountTypes[1]);
+                                  }
                                   accountController.changeAccountStyle(value);
                                 },
                               ),

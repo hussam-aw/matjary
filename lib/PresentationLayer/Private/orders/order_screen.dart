@@ -17,6 +17,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_dialog.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/divider.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/page_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
@@ -136,7 +137,12 @@ class OrderScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  spacerHeight(height: 30),
+                                  spacerHeight(),
+                                  divider(
+                                    thickness: 1,
+                                    color: UIColors.white.withOpacity(.2),
+                                  ),
+                                  spacerHeight(),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -153,7 +159,12 @@ class OrderScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  spacerHeight(height: 30),
+                                  spacerHeight(),
+                                  divider(
+                                    thickness: 1,
+                                    color: UIColors.white.withOpacity(.2),
+                                  ),
+                                  spacerHeight(),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -165,15 +176,20 @@ class OrderScreen extends StatelessWidget {
                                             .toString(),
                                       ),
                                       OrderInfoItem(
-                                        itemTitle: 'مرتبطة بالمسوق',
+                                        itemTitle: 'المسوق',
                                         itemText: order.marketerId != null
                                             ? accountsController.getAccountName(
                                                 order.marketerId!)
-                                            : '---------',
+                                            : 'لا يوجد مسوق',
                                       ),
                                     ],
                                   ),
-                                  spacerHeight(height: 30),
+                                  spacerHeight(),
+                                  divider(
+                                    thickness: 1,
+                                    color: UIColors.white.withOpacity(.2),
+                                  ),
+                                  spacerHeight(),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,

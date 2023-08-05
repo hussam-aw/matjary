@@ -95,7 +95,7 @@ class OrderProductBox extends StatelessWidget {
           ),
           spacerWidth(),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Column(
               children: [
                 Text(
@@ -113,7 +113,7 @@ class OrderProductBox extends StatelessWidget {
                     totalPrice.toStringAsFixed(1),
                     softWrap: true,
                     //overflow: TextOverflow.ellipsis,
-                    style: UITextStyle.normalMeduim.copyWith(
+                    style: UITextStyle.boldMeduim.copyWith(
                       color: textColor,
                     ),
                   ),
