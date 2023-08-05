@@ -50,7 +50,7 @@ class AccountStatementTypeScreen extends StatelessWidget {
                         accountName: account!.name,
                         accountType: accountController
                             .convertAccountStyleToString(account!.style),
-                        accountImage: 'assets/images/user.png',
+                        accountImage: account!.avatar.toString(),
                       ),
                       spacerHeight(height: 22),
                       Obx(() {

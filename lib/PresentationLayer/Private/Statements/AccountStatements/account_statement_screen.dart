@@ -48,7 +48,7 @@ class AccountStatementScreen extends StatelessWidget {
                         accountName: account.name,
                         accountType: accountController
                             .convertAccountTypeToString(account.type),
-                        accountImage: 'assets/images/user.png',
+                        accountImage: account.avatar.toString(),
                       ),
                       spacerHeight(height: 22),
                       Align(

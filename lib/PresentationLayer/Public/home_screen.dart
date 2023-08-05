@@ -345,8 +345,9 @@ class HomeScreen extends StatelessWidget {
                                         },
                                         customerName: accountsController
                                             .pinnedAccounts[index].name,
-                                        customerImage:
-                                            'assets/new_icons/client_ph.png',
+                                        customerImage: accountsController
+                                            .pinnedAccounts[index].avatar
+                                            .toString(),
                                         customerStatus: accountController
                                             .convertAccountStyleToString(
                                                 accountsController
