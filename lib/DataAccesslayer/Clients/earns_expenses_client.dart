@@ -18,19 +18,18 @@ class EarnsExpensesClient {
 
   Future<dynamic> createStatementBasedOnType(
       type, statement, amount, bankId, date) async {
-    var response = await http.post(Uri.parse('$baseUrl$earnExpenseLink'),
+    var response = await http.post(Uri.parse('$baseUrl$statementLink'),
         body: jsonEncode(<String, dynamic>{
           "type": type,
           "statement": statement,
           "amount": amount,
           "bank_id": bankId,
           "date": date,
-          "company_id": MyApp.appUser!.companyId,
+          "user_id": MyApp.appUser!.companyId,
         }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -40,6 +39,7 @@ class EarnsExpensesClient {
 
   Future<dynamic> updateStatement(
       id, type, statement, amount, bankId, date) async {
+    print(date);
     var response = await http.post(Uri.parse('$baseUrl$statementLink/$id'),
         body: jsonEncode(<String, dynamic>{
           "type": type,
