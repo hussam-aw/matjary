@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 import 'package:matjary/DataAccesslayer/Clients/accounts_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
-import 'package:matjary/DataAccesslayer/Models/bank_account.dart';
-import 'package:matjary/DataAccesslayer/Models/client_account.dart';
 
 class AccountsRepo {
   AccountsClient client = AccountsClient();
@@ -17,29 +14,29 @@ class AccountsRepo {
     return [];
   }
 
-  Future<List<Account>> getBankAccounts() async {
-    var response = await client.getBankAccounts();
-    if (response != "") {
-      final parsed = json.decode(response).cast<Map<String, dynamic>>();
+  // Future<List<Account>> getBankAccounts() async {
+  //   var response = await client.getBankAccounts();
+  //   if (response != "") {
+  //     final parsed = json.decode(response).cast<Map<String, dynamic>>();
 
-      return parsed
-          .map<BankAccount>((json) => BankAccount.fromMap(json))
-          .toList();
-    }
-    return [];
-  }
+  //     return parsed
+  //         .map<BankAccount>((json) => BankAccount.fromMap(json))
+  //         .toList();
+  //   }
+  //   return [];
+  // }
 
-  Future<List<Account>> getClientAccounts() async {
-    var response = await client.getClientAccounts();
-    if (response != "") {
-      final parsed = json.decode(response).cast<Map<String, dynamic>>();
+  // Future<List<Account>> getClientAccounts() async {
+  //   var response = await client.getClientAccounts();
+  //   if (response != "") {
+  //     final parsed = json.decode(response).cast<Map<String, dynamic>>();
 
-      return parsed
-          .map<ClientAccount>((json) => ClientAccount.fromMap(json))
-          .toList();
-    }
-    return [];
-  }
+  //     return parsed
+  //         .map<ClientAccount>((json) => ClientAccount.fromMap(json))
+  //         .toList();
+  //   }
+  //   return [];
+  // }
 
   Future<double> getCashAmount() async {
     var response = await client.getCashAmount();
@@ -49,21 +46,21 @@ class AccountsRepo {
     return parsed.toDouble();
   }
 
-  Future<Account?> createAccount(
-      id, name, balance, type, style, email, address, mobileNumber) async {
+  Future<bool?> createAccount(
+      name, balance, type, style, email, address, mobileNumber, image) async {
     var createdAccount = await client.createAccount(
-        id, name, balance, type, style, email, address, mobileNumber);
+        name, balance, type, style, email, address, mobileNumber, image);
     if (createdAccount != null) {
-      return Account.fromMap(jsonDecode(createdAccount));
+      return true;
     }
     return null;
   }
 
-  Future<Account?> updateAccount(id, name, balance, type, style) async {
+  Future<bool?> updateAccount(id, name, balance, type, style, image) async {
     var updatedAccount =
-        await client.updateAccount(id, name, balance, type, style);
+        await client.updateAccount(id, name, balance, type, style, image);
     if (updatedAccount != null) {
-      return Account.fromMap(jsonDecode(updatedAccount));
+      return true;
     }
     return null;
   }
