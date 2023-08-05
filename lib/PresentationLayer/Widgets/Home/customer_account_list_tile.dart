@@ -40,7 +40,11 @@ class CustomerAccountListTile extends StatelessWidget {
                       CircleAvatar(
                         radius: 22,
                         backgroundColor: UIColors.menuTitle,
-                        backgroundImage: AssetImage(customerImage),
+                        backgroundImage: customerImage.isNotEmpty
+                            ? NetworkImage(customerImage.toString())
+                                as ImageProvider
+                            : const AssetImage(
+                                'assets/new_icons/client_ph.png'),
                       ),
                       spacerWidth(),
                       Expanded(

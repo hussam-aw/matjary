@@ -24,7 +24,10 @@ class AccountStatementHeader extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 32,
-          backgroundImage: AssetImage(accountImage),
+          backgroundColor: UIColors.circleAvatarBackground,
+          backgroundImage: accountImage.isNotEmpty
+              ? NetworkImage(accountImage) as ImageProvider
+              : const AssetImage('assets/images/user.png'),
         ),
         spacerWidth(),
         Expanded(
