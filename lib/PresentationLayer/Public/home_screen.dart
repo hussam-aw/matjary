@@ -18,6 +18,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/add_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/bottom_navigation_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_app_bar.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/custom_drawer.dart';
+import 'package:matjary/PresentationLayer/Widgets/Public/divider.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/amount_shimmer.dart';
@@ -305,8 +306,7 @@ class HomeScreen extends StatelessWidget {
                   height: 400,
                   child: Container(
                     width: Get.width,
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 35, right: 35),
+                    padding: const EdgeInsets.all(30),
                     decoration: const BoxDecoration(
                       color: UIColors.containerBackground,
                       borderRadius: raduis32top,
@@ -315,9 +315,16 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'حسابات العملاء',
+                          'الحسابات المثبتة',
                           softWrap: true,
                           style: UITextStyle.boldBody,
+                        ),
+                        spacerHeight(
+                          height: 10,
+                        ),
+                        divider(
+                          thickness: 1,
+                          color: UIColors.white.withOpacity(.2),
                         ),
                         spacerHeight(height: 20),
                         Expanded(

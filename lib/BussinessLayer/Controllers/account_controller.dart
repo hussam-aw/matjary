@@ -98,6 +98,7 @@ class AccountController extends GetxController {
   }
 
   void setAccountType(accountType) {
+    print(type);
     type = accountType;
   }
 
@@ -166,7 +167,10 @@ class AccountController extends GetxController {
       setAccountName('');
       setAccountBalance('');
       setAccountType('مدين');
-      setAccountStyle('حساب عادي');
+      if (style == null || style == '') {
+        setAccountStyle('حساب عادي');
+      }
+
       setAccountEmail('');
       setAccountMobilePhone('');
       setAccountAddress('');

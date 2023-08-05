@@ -26,10 +26,13 @@ import 'package:matjary/PresentationLayer/Widgets/Public/section_title.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 
+import '../../BussinessLayer/Controllers/accounts_controller.dart';
+
 class CreateEditAccountScreen extends StatelessWidget {
   CreateEditAccountScreen({super.key});
 
   final AccountController accountController = Get.put(AccountController());
+  final AccountsController accountsController = Get.find<AccountsController>();
   final AccountScreenController accountScreenController =
       Get.put(AccountScreenController());
   final homeController = Get.find<HomeController>();
@@ -65,11 +68,10 @@ class CreateEditAccountScreen extends StatelessWidget {
                               accountController
                                   .pinAccountToHomeScreen(account!.id);
                             },
-                            child: const Icon(
-                              Icons.check,
-                              size: 30,
-                              color: UIColors.primary,
-                            ),
+                            child: const Icon(Icons.pin_invoke,
+                                size: 30,
+                                color: UIColors.primary,
+                                semanticLabel: "ثتبيت"),
                           ),
                           spacerWidth(),
                           InkWell(

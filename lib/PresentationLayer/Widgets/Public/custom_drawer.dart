@@ -8,6 +8,7 @@ import 'package:matjary/BussinessLayer/Controllers/profile_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/store_settings_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
+import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/icon_shimmer.dart';
 import 'package:matjary/main.dart';
 
@@ -43,9 +44,12 @@ class CustomDrawer extends StatelessWidget {
                                     NetworkImage(MyApp.storeSettings!.icon),
                               );
                       }),
-                      accountName: Text(MyApp.appUser != null
-                          ? MyApp.appUser!.name
-                          : "App User"),
+                      accountName: Text(
+                        MyApp.appUser != null
+                            ? MyApp.appUser!.name
+                            : "App User",
+                        style: UITextStyle.boldMeduim,
+                      ),
                       accountEmail: Text(
                           MyApp.appUser != null ? MyApp.appUser!.email : ""),
                     );
@@ -66,11 +70,11 @@ class CustomDrawer extends StatelessWidget {
                   iconData: Icons.logout,
                   onTap: null,
                 ),
-              const DrawerListTile(
+              DrawerListTile(
                 title: "الرئيسية",
                 subtitle: "الواجهة الرئيسية للتطبيق",
                 iconData: Ionicons.home,
-                onTap: null,
+                onTap: () => Get.toNamed(AppRoutes.homeScreen),
               ),
               DrawerListTile(
                 title: "الحسابات",
@@ -86,9 +90,19 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
               DrawerListTile(
+                title: "الفواتير",
+                subtitle: "تصفح و تعديل الفواتير",
+                iconData: FontAwesomeIcons.fileInvoice,
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.ordersScreen,
+                  );
+                },
+              ),
+              DrawerListTile(
                 title: "جهات العمل",
                 subtitle: "الزبائن والموردين والموزعين والمسوقين",
-                iconData: FontAwesomeIcons.fileInvoice,
+                iconData: FontAwesomeIcons.person,
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.chooseAccountScreen,
@@ -114,14 +128,6 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
               DrawerListTile(
-                title: "المستودعات",
-                subtitle: "تصفح و تعديل المستودعات",
-                iconData: Icons.warehouse,
-                onTap: () {
-                  Get.toNamed(AppRoutes.chooseWareScreen, arguments: {});
-                },
-              ),
-              DrawerListTile(
                 title: "تصنيفات البضاعة",
                 subtitle: "تصفح و تعديل تصنيفات البضاعة",
                 iconData: Ionicons.menu,
@@ -142,13 +148,11 @@ class CustomDrawer extends StatelessWidget {
                 },
               ),
               DrawerListTile(
-                title: "الفواتير",
-                subtitle: "تصفح و تعديل الفواتير",
-                iconData: FontAwesomeIcons.fileInvoice,
+                title: "المستودعات",
+                subtitle: "تصفح و تعديل المستودعات",
+                iconData: Icons.warehouse,
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.ordersScreen,
-                  );
+                  Get.toNamed(AppRoutes.chooseWareScreen, arguments: {});
                 },
               ),
               DrawerListTile(
@@ -177,11 +181,11 @@ class CustomDrawer extends StatelessWidget {
                 iconData: Ionicons.pricetag,
                 onTap: null,
               ),
-              const DrawerListTile(
+              DrawerListTile(
                 title: "التقارير",
                 subtitle: "التقارير المحاسبية",
                 iconData: Ionicons.analytics,
-                onTap: null,
+                onTap: () => Get.toNamed(AppRoutes.reportsScreen),
               ),
               DrawerListTile(
                 title: "المستخدمين",

@@ -86,8 +86,9 @@ class OrderBasicInformation extends StatelessWidget {
                             'style': 'customers',
                             'accounts': accountsController.customersAccounts
                           });
+
                       orderScreenController.selectAccountBasedOnType(
-                          account, 'customers');
+                          account, 'clientsAndSuppliers');
                     },
                   ),
                 ],

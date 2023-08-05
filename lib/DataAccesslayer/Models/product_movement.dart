@@ -15,7 +15,7 @@ class ProductMovement {
         quantity: map["quantity"],
         movement: map["movement"],
         ware: map["ware"],
-        statement: map["note"],
+        statement: map["note"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

@@ -25,6 +25,7 @@ class AccountsController extends GetxController {
   AccountsRepo accountsRepo = AccountsRepo();
   BoxClient boxClient = BoxClient();
 
+  String? swapStyle;
   Map<String, String> counterAccountStyle = {
     'bank': 'الصناديق النقدية',
     'client': 'الزبائن',
@@ -44,6 +45,24 @@ class AccountsController extends GetxController {
     getCustomersAccounts();
     getPinnedAccounts();
     isLoadingAccounts.value = false;
+  }
+
+  void changeSwapStyle(swap) {
+    /*   'bank': 'الصناديق النقدية',
+    'client': 'الزبائن',
+    'supplier': 'المزودين',
+    'marketer': 'المسوقين',
+    'customers': 'العملاء',
+    'employers': 'جهات العمل'
+     */
+    switch (swap) {
+      case 'bank':
+        swapStyle = "";
+        break;
+      default:
+    }
+    swapStyle = swap;
+    update();
   }
 
   Future<void> getBankAcoounts() async {
@@ -140,7 +159,9 @@ class AccountsController extends GetxController {
   }
 
   String getAccountName(int id) {
-    return getAccountFromId(id) != null ? getAccountFromId(id)!.name : '';
+    return getAccountFromId(id) != null
+        ? getAccountFromId(id)!.name
+        : 'غير معين';
   }
 
   Future<dynamic> selectAccount(accountList, style) async {
