@@ -11,6 +11,7 @@ class Account {
   final double? salary;
   final String? salaryCurrency;
   final String? accountingName;
+  final String? avatar;
 
   Account({
     required this.id,
@@ -25,6 +26,7 @@ class Account {
     this.salary,
     this.salaryCurrency,
     this.accountingName,
+    this.avatar,
   });
 
   Map<String, dynamic> toMap() {
@@ -37,6 +39,7 @@ class Account {
       'balance': balance,
       'type': type,
       'style': style,
+      'avatar': avatar,
     };
   }
 
@@ -50,6 +53,7 @@ class Account {
       balance: map['balance'] ?? 0,
       type: map['type'] ?? 0,
       style: map['style'] ?? 0,
+      avatar: map['avatar'],
     );
   }
 }
