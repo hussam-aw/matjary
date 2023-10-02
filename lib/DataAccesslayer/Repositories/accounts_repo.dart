@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:matjary/DataAccesslayer/Clients/accounts_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 
@@ -40,7 +42,9 @@ class AccountsRepo {
 
   Future<double> getCashAmount() async {
     var response = await client.getCashAmount();
-
+    if (kDebugMode) {
+      print(response);
+    }
     final parsed = json.decode(response);
 
     return parsed.toDouble();

@@ -21,16 +21,26 @@ class RegisterScreen extends StatelessWidget {
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
               children: [
                 const AppIconHeader(),
+                spacerHeight(
+                  height: 20,
+                ),
+                const Text(
+                  "إنشاء حساب ",
+                  style: UITextStyle.boldHeading,
+                ),
                 Expanded(
                   flex: 6,
                   child: SingleChildScrollView(
                     child: Form(
                       child: Column(
                         children: [
+                          spacerHeight(
+                            height: 30,
+                          ),
                           CustomTextFormField(
                             controller: TextEditingController(),
                             hintText: 'الاسم',

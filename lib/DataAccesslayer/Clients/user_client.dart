@@ -1,6 +1,8 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:matjary/main.dart';
+
 import '../../Constants/api_links.dart';
 
 class UserClient {
@@ -11,7 +13,8 @@ class UserClient {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-
+    // ignore: avoid_print
+    print(response.body);
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -25,6 +28,7 @@ class UserClient {
         body: jsonEncode(<String, dynamic>{
           "app_role": type,
           "name": userName,
+          "email": mobilePhone,
           "phone": mobilePhone,
           "password": password,
           "notifiable": notifiable,

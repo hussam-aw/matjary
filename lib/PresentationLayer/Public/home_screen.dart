@@ -111,7 +111,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                             CreateMenuItem(
                               onTap: () {
-                                Get.toNamed(AppRoutes.createEditPaymentScreen);
+                                Get.toNamed(AppRoutes.createEditPaymentScreen,
+                                    arguments: {'paymentType': 'مقبوضات'});
                               },
                               icon: 'assets/new_icons/account_ph.png',
                               title: 'دفعة نقدية',

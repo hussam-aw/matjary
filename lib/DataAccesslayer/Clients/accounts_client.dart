@@ -1,12 +1,16 @@
-import 'package:matjary/main.dart';
+// ignore_for_file: avoid_print
+
 import 'package:http/http.dart' as http;
 import 'package:matjary/Constants/api_links.dart';
+import 'package:matjary/main.dart';
 
 class AccountsClient {
   Future<dynamic> getAccounts() async {
     var response = await http
         .get(Uri.parse("$baseUrl$accountsLink/${MyApp.appUser!.companyId}"));
+    print("accounts : ");
 
+    print(response.body);
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -37,7 +41,7 @@ class AccountsClient {
 
   Future<dynamic> getCashAmount() async {
     var response = await http
-        .get(Uri.parse("$baseUrl$cashAmountLink/${MyApp.appUser!.id}"));
+        .get(Uri.parse("$baseUrl$cashAmountLink/${MyApp.appUser!.companyId}"));
 
     if (response.statusCode == 200) {
       return response.body;

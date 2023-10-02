@@ -18,7 +18,7 @@ class PinCodeScreen extends StatelessWidget {
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
               children: [
                 const AppIconHeader(),

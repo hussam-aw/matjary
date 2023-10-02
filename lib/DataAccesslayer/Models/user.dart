@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 class User {
@@ -69,7 +71,10 @@ class User {
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   static DateTime? getExpiryDate(date) {
-    return date.isNotEmpty ? DateTime.parse(date) : null;
+    print(date);
+    return (date != null && date.isNotEmpty && date != "null")
+        ? DateTime.parse(date)
+        : null;
   }
 
   String getDateString(DateTime date) {

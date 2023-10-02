@@ -38,11 +38,14 @@ class CustomDrawer extends StatelessWidget {
                       currentAccountPicture: Obx(() {
                         return storeSettingsController.isLoading.value
                             ? const IconShimmer()
-                            : CircleAvatar(
-                                backgroundColor: UIColors.containerBackground,
-                                backgroundImage:
-                                    NetworkImage(MyApp.storeSettings!.icon),
-                              );
+                            : MyApp.storeSettings == null
+                                ? const IconShimmer()
+                                : CircleAvatar(
+                                    backgroundColor:
+                                        UIColors.containerBackground,
+                                    backgroundImage:
+                                        NetworkImage(MyApp.storeSettings!.icon),
+                                  );
                       }),
                       accountName: Text(
                         MyApp.appUser != null

@@ -209,7 +209,17 @@ class CreateEditAccountScreen extends StatelessWidget {
                                   'مسوق'
                                 ],
                                 onChanged: (value) {
-                                  
+                                  if ([
+                                    'حساب عادي',
+                                    'صندوق',
+                                    'جهة عمل',
+                                  ].contains(value)) {
+                                    accountScreenController
+                                        .setAccountType('مدين');
+                                  } else {
+                                    accountScreenController
+                                        .setAccountType('دائن');
+                                  }
                                   accountScreenController
                                       .changeAccountStyleForInformation(value);
                                   accountController.setAccountStyle(value);

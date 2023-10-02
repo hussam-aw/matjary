@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/accept_button.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/app_icon_header.dart';
@@ -9,6 +8,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/primary_line.dart';
 import 'package:matjary/PresentationLayer/Widgets/Public/spacerHeight.dart';
 
 import '../../BussinessLayer/Controllers/auth_controller.dart';
+import '../../Constants/ui_text_styles.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -22,18 +22,25 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: UIColors.mainBackground,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 90),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 90),
             child: GetBuilder(
                 init: authController,
                 builder: (context) {
                   return Column(
                     children: [
                       const AppIconHeader(),
+                      const Text(
+                        "تسجيل الدخول ",
+                        style: UITextStyle.boldHeading,
+                      ),
                       Expanded(
                         flex: 3,
                         child: Form(
                           child: Column(
                             children: [
+                              spacerHeight(
+                                height: 30,
+                              ),
                               CustomTextFormField(
                                 controller: authController.loginEmailController,
                                 keyboardType: TextInputType.emailAddress,
@@ -50,7 +57,6 @@ class LoginScreen extends StatelessWidget {
                               spacerHeight(),
                               Obx(() {
                                 return AcceptButton(
-                                  backgroundColor: UIColors.containerBackground,
                                   text: 'متابعة',
                                   onPressed: () async {
                                     await authController.login();
@@ -58,14 +64,14 @@ class LoginScreen extends StatelessWidget {
                                   isLoading: authController.logging.value,
                                 );
                               }),
-                              spacerHeight(),
+                              /* spacerHeight(),
                               AcceptButton(
                                 onPressed: () {
                                   Get.toNamed(AppRoutes.registerScreen);
                                 },
                                 backgroundColor: UIColors.primary,
                                 text: 'إنشاء حساب',
-                              ),
+                              ), */
                             ],
                           ),
                         ),

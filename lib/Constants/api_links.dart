@@ -1,4 +1,4 @@
-const baseUrl = "https://matjary2.brain.sy/api/v1";
+const baseUrl = "https://matjary.brain.sy/api/v1";
 const loginLink = "/login";
 const accountsLink = "/accounts";
 const bankAccountsLink = "/getBankAccounts";

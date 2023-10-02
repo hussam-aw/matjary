@@ -1,12 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:matjary/main.dart';
+
 import '../../Constants/api_links.dart';
 
 class StoreSettingsClient {
   Future<dynamic> getStoreSettings() async {
+    // ignore: avoid_print
+    print(MyApp.appUser!.companyId);
     var response = await http
         .get(Uri.parse("$baseUrl$settingsLink/${MyApp.appUser!.companyId}"));
-
+    if (kDebugMode) {
+      print(response.body);
+    }
     if (response.statusCode == 200) {
       return response.body;
     } else {
