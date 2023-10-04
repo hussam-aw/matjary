@@ -1,20 +1,25 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 
 class ConnectivityController extends GetxController {
-  final Connectivity _connectivity = Connectivity();
+  final Connectivity connectivity = Connectivity();
   final RxBool _isConnected = true.obs;
-
   StreamSubscription<ConnectivityResult>? _connectivitySubscription;
 
   void _initializeConnectivity() async {
-    final ConnectivityResult result = await _connectivity.checkConnectivity();
-    _updateConnectivityStatus(result);
+    final ConnectivityResult result = await connectivity.checkConnectivity();
+    _isConnected.value = (result != ConnectivityResult.none);
   }
 
   void _updateConnectivityStatus(ConnectivityResult result) {
     _isConnected.value = (result != ConnectivityResult.none);
+    if (isConnected) {
+      SnackBars.showSuccess('متصل بالانترنت');
+    } else {
+      SnackBars.showError('غير متصل بالانترنت');
+    }
   }
 
   @override
@@ -22,7 +27,7 @@ class ConnectivityController extends GetxController {
     super.onInit();
     _initializeConnectivity();
     _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectivityStatus);
+        connectivity.onConnectivityChanged.listen(_updateConnectivityStatus);
   }
 
   @override
