@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Repositories/accounts_repo.dart';
@@ -21,6 +22,8 @@ class AccountController extends GetxController {
   var loading = false.obs;
   var savingState = false;
   bool accountStyleForInformation = false;
+  final connectivityController = Get.find<ConnectivityController>();
+
   int convertAccountTypeToNumber(type) {
     if (type == 'مدين') {
       return 0;
@@ -217,12 +220,21 @@ class AccountController extends GetxController {
     String email = getAccountEmail();
     String mobileNumber = getAccountMobilePhone();
     String address = getAccountAddress();
+    bool connected = connectivityController.isConnected;
     if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
       loading.value = true;
-      var account = await accountsRepo.createAccount(name, balance, accounttype,
-          accountStyle, email, address, mobileNumber, accountImage);
+      bool isAccountCreated = await accountsRepo.createAccount(
+          connected,
+          name,
+          balance,
+          accounttype,
+          accountStyle,
+          email,
+          address,
+          mobileNumber,
+          accountImage);
       loading.value = false;
-      if (account != null) {
+      if (isAccountCreated) {
         await accountsController.getAccounts();
         savingState = true;
         setAcountDetails(null);
@@ -257,14 +269,15 @@ class AccountController extends GetxController {
   }
 
   Future<void> deleteAccount(id) async {
+    bool connected = connectivityController.isConnected;
     loading.value = true;
-    var account = await accountsRepo.deleteAccount(id);
+    var isAccountDeleted = await accountsRepo.deleteAccount(connected, id);
     loading.value = false;
-    if (account != null) {
+    if (isAccountDeleted) {
       await accountsController.getAccounts();
       if (accountsController.checkIfAccountInAccountList(
-          accountsController.pinnedAccounts, account.id)) {
-        boxClient.removeFromPinnedAccountList(account.id);
+          accountsController.pinnedAccounts, id)) {
+        boxClient.removeFromPinnedAccountList(id);
         await accountsController.getPinnedAccounts();
       }
       SnackBars.showSuccess('تم الحذف بنجاح');

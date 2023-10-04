@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
@@ -24,6 +25,7 @@ class AccountsController extends GetxController {
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
   BoxClient boxClient = BoxClient();
+  final connectivityController = Get.find<ConnectivityController>();
 
   String? swapStyle;
   Map<String, String> counterAccountStyle = {
@@ -37,7 +39,8 @@ class AccountsController extends GetxController {
 
   Future<void> getAccounts() async {
     isLoadingAccounts.value = true;
-    accounts = await accountsRepo.getAccounts();
+    accounts =
+        await accountsRepo.getAccounts(connectivityController.isConnected);
     getBankAcoounts();
     getClientAcoounts();
     getSupplierAccounts();
