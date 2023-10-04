@@ -268,7 +268,9 @@ class CreateEditAccountScreen extends StatelessWidget {
                                                         .value
                                                         .isEmpty
                                                     ? account != null &&
-                                                            account!.avatar!
+                                                            Uri.parse(account!
+                                                                    .avatar!)
+                                                                .host
                                                                 .isNotEmpty
                                                         ? CustomImageContainer(
                                                             image: NetworkImage(
