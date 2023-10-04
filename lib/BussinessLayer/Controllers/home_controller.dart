@@ -35,7 +35,7 @@ class HomeController extends GetxController {
       //await accountsController.getPinnedAccounts();
       productsController.getProducts();
       categoriesController.getCategories();
-      //paymentsController.getPayments();
+      paymentsController.getPayments();
       waresController.getWares();
       earnsExpensesController.getStatements();
       usersController.getUsers();
@@ -46,6 +46,9 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    connectivityController.connectivity.onConnectivityChanged.listen((event) {
+      fetchData();
+    });
     fetchData();
     super.onInit();
   }
