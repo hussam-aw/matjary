@@ -77,7 +77,7 @@ class Order {
       notes: map['notes'] ?? '',
       type: map['type'] as String,
       paidUp: map['paid_up'] as num,
-      restOfTheBill: map['rest_of_the_bill'] as num,
+      restOfTheBill: map['rest_of_the_bill'] ?? 0.0,
       wareId: map['ware_id'] as int,
       toWareId: map['to_ware_id'] ?? 0.0,
       bankId: map['bank_id'] as int,
