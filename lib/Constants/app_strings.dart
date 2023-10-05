@@ -1,11 +1,11 @@
 // Database Strings
 const String appDatabaseName = 'MatjaryDatabase.db';
-const String accountTableName = 'Account';
-const String productTableName = 'Product';
-const String orderTableName = 'Order';
-const String transactionTableName = 'Transaction';
+const String accountsTableName = 'Accounts';
+const String productsTableName = 'Products';
+const String ordersTableName = 'Orders';
+const String transactionsTableName = 'Transactions';
 const List<String> createTableQueries = [
-  '''CREATE TABLE $accountTableName 
+  '''CREATE TABLE $accountsTableName 
         (id integer primary key autoincrement, 
         name TEXT NOT NULL, 
         email TEXT, 
@@ -15,7 +15,7 @@ const List<String> createTableQueries = [
         type INTEGER NOT NULL,
         style INTEGER NOT NULL,
         avatar TEXT)''',
-  '''CREATE TABLE $productTableName 
+  '''CREATE TABLE $productsTableName 
         (id INTEGER PRIMARY KEY AUTOINCREMENT, 
         name TEXT NOT NULL, 
         categoryId INTEGER, 
@@ -26,7 +26,7 @@ const List<String> createTableQueries = [
         initial_price REAL NOT NULL,
         affectedExchange TEXT NOT NULL, 
         images TEXT)''',
-  '''CREATE TABLE $orderTableName 
+  '''CREATE TABLE $ordersTableName 
         (id INTEGER PRIMARY KEY AUTOINCREMENT, 
         total REAL NOT NULL, 
         customerId INTEGER NOT NULL, 
@@ -45,7 +45,7 @@ const List<String> createTableQueries = [
         marketerFee REAL, 
         marketerFeeType TEXT NOT NULL,   
         details TEXT NOT NULL)''',
-  '''CREATE TABLE $transactionTableName 
+  '''CREATE TABLE $transactionsTableName 
         (id INTEGER PRIMARY KEY AUTOINCREMENT, 
         firstSideId INTEGER NOT NULL, 
         secondSideId INTEGER NOT NULL, 
