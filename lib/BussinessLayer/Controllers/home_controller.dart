@@ -25,22 +25,19 @@ class HomeController extends GetxController {
   final connectivityController = Get.find<ConnectivityController>();
 
   void fetchData() async {
+    await accountsController.getAccounts();
+    productsController.getProducts();
     if (connectivityController.isConnected) {
-      //isLoading.value = true;
       await accountsController.getCachAmount();
       await ordersController.getOrders();
-      await accountsController.getAccounts();
       ordersController.getPurchasesOrders();
       ordersController.getSalesOrders();
-      //await accountsController.getPinnedAccounts();
-      productsController.getProducts();
       categoriesController.getCategories();
       paymentsController.getPayments();
       waresController.getWares();
       earnsExpensesController.getStatements();
       usersController.getUsers();
       storeSettingsController.getStoreSettings();
-      //isLoading.value = false;
     }
   }
 
