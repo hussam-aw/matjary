@@ -19,7 +19,10 @@ class DatabaseHelper {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        createTableQueries.map((query) async => await db.execute(query));
+        await db.execute(createTableQueries[0]);
+        await db.execute(createTableQueries[1]);
+        await db.execute(createTableQueries[2]);
+        await db.execute(createTableQueries[3]);
       },
     );
   }
@@ -29,30 +32,55 @@ class DatabaseHelper {
     List<dynamic> maps =
         await dbClient?.query(tableName) as List<Map<dynamic, dynamic>>;
     print(maps);
-    return maps;
+    return maps.reversed;
   }
 
-  Future<void> insert(table, row) async {
+  Future<bool> insert(table, row) async {
     var dbClient = await database;
     try {
-      await dbClient?.insert(
+      await dbClient!.insert(
         table,
         row,
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
       print('Inserted');
+      return true;
     } catch (e) {
-      print(e);
+      return false;
     }
   }
 
-  Future<void> delete(table, id) async {
+  Future<bool> update(table, row, id) async {
     var dbClient = await database;
     try {
-      dbClient?.delete(table, where: 'id=?', whereArgs: [id]);
-      print('Deleted');
+      int count =
+          await dbClient!.update(table, row, where: '$id=?', whereArgs: [id]);
+      if (count > 0) {
+        print('Updated');
+        return true;
+      }
     } catch (e) {
-      print(e);
+      return false;
     }
+    return false;
+  }
+
+  Future<bool> delete(table, id) async {
+    var dbClient = await database;
+    try {
+      int rows = await dbClient!.delete(table, where: 'id=?', whereArgs: [id]);
+      if (rows > 0) {
+        print('Deleted');
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+
+  Future<void> clearTable(String tableName) async {
+    var dbClient = await database;
+    await dbClient!.rawDelete('DELETE FROM $tableName');
   }
 }
