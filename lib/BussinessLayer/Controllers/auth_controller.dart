@@ -24,7 +24,7 @@ class AuthController extends GetxController {
 
       if (user != null) {
         MyApp.appUser = user;
-        await client.setAuthedUser(user);
+        //await client.setAuthedUser(user);
         SnackBars.showSuccess("${'أهلاً بك  : '}${user.name}");
         Get.toNamed(AppRoutes.homeScreen);
       } else {
