@@ -221,29 +221,32 @@ class AccountController extends GetxController {
     String mobileNumber = getAccountMobilePhone();
     String address = getAccountAddress();
     bool connected = connectivityController.isConnected;
-    if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
-      loading.value = true;
-      bool isAccountCreated = await accountsRepo.createAccount(
-          connected,
-          name,
-          balance,
-          accounttype,
-          accountStyle,
-          email,
-          address,
-          mobileNumber,
-          accountImage);
-      loading.value = false;
-      if (isAccountCreated) {
-        await accountsController.getAccounts();
-        savingState = true;
-        setAcountDetails(null);
-        SnackBars.showSuccess('تم انشاء الحساب');
+    if (connected) {
+      if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+        loading.value = true;
+        bool isAccountCreated = await accountsRepo.createAccount(
+            name,
+            balance,
+            accounttype,
+            accountStyle,
+            email,
+            address,
+            mobileNumber,
+            accountImage);
+        loading.value = false;
+        if (isAccountCreated) {
+          await accountsController.getAccounts();
+          savingState = true;
+          setAcountDetails(null);
+          SnackBars.showSuccess('تم انشاء الحساب');
+        } else {
+          SnackBars.showError('فشل انشاء الحساب');
+        }
       } else {
-        SnackBars.showError('فشل انشاء الحساب');
+        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
       }
     } else {
-      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 
@@ -252,37 +255,46 @@ class AccountController extends GetxController {
     num balance = getAccountBalance();
     int accounttype = getAccountType();
     int accountStyle = getAccountStyle();
-    if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
-      loading.value = true;
-      var account = await accountsRepo.updateAccount(
-          id, name, balance, accounttype, accountStyle, accountImage);
-      loading.value = false;
-      if (account != null) {
-        await accountsController.getAccounts();
-        SnackBars.showSuccess('تم التعديل بنجاح');
+    bool connected = connectivityController.isConnected;
+    if (connected) {
+      if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+        loading.value = true;
+        bool isAccountUpdated = await accountsRepo.updateAccount(
+            id, name, balance, accounttype, accountStyle, accountImage);
+        loading.value = false;
+        if (isAccountUpdated) {
+          await accountsController.getAccounts();
+          SnackBars.showSuccess('تم التعديل بنجاح');
+        } else {
+          SnackBars.showError('فشل التعديل');
+        }
       } else {
-        SnackBars.showError('فشل التعديل');
+        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
       }
     } else {
-      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 
   Future<void> deleteAccount(id) async {
     bool connected = connectivityController.isConnected;
-    loading.value = true;
-    var isAccountDeleted = await accountsRepo.deleteAccount(connected, id);
-    loading.value = false;
-    if (isAccountDeleted) {
-      await accountsController.getAccounts();
-      if (accountsController.checkIfAccountInAccountList(
-          accountsController.pinnedAccounts, id)) {
-        boxClient.removeFromPinnedAccountList(id);
-        await accountsController.getPinnedAccounts();
+    if (connected) {
+      loading.value = true;
+      var isAccountDeleted = await accountsRepo.deleteAccount(id);
+      loading.value = false;
+      if (isAccountDeleted) {
+        await accountsController.getAccounts();
+        if (accountsController.checkIfAccountInAccountList(
+            accountsController.pinnedAccounts, id)) {
+          boxClient.removeFromPinnedAccountList(id);
+          await accountsController.getPinnedAccounts();
+        }
+        SnackBars.showSuccess('تم الحذف بنجاح');
+      } else {
+        SnackBars.showError('فشل الحذف');
       }
-      SnackBars.showSuccess('تم الحذف بنجاح');
     } else {
-      SnackBars.showError('فشل الحذف');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 

@@ -26,60 +26,56 @@ class AccountsRepo {
       print(response);
     }
     final parsed = json.decode(response);
-
     return parsed.toDouble();
   }
 
-  Future<bool> createAccount(connected, name, balance, type, style, email,
-      address, mobileNumber, image) async {
-    Map<String, Object?> accountFieldsMap = {};
-    if (connected) {
-      accountFieldsMap = {
-        'primaryFileds': {
-          'name': name.toString(),
-          "balance": balance.toString(),
-          "type": type.toString(),
-          "style": style.toString(),
-          "email": email.toString(),
-          "address": address.toString(),
-          "phone": mobileNumber.toString(),
-          "user_id": MyApp.appUser!.id.toString(),
-          'company_id': MyApp.appUser!.companyId.toString(),
-        },
-        'files': image,
-      };
-    } else {
-      accountFieldsMap = {
-        'name': name,
-        "balance": balance,
-        "type": type,
-        "style": style,
-        "email": email,
-        "address": address,
-        "phone": mobileNumber,
-        "avatar": image,
-      };
-    }
-    bool? isAccountCreated =
-        await client.createAccount(connected, accountFieldsMap);
-    if (isAccountCreated != null && isAccountCreated) {
+  Future<bool> createAccount(
+      name, balance, type, style, email, address, mobileNumber, image) async {
+    var accountFieldsMap = {};
+    accountFieldsMap = {
+      'primaryFileds': {
+        'name': name.toString(),
+        "balance": balance.toString(),
+        "type": type.toString(),
+        "style": style.toString(),
+        "email": email.toString(),
+        "address": address.toString(),
+        "phone": mobileNumber.toString(),
+        "user_id": MyApp.appUser!.id.toString(),
+        'company_id': MyApp.appUser!.companyId.toString(),
+      },
+      'files': image,
+    };
+    bool isAccountCreated = await client.createAccount(accountFieldsMap);
+    if (isAccountCreated) {
       return true;
     }
     return false;
   }
 
-  Future<bool?> updateAccount(id, name, balance, type, style, image) async {
-    var updatedAccount =
-        await client.updateAccount(id, name, balance, type, style, image);
-    if (updatedAccount != null) {
+  Future<bool> updateAccount(id, name, balance, type, style, image) async {
+    var accountFieldsMap = {};
+    accountFieldsMap = {
+      'primaryFileds': {
+        'name': name.toString(),
+        "balance": balance.toString(),
+        "type": type.toString(),
+        "style": style.toString(),
+        "user_id": MyApp.appUser!.id.toString(),
+        'company_id': MyApp.appUser!.companyId.toString(),
+      },
+      'files': image,
+    };
+    bool isAccountUpdated = await client.updateAccount(id, accountFieldsMap);
+    if (isAccountUpdated) {
       return true;
     }
-    return null;
+    return false;
   }
 
-  Future<bool> deleteAccount(connected, id) async {
-    var isAccountDeleted = await client.deleteAccount(connected, id);
-    if (isAccountDeleted != null && isAccountDeleted) {
+  Future<bool> deleteAccount(id) async {
+    bool isAccountDeleted = await client.deleteAccount(id);
+    if (isAccountDeleted) {
       return true;
     }
     return false;
