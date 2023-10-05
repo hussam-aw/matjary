@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Models/product.dart';
@@ -22,6 +23,7 @@ class ProductController extends GetxController {
   PrdouctsRepo prdouctsRepo = PrdouctsRepo();
   var categoriesController = Get.find<CategoriesController>();
   ProductsController productsController = Get.find<ProductsController>();
+  final connectivityController = Get.find<ConnectivityController>();
   var loading = false.obs;
   var savingState = false;
 
@@ -186,31 +188,36 @@ class ProductController extends GetxController {
     num supplierPrice = getSupplierPrice();
     num retailPrice = getRetailPrice();
     List<String> images = getProductImages();
-    if (name.isNotEmpty) {
-      loading.value = true;
-      var product = await prdouctsRepo.createProduct(
-        name,
-        categoryId,
-        wholesalePrice,
-        retailPrice,
-        supplierPrice,
-        quantity,
-        exchangeState,
-        price,
-        MyApp.appUser!.id,
-        images.isEmpty ? [] : images,
-      );
-      loading.value = false;
-      if (product != null) {
-        productsController.getProducts();
-        savingState = true;
-        setProductDetails(null);
-        SnackBars.showSuccess('تم انشاء المنتج');
+    bool connected = connectivityController.isConnected;
+    if (connected) {
+      if (name.isNotEmpty) {
+        loading.value = true;
+        bool isProductCreated = await prdouctsRepo.createProduct(
+          name,
+          categoryId,
+          wholesalePrice,
+          retailPrice,
+          supplierPrice,
+          quantity,
+          exchangeState,
+          price,
+          MyApp.appUser!.id,
+          images.isEmpty ? [] : images,
+        );
+        loading.value = false;
+        if (isProductCreated) {
+          productsController.getProducts();
+          savingState = true;
+          setProductDetails(null);
+          SnackBars.showSuccess('تم انشاء المنتج');
+        } else {
+          SnackBars.showError('فشل انشاء المنتج');
+        }
       } else {
-        SnackBars.showError('فشل انشاء المنتج');
+        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
       }
     } else {
-      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 
@@ -224,42 +231,52 @@ class ProductController extends GetxController {
     num supplierPrice = getSupplierPrice();
     num retailPrice = getRetailPrice();
     List<String> images = getProductImages();
-    if (name.isNotEmpty) {
-      loading.value = true;
-      var product = await prdouctsRepo.updateProduct(
-        id,
-        name,
-        categoryId,
-        wholesalePrice,
-        retailPrice,
-        supplierPrice,
-        quantity,
-        exchangeState,
-        price,
-        MyApp.appUser!.id,
-        images.isEmpty ? [] : images,
-      );
-      loading.value = false;
-      if (product != null) {
-        productsController.getProducts();
-        SnackBars.showSuccess('تم التعديل بنجاح');
+    bool connected = connectivityController.isConnected;
+    if (connected) {
+      if (name.isNotEmpty) {
+        loading.value = true;
+        bool isProductUpdated = await prdouctsRepo.updateProduct(
+          id,
+          name,
+          categoryId,
+          wholesalePrice,
+          retailPrice,
+          supplierPrice,
+          quantity,
+          exchangeState,
+          price,
+          MyApp.appUser!.id,
+          images.isEmpty ? [] : images,
+        );
+        loading.value = false;
+        if (isProductUpdated) {
+          productsController.getProducts();
+          SnackBars.showSuccess('تم التعديل بنجاح');
+        } else {
+          SnackBars.showError('فشل التعديل');
+        }
       } else {
-        SnackBars.showError('فشل التعديل');
+        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
       }
     } else {
-      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 
   Future<void> deleteProduct(id) async {
-    loading.value = true;
-    var product = await prdouctsRepo.deleteProduct(id);
-    loading.value = false;
-    if (product != null) {
-      productsController.getProducts();
-      SnackBars.showSuccess('تم الحذف بنجاح');
+    bool connected = connectivityController.isConnected;
+    if (connected) {
+      loading.value = true;
+      bool isProductDeleted = await prdouctsRepo.deleteProduct(id);
+      loading.value = false;
+      if (isProductDeleted) {
+        productsController.getProducts();
+        SnackBars.showSuccess('تم الحذف بنجاح');
+      } else {
+        SnackBars.showError('فشل الحذف');
+      }
     } else {
-      SnackBars.showError('فشل الحذف');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 }
