@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/database_helper.dart';
+import 'package:matjary/Constants/app_strings.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
@@ -26,8 +28,9 @@ class AccountsController extends GetxController {
   AccountsRepo accountsRepo = AccountsRepo();
   BoxClient boxClient = BoxClient();
   final connectivityController = Get.find<ConnectivityController>();
-
   String? swapStyle;
+  DatabaseHelper databaseHelper = DatabaseHelper.db;
+
   Map<String, String> counterAccountStyle = {
     'bank': 'الصناديق النقدية',
     'client': 'الزبائن',
@@ -47,7 +50,17 @@ class AccountsController extends GetxController {
     getMarketerAccounts();
     getCustomersAccounts();
     getPinnedAccounts();
+    backupAccounts();
     isLoadingAccounts.value = false;
+  }
+
+  Future<void> backupAccounts() async {
+    databaseHelper.clearTable(accountsTableName);
+    if (connectivityController.isConnected) {
+      for (var account in accounts) {
+        await databaseHelper.insert(accountsTableName, account.toMap());
+      }
+    }
   }
 
   void changeSwapStyle(swap) {
