@@ -10,12 +10,13 @@ class ConnectivityController extends GetxController {
 
   void _initializeConnectivity() async {
     final ConnectivityResult result = await connectivity.checkConnectivity();
-    //_isConnected.value = (result != ConnectivityResult.none);
-    _updateConnectivityStatus(result);
+    _isConnected.value = (result != ConnectivityResult.none);
+    //_updateConnectivityStatus(result);
   }
 
   void _updateConnectivityStatus(ConnectivityResult result) {
-    _isConnected.value = (result != ConnectivityResult.none);
+    _isConnected.value =
+        (result != ConnectivityResult.none || result != ConnectivityResult.vpn);
     if (isConnected) {
       SnackBars.showSuccess('متصل بالانترنت');
     } else {
