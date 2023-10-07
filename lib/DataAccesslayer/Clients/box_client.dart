@@ -1,4 +1,5 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:matjary/DataAccesslayer/Models/store_settings.dart';
 
 import '../Models/user.dart';
 
@@ -134,6 +135,26 @@ class BoxClient {
     return null;
   }
 
+  Future<void> setCashAmount(num amount) async {
+    await box.remove('cash_amount');
+    await box.write('cash_amount', amount);
+  }
+
+  Future<double> getCashAmount() async {
+    var cashAmount = await box.read('cash_amount');
+    return cashAmount;
+  }
+
+  Future<void> setStoreSettings(StoreSettings settings) async {
+    await box.remove('store_settings');
+    await box.write('store_settings', settings.toJson());
+  }
+
+  Future<StoreSettings> getStoreSettings() async {
+    var data = await box.read('store_settings');
+    return StoreSettings.fromJson(data);
+  }
+
   Future<void> clearStorage() async {
     await removeUserData();
     await box.remove('first_side_account');
@@ -142,5 +163,7 @@ class BoxClient {
     await box.remove('ware_account');
     await box.remove('marketer_account');
     await box.remove('pinned_accounts');
+    await box.remove('cash_amount');
+    await box.remove('store_settings');
   }
 }
