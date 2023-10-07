@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'order_product.dart';
 
 class Order {
@@ -64,7 +66,12 @@ class Order {
       "sell_type": sellType,
       "status": status,
       "expenses": expenses,
-      "discount": discount,
+      'discount': discount,
+      'discount_type': discountType,
+      'marketer_id': marketerId,
+      'marketer_fee_type': marketerFeeType,
+      'marketer_fee': marketerFee,
+      'details': details.map((product) => product.toJson()).toList(),
     };
   }
 
@@ -97,9 +104,15 @@ class Order {
 
   static List<OrderProduct> getDetailsList(details) {
     List<OrderProduct> result = [];
-    if (details != null) {
-      for (int i = 0; i < details.length; i++) {
-        result.add(OrderProduct.fromJson(details[i]));
+    dynamic parsed;
+    if (details is String) {
+      parsed = json.decode(details);
+    } else {
+      parsed = details;
+    }
+    if (parsed != null) {
+      for (int i = 0; i < parsed.length; i++) {
+        result.add(OrderProduct.fromJson(parsed[i]));
       }
     }
     return result;
