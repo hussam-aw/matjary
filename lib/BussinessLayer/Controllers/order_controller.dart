@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
@@ -58,6 +59,7 @@ class OrderController extends GetxController {
   WaresController waresController = Get.find<WaresController>();
   BoxClient boxClient = BoxClient();
   PdfHelper pdfHelper = PdfHelper();
+  final connectivityController = Get.find<ConnectivityController>();
 
   int getOrderProductsQuantitiesCount(details) {
     int count = 0;
@@ -285,8 +287,10 @@ class OrderController extends GetxController {
     num? discountMarketer = getMarketerDiscount(discountMarketerType);
     num paidAmount = getPaidAmount();
     getOrderProductsMap();
+    bool connected = connectivityController.isConnected;
     loading.value = true;
     var orderCreationStatus = await orderRepo.createOrder(
+      connected,
       counterPartyAccount!.id,
       totalOrderAmount.value,
       notesController.text,

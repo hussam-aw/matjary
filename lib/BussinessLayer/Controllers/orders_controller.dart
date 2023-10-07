@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
@@ -15,6 +16,7 @@ class OrdersController extends GetxController {
   List<Order> currentOrders = [];
   List<Order> filteredOrders = [];
   String currentOrderFilterType = 'الكل';
+  final connectivityController = Get.find<ConnectivityController>();
 
   List<String> orderFilterTypes = [
     'الكل',
@@ -60,7 +62,7 @@ class OrdersController extends GetxController {
 
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
-    orders = await ordersRepo.getOrders();
+    orders = await ordersRepo.getOrders(connectivityController.isConnected);
     isLoadingOrders.value = false;
     filteredOrders = orders;
   }
@@ -100,7 +102,7 @@ class OrdersController extends GetxController {
 
   Future<void> getOrdersByType(String type) async {
     isLoadingOrders.value = true;
-    orders = await ordersRepo.getOrders();
+    orders = await ordersRepo.getOrders(connectivityController.isConnected);
     if (type == 'الكل') {
       currentOrders = orders;
     } else {

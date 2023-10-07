@@ -1,18 +1,31 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:matjary/BussinessLayer/helpers/database_helper.dart';
 import 'package:matjary/Constants/api_links.dart';
+import 'package:matjary/Constants/app_strings.dart';
 import 'package:matjary/main.dart';
 
 class OrdersClient {
-  Future<dynamic> getOrders() async {
-    var response = await http
-        .get(Uri.parse("$baseUrl$ordersLink/${MyApp.appUser!.companyId}"));
+  DatabaseHelper databaseHelper = DatabaseHelper.db;
 
-    if (response.statusCode == 200) {
-      return response.body;
+  Future<dynamic> getOrders(connected) async {
+    if (connected) {
+      var response = await http
+          .get(Uri.parse("$baseUrl$ordersLink/${MyApp.appUser!.companyId}"));
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return "";
+      }
     } else {
-      return "";
+      var data = await databaseHelper.getData(ordersTableName);
+      if (data.isNotEmpty) {
+        return data;
+      } else {
+        return "";
+      }
     }
   }
 
@@ -43,58 +56,21 @@ class OrdersClient {
     }
   }
 
-  Future<dynamic> createOrder(
-      customerId,
-      total,
-      notes,
-      type,
-      paidUp,
-      restOfTheBill,
-      wareId,
-      toWareId,
-      bankId,
-      sellType,
-      status,
-      expenses,
-      discount,
-      marketerId,
-      discountType,
-      details,
-      marketerFeeType,
-      marketerFee,
-      date) async {
-    var response = await http.post(Uri.parse('$baseUrl$orderLink'),
-        body: jsonEncode(<String, dynamic>{
-          "total": total,
-          "customer_id": customerId,
-          "user_id": MyApp.appUser!.id,
-          "company_id": MyApp.appUser!.companyId,
-          "notes": notes,
-          "type": type,
-          "paid_up": paidUp,
-          "rest_of_the_bill": restOfTheBill,
-          "ware_id": wareId,
-          "to_ware_id": toWareId,
-          "bank_id": bankId,
-          "sell_type": sellType,
-          "status": status,
-          "expenses": expenses,
-          "discount": discount,
-          "discount_type": discountType,
-          "marketer_id": marketerId,
-          "marketer_fee_type": marketerFeeType,
-          "marketer_fee": marketerFee,
-          "details": details,
-          "created_at": date,
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        });
-
-    if (response.statusCode == 201) {
-      return true;
+  Future<dynamic> createOrder(connected, map) async {
+    if (connected) {
+      var response = await http.post(Uri.parse('$baseUrl$orderLink'),
+          body: jsonEncode(map),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      var isInserted = await databaseHelper.insert(ordersTableName, map);
+      return isInserted;
     }
   }
 
