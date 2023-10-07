@@ -160,9 +160,14 @@ class AccountsController extends GetxController {
   }
 
   Future<void> getCachAmount() async {
-    isLoadingCashAmount.value = true;
-    cashAmount.value = await accountsRepo.getCashAmount();
-    isLoadingCashAmount.value = false;
+    if (connectivityController.isConnected) {
+      isLoadingCashAmount.value = true;
+      cashAmount.value = await accountsRepo.getCashAmount();
+      isLoadingCashAmount.value = false;
+      boxClient.setCashAmount(cashAmount.value);
+    } else {
+      cashAmount.value = await boxClient.getCashAmount();
+    }
   }
 
   Account? getAccountFromId(accountId) {
