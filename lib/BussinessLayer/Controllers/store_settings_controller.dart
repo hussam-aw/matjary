@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
+import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/store_settings.dart';
 import 'package:matjary/DataAccesslayer/Repositories/store_settings_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -10,12 +12,22 @@ class StoreSettingsController extends GetxController {
   String selectedIconPath = '';
   StoreSettingsRepo repo = StoreSettingsRepo();
   var isLoading = true.obs;
+  BoxClient boxClient = BoxClient();
+  final connectivityController = Get.find<ConnectivityController>();
 
   Future<void> getStoreSettings() async {
-    isLoading.value = true;
-    StoreSettings? storeSettings = await repo.getStoreSettings();
-    isLoading.value = false;
-    if (storeSettings != null) MyApp.storeSettings = storeSettings;
+    StoreSettings? storeSettings;
+    if (connectivityController.isConnected) {
+      isLoading.value = true;
+      storeSettings = await repo.getStoreSettings();
+      isLoading.value = false;
+      if (storeSettings != null) {
+        await boxClient.setStoreSettings(storeSettings);
+      }
+    } else {
+      storeSettings = await boxClient.getStoreSettings();
+    }
+    MyApp.storeSettings = storeSettings;
   }
 
   void setStoreName(name) {
