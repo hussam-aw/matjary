@@ -15,6 +15,7 @@ class OrdersRepo {
       }
       return parsed.map<Order>((json) => Order.fromMap(json)).toList();
     }
+    print('1111');
     return [];
   }
 
@@ -86,9 +87,11 @@ class OrdersRepo {
       "marketer_id": marketerId,
       "marketer_fee_type": marketerFeeType,
       "marketer_fee": marketerFee,
-      "details": jsonEncode(details),
+      "details": connected ? details : jsonEncode(details),
       "created_at": date,
+      "updated_at": date
     };
+
     bool isOrderCreated = await client.createOrder(connected, orderFieldsMap);
     return isOrderCreated;
   }
