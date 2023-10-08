@@ -34,7 +34,7 @@ class Product {
       "affected_exchange": affectedExchange,
       "initial_price": initialPrice,
       "category": categoryId,
-      "images": images,
+      "images": images.toString(),
     };
   }
 
