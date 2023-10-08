@@ -56,7 +56,7 @@ class OrderPrintScreen extends StatelessWidget {
                             .getProductName(order.details[index].productId),
                         price: order.details[index].price,
                         quantity: order.details[index].quantity,
-                        totalPrice: order.details[index].totalPrice,
+                        totalPrice: order.details[index].totalPrice!,
                         screenMode: 'print',
                       );
                     },

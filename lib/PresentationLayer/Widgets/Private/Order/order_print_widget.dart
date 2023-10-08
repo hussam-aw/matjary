@@ -198,7 +198,7 @@ List<p.Widget> buildOrderPrintWidget(Order order) {
                     p.Align(
                       alignment: p.Alignment.center,
                       child: p.Text(
-                        order.details[index].totalPrice.toStringAsFixed(1),
+                        order.details[index].totalPrice!.toStringAsFixed(1),
                         softWrap: true,
                         textDirection: p.TextDirection.rtl,
                         style: printTextStyle.copyWith(

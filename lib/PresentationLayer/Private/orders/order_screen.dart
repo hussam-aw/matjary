@@ -206,7 +206,7 @@ class OrderScreen extends StatelessWidget {
                                                 order.updationDate)
                                             ? '---------'
                                             : order.getDateString(
-                                                order.updationDate),
+                                                order.updationDate!),
                                       ),
                                     ],
                                   ),
