@@ -38,14 +38,15 @@ class DatabaseHelper {
   Future<bool> insert(table, row) async {
     var dbClient = await database;
     try {
-      await dbClient!.insert(
+      int id = await dbClient!.insert(
         table,
         row,
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-      print('Inserted');
+      print(id);
       return true;
     } catch (e) {
+      print('catch erro ' + e.toString());
       return false;
     }
   }

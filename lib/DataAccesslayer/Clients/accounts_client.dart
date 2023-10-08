@@ -13,8 +13,6 @@ class AccountsClient {
     if (connected) {
       var response = await http
           .get(Uri.parse("$baseUrl$accountsLink/${MyApp.appUser!.companyId}"));
-      print("accounts : ");
-      print(response.body);
       if (response.statusCode == 200) {
         return response.body;
       } else {

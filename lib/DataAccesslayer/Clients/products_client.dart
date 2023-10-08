@@ -11,7 +11,6 @@ class ProductsClient {
     if (connected) {
       var response = await http
           .get(Uri.parse("$baseUrl$productsLink/${MyApp.appUser!.companyId}"));
-      print(response.body);
       if (response.statusCode == 200) {
         return response.body;
       } else {
