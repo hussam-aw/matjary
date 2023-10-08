@@ -5,6 +5,7 @@ import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart'
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/wares_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/BussinessLayer/helpers/pdf_helper.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
@@ -279,7 +280,7 @@ class OrderController extends GetxController {
   }
 
   Future<void> createOrder() async {
-    String? date = dateController.text;
+    String? date = DateFormatter.getCurrentDateString();
     String? discountOrderType = getDiscountOrderType();
     num? discountOrder = getDiscountOrder(discountOrderType);
     int? marketerId = getMarketerId();
