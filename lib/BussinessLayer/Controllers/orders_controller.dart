@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
+import 'package:matjary/BussinessLayer/helpers/database_helper.dart';
+import 'package:matjary/Constants/app_strings.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
 import 'package:matjary/DataAccesslayer/Repositories/orders_repo.dart';
@@ -17,6 +19,7 @@ class OrdersController extends GetxController {
   List<Order> filteredOrders = [];
   String currentOrderFilterType = 'الكل';
   final connectivityController = Get.find<ConnectivityController>();
+  DatabaseHelper databaseHelper = DatabaseHelper.db;
 
   List<String> orderFilterTypes = [
     'الكل',
@@ -63,8 +66,18 @@ class OrdersController extends GetxController {
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
     orders = await ordersRepo.getOrders(connectivityController.isConnected);
+    backupOrders();
     isLoadingOrders.value = false;
     filteredOrders = orders;
+  }
+
+  Future<void> backupOrders() async {
+    await databaseHelper.clearTable(ordersTableName);
+    if (connectivityController.isConnected) {
+      for (var order in orders) {
+        await databaseHelper.insert(ordersTableName, order.toMap());
+      }
+    }
   }
 
   void getPurchasesOrders() {
@@ -103,6 +116,7 @@ class OrdersController extends GetxController {
   Future<void> getOrdersByType(String type) async {
     isLoadingOrders.value = true;
     orders = await ordersRepo.getOrders(connectivityController.isConnected);
+    print(orders);
     if (type == 'الكل') {
       currentOrders = orders;
     } else {
