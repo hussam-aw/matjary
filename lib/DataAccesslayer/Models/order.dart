@@ -24,7 +24,8 @@ class Order {
   final num? marketerFee;
   final List<OrderProduct> details;
   final DateTime creationDate;
-  final DateTime updationDate;
+  final DateTime? updationDate;
+
   Order({
     required this.id,
     required this.total,
@@ -71,7 +72,8 @@ class Order {
       'marketer_id': marketerId,
       'marketer_fee_type': marketerFeeType,
       'marketer_fee': marketerFee,
-      'details': details.map((product) => product.toJson()).toList(),
+      'details':
+          json.encode(details.map((product) => product.toJson()).toList()),
     };
   }
 
@@ -97,7 +99,7 @@ class Order {
       marketerFeeType: map["marketer_fee_type"] ?? '',
       marketerFee: map['marketer_fee'] ?? 0.0,
       details: getDetailsList(map["details"]),
-      creationDate: getDate(map["created_at"]),
+      creationDate: getDate(map["created_at"]) ?? DateTime.now(),
       updationDate: getDate(map["updated_at"]),
     );
   }
@@ -107,14 +109,21 @@ class Order {
     dynamic parsed;
     if (details is String) {
       parsed = json.decode(details);
+      print(parsed);
+      if (parsed != null) {
+        for (int i = 0; i < parsed.length; i++) {
+          result.add(OrderProduct.fromDatabaseJson(parsed[i]));
+        }
+      }
     } else {
       parsed = details;
-    }
-    if (parsed != null) {
-      for (int i = 0; i < parsed.length; i++) {
-        result.add(OrderProduct.fromJson(parsed[i]));
+      if (parsed != null) {
+        for (int i = 0; i < parsed.length; i++) {
+          result.add(OrderProduct.fromApiJson(parsed[i]));
+        }
       }
     }
+
     return result;
   }
 
@@ -122,7 +131,10 @@ class Order {
     return "${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day}";
   }
 
-  static DateTime getDate(String date) {
-    return DateTime.parse(date);
+  static DateTime? getDate(String? date) {
+    if (date != null) {
+      return DateTime.parse(date);
+    }
+    return null;
   }
 }
