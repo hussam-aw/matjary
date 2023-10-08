@@ -21,7 +21,7 @@ class ProductsController extends GetxController {
   }
 
   Future<void> backupProducts() async {
-    databaseHelper.clearTable(productsTableName);
+    await databaseHelper.clearTable(productsTableName);
     if (connectivityController.isConnected) {
       for (var product in products) {
         await databaseHelper.insert(productsTableName, product.toMap());

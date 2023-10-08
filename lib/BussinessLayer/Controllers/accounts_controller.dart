@@ -55,7 +55,7 @@ class AccountsController extends GetxController {
   }
 
   Future<void> backupAccounts() async {
-    databaseHelper.clearTable(accountsTableName);
+    await databaseHelper.clearTable(accountsTableName);
     if (connectivityController.isConnected) {
       for (var account in accounts) {
         await databaseHelper.insert(accountsTableName, account.toMap());
