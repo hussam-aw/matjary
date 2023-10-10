@@ -189,8 +189,8 @@ class ProductController extends GetxController {
     num retailPrice = getRetailPrice();
     List<String> images = getProductImages();
     bool connected = connectivityController.isConnected;
-    if (connected) {
-      if (name.isNotEmpty) {
+    if (name.isNotEmpty) {
+      if (connected) {
         loading.value = true;
         bool isProductCreated = await prdouctsRepo.createProduct(
           name,
@@ -214,10 +214,10 @@ class ProductController extends GetxController {
           SnackBars.showError('فشل انشاء المنتج');
         }
       } else {
-        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
-      SnackBars.showError('لا يوجد اتصال بالانترنت');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
@@ -232,8 +232,9 @@ class ProductController extends GetxController {
     num retailPrice = getRetailPrice();
     List<String> images = getProductImages();
     bool connected = connectivityController.isConnected;
-    if (connected) {
-      if (name.isNotEmpty) {
+
+    if (name.isNotEmpty) {
+      if (connected) {
         loading.value = true;
         bool isProductUpdated = await prdouctsRepo.updateProduct(
           id,
@@ -256,10 +257,10 @@ class ProductController extends GetxController {
           SnackBars.showError('فشل التعديل');
         }
       } else {
-        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
-      SnackBars.showError('لا يوجد اتصال بالانترنت');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
