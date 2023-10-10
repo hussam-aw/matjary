@@ -1,6 +1,8 @@
+// ignore_for_file: unused_local_variable
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/database_helper.dart';
+import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/Constants/app_strings.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
 import 'package:matjary/DataAccesslayer/Models/order.dart';
@@ -17,6 +19,7 @@ class OrdersController extends GetxController {
   List<Order> salesOrders = [];
   List<Order> currentOrders = [];
   List<Order> filteredOrders = [];
+  List<Order> offlineOrders = [];
   String currentOrderFilterType = 'الكل';
   final connectivityController = Get.find<ConnectivityController>();
   DatabaseHelper databaseHelper = DatabaseHelper.db;
@@ -66,18 +69,51 @@ class OrdersController extends GetxController {
   Future<void> getOrders() async {
     isLoadingOrders.value = true;
     orders = await ordersRepo.getOrders(connectivityController.isConnected);
+    filteredOrders = orders;
+    currentOrders = orders;
+    getPurchasesOrders();
+    getSalesOrders();
     backupOrders();
     isLoadingOrders.value = false;
-    filteredOrders = orders;
   }
 
   Future<void> backupOrders() async {
-    await databaseHelper.clearTable(ordersTableName);
     if (connectivityController.isConnected) {
+      await databaseHelper.clearTable(ordersTableName);
       for (var order in orders) {
         await databaseHelper.insert(ordersTableName, order.toMap());
       }
     }
+  }
+
+  Future<void> syncOfflineOrders() async {
+    offlineOrders = await ordersRepo.getOfflineOrders();
+    bool isCreatedOrder;
+    for (var order in offlineOrders) {
+      isCreatedOrder = await ordersRepo.createOrder(
+        true,
+        order.customerId,
+        order.total,
+        order.notes,
+        order.type,
+        order.paidUp,
+        order.restOfTheBill,
+        order.wareId,
+        order.toWareId,
+        order.bankId,
+        order.sellType,
+        order.status,
+        order.expenses,
+        order.discount,
+        order.marketerId,
+        order.discountType,
+        order.details,
+        order.marketerFeeType,
+        order.marketerFee,
+        DateFormatter.getFormated(order.creationDate),
+      );
+    }
+    await databaseHelper.clearTable(offlineOrderTableName);
   }
 
   void getPurchasesOrders() {
