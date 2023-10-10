@@ -20,7 +20,7 @@ class OrdersClient {
         return "";
       }
     } else {
-      var data = await databaseHelper.getData(ordersTableName);
+      var data = await databaseHelper.getAllTableData(ordersTableName);
       if (data.isNotEmpty) {
         return data;
       } else {
