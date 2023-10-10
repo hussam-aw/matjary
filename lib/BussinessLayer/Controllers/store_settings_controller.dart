@@ -11,7 +11,7 @@ class StoreSettingsController extends GetxController {
   TextEditingController storeNameController = TextEditingController();
   String selectedIconPath = '';
   StoreSettingsRepo repo = StoreSettingsRepo();
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   BoxClient boxClient = BoxClient();
   final connectivityController = Get.find<ConnectivityController>();
 
