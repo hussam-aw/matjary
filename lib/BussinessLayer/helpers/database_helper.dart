@@ -27,10 +27,21 @@ class DatabaseHelper {
     );
   }
 
-  Future<dynamic> getData(tableName) async {
+  Future<dynamic> getAllTableData(tableName) async {
     var dbClient = await database;
     List<dynamic> maps =
         await dbClient?.query(tableName) as List<Map<dynamic, dynamic>>;
+    print(maps);
+    return maps.reversed;
+  }
+
+  Future<dynamic> getData(tableName, args) async {
+    var dbClient = await database;
+    List<dynamic> maps = await dbClient?.query(
+      tableName,
+      where: "type IN (?, ?, ?)",
+      whereArgs: args,
+    ) as List<Map<dynamic, dynamic>>;
     print(maps);
     return maps.reversed;
   }
