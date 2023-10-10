@@ -23,6 +23,8 @@ class DatabaseHelper {
         await db.execute(createTableQueries[1]);
         await db.execute(createTableQueries[2]);
         await db.execute(createTableQueries[3]);
+        await db.execute(createTableQueries[4]);
+        await db.execute(createTableQueries[5]);
       },
     );
   }
