@@ -53,8 +53,10 @@ class ProductReportScreen extends StatelessWidget {
                               AppRoutes.chooseProductScreen,
                               arguments: 'selection',
                             );
-                            Get.toNamed(AppRoutes.productQtyReportScreen,
-                                arguments: product);
+                            if (product != null) {
+                              Get.toNamed(AppRoutes.productQtyReportScreen,
+                                  arguments: product);
+                            }
                           },
                         ),
                       ),
