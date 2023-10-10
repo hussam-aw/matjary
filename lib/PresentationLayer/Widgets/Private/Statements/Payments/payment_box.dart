@@ -70,7 +70,7 @@ class PaymentBox extends StatelessWidget {
                   ),
                   spacerHeight(height: 8),
                   Text(
-                    DateFormatter.getDateString(payment.date),
+                    DateFormatter.getDateString(payment.createdAt),
                     softWrap: true,
                     style: UITextStyle.normalSmall.copyWith(
                       color: UIColors.titleNoteText,

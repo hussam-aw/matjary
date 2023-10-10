@@ -61,7 +61,7 @@ class StatementWithTypeBox extends StatelessWidget {
                   ),
                   spacerHeight(height: 8),
                   Text(
-                    statement.getDateString(statement.date),
+                    statement.getDateString(statement.createdAt),
                     softWrap: true,
                     style: UITextStyle.normalSmall.copyWith(
                       color: UIColors.titleNoteText,
