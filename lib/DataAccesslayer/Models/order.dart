@@ -74,6 +74,8 @@ class Order {
       'marketer_fee': marketerFee,
       'details':
           json.encode(details.map((product) => product.toJson()).toList()),
+      'created_at': creationDate.toIso8601String(),
+      'updated_at': updationDate!.toIso8601String(),
     };
   }
 
@@ -109,7 +111,6 @@ class Order {
     dynamic parsed;
     if (details is String) {
       parsed = json.decode(details);
-      print(parsed);
       if (parsed != null) {
         for (int i = 0; i < parsed.length; i++) {
           result.add(OrderProduct.fromDatabaseJson(parsed[i]));
@@ -123,7 +124,6 @@ class Order {
         }
       }
     }
-
     return result;
   }
 
