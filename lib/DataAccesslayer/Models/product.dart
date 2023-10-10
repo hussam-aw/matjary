@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Product {
   final int id;
   final String name;
@@ -29,12 +31,12 @@ class Product {
       "name": name,
       "wholesale_price": wholesalePrice,
       "retail_price": retailPrice,
-      "supplier_price\t": supplierPrice,
+      "supplier_price": supplierPrice,
       "quantity": quantity,
       "affected_exchange": affectedExchange,
       "initial_price": initialPrice,
       "category": categoryId,
-      "images": images.toString(),
+      "images": jsonEncode(images),
     };
   }
 
@@ -44,7 +46,7 @@ class Product {
       name: map['name'] ?? "",
       wholesalePrice: map['wholesale_price'].toString(),
       retailPrice: map['retail_price'].toString(),
-      supplierPrice: map['supplier_price\t'].toString(),
+      supplierPrice: map['supplier_price'].toString(),
       quantity: map['quantity'].toString(),
       affectedExchange: map['affected_exchange'].toString(),
       initialPrice: map['initial_price'].toString(),
@@ -55,12 +57,14 @@ class Product {
 
   static List<String> getImages(images) {
     List<String> result = [];
+    if (images is String) {
+      images = json.decode(images).cast<String>();
+    }
     if (images != "[]") {
       for (int i = 0; i < images.length; i++) {
         result.add(images[i].toString());
       }
-      return result;
     }
-    return [];
+    return result;
   }
 }
