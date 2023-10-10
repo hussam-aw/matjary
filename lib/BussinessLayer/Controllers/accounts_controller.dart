@@ -23,7 +23,7 @@ class AccountsController extends GetxController {
   List<Account> customersAccounts = [];
   var isLoadingPinnedAccounts = true.obs;
   List<Account> pinnedAccounts = [];
-  var isLoadingCashAmount = true.obs;
+  var isLoadingCashAmount = false.obs;
   var cashAmount = 0.0.obs;
   AccountsRepo accountsRepo = AccountsRepo();
   BoxClient boxClient = BoxClient();
@@ -55,8 +55,8 @@ class AccountsController extends GetxController {
   }
 
   Future<void> backupAccounts() async {
-    await databaseHelper.clearTable(accountsTableName);
     if (connectivityController.isConnected) {
+      await databaseHelper.clearTable(accountsTableName);
       for (var account in accounts) {
         await databaseHelper.insert(accountsTableName, account.toMap());
       }

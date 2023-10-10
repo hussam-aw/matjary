@@ -16,13 +16,13 @@ class ProductsController extends GetxController {
     isLoadingProducts.value = true;
     products =
         await prdouctsRepo.getProducts(connectivityController.isConnected);
-    backupProducts();
     isLoadingProducts.value = false;
+    backupProducts();
   }
 
   Future<void> backupProducts() async {
-    await databaseHelper.clearTable(productsTableName);
     if (connectivityController.isConnected) {
+      await databaseHelper.clearTable(productsTableName);
       for (var product in products) {
         await databaseHelper.insert(productsTableName, product.toMap());
       }
