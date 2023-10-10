@@ -74,7 +74,7 @@ class OrderController extends GetxController {
     for (Product product in selectedProducts) {
       orderProducts.add({
         "product_id": product.id,
-        "qty": orderProductsQuantities[product.id],
+        "quantity": orderProductsQuantities[product.id],
         "price": orderProductsPrices[product.id],
       });
     }
