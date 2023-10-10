@@ -6,10 +6,13 @@ import '../Models/ware.dart';
 class WareRepo {
   var client = WareClient();
 
-  Future<List<Ware>> getWares() async {
-    var response = await client.getWares();
+  Future<List<Ware>> getWares(connected) async {
+    var response = await client.getWares(connected);
     if (response != "") {
-      final parsed = json.decode(response).cast<Map<String, dynamic>>();
+      var parsed = response;
+      if (connected) {
+        parsed = json.decode(response).cast<Map<String, dynamic>>();
+      }
       return parsed.map<Ware>((json) => Ware.fromMap(json)).toList();
     }
     return [];

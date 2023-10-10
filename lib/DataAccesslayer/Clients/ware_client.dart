@@ -1,17 +1,29 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:matjary/BussinessLayer/helpers/database_helper.dart';
+import 'package:matjary/Constants/app_strings.dart';
 import 'package:matjary/main.dart';
 import '../../Constants/api_links.dart';
 
 class WareClient {
-  Future<dynamic> getWares() async {
-    var response = await http
-        .get(Uri.parse("$baseUrl$waresLink/${MyApp.appUser!.companyId}"));
+  DatabaseHelper databaseHelper = DatabaseHelper.db;
 
-    if (response.statusCode == 200) {
-      return response.body;
+  Future<dynamic> getWares(connected) async {
+    if (connected) {
+      var response = await http
+          .get(Uri.parse("$baseUrl$waresLink/${MyApp.appUser!.companyId}"));
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return "";
+      }
     } else {
-      return "";
+      var data = await databaseHelper.getAllTableData(waresTableName);
+      if (data.isNotEmpty) {
+        return data;
+      } else {
+        return "";
+      }
     }
   }
 
