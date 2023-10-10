@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/account_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/home_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/orders_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/profile_controller.dart';
@@ -24,6 +25,7 @@ import 'package:matjary/PresentationLayer/Widgets/Public/spacerWidth.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/amount_shimmer.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/customer_list_tile_shimmer.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/order_count_shimmer.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 import 'package:matjary/main.dart';
 
 import '../../Constants/get_routes.dart';
@@ -37,6 +39,7 @@ class HomeScreen extends StatelessWidget {
   final accountController = Get.put(AccountController());
   final ordersController = Get.find<OrdersController>();
   final profileController = Get.put(ProfileController());
+  final connectivityController = Get.find<ConnectivityController>();
 
   @override
   Widget build(BuildContext context) {
@@ -95,14 +98,19 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             CreateMenuItem(
                               onTap: () async {
-                                var account =
-                                    await accountsController.selectAccount(
-                                        accountsController.accounts, '');
-                                if (account != null) {
-                                  Get.toNamed(
-                                    AppRoutes.accountStatementTypeScreen,
-                                    arguments: account,
-                                  );
+                                if (connectivityController.isConnected) {
+                                  var account =
+                                      await accountsController.selectAccount(
+                                          accountsController.accounts, '');
+                                  if (account != null) {
+                                    Get.toNamed(
+                                      AppRoutes.accountStatementTypeScreen,
+                                      arguments: account,
+                                    );
+                                  }
+                                } else {
+                                  SnackBars.showError(
+                                      'لا يوجد اتصال بالانترنت');
                                 }
                               },
                               icon: 'assets/new_icons/account2-ph.png',
@@ -128,7 +136,12 @@ class HomeScreen extends StatelessWidget {
                             ),
                             CreateMenuItem(
                               onTap: () {
-                                Get.toNamed(AppRoutes.productReportScreen);
+                                if (connectivityController.isConnected) {
+                                  Get.toNamed(AppRoutes.productReportScreen);
+                                } else {
+                                  SnackBars.showError(
+                                      'لا يوجد اتصال بالانترنت');
+                                }
                               },
                               icon: 'assets/new_icons/ware_ph.png',
                               title: 'جرد بضاعة',
@@ -353,9 +366,13 @@ class HomeScreen extends StatelessWidget {
                                         },
                                         customerName: accountsController
                                             .pinnedAccounts[index].name,
-                                        customerImage: accountsController
-                                            .pinnedAccounts[index].avatar
-                                            .toString(),
+                                        customerImage:
+                                            connectivityController.isConnected
+                                                ? accountsController
+                                                    .pinnedAccounts[index]
+                                                    .avatar
+                                                    .toString()
+                                                : '',
                                         customerStatus: accountController
                                             .convertAccountStyleToString(
                                                 accountsController

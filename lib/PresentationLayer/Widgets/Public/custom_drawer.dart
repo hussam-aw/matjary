@@ -4,12 +4,14 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/auth_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/profile_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/store_settings_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 import 'package:matjary/Constants/ui_text_styles.dart';
 import 'package:matjary/PresentationLayer/Widgets/shimmers/icon_shimmer.dart';
+import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 import 'package:matjary/main.dart';
 
 import '../Home/drawer_list_tile.dart';
@@ -20,6 +22,7 @@ class CustomDrawer extends StatelessWidget {
   final accountsController = Get.find<AccountsController>();
   final profileController = Get.find<ProfileController>();
   final storeSettingsController = Get.find<StoreSettingsController>();
+  final connectivityController = Get.find<ConnectivityController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,12 @@ class CustomDrawer extends StatelessWidget {
                                     backgroundColor:
                                         UIColors.containerBackground,
                                     backgroundImage:
-                                        NetworkImage(MyApp.storeSettings!.icon),
+                                        connectivityController.isConnected
+                                            ? NetworkImage(
+                                                MyApp.storeSettings!.icon)
+                                            : const AssetImage(
+                                                    'assets/images/user.png')
+                                                as ImageProvider,
                                   );
                       }),
                       accountName: Text(
@@ -97,9 +105,13 @@ class CustomDrawer extends StatelessWidget {
                 subtitle: "تصفح و تعديل الفواتير",
                 iconData: FontAwesomeIcons.fileInvoice,
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.ordersScreen,
-                  );
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(
+                      AppRoutes.ordersScreen,
+                    );
+                  } else {
+                    SnackBars.showError('لا يوجد اتصال بالانترنت');
+                  }
                 },
               ),
               DrawerListTile(
@@ -135,9 +147,13 @@ class CustomDrawer extends StatelessWidget {
                 subtitle: "تصفح و تعديل تصنيفات البضاعة",
                 iconData: Ionicons.menu,
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.chooseCategoryScreen,
-                  );
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(
+                      AppRoutes.chooseCategoryScreen,
+                    );
+                  } else {
+                    SnackBars.showError('لا يوجد اتصال بالانترنت');
+                  }
                 },
               ),
               DrawerListTile(
@@ -163,9 +179,13 @@ class CustomDrawer extends StatelessWidget {
                 subtitle: "تصفح و تعديل الدفعات",
                 iconData: FontAwesomeIcons.fileInvoiceDollar,
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.paymentsScreen,
-                  );
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(
+                      AppRoutes.paymentsScreen,
+                    );
+                  } else {
+                    SnackBars.showError('لا يوجد اتصال بالانترنت');
+                  }
                 },
               ),
               DrawerListTile(
@@ -173,9 +193,13 @@ class CustomDrawer extends StatelessWidget {
                 subtitle: "تصفح و تعديل الإيرادات والمصاريف",
                 iconData: FontAwesomeIcons.fileInvoiceDollar,
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.earnsExpensesScreen,
-                  );
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(
+                      AppRoutes.earnsExpensesScreen,
+                    );
+                  } else {
+                    SnackBars.showError('لا يوجد اتصال بالانترنت');
+                  }
                 },
               ),
               const DrawerListTile(
@@ -188,14 +212,24 @@ class CustomDrawer extends StatelessWidget {
                 title: "التقارير",
                 subtitle: "التقارير المحاسبية",
                 iconData: Ionicons.analytics,
-                onTap: () => Get.toNamed(AppRoutes.reportsScreen),
+                onTap: () {
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(AppRoutes.reportsScreen);
+                  } else {
+                    SnackBars.showError('لا يوجد اتصال بالانترنت');
+                  }
+                },
               ),
               DrawerListTile(
                 title: "المستخدمين",
                 subtitle: "تصفح و تعديل المستخدمين",
                 iconData: FontAwesomeIcons.user,
                 onTap: () {
-                  Get.toNamed(AppRoutes.chooseUserScreen);
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(AppRoutes.chooseUserScreen);
+                  } else {
+                    SnackBars.showError('لا يوجد اتصال بالانترنت');
+                  }
                 },
               ),
               DrawerListTile(
@@ -203,7 +237,11 @@ class CustomDrawer extends StatelessWidget {
                 subtitle: "التعديل في إعدادات التطبيق",
                 iconData: Icons.settings,
                 onTap: () {
-                  Get.toNamed(AppRoutes.settingsScreen);
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(AppRoutes.settingsScreen);
+                  } else {
+                    SnackBars.showError('لا يوجد اتصال بالانترنت');
+                  }
                 },
               ),
               if (MyApp.appUser != null)

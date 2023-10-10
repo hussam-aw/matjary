@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/products_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/search_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
@@ -22,7 +23,7 @@ class ChooseProductScreen extends StatelessWidget {
 
   final ProductsController productsController = Get.find<ProductsController>();
   final ListSearchController searchController = Get.put(ListSearchController());
-
+  final connectivityController = Get.find<ConnectivityController>();
   String? screenMode = Get.arguments;
 
   Widget buildProductsList(productsList) {
@@ -44,12 +45,14 @@ class ChooseProductScreen extends StatelessWidget {
                     ? () {
                         Get.back(result: productsList[index]);
                       }
-                    : () {},
-                onLongTap: () {
-                  buildCustomBottomSheet(
-                    ProductOptionsMenu(product: productsList[index]),
-                  );
-                },
+                    : null,
+                onLongTap: connectivityController.isConnected
+                    ? () {
+                        buildCustomBottomSheet(
+                          ProductOptionsMenu(product: productsList[index]),
+                        );
+                      }
+                    : null,
               );
             },
             separatorBuilder: (context, index) {
@@ -117,13 +120,15 @@ class ChooseProductScreen extends StatelessWidget {
             ),
           ),
         ),
-        floatingActionButton: AddButton(
-          backgroundColor: UIColors.primary,
-          iconColor: UIColors.white,
-          onPressed: () {
-            Get.toNamed(AppRoutes.createEditProductScreen);
-          },
-        ),
+        floatingActionButton: connectivityController.isConnected
+            ? AddButton(
+                backgroundColor: UIColors.primary,
+                iconColor: UIColors.white,
+                onPressed: () {
+                  Get.toNamed(AppRoutes.createEditProductScreen);
+                },
+              )
+            : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
