@@ -19,7 +19,7 @@ class AccountsClient {
         return "";
       }
     } else {
-      var data = await databaseHelper.getData(accountsTableName);
+      var data = await databaseHelper.getAllTableData(accountsTableName);
       if (data.isNotEmpty) {
         return data;
       } else {
