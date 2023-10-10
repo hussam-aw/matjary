@@ -29,32 +29,41 @@ class OrdersClient {
     }
   }
 
-  Future<dynamic> getOrdersLastDay() async {
-    var response = await http.get(Uri.parse("$baseUrl$ordersLastDayLink"));
-    if (response.statusCode == 200) {
-      return response.body;
+  Future<dynamic> getOfflineOrders() async {
+    var data = await databaseHelper.getAllTableData(offlineOrderTableName);
+    if (data.isNotEmpty) {
+      return data;
     } else {
       return "";
     }
   }
 
-  Future<dynamic> getOrdersLastWeek() async {
-    var response = await http.get(Uri.parse("$baseUrl$ordersLastWeekLink"));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return "";
-    }
-  }
+  // Future<dynamic> getOrdersLastDay() async {
+  //   var response = await http.get(Uri.parse("$baseUrl$ordersLastDayLink"));
+  //   if (response.statusCode == 200) {
+  //     return response.body;
+  //   } else {
+  //     return "";
+  //   }
+  // }
 
-  Future<dynamic> getOrdersLastMonth() async {
-    var response = await http.get(Uri.parse("$baseUrl$ordersLastMonthLink"));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return "";
-    }
-  }
+  // Future<dynamic> getOrdersLastWeek() async {
+  //   var response = await http.get(Uri.parse("$baseUrl$ordersLastWeekLink"));
+  //   if (response.statusCode == 200) {
+  //     return response.body;
+  //   } else {
+  //     return "";
+  //   }
+  // }
+
+  // Future<dynamic> getOrdersLastMonth() async {
+  //   var response = await http.get(Uri.parse("$baseUrl$ordersLastMonthLink"));
+  //   if (response.statusCode == 200) {
+  //     return response.body;
+  //   } else {
+  //     return "";
+  //   }
+  // }
 
   Future<dynamic> createOrder(connected, map) async {
     if (connected) {
@@ -69,7 +78,7 @@ class OrdersClient {
         return false;
       }
     } else {
-      var isInserted = await databaseHelper.insert(ordersTableName, map);
+      var isInserted = await databaseHelper.insert(offlineOrderTableName, map);
       return isInserted;
     }
   }
