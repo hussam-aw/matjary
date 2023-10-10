@@ -74,7 +74,10 @@ class PaymentsScreen extends StatelessWidget {
           backgroundColor: UIColors.primary,
           iconColor: UIColors.white,
           onPressed: () {
-            Get.toNamed(AppRoutes.createEditPaymentScreen);
+            Get.toNamed(
+              AppRoutes.createEditPaymentScreen,
+              arguments: {'paymentType': 'مقبوضات'},
+            );
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
