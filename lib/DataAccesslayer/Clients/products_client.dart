@@ -17,7 +17,7 @@ class ProductsClient {
         return "";
       }
     } else {
-      var data = await databaseHelper.getData(productsTableName);
+      var data = await databaseHelper.getAllTableData(productsTableName);
       if (data.isNotEmpty) {
         return data;
       } else {
