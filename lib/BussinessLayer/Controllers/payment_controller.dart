@@ -144,7 +144,7 @@ class PaymentController extends GetxController {
       setCounterPartyAccount(payment.counterParty);
       setBankAccount(payment.bank);
       setAmount(payment.amount);
-      setDate(DateFormatter.getFormated(payment.date));
+      setDate(DateFormatter.getFormated(payment.createdAt));
       setNotes(payment.statement);
     } else {
       setCounterPaymentType(paymentType);

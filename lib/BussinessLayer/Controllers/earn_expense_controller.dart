@@ -124,7 +124,7 @@ class EarnExpenseController extends GetxController {
       setStatementType(statement.type);
       setBankAccount(statement.bank);
       setAmount(statement.amount);
-      setDate(DateFormatter.getFormated(statement.date));
+      setDate(DateFormatter.getFormated(statement.createdAt));
       setStatementText(statement.statement);
     } else {
       setCounterStatementType('إيرادات');
