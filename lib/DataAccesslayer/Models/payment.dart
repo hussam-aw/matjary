@@ -7,7 +7,7 @@ class Payment {
   Account bank;
   String statement;
   num amount;
-  DateTime date;
+  DateTime createdAt;
 
   Payment({
     required this.id,
@@ -16,7 +16,7 @@ class Payment {
     required this.bank,
     required this.statement,
     required this.amount,
-    required this.date,
+    required this.createdAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,7 +27,7 @@ class Payment {
       "bank_id": bank,
       "amount": amount,
       "statement": statement,
-      "date": date,
+      "created_at": createdAt,
     };
   }
 
@@ -39,7 +39,7 @@ class Payment {
       bank: Account.fromMap(map["other_side"]),
       amount: map["amount"],
       statement: map["statement"] ?? '',
-      date: DateTime.parse(map['date']),
+      createdAt: DateTime.parse(map['created_at']),
     );
   }
 }

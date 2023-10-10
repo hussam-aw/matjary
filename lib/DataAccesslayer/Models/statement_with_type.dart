@@ -6,7 +6,7 @@ class StatementWithType {
   final String statement;
   final num amount;
   final Account bank;
-  final DateTime date;
+  final DateTime createdAt;
 
   StatementWithType({
     required this.id,
@@ -14,7 +14,7 @@ class StatementWithType {
     required this.statement,
     required this.amount,
     required this.bank,
-    required this.date,
+    required this.createdAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,7 +24,7 @@ class StatementWithType {
       "statement": statement,
       "amount": amount,
       "bank": bank,
-      "date": date,
+      "created_at": createdAt,
     };
   }
 
@@ -35,7 +35,7 @@ class StatementWithType {
       statement: map["statement"] ?? '',
       amount: map["amount"],
       bank: Account.fromMap(map["other_side"]),
-      date: DateTime.parse(map['created_at']),
+      createdAt: DateTime.parse(map['created_at']),
     );
   }
 
