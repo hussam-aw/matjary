@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class StoreSettings {
   int id;
   String name;
@@ -17,19 +19,21 @@ class StoreSettings {
     required this.createdAt,
   });
 
-  factory StoreSettings.fromJson(Map<String, dynamic> json) => StoreSettings(
-        id: json["id"].toInt(),
-        name: json["name"],
-        icon: json["icon"],
-        defaultWare: json["default_ware"] is String
-            ? int.parse(json["default_ware"])
-            : json["default_ware"],
-        defaultBank: json["default_bank"] is String
-            ? int.parse(json["default_bank"])
-            : json["default_bank"],
-        currencies: json["currencies"] ?? [],
-        createdAt: json["created_at"].isNotEmpty
-            ? DateTime.parse(json["created_at"])
+  factory StoreSettings.fromJson(Map<String, dynamic> map) => StoreSettings(
+        id: map["id"].toInt(),
+        name: map["name"],
+        icon: map["icon"],
+        defaultWare: map["default_ware"] is String
+            ? int.parse(map["default_ware"])
+            : map["default_ware"],
+        defaultBank: map["default_bank"] is String
+            ? int.parse(map["default_bank"])
+            : map["default_bank"],
+        currencies: map["currencies"] is String
+            ? List<String>.from(json.decode(map["currencies"]))
+            : map["currencies"] ?? [],
+        createdAt: map["created_at"].isNotEmpty
+            ? DateTime.parse(map["created_at"])
             : null,
       );
 
@@ -39,7 +43,7 @@ class StoreSettings {
         "icon": icon,
         "default_ware": defaultWare,
         "default_bank": defaultBank,
-        "currencies": currencies,
+        "currencies": json.encode(currencies),
         "created_at": createdAt!.toIso8601String(),
       };
 }
