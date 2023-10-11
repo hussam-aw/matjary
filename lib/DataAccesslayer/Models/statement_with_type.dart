@@ -1,11 +1,9 @@
-import 'package:matjary/DataAccesslayer/Models/account.dart';
-
 class StatementWithType {
   final int id;
   final String type;
   final String statement;
   final num amount;
-  final Account bank;
+  final int bankId;
   final DateTime createdAt;
 
   StatementWithType({
@@ -13,7 +11,7 @@ class StatementWithType {
     required this.type,
     required this.statement,
     required this.amount,
-    required this.bank,
+    required this.bankId,
     required this.createdAt,
   });
 
@@ -23,7 +21,7 @@ class StatementWithType {
       "type": type,
       "statement": statement,
       "amount": amount,
-      "bank": bank,
+      "bank": bankId,
       "created_at": createdAt,
     };
   }
@@ -34,7 +32,18 @@ class StatementWithType {
       type: map["type"],
       statement: map["statement"] ?? '',
       amount: map["amount"],
-      bank: Account.fromMap(map["other_side"]),
+      bankId: map["other_side"]["id"],
+      createdAt: DateTime.parse(map['created_at']),
+    );
+  }
+
+  factory StatementWithType.fromDatabaseMap(Map<String, dynamic> map) {
+    return StatementWithType(
+      id: map["id"],
+      type: map["type"],
+      statement: map["statement"] ?? '',
+      amount: map["amount"],
+      bankId: map["other_side"],
       createdAt: DateTime.parse(map['created_at']),
     );
   }
