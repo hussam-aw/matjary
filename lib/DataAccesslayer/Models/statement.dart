@@ -28,8 +28,8 @@ class Statement {
 
   factory Statement.fromMap(Map<String, dynamic> map) {
     return Statement(
-      firstSideId: map['first_side_id'] as int,
-      secondSideId: map['second_side_id'] as int,
+      firstSideId: map['first_side'] as int,
+      secondSideId: map['other_side'] as int,
       type: '',
       statement: map['statement'] ?? '',
       amount: map['amount'],
