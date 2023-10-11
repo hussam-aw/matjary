@@ -54,7 +54,7 @@ class PaymentBox extends StatelessWidget {
                   ),
                   spacerHeight(height: 12),
                   Text(
-                    'الطرف المقابل: ${payment.counterParty.name}',
+                    'الطرف المقابل: ${accountsController.getAccountName(payment.counterPartyId)}',
                     style: UITextStyle.normalSmall,
                     softWrap: true,
                     //overflow: TextOverflow.ellipsis,
