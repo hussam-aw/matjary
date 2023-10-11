@@ -9,9 +9,11 @@ class User {
   final String mobileNumber;
   final String email;
   final String address;
+  final String package;
   final DateTime? expiryDate;
   final String avatar;
   final String token;
+
   User({
     required this.id,
     required this.companyId,
@@ -19,6 +21,7 @@ class User {
     required this.name,
     required this.email,
     required this.address,
+    required this.package,
     required this.expiryDate,
     required this.avatar,
     required this.token,
@@ -32,6 +35,7 @@ class User {
       'name': name,
       'email': email,
       'address': address,
+      'package': package,
       'expiry_date': expiryDate.toString(),
       'avatar': avatar,
       'token': token
@@ -46,6 +50,7 @@ class User {
       name: map['user']['name'] ?? '',
       email: map['user']['email'] ?? '',
       address: map['user']['address'] ?? '',
+      package: map['user']['package'] ?? '',
       expiryDate: getExpiryDate(map['user']['expiry_date']),
       avatar: map['user']['avatar'] ?? '',
       token: map['token'] ?? '',
@@ -60,6 +65,7 @@ class User {
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       address: map['address'] ?? '',
+      package: map['package'] ?? '',
       expiryDate: getExpiryDate(map['expiry_date']),
       avatar: map['avatar'] ?? '',
       token: map['token'] ?? '',
