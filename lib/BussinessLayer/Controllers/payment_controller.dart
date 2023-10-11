@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/payments_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
@@ -12,9 +13,9 @@ import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
 class PaymentController extends GetxController {
   String? paymentType;
   TextEditingController bankController = TextEditingController();
-  Account? bankAccount;
+  int? bankAccountId;
   TextEditingController counterPartyController = TextEditingController();
-  Account? counterPartyAccount;
+  int? counterPartyId;
   TextEditingController amountController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController notesController = TextEditingController();
@@ -24,6 +25,7 @@ class PaymentController extends GetxController {
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
   var savingState = false;
+  final connectivityController = Get.find<ConnectivityController>();
 
   Map<String, String> counterPaymentTypes = {
     'مقبوضات': 'income',
@@ -43,37 +45,32 @@ class PaymentController extends GetxController {
   }
 
   void setBankAccount(Account? account) {
-    bankAccount = account;
     if (account != null) {
-      bankController.value = TextEditingValue(text: account.name);
+      bankAccountId = account.id;
+      bankController.value =
+          TextEditingValue(text: accountsController.getAccountName(account.id));
     } else {
       bankController.clear();
     }
   }
 
   int? getBankAccountId() {
-    if (bankAccount != null) {
-      return bankAccount!.id;
-    } else {
-      return null;
-    }
+    return bankAccountId;
   }
 
   void setCounterPartyAccount(Account? account) {
-    counterPartyAccount = account;
     if (account != null) {
-      counterPartyController.value = TextEditingValue(text: account.name);
+      counterPartyId = account.id;
+      counterPartyController.value =
+          TextEditingValue(text: accountsController.getAccountName(account.id));
     } else {
+      counterPartyId = null;
       counterPartyController.clear();
     }
   }
 
   int? getCounterPartyAccountId() {
-    if (counterPartyAccount != null) {
-      return counterPartyAccount!.id;
-    } else {
-      return null;
-    }
+    return counterPartyId;
   }
 
   void setAmount(amount) {
@@ -116,16 +113,16 @@ class PaymentController extends GetxController {
   void setDefaultAccounts(bool clear) async {
     if (!clear) {
       Account? bank, counterParty;
-      int? bankId, counterPartyId;
-      counterPartyId = await boxClient.getCounterPartyAccount();
+      int? bankId, counterId;
+      counterId = await boxClient.getCounterPartyAccount();
       bankId = await boxClient.getBankAccount();
-      counterParty = accountsController.getAccountFromId(counterPartyId);
+      counterParty = accountsController.getAccountFromId(counterId);
       bank = accountsController.getAccountFromId(bankId);
       if (counterParty == null && bank == null) {
         counterParty = accountsController.accounts.isNotEmpty
             ? accountsController.accounts[0]
             : null;
-        bankAccount = accountsController.accounts.isNotEmpty
+        bank = accountsController.accounts.isNotEmpty
             ? accountsController.bankAccounts[0]
             : null;
       }
@@ -141,8 +138,9 @@ class PaymentController extends GetxController {
       {bool clear = false, String? paymentType = 'مقبوضات', Payment? payment}) {
     if (payment != null) {
       setPaymentType(payment.type);
-      setCounterPartyAccount(payment.counterParty);
-      setBankAccount(payment.bank);
+      setCounterPartyAccount(
+          accountsController.getAccountFromId(payment.counterPartyId));
+      setBankAccount(accountsController.getAccountFromId(payment.bankId));
       setAmount(payment.amount);
       setDate(DateFormatter.getFormated(payment.createdAt));
       setNotes(payment.statement);
@@ -162,9 +160,11 @@ class PaymentController extends GetxController {
     num amount = getAmount();
     String date = getDate();
     String notes = getNotes();
+    bool connected = connectivityController.isConnected;
     if (bankId != null && counterPartyId != null && date.isNotEmpty) {
       loading.value = true;
-      var payment = await paymentsRepo.createPayment(
+      bool isPaymentCreated = await paymentsRepo.createPayment(
+        connected,
         paymentType,
         counterPartyId,
         bankId,
@@ -173,12 +173,14 @@ class PaymentController extends GetxController {
         date,
       );
       loading.value = false;
-      if (payment != null) {
+      if (isPaymentCreated) {
         setDefaultFields(clear: true);
         boxClient.setCounterPartyAccount(counterPartyId);
         boxClient.setBankAccount(bankId);
-        await accountsController.getAccounts();
-        paymentsController.getPayments();
+        if (connected) {
+          await accountsController.getAccounts();
+          paymentsController.getPayments();
+        }
         savingState = true;
         setDefaultFields(clear: true);
         SnackBars.showSuccess('تم انشاء القيد الدفعة');
@@ -198,23 +200,27 @@ class PaymentController extends GetxController {
     String date = getDate();
     String notes = getNotes();
     if (bankId != null && counterPartyId != null && date.isNotEmpty) {
-      loading.value = true;
-      var payment = await paymentsRepo.updatePayment(
-        id,
-        paymentType,
-        counterPartyId,
-        bankId,
-        notes,
-        amount,
-        date,
-      );
-      loading.value = false;
-      if (payment != null) {
-        await paymentsController.getPayments();
-        savingState = true;
-        SnackBars.showSuccess('تم تعديل القيد الدفعة');
+      if (connectivityController.isConnected) {
+        loading.value = true;
+        bool isPaymentUpdated = await paymentsRepo.updatePayment(
+          id,
+          paymentType,
+          counterPartyId,
+          bankId,
+          notes,
+          amount,
+          date,
+        );
+        loading.value = false;
+        if (isPaymentUpdated) {
+          await paymentsController.getPayments();
+          savingState = true;
+          SnackBars.showSuccess('تم تعديل القيد الدفعة');
+        } else {
+          SnackBars.showError('فشل تعديل الدفعة');
+        }
       } else {
-        SnackBars.showError('فشل تعديل الدفعة');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
@@ -222,14 +228,18 @@ class PaymentController extends GetxController {
   }
 
   Future<void> deletePayment(id) async {
-    loading.value = true;
-    var payment = await paymentsRepo.deletePayment(id);
-    loading.value = false;
-    if (payment != null) {
-      paymentsController.getPayments();
-      SnackBars.showSuccess('تم الحذف بنجاح');
+    if (connectivityController.isConnected) {
+      loading.value = true;
+      var isPaymentDeleted = await paymentsRepo.deletePayment(id);
+      loading.value = false;
+      if (isPaymentDeleted) {
+        paymentsController.getPayments();
+        SnackBars.showSuccess('تم الحذف بنجاح');
+      } else {
+        SnackBars.showError('فشل الحذف');
+      }
     } else {
-      SnackBars.showError('فشل الحذف');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 }

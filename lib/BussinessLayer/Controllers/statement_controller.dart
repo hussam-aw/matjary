@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/account.dart';
@@ -24,6 +25,7 @@ class StatementController extends GetxController {
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
   var savingState = false;
+  final connectivityController = Get.find<ConnectivityController>();
 
   void setFromAccount(Account? account) {
     fromAccount = account;
@@ -143,12 +145,14 @@ class StatementController extends GetxController {
     num amount = getAmount();
     String date = getDate();
     String statementText = getStatementText();
+    bool connected = connectivityController.isConnected;
     if (fromId != null &&
         toId != null &&
         date.isNotEmpty &&
         statementText.isNotEmpty) {
       loading.value = true;
-      var statement = await statementRepo.createStatement(
+      bool isStatementCreated = await statementRepo.createStatement(
+        connected,
         fromId,
         toId,
         statementText,
@@ -156,10 +160,12 @@ class StatementController extends GetxController {
         date,
       );
       loading.value = false;
-      if (statement != null) {
+      if (isStatementCreated) {
         boxClient.setFirstSideAccount(fromId);
         boxClient.setSecondSideAccount(toId);
-        await accountsController.getAccounts();
+        if (connected) {
+          await accountsController.getAccounts();
+        }
         savingState = true;
         setDefaultFields(clear: true);
         SnackBars.showSuccess('تم انشاء القيد المحاسبي');

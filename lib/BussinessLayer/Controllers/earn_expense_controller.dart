@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/accounts_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/BussinessLayer/Controllers/earns_expenses_controller.dart';
 import 'package:matjary/BussinessLayer/helpers/date_formatter.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
@@ -14,7 +15,7 @@ class EarnExpenseController extends GetxController {
   TextEditingController statementTextController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController bankController = TextEditingController();
-  Account? bankAccount;
+  int? bankAccountId;
   TextEditingController dateController = TextEditingController();
   AccountsController accountsController = Get.find<AccountsController>();
   EarnsExpensesRepo earnsExpensesRepo = EarnsExpensesRepo();
@@ -23,6 +24,7 @@ class EarnExpenseController extends GetxController {
   BoxClient boxClient = BoxClient();
   var loading = false.obs;
   var savingState = false;
+  final connectivityController = Get.find<ConnectivityController>();
 
   Map<String, String> counterStatementTypes = {
     'إيرادات': 'revenues',
@@ -66,8 +68,8 @@ class EarnExpenseController extends GetxController {
   }
 
   void setBankAccount(Account? account) {
-    bankAccount = account;
     if (account != null) {
+      bankAccountId = account.id;
       bankController.value = TextEditingValue(text: account.name);
     } else {
       bankController.clear();
@@ -75,11 +77,7 @@ class EarnExpenseController extends GetxController {
   }
 
   int? getBankAccountId() {
-    if (bankAccount != null) {
-      return bankAccount!.id;
-    } else {
-      return null;
-    }
+    return bankAccountId;
   }
 
   String getDateString(date) {
@@ -108,11 +106,9 @@ class EarnExpenseController extends GetxController {
       int? bankId;
       bankId = await boxClient.getBankAccount();
       bank = accountsController.getAccountFromId(bankId);
-      if (bank == null) {
-        bankAccount = accountsController.accounts.isNotEmpty
-            ? accountsController.bankAccounts[0]
-            : null;
-      }
+      bank ??= accountsController.accounts.isNotEmpty
+          ? accountsController.bankAccounts[0]
+          : null;
       setBankAccount(bank);
     } else {
       setBankAccount(null);
@@ -122,7 +118,7 @@ class EarnExpenseController extends GetxController {
   void setDefaultFields({bool clear = false, StatementWithType? statement}) {
     if (statement != null) {
       setStatementType(statement.type);
-      setBankAccount(statement.bank);
+      setBankAccount(accountsController.getAccountFromId(statement.bankId));
       setAmount(statement.amount);
       setDate(DateFormatter.getFormated(statement.createdAt));
       setStatementText(statement.statement);
@@ -141,9 +137,12 @@ class EarnExpenseController extends GetxController {
     num amount = getAmount();
     int? bankId = getBankAccountId();
     String date = getDate();
+    bool connected = connectivityController.isConnected;
     if (bankId != null && date.isNotEmpty) {
       loading.value = true;
-      var statement = await earnsExpensesRepo.createStatementBsedOnType(
+      bool isStatementCreated =
+          await earnsExpensesRepo.createStatementBsedOnType(
+        connected,
         statementType,
         statementText,
         amount,
@@ -151,10 +150,12 @@ class EarnExpenseController extends GetxController {
         date,
       );
       loading.value = false;
-      if (statement != null) {
+      if (isStatementCreated) {
         boxClient.setBankAccount(bankId);
-        await accountsController.getAccounts();
-        await earnsExpensesController.getStatements();
+        if (connected) {
+          await accountsController.getAccounts();
+          await earnsExpensesController.getEarnsAndExpenses();
+        }
         savingState = true;
         setDefaultFields(clear: true);
         SnackBars.showSuccess('تم انشاء القيد');
@@ -173,22 +174,26 @@ class EarnExpenseController extends GetxController {
     int? bankId = getBankAccountId();
     String date = getDate();
     if (bankId != null && date.isNotEmpty) {
-      loading.value = true;
-      var statement = await earnsExpensesRepo.updateStatement(
-        id,
-        statementType,
-        statementText,
-        amount,
-        bankId,
-        date,
-      );
-      loading.value = false;
-      if (statement != null) {
-        await earnsExpensesController.getStatements();
-        savingState = true;
-        SnackBars.showSuccess('تم تعديل القيد');
+      if (connectivityController.isConnected) {
+        loading.value = true;
+        var statement = await earnsExpensesRepo.updateStatement(
+          id,
+          statementType,
+          statementText,
+          amount,
+          bankId,
+          date,
+        );
+        loading.value = false;
+        if (statement != null) {
+          await earnsExpensesController.getEarnsAndExpenses();
+          savingState = true;
+          SnackBars.showSuccess('تم تعديل القيد');
+        } else {
+          SnackBars.showError('فشل تعديل القيد');
+        }
       } else {
-        SnackBars.showError('فشل تعديل القيد');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
@@ -196,14 +201,18 @@ class EarnExpenseController extends GetxController {
   }
 
   Future<void> deleteStatement(id) async {
-    loading.value = true;
-    var statement = await earnsExpensesRepo.deleteStatement(id);
-    loading.value = false;
-    if (statement != null) {
-      earnsExpensesController.getStatements();
-      SnackBars.showSuccess('تم الحذف بنجاح');
+    if (connectivityController.isConnected) {
+      loading.value = true;
+      bool isStatementDeleted = await earnsExpensesRepo.deleteStatement(id);
+      loading.value = false;
+      if (isStatementDeleted) {
+        earnsExpensesController.getEarnsAndExpenses();
+        SnackBars.showSuccess('تم الحذف بنجاح');
+      } else {
+        SnackBars.showError('فشل الحذف');
+      }
     } else {
-      SnackBars.showError('فشل الحذف');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 }
