@@ -33,6 +33,15 @@ class UserRepo {
     return null;
   }
 
+  Future<User?> getUserDataById(id) async {
+    var response = await client.getUserDataById(id);
+    if (response != "") {
+      final parsed = json.decode(response);
+      return User.fromMap(parsed);
+    }
+    return null;
+  }
+
   Future<List<User>> getUsers() async {
     var response = await client.getUsers();
     if (response != "") {
