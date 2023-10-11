@@ -406,7 +406,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: const CustomBottomNavigationBar(),
+        bottomNavigationBar: CustomBottomNavigationBar(),
         floatingActionButton: AddButton(
           onPressed: () {
             Get.bottomSheet(CreateBottomSheet());
