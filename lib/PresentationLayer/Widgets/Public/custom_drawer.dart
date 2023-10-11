@@ -105,13 +105,7 @@ class CustomDrawer extends StatelessWidget {
                 subtitle: "تصفح و تعديل الفواتير",
                 iconData: FontAwesomeIcons.fileInvoice,
                 onTap: () {
-                  if (connectivityController.isConnected) {
-                    Get.toNamed(
-                      AppRoutes.ordersScreen,
-                    );
-                  } else {
-                    SnackBars.showError('لا يوجد اتصال بالانترنت');
-                  }
+                  Get.toNamed(AppRoutes.ordersScreen);
                 },
               ),
               DrawerListTile(

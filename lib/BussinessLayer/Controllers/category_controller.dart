@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:matjary/BussinessLayer/Controllers/categories_controller.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/DataAccesslayer/Models/category.dart';
 import 'package:matjary/DataAccesslayer/Repositories/categories_repo.dart';
 import 'package:matjary/PresentationLayer/Widgets/snackbars.dart';
@@ -13,6 +14,7 @@ class CategoryController extends GetxController {
   CategoriesController categoriesController = Get.find<CategoriesController>();
   var loading = false.obs;
   var savingState = false;
+  final connectivityController = Get.find<ConnectivityController>();
 
   void setCategoryName(categoryName) {
     if (categoryName.isNotEmpty) {
@@ -52,17 +54,21 @@ class CategoryController extends GetxController {
     savingState = false;
     String categoryName = getCategoryName();
     if (categoryName.isNotEmpty) {
-      loading.value = true;
-      var category =
-          await categoriesRepo.createCategory(categoryName, parentId);
-      loading.value = false;
-      if (category != null) {
-        categoriesController.getCategories();
-        savingState = true;
-        setCategoryDetails(null);
-        SnackBars.showSuccess('تمت إضافة فئة جديدة');
+      if (connectivityController.isConnected) {
+        loading.value = true;
+        var category =
+            await categoriesRepo.createCategory(categoryName, parentId);
+        loading.value = false;
+        if (category != null) {
+          categoriesController.getCategories();
+          savingState = true;
+          setCategoryDetails(null);
+          SnackBars.showSuccess('تمت إضافة فئة جديدة');
+        } else {
+          SnackBars.showWarning('حدث خطأ أثناء الإضافة');
+        }
       } else {
-        SnackBars.showWarning('حدث خطأ أثناء الإضافة');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
@@ -72,15 +78,19 @@ class CategoryController extends GetxController {
   Future<void> updateCategory(int id) async {
     String categoryName = getCategoryName();
     if (categoryName.isNotEmpty) {
-      loading.value = true;
-      var category =
-          await categoriesRepo.updateCategory(id, categoryName, parentId);
-      loading.value = false;
-      if (category != null) {
-        categoriesController.getCategories();
-        SnackBars.showSuccess('تم التعديل بنجاح');
+      if (connectivityController.isConnected) {
+        loading.value = true;
+        var category =
+            await categoriesRepo.updateCategory(id, categoryName, parentId);
+        loading.value = false;
+        if (category != null) {
+          categoriesController.getCategories();
+          SnackBars.showSuccess('تم التعديل بنجاح');
+        } else {
+          SnackBars.showError('فشل التعديل');
+        }
       } else {
-        SnackBars.showError('فشل التعديل');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
@@ -88,14 +98,18 @@ class CategoryController extends GetxController {
   }
 
   Future<void> deleteCategory(id) async {
-    loading.value = true;
-    var category = await categoriesRepo.deleteCategory(id);
-    loading.value = false;
-    if (category != null) {
-      categoriesController.getCategories();
-      SnackBars.showSuccess('تم الحذف بنجاح');
+    if (connectivityController.isConnected) {
+      loading.value = true;
+      var category = await categoriesRepo.deleteCategory(id);
+      loading.value = false;
+      if (category != null) {
+        categoriesController.getCategories();
+        SnackBars.showSuccess('تم الحذف بنجاح');
+      } else {
+        SnackBars.showError('فشل الحذف');
+      }
     } else {
-      SnackBars.showError('فشل الحذف');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 }

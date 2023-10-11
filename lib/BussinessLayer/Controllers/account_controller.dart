@@ -220,9 +220,8 @@ class AccountController extends GetxController {
     String email = getAccountEmail();
     String mobileNumber = getAccountMobilePhone();
     String address = getAccountAddress();
-    bool connected = connectivityController.isConnected;
-    if (connected) {
-      if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+    if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+      if (connectivityController.isConnected) {
         loading.value = true;
         bool isAccountCreated = await accountsRepo.createAccount(
             name,
@@ -243,10 +242,10 @@ class AccountController extends GetxController {
           SnackBars.showError('فشل انشاء الحساب');
         }
       } else {
-        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
-      SnackBars.showError('لا يوجد اتصال بالانترنت');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
@@ -255,9 +254,8 @@ class AccountController extends GetxController {
     num balance = getAccountBalance();
     int accounttype = getAccountType();
     int accountStyle = getAccountStyle();
-    bool connected = connectivityController.isConnected;
-    if (connected) {
-      if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+    if (name.isNotEmpty && type!.isNotEmpty && style!.isNotEmpty) {
+      if (connectivityController.isConnected) {
         loading.value = true;
         bool isAccountUpdated = await accountsRepo.updateAccount(
             id, name, balance, accounttype, accountStyle, accountImage);
@@ -269,16 +267,15 @@ class AccountController extends GetxController {
           SnackBars.showError('فشل التعديل');
         }
       } else {
-        SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
-      SnackBars.showError('لا يوجد اتصال بالانترنت');
+      SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
     }
   }
 
   Future<void> deleteAccount(id) async {
-    bool connected = connectivityController.isConnected;
-    if (connected) {
+    if (connectivityController.isConnected) {
       loading.value = true;
       var isAccountDeleted = await accountsRepo.deleteAccount(id);
       loading.value = false;

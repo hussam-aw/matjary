@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/Constants/get_routes.dart';
 import 'package:matjary/Constants/ui_colors.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  const CustomBottomNavigationBar({super.key});
+  CustomBottomNavigationBar({super.key});
+
+  final connectivityController = Get.find<ConnectivityController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   FontAwesomeIcons.houseChimney,
                   color: UIColors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoutes.homeScreen);
+                },
               ),
             ),
             Expanded(
@@ -35,7 +40,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   color: UIColors.white,
                 ),
                 onPressed: () {
-                  Get.toNamed(AppRoutes.notificationsScreen);
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(AppRoutes.notificationsScreen);
+                  }
                 },
               ),
             ),
@@ -48,7 +55,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   color: UIColors.white,
                 ),
                 onPressed: () {
-                  Get.toNamed(AppRoutes.reportsScreen);
+                  if (connectivityController.isConnected) {
+                    Get.toNamed(AppRoutes.reportsScreen);
+                  }
                 },
               ),
             ),

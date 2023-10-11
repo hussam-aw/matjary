@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:matjary/BussinessLayer/Controllers/connectivity_controller.dart';
 import 'package:matjary/DataAccesslayer/Clients/box_client.dart';
 import 'package:matjary/DataAccesslayer/Models/user.dart';
 import 'package:matjary/DataAccesslayer/Repositories/user_repo.dart';
@@ -13,6 +14,7 @@ class ProfileController extends GetxController {
   UserRepo userRepo = UserRepo();
   BoxClient client = BoxClient();
   var isLoading = false.obs;
+  final connectivityController = Get.find<ConnectivityController>();
 
   void setUserName(name) {
     if (name.isNotEmpty) {
@@ -67,18 +69,21 @@ class ProfileController extends GetxController {
     String mobilePhone = getMobilePhone();
     String password = getPassword();
     if (userName.isNotEmpty && mobilePhone.isNotEmpty && password.isNotEmpty) {
-      //setUserDetails(null);
-      isLoading.value = true;
-      var user =
-          await userRepo.updateUserInfo(userName, mobilePhone, password, '');
-      isLoading.value = false;
-      if (user != null) {
-        MyApp.appUser = user;
-        await client.setAuthedUser(user);
-        update();
-        SnackBars.showSuccess('تم تعديل بيانات الملف الشخصي');
+      if (connectivityController.isConnected) {
+        isLoading.value = true;
+        var user =
+            await userRepo.updateUserInfo(userName, mobilePhone, password, '');
+        isLoading.value = false;
+        if (user != null) {
+          MyApp.appUser = user;
+          await client.setAuthedUser(user);
+          update();
+          SnackBars.showSuccess('تم تعديل بيانات الملف الشخصي');
+        } else {
+          SnackBars.showError('فشل التعديل');
+        }
       } else {
-        SnackBars.showError('فشل التعديل');
+        SnackBars.showError('لا يوجد اتصال بالانترنت');
       }
     } else {
       SnackBars.showWarning('يرجى تعبئة الحقول المطلوبة');
