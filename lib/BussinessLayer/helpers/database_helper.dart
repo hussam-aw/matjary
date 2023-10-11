@@ -37,11 +37,11 @@ class DatabaseHelper {
     return maps.reversed;
   }
 
-  Future<dynamic> getData(tableName, args) async {
+  Future<dynamic> getData(tableName, column, args) async {
     var dbClient = await database;
     List<dynamic> maps = await dbClient?.query(
       tableName,
-      where: "type IN (?, ?, ?)",
+      where: "$column IN (?, ?)",
       whereArgs: args,
     ) as List<Map<dynamic, dynamic>>;
     print(maps);
@@ -79,10 +79,14 @@ class DatabaseHelper {
     return false;
   }
 
-  Future<bool> delete(table, id) async {
+  Future<bool> delete(table, column, args) async {
     var dbClient = await database;
     try {
-      int rows = await dbClient!.delete(table, where: 'id=?', whereArgs: [id]);
+      int rows = await dbClient!.delete(
+        table,
+        where: "$column IN (?, ?)",
+        whereArgs: args,
+      );
       if (rows > 0) {
         print('Deleted');
         return true;
