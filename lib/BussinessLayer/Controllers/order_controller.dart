@@ -333,50 +333,58 @@ class OrderController extends GetxController {
     num? discountMarketer = getMarketerDiscount(marketerDiscountType);
     num? paidAmount = getPaidAmount();
     getOrderProductsMap();
-    loading.value = true;
-    var orderUpdationStatus = await orderRepo.updateOrder(
-        id,
-        counterPartyAccount!.id,
-        totalOrderAmount.value,
-        notesController.text,
-        type,
-        paidAmount,
-        remainingAmount.value,
-        wareAccount!.id,
-        null,
-        bankAccount!.id,
-        buyingType,
-        status,
-        expenses.value,
-        discountOrder,
-        marketerId,
-        discountOrderType,
-        orderProducts,
-        discountMarketerType,
-        discountMarketer,
-        date);
-    loading.value = false;
-    if (orderUpdationStatus == true) {
-      orderSaving = true;
-      await ordersController.getOrders();
-      await accountsController.getAccounts();
-      saveSelectedAccountsInStorage();
-      SnackBars.showSuccess('تم التعديل بنجاح');
+    if (connectivityController.isConnected) {
+      loading.value = true;
+      var orderUpdationStatus = await orderRepo.updateOrder(
+          id,
+          counterPartyAccount!.id,
+          totalOrderAmount.value,
+          notesController.text,
+          type,
+          paidAmount,
+          remainingAmount.value,
+          wareAccount!.id,
+          null,
+          bankAccount!.id,
+          buyingType,
+          status,
+          expenses.value,
+          discountOrder,
+          marketerId,
+          discountOrderType,
+          orderProducts,
+          discountMarketerType,
+          discountMarketer,
+          date);
+      loading.value = false;
+      if (orderUpdationStatus == true) {
+        orderSaving = true;
+        await ordersController.getOrders();
+        await accountsController.getAccounts();
+        saveSelectedAccountsInStorage();
+        SnackBars.showSuccess('تم التعديل بنجاح');
+      } else {
+        SnackBars.showError('فشل التعديل');
+      }
     } else {
-      SnackBars.showError('فشل التعديل');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 
   Future<void> deleteOrder(id) async {
-    loading.value = true;
-    var order = await orderRepo.deleteOrder(id);
-    loading.value = false;
-    if (order != null) {
-      await ordersController.getOrders();
-      await accountsController.getAccounts();
-      SnackBars.showSuccess('تم الحذف بنجاح');
+    if (connectivityController.isConnected) {
+      loading.value = true;
+      var order = await orderRepo.deleteOrder(id);
+      loading.value = false;
+      if (order != null) {
+        await ordersController.getOrders();
+        await accountsController.getAccounts();
+        SnackBars.showSuccess('تم الحذف بنجاح');
+      } else {
+        SnackBars.showError('فشل الحذف');
+      }
     } else {
-      SnackBars.showError('فشل الحذف');
+      SnackBars.showError('لا يوجد اتصال بالانترنت');
     }
   }
 
