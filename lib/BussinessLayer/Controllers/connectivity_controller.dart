@@ -7,19 +7,23 @@ class ConnectivityController extends GetxController {
   final Connectivity connectivity = Connectivity();
   final RxBool _isConnected = true.obs;
   StreamSubscription<ConnectivityResult>? _connectivitySubscription;
+  bool isFirstChange = true;
 
   void _initializeConnectivity() async {
     final ConnectivityResult result = await connectivity.checkConnectivity();
-    _isConnected.value = (result != ConnectivityResult.none);
-    //_updateConnectivityStatus(result);
+    _updateConnectivityStatus(result);
   }
 
   void _updateConnectivityStatus(ConnectivityResult result) {
     _isConnected.value = (result != ConnectivityResult.none);
-    if (isConnected) {
-      SnackBars.showSuccess('متصل بالانترنت');
+    if (!isFirstChange) {
+      if (isConnected) {
+        SnackBars.showSuccess('متصل بالانترنت');
+      } else {
+        SnackBars.showError('غير متصل بالانترنت');
+      }
     } else {
-      SnackBars.showError('غير متصل بالانترنت');
+      isFirstChange = false;
     }
   }
 
